@@ -2,7 +2,7 @@
 <view></view>
 <view class="weui-grids">
   <block wx:for="{{grids}}" wx:for-item="item">
-    <navigator url="../catalog/catalog" class="weui-grid" hover-class="weui-grid_active" style='background-color:{{item.color}}'>
+    <navigator url="../catalog/catalog?type={{item.name}}" class="weui-grid" hover-class="weui-grid_active" style='background-color:{{item.color}}'>
       <image class="" style='width:100%;height:100px' src="{{item.image}}" />
       <view class="weui-grid__label label">{{item.name}}</view>
     </navigator>

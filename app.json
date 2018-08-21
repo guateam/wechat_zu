@@ -6,12 +6,13 @@
     "pages/usercenter/usercenter",
     "pages/found/found",
     "pages/shoppingcart/shoppingcart",
-    "pages/catalog/catalog"
+    "pages/catalog/catalog",
+    "pages/technician-detail/technician-detail"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "足疗程序",
+    "navigationBarTitleText": "养生馆",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {

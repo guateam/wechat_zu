@@ -5,14 +5,41 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+      service_type:"",
+      technician:[
+        {id:0, name: "小明", image: "https://img2.woyaogexing.com/2018/08/12/18256e62c0db0dae!400x400_big.jpg", available: true},
+        { id:1,name: "小李", image: "https://img2.woyaogexing.com/2018/08/12/18256e62c0db0dae!400x400_big.jpg",  available: true},
+        { id: 2 ,name: "小红", image: "",  available: false },
+        { id: 3,name: "小华", image: "",available: true },
+        { id: 4,name: "小张", image: "",available: false },
+        { id: 5,name: "小丽", image: "", available: true },
+        { id: 6,name: "小亮", image: "", available: true },
+      ],
+      price:120,
+      discount:1,
+      duration:90
   },
-
+  jump_detail:function(event){
+    wx.navigateTo({
+      url: '../technician-detail/technician-detail?id=' + event.currentTarget.id,
+      success: function(res) {},
+      fail: function(res) {},
+      complete: function(res) {},
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+      this.setData({service_type:options.type})
+      /*这里留读取技师的函数
 
+
+
+
+
+      
+      */
   },
 
   /**

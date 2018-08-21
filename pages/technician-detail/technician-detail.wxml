@@ -1,0 +1,47 @@
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell">
+    <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+      这里放技师的头像
+    </view>
+    <view class="weui-cell__bd">
+      <view>这里是技师的名字</view>
+    </view>
+  </view>
+  <view class="weui-cell">
+    <view class="weui-cell__bd">
+      <view>微信号</view>
+      <view style="font-size: 13px;color: #888888;">
+        这里放微信号
+      </view>
+    </view>
+  </view>
+  <view class="weui-cell">
+    <view class="weui-cell__bd">
+      <view>视频介绍</view>
+      <view style="font-size: 13px;color: #888888;">
+        这里放视频
+      </view>
+    </view>
+  </view>
+  <view class="weui-cell">
+    <view class="weui-cell__bd">
+      <view>入职时长</view>
+      <view style="font-size: 13px;color: #888888;">
+        这里放入职日期
+      </view>
+      <view style="font-size: 13px;color: #888888;">
+        这里放入职时长
+      </view>
+    </view>
+  </view>
+  <view class="weui-cell">
+    <view class="weui-cell__bd">
+      <view>
+      <text>工作状态</text>
+      <text style="font-size: 13px;color: #888888;">这里放工作状态:正在工作/空闲</text>
+      </view>
+    </view>
+  </view>
+</view>
+<button wx:if="如果空闲" class="weui-btn" type="primary">预约</button>
+<button wx:else disabled='true' class="weui-btn" type="primary">正在工作，无法预约</button>
