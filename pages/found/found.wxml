@@ -1,0 +1,5 @@
+<!--pages/found/found.wxml-->
+<view class='container'>
+  <text class='text-center'>发现页面</text>
+  
+</view>

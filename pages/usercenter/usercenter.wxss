@@ -1,1 +1,8 @@
 /* pages/usercenter/usercenter.wxss */
+.top-bar{
+
+}
+.head{
+  width: 30%;
+  height: 20%;
+}

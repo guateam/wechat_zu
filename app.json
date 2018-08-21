@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/logs/logs",
     "pages/main/main",
-    "pages/usercenter/usercenter"
+    "pages/usercenter/usercenter",
+    "pages/found/found"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -12,14 +13,16 @@
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
-    "selectedColor":"#66ccff",
+    "selectedColor":"#F73809",
     "list": [
       {
         "pagePath": "pages/main/main",
         "text": "主页",
         "iconPath":""
-      },
-      {
+      },{
+        "pagePath": "pages/found/found",
+        "text": "发现"
+      },{
         "pagePath": "pages/usercenter/usercenter",
         "text": "我"
       }
