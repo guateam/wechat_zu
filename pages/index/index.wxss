@@ -19,3 +19,8 @@
 .usermotto {
   margin-top: 200px;
 }
+
+.logo{
+  font-size: 20px;
+  
+}

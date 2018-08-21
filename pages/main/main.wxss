@@ -1,0 +1,4 @@
+/* pages/main/main.wxss */
+.text-center{
+  text-align: center;
+}

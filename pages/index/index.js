@@ -4,7 +4,7 @@ const app = getApp()
 
 Page({
   data: {
-    motto: 'Hello World',
+    name: 'XXX洗浴中心',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
@@ -42,6 +42,19 @@ Page({
         }
       })
     }
+    setTimeout(()=>{
+      wx.request({
+        url: 'http://localhost/wechat',
+        data: {
+          'username': 'hello'
+        },
+        success: (data) => {
+          wx.navigateTo({
+            url: '../main/main'
+          })
+        }
+      })
+    },2000)
   },
   getUserInfo: function(e) {
     console.log(e)
