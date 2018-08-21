@@ -4,7 +4,9 @@
     "pages/logs/logs",
     "pages/main/main",
     "pages/usercenter/usercenter",
-    "pages/found/found"
+    "pages/found/found",
+    "pages/shoppingcart/shoppingcart",
+    "pages/catalog/catalog"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -18,14 +20,25 @@
       {
         "pagePath": "pages/main/main",
         "text": "主页",
-        "iconPath":""
+        "iconPath":"src/icon/home.png",
+        "selectedIconPath":"src/icon/home_select.png"
       },{
         "pagePath": "pages/found/found",
-        "text": "发现"
+        "text": "发现",
+        "iconPath": "src/icon/found.png",
+        "selectedIconPath":"src/icon/found_select.png"
+      },{
+        "pagePath": "pages/shoppingcart/shoppingcart",
+        "text": "购物车",
+        "iconPath": "src/icon/shoppingcart.png",
+        "selectedIconPath": "src/icon/shoppingcart_select.png"
       },{
         "pagePath": "pages/usercenter/usercenter",
-        "text": "我"
+        "text": "我",
+        "iconPath": "src/icon/user.png",
+        "selectedIconPath":"src/icon/user_select.png"
       }
     ]
-  }
+  },
+  "debug":true
 }

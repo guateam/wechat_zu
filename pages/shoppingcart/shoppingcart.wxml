@@ -1,0 +1,5 @@
+<!--pages/shoppingcart/shoppingcart.wxml-->
+<view class='container'>
+  <text class='text-center'>这里是主页面</text>
+  <text></text>
+</view>
