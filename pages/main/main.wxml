@@ -1,12 +1,10 @@
 <!--pages/main/main.wxml-->
-<view class='container'>
-  
-  <view class="weui-grids">
-    <block wx:for="{{grids}}" wx:for-item="item">
-      <navigator url="../catalog/catalog" class="weui-grid" hover-class="weui-grid_active">
-        <image class="" style='width:100%;height:100px' src="{{item.image}}" />
-        <view class="weui-grid__label">{{item.name}}</view>
-      </navigator>
-    </block>
-  </view>
+<view></view>
+<view class="weui-grids">
+  <block wx:for="{{grids}}" wx:for-item="item">
+    <navigator url="../catalog/catalog" class="weui-grid" hover-class="weui-grid_active" style='background-color:{{item.color}}'>
+      <image class="" style='width:100%;height:100px' src="{{item.image}}" />
+      <view class="weui-grid__label label">{{item.name}}</view>
+    </navigator>
+  </block>
 </view>
