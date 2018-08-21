@@ -2,12 +2,27 @@
   "pages": [
     "pages/index/index",
     "pages/logs/logs",
-    "pages/main/main"
+    "pages/main/main",
+    "pages/usercenter/usercenter"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "足疗程序",
     "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "selectedColor":"#66ccff",
+    "list": [
+      {
+        "pagePath": "pages/main/main",
+        "text": "主页",
+        "iconPath":""
+      },
+      {
+        "pagePath": "pages/usercenter/usercenter",
+        "text": "我"
+      }
+    ]
   }
 }
