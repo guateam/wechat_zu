@@ -28,7 +28,28 @@ Page({
       discount:1,
       duration:90,
       inputVal:"",
-      inputShowed:false
+      inputShowed:false,
+      filter_index:0,
+      filter_list:["显示全部","仅显示可预约"],
+  },
+  set_filter:function(e){
+    this.setData({filter_index:e.detail.value})
+    this.setData({ showed_tech: [] })
+    if (this.data.inputVal.length == 0) {
+      for (var i = 0; i < this.data.technician.length; i++) {
+        var item = this.data.technician[i]
+        this.apply_filter(item)
+      }
+    } else {
+      this.setData({ showed_tech: [] })
+      for (var i = 0; i < this.data.technician.length; i++) {
+        var item = this.data.technician[i]
+        if (item.name == this.data.inputVal) {
+          this.apply_filter(item)
+        }
+      }
+    }
+    this.setData({ showed_tech: this.data.showed_tech })
   },
   jump_detail:function(event){
     wx.navigateTo({
@@ -39,27 +60,38 @@ Page({
     })
   },
   inputTyping:function(e){
-      this.setData({showed_tech:[]})
-      this.setData({inputVal:e.detail.value})
-      for(var i=0;i<this.data.technician.length;i++){
+    this.setData({ inputVal: e.detail.value })
+    this.setData({ showed_tech: [] })
+    if (this.data.inputVal.length == 0) {
+      for (var i = 0; i < this.data.technician.length; i++) {
         var item = this.data.technician[i]
-        if (item.name==this.data.inputVal){ 
-          this.data.showed_tech.push({id:item.id,name:item.name,image:item.image,available:item.available})
-          this.setData({ showed_tech: this.data.showed_tech})
-
-        }
-        console.log("输入:"+this.data.inputVal)
-        console.log("比较:"+item.name)
-        console.log(this.data.showed_tech)
+        this.apply_filter(item)
       }
-      if(this.data.inputVal.length==0){
-        for (var i = 0; i < this.data.technician.length; i++){
-          var item = this.data.technician[i]
+    }else{
+      this.setData({ showed_tech: [] })
+      for (var i = 0; i < this.data.technician.length; i++) {
+        var item = this.data.technician[i]
+        if (item.name == this.data.inputVal) {
+          this.apply_filter(item)
+        }
+      }
+    }
+    this.setData({ showed_tech: this.data.showed_tech })
+  },
+  apply_filter:function(item){
+    var temp_val = ""
+    if (this.data.inputVal.length == 0)temp_val=item.name;
+    else temp_val = this.data.inputVal;
+
+    if (item.name == temp_val) {
+      if (this.data.filter_index == 0) {
+        this.data.showed_tech.push({ id: item.id, name: item.name, image: item.image, available: item.available })
+      } else if (this.data.filter_index == 1) {
+        if(item.available == true){
           this.data.showed_tech.push({ id: item.id, name: item.name, image: item.image, available: item.available })
-
         }
-        this.setData({ showed_tech: this.data.showed_tech })
       }
+    }
   },
   clearInput:function(){
     this.setData({inputValue:""})

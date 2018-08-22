@@ -42,6 +42,22 @@
       </view>
     </view>
   </view>
+  <view class="weui-cell">
+    <view class="weui-cell__bd">
+      <view>服务时长</view>
+      <view style="font-size: 13px;color: #888888;">
+        xx分钟  （根据客户的vip等级进行调整)
+      </view>
+    </view>
+  </view>
+  <view class="weui-cell">
+    <view class="weui-cell__bd">
+      <view>价格</view>
+      <view style="font-size: 13px;color: #f55d5d;">
+        这里放价格  ￥
+      </view>
+    </view>
+  </view>
 </view>
 <button wx:if="如果空闲" class="weui-btn" type="primary">预约</button>
 <button wx:else disabled='true' class="weui-btn" type="primary">正在工作，无法预约</button>
