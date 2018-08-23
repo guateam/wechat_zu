@@ -1,4 +1,5 @@
 <!--pages/main/main.wxml-->
-<view class='container'>
-  <view class='top-bar'><image src='{{userInfo.avatarUrl}}' class='head'></image><text class='username'>{{userInfo.nickName}}</text></view>
+<view class='top-bar'>
+  <image src='{{userInfo.avatarUrl}}' class='head'></image>
+  <text class='username'>{{userInfo.nickName}}</text>
 </view>
