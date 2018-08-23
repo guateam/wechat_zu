@@ -6,7 +6,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userInfo:{}
+    wxuserInfo:{},
+    userInfo:{nickName:'的力格楞~'},
+    menu: [{ name: '收藏商品', url: '', image: '/src/icon/uhomeapp7.png' }, { name: '我的账单', url: '', image: '/src/icon/uhomeapp6.png' }, { name: '日志', url: '../logs/logs', image: '/src/icon/uhomeapp1.png' }]
   },
 
   /**
@@ -15,7 +17,7 @@ Page({
   onLoad: function (options) {
     if (app.globalData.userInfo) {
       this.setData({
-        userInfo: app.globalData.userInfo,
+        wxuserInfo: app.globalData.userInfo,
         hasUserInfo: true
       })
     } else if (this.data.canIUse) {
@@ -23,7 +25,7 @@ Page({
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = res => {
         this.setData({
-          userInfo: res.userInfo,
+          wxuserInfo: res.userInfo,
           hasUserInfo: true
         })
       }
@@ -33,7 +35,7 @@ Page({
         success: res => {
           app.globalData.userInfo = res.userInfo
           this.setData({
-            userInfo: res.userInfo,
+            wxuserInfo: res.userInfo,
             hasUserInfo: true
           })
         }

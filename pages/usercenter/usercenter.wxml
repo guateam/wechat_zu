@@ -1,5 +1,25 @@
-<!--pages/main/main.wxml-->
-<view class='top-bar'>
-  <image src='{{userInfo.avatarUrl}}' class='head'></image>
-  <text class='username'>{{userInfo.nickName}}</text>
+<view>
+  <view class="uchome-info">
+    <view class="uchome-info-uimg">
+      <image src="{{wxuserInfo.avatarUrl}}" />
+    </view>
+    <view class="uchome-info-uinfo">
+      <text>{{userInfo.nickName}}，欢迎光临\n</text>
+      <text>微信帐号:{{wxuserInfo.nickName}}\n余额：<text class="red">￥20000.00</text>\n</text>
+      <text>积分：<text class="red">2531</text>，消息：<text class="red">12</text>
+      </text>
+    </view>
+  </view>
+
+  <view class="am-cf uchome-apps">
+      <block class="grids" wx:for="{{menu}}" wx:for-item="item">
+        <navigator class='grid' url="{{item.url}}">
+          <view class='imgp'>
+            <image src="{{item.image}}" class="am-img-responsive" />
+          </view>
+          <text class="namep">{{item.name}}\n</text>
+        </navigator>
+      </block>
+
+  </view>
 </view>
