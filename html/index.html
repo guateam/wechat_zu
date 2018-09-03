@@ -38,14 +38,14 @@
 
 <body style="line-height: 0;">
     <div class="weui-tab">
-        <div class="weui-tab__panel">
+        <div class="weui-tab__panel" id='shop'>
             <img src="../src/top-img.png" alt="" style="height: 22%;width: 100%;">
             <div style="height: 7%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;display: flex;align-items: center;">
-                <span style="margin-left: 10px">铂金宫</span>
+                <span style="margin-left: 10px">{{data.name}}</span>
                 <span style="margin-left: 20px">12:00~23:59</span>
             </div>
             <div style="height: 7%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;display: flex;align-items: center;background-image: url(../src/定位.png);background-repeat:no-repeat;background-position: 1%;">
-                <span style="margin-left: 25px">杭州市江干区下沙街道学源街258号</span>
+                <span style="margin-left: 25px">{{data.position}}</span>
                 <span style="width: 20%;margin-left: 3%;text-align: center;border-left: 1px #f2f2f2 solid;"><img src="../src/电话.png" alt=""></span></div>
             <div class="weui-flex" style="justify-content: center;align-items: center;height: 16%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;">
                 <div class="box weui-flex" style="width: 100%; height: 100%;">
@@ -227,6 +227,17 @@
         created() {
             if (back.notice.status == 1) {
                 this.items = back.notice.data
+            }
+        },
+    })
+    new Vue({
+        el: '#shop',
+        data: {
+            data: {}
+        },
+        created() {
+            if (back.shop.status == 1) {
+                this.data = back.shop.data
             }
         },
     })
