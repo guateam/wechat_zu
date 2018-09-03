@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>技师选择</title>
     <link rel="stylesheet" type="text/css" href="http://unpkg.com/iview/dist/styles/iview.css">
-
+    <link rel="stylesheet" type="text/css" href="../css/overlay.css">
     <style>
         #app {
             font-family: Cursive;
@@ -48,16 +48,16 @@
             <card :bordered="false" dis-hover>
                 <row :gutter="2">
                     <i-col span="6">
-                        <i-button @click="sort_by_rate" long>评价</i-button>
+                        <i-button v-bind:type="button_type[0]" @click="sort_by(0,'rate')" long>评价</i-button>
                     </i-col>
                     <i-col span="6">
-                        <i-button long>人气</i-button>
+                        <i-button :type="button_type[1]"  long>人气</i-button>
                     </i-col>
                     <i-col span="6">
-                        <i-button long>级别</i-button>
+                        <i-button :type="button_type[2]" long>级别</i-button>
                     </i-col>
                     <i-col span="6">
-                        <i-button long>状态</i-button>
+                        <i-button :type="button_type[3]" @click="sort_by(3,'state')" long>状态</i-button>
                     </i-col>
                 </row>
             </card>
@@ -125,6 +125,11 @@
             </card>
         </row>
         <back-top></back-top>
+        <div id="modal-overlay" v-show="overlay">
+            <div class="modal-data">
+                <img src="../src/loading.gif" />
+            </div>
+        </div>
     </div>
 </body>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
@@ -135,6 +140,13 @@
     let Main = {
         data() {
             return {
+                overlay:true,
+                button_type:[
+                    "default",
+                    "default",
+                    "default",
+                    "default",
+                ],
                 timePick: new Date(),
                 vip_discount: 100,
                 serviceList: [{
@@ -164,6 +176,12 @@
             }
         },
         methods: {
+            button_click(idx){
+                for(var i=0;i<this.button_type.length;i++){
+                    if(i==idx)this.button_type[i] = "primary"
+                    else this.button_type[i] = "default"
+                }
+            },
             select_service() {
                 var that = this;
                 var val = that.selector;
@@ -184,7 +202,8 @@
                     }
                 }
             },
-            sort_by_rate() {
+            sort_by(idx,keyName) {
+                this.button_click(idx);
                 var that = this;
                 var sort = function (keyName) {
                     return function (objectN, objectM) {
@@ -195,8 +214,8 @@
                         else return 0
                     }
                 }
-                this.list.sort(sort("rate"));
-            }
+                this.list.sort(sort(keyName));
+            },
         },
         created() {
             var that = this;
@@ -231,6 +250,7 @@
                         show: true
                     })
                 }
+                that.overlay = false;
             })
         }
     };
