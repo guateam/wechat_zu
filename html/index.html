@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>铂金宫</title>
+    <link rel="stylesheet" href="../css/weui-min.css" />
+    <link rel="stylesheet" href="../css/example.css" />
+    <style>
+        .marquee {
+            margin: 0 auto;
+            overflow: hidden;
+            white-space: nowrap;
+            box-sizing: border-box;
+            animation: marquee 8s linear infinite;
+            width: 60%;
+            margin-left: 2.7em;
+        }
+        /* Make it move */
+        
+        @keyframes marquee {
+            0% {
+                text-indent: 15.5em
+            }
+            100% {
+                text-indent: -15em
+            }
+        }
+        /* Make it pretty */
+        
+        .microsoft {
+            position: relative;
+            font: 16px 'Segoe UI', Tahoma, Helvetica, Sans-Serif;
+        }
+    </style>
+</head>
+
+<body style="line-height: 0;">
+    <div class="weui-tab">
+        <div class="weui-tab__panel">
+            <img src="../src/top-img.png" alt="" style="height: 22%;width: 100%;">
+            <div style="height: 7%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;display: flex;align-items: center;">
+                <span style="margin-left: 10px">铂金宫</span>
+                <span style="margin-left: 20px">12:00~23:59</span>
+            </div>
+            <div style="height: 7%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;display: flex;align-items: center;background-image: url(../src/定位.png);background-repeat:no-repeat;background-position: 1%;">
+                <span style="margin-left: 25px">杭州市江干区下沙街道学源街258号</span>
+                <span style="width: 20%;margin-left: 3%;text-align: center;border-left: 1px #f2f2f2 solid;"><img src="../src/电话.png" alt=""></span></div>
+            <div class="weui-flex" style="justify-content: center;align-items: center;height: 16%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;">
+                <div class="box weui-flex" style="width: 100%; height: 100%;">
+                    <div class="item weui-flex__item" style="text-align: center">
+                        <div style="height: 60px;width: 60px;border-radius: 50%;background-color: #ffcc66;margin: 10px auto;background-image: url(../src/技师预约.png);background-repeat: no-repeat"></div>技师预约
+                    </div>
+                    <div class="item weui-flex__item" style="text-align: center">
+                        <div style="height: 60px;width: 60px;border-radius: 50%;background-color: #ffcc66;margin: 10px auto;display: flex;justify-content: center;align-items: center;">
+                            <img src="../src/包厢预约.png" alt="" style="width: 34px;height: 34px;"></div>包厢预约
+                    </div>
+                    <div class="item weui-flex__item" style="text-align: center">
+                        <div style="height: 60px;width: 60px;border-radius: 50%;background-color: #ff9966;margin: 10px auto;display: flex;justify-content: center;align-items: center;">
+                            <img src="../src/闪付买单.png" alt="" style="width: 34px;height: 34px;"></div>闪付买单
+                    </div>
+                    <div class="item weui-flex__item" style="text-align: center">
+                        <div style="height: 60px;width: 60px;border-radius: 50%;background-color: #66ccff;margin: 10px auto;display: flex;justify-content: center;align-items: center;">
+                            <img src="../src/会员充值.png" alt="" style="width: 34px;height: 34px;"></div>会员充值
+                    </div>
+                    <div class="item weui-flex__item" style="text-align: center">
+                        <div style="height: 60px;width: 60px;border-radius: 50%;background-color: #ff6666;margin: 10px auto;display: flex;justify-content: center;align-items: center;">
+                            <img src="../src/打赏技师.png" alt="" style="width: 34px;height: 34px;"></div>打赏技师
+                    </div>
+                </div>
+            </div>
+
+            <div style="width: 100%;height: 7%;background-color: white;background-image: url(../src/喇叭.png);background-repeat: no-repeat;background-position: 2%;display: flex;align-items: center;">
+                <p class="microsoft marquee">
+                    <a>开业大酬宾，全场一折起！</a>
+                </p>
+                <div style="background:#ff9966;line-height: 1.6;width: 62px;height: 32px;display: flex;justify-content: center;align-items: center;border-radius: 4px;margin-right: 25px">优惠券</div>
+            </div>
+            <div class="weui-tab" style="background-color: white;">
+                <div class="weui-navbar" style="height: 7%;background-color: white">
+                    <div class="weui-navbar__item one" style="display: flex;justify-content: center;line-height: 1.6">
+                        <span>优惠活动</span>
+                    </div>
+                    <div class="weui-navbar__item weui-bar__item_on two" style="display: flex;justify-content: center;line-height: 1.6">
+                        <span>项目分类</span>
+                    </div>
+                </div>
+                <div class="weui-tab__panel">
+                    <div class="weui-tab__panel-item-one" style="display: none" id='app1'>
+                        <div class="weui-flex" style="height: 40px;border-bottom: 1px #f2f2f2 solid;">
+                            <div class="weui-flex weui-flex__item" style="flex: 0 0 40%;">
+                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">项目名称</div>
+                            </div>
+                            <div class="weui-flex weui-flex__item" style="flex: 0 0 30%;">
+                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">原价/元</div>
+                            </div>
+                            <div class="weui-flex weui-flex__item" style="flex: 0 0 30%;">
+                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">现价/元</div>
+                            </div>
+                        </div>
+                        <div class="weui-flex" style="height: 40px;border-bottom: 1px #f2f2f2 solid;" v-for="item in items">
+                            <div class="weui-flex weui-flex__item" style="flex: 0 0 40%;">
+                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">{{item.name}}</div>
+                            </div>
+                            <div class="weui-flex weui-flex__item" style="flex: 0 0 30%;">
+                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">{{item.price}}</div>
+                            </div>
+                            <div class="weui-flex weui-flex__item" style="flex: 0 0 30%;">
+                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center;color: #ff6666;">{{item.discount}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weui-tab__panel-item-two" id='app2'>
+                        <div class="weui-flex" style="height: 40px;border-bottom: 1px #f2f2f2 solid;">
+                            <div class="weui-flex weui-flex__item" style="flex: 0 0 40%;">
+                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">项目名称</div>
+                            </div>
+                            <div class="weui-flex weui-flex__item" style="flex: 0 0 30%;">
+                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">时长/分</div>
+                            </div>
+                            <div class="weui-flex weui-flex__item" style="flex: 0 0 30%;">
+                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">门市价/元</div>
+                            </div>
+                        </div>
+                        <div class="weui-flex" style="height: 40px;border-bottom: 1px #f2f2f2 solid;" v-for="item in items">
+                            <div class="weui-flex weui-flex__item" style="flex: 0 0 40%;">
+                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">{{item.name}}</div>
+                            </div>
+                            <div class="weui-flex weui-flex__item" style="flex: 0 0 30%;">
+                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">{{item.time}}</div>
+                            </div>
+                            <div class="weui-flex weui-flex__item" style="flex: 0 0 30%;">
+                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center;color: #1aad19">{{item.price}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="weui-tabbar ">
+        <a href="../html/index.html " class="weui-tabbar__item weui-bar__item_on ">
+            <img src="../src/主页激活.png " data-original="../src/主页激活.png " alt=" " class="weui-tabbar__icon ">
+            <p class="weui-tabbar__label ">首页</p>
+        </a>
+        <a href="../html/订单.html " class="weui-tabbar__item ">
+            <img src="../src/订单.png " data-original="../src/订单激活.png " alt=" " class="weui-tabbar__icon ">
+            <p class="weui-tabbar__label ">订单</p>
+        </a>
+        <a href="../html/我的.html " class="weui-tabbar__item ">
+            <img src="../src/我的.png " data-original="../src/我的激活.png " alt=" " class="weui-tabbar__icon ">
+            <p class="weui-tabbar__label ">我的</p>
+        </a>
+    </div>
+    </div>
+</body>
+<script type="text/javascript " src="../js/jweixin.js "></script>
+<script type="text/javascript " src="../js/example.js "></script>
+<script type="text/javascript " src="../js/weui-min.js "></script>
+<script type="text/javascript " src="../js/zepto.js "></script>
+<script type="text/javascript " src="../js/jquery.js "></script>
+<script type="text/javascript " src="../js/echarts-simple-min.js "></script>
+<script src="../js/vue.js "></script>
+<script type="text/javascript ">
+    $(function() {
+        $('.weui-tabbar__item').on('click', function() {
+            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
+            $(this).children('.weui-tabbar__icon').attr("src ", $(this).children('.weui-tabbar__icon').attr('data-original'));
+        });
+    });
+    $(function() {
+        $('.weui-navbar__item').on('click', function() {
+            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
+        });
+        $('.one').on('click', function() {
+            $('.weui-tab__panel-item-one').css('display', 'block');
+            $('.weui-tab__panel-item-two').css('display', 'none');
+        });
+        $('.two').on('click', function() {
+            $('.weui-tab__panel-item-two').css('display', 'block');
+            $('.weui-tab__panel-item-one').css('display', 'none');
+        });
+    });
+    var back = {};
+    $.ajax({
+        type: 'POST',
+        async: false,
+        data: {
+            id: id
+        },
+        dataType: 'json',
+        url: '../php/getmainpage.php',
+    }).done((data) => {
+        if (data.status == 1) {
+            back = data.data
+        }
+    })
+    new Vue({
+        el: '#app1',
+        data: {
+            items: {}
+        },
+        created() {
+            if (back.app1.status == 1) {
+                this.items = back.app1.data
+            }
+        },
+    })
+    new Vue({
+        el: '#app2',
+        data: {
+            items: {}
+        },
+        created() {
+            if (back.app2.status == 1) {
+                this.items = back.app2.data
+            }
+        },
+    })
+</script>
+
+</html>

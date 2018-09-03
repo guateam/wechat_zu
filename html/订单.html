@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>铂金宫</title>
+    <link rel="stylesheet" href="../css/weui-min.css" />
+    <link rel="stylesheet" href="../css/example.css" />
+</head>
+
+<body>
+    <div class="weui-tab">
+        <div class="weui-tab__panel">
+
+        </div>
+        <div class="weui-tabbar">
+            <a href="../html/index.html" class="weui-tabbar__item">
+                <img src="../src/主页.png" data-original="../src/主页.png" alt="" class="weui-tabbar__icon">
+                <p class="weui-tabbar__label">首页</p>
+            </a>
+            <a href="../html/订单.html" class="weui-tabbar__item weui-bar__item_on">
+                <img src="../src/订单激活.png" data-original="../src/订单激活.png" alt="" class="weui-tabbar__icon">
+                <p class="weui-tabbar__label">订单</p>
+            </a>
+            <a href="../html/我的.html" class="weui-tabbar__item">
+                <img src="../src/我的.png" data-original="../src/我的激活.png" alt="" class="weui-tabbar__icon">
+                <p class="weui-tabbar__label">我的</p>
+            </a>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../js/jweixin.js"></script>
+<script type="text/javascript" src="../js/example.js"></script>
+<script type="text/javascript" src="../js/weui-min.js"></script>
+<script type="text/javascript" src="../js/zepto.js"></script>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../js/echarts-simple-min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $('.weui-tabbar__item').on('click', function() {
+            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
+            $(this).children('.weui-tabbar__icon').attr("src", $(this).children('.weui-tabbar__icon').attr('data-original'));
+        });
+    });
+</script>
+
+</html>
