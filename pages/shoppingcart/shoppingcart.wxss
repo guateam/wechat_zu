@@ -1,9 +1,0 @@
-/* pages/shoppingcart/shoppingcart.wxss */
-.weui-form-preview{
-    margin-bottom: 25px;
-}
-.title{
-  font-size: 60rpx;
-  margin-bottom: 10rpx;
-  border: solid 2px #d9d9d9;
-}
