@@ -153,7 +153,6 @@
             <p class="weui-tabbar__label ">我的</p>
         </a>
     </div>
-    </div>
 </body>
 <script type="text/javascript " src="../js/jweixin.js "></script>
 <script type="text/javascript " src="../js/example.js "></script>
@@ -163,21 +162,24 @@
 <script type="text/javascript " src="../js/echarts-simple-min.js "></script>
 <script src="../js/vue.js "></script>
 <script type="text/javascript ">
-    $(function() {
-        $('.weui-tabbar__item').on('click', function() {
-            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
-            $(this).children('.weui-tabbar__icon').attr("src ", $(this).children('.weui-tabbar__icon').attr('data-original'));
+    $(function () {
+        $('.weui-tabbar__item').on('click', function () {
+            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass(
+                'weui-bar__item_on');
+            $(this).children('.weui-tabbar__icon').attr("src ", $(this).children('.weui-tabbar__icon').attr(
+                'data-original'));
         });
     });
-    $(function() {
-        $('.weui-navbar__item').on('click', function() {
-            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
+    $(function () {
+        $('.weui-navbar__item').on('click', function () {
+            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass(
+                'weui-bar__item_on');
         });
-        $('.one').on('click', function() {
+        $('.one').on('click', function () {
             $('.weui-tab__panel-item-one').css('display', 'block');
             $('.weui-tab__panel-item-two').css('display', 'none');
         });
-        $('.two').on('click', function() {
+        $('.two').on('click', function () {
             $('.weui-tab__panel-item-two').css('display', 'block');
             $('.weui-tab__panel-item-one').css('display', 'none');
         });
