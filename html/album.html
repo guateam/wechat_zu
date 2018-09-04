@@ -28,6 +28,11 @@
                 </div>
             </div>
         </div>
+        <div id="modal-overlay" v-show="overlay">
+                <div class="modal-data">
+                    <img src="../src/loading.gif" />
+                </div>
+            </div>
     </div>
 </body>
 <script type="text/javascript" src="../js/jweixin.js"></script>
@@ -50,6 +55,7 @@
             photolist: [],
             photolist_by_time: [],
             job_number: "",
+            overlay:true,
         },
         created() {
             var that = this;
@@ -96,8 +102,10 @@
                             "day": dt.substring(8,10),
                             "photos": time_photo
                         });
+
                     }
                 }
+                that.overlay = false;
             })
         }
     })

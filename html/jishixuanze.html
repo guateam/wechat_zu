@@ -69,7 +69,7 @@
                         <row type="flex">
                             <i-col span="24">
                                 <div style="text-align: center">
-                                    <img @click="navi('tech-info.html',item.job_number)" :src="item.avatar_url" style="height: 60px; width: 60px; border-radius: 50px;" />
+                                    <img @click="tech_info(item.job_number)" :src="item.avatar_url" style="height: 60px; width: 60px; border-radius: 50px;" />
                                 </div>
                             </i-col>
                         </row>
@@ -200,6 +200,10 @@
             },
             navi(url, job_number) {
                 window.location.href = url + "?job_number=" + job_number
+            },
+            tech_info(job_number){
+                var that = this;
+                window.location.href ="tech-info.html?job_number=" + job_number+"&start-time="+that.timePick
             },
             down_order() {
                 var that = this;

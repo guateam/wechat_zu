@@ -78,10 +78,10 @@
             <button style="position:absolute;right: 15px; width: 100px;height: 40px;border-radius: 5px;background-color: #2b85e4;color: white;outline: none">确认预约</button>
         </div>
         <div id="modal-overlay" v-show="overlay">
-                <div class="modal-data">
-                    <img src="../src/loading.gif" />
-                </div>
+            <div class="modal-data">
+                <img src="../src/loading.gif" />
             </div>
+        </div>
     </div>
     <script type="text/javascript" src="../js/jweixin.js"></script>
     <script type="text/javascript" src="../js/example.js"></script>
@@ -106,7 +106,7 @@
                 total_price: 0,
                 start_time: "",
                 end_time: "",
-                overlay : true,
+                overlay: true,
             },
             methods: {
                 remove(name) {
@@ -121,7 +121,7 @@
                                 m += 60;
                                 h -= 1;
                             }
-                            if(m<10)m="0"+m;
+                            if (m < 10) m = "0" + m;
                             h -= parseInt(skill[i].duration / 60);
                             if (h < 0) h += 24;
                             that.end_time = h + ":" + m;
@@ -156,7 +156,7 @@
                             })
                             that.total_price += parseInt(info.price);
                         }
-                        
+
                         m += duration % 60;
                         if (m >= 60) {
                             m -= 60;
@@ -164,7 +164,7 @@
                         }
                         h += parseInt(duration / 60);
                         if (h >= 24) h -= 24;
-                        if(m<10)m="0"+m;
+                        if (m < 10) m = "0" + m;
                         that.end_time = h + ":" + m;
                         that.overlay = false;
                     }

@@ -17,7 +17,7 @@ function getfeedback($id){
                         $head=$user['head'];
                     }
                     $price=0;
-                    if($value['servicetype']==1){
+                    if($value['service_type']==1){
                         $serivcetype=get('service_type','ID',$rate['service_id']);
                         if($serivcetype){
                             $price=$serivcetype[0]['price'];
@@ -36,7 +36,7 @@ function getfeedback($id){
                         'head'=>'border-radius: 50%;background-color: #ffcc99;background-image: url("'.$head.'");background-size:cover',
                         'rate'=>$rate['score'],
                         'text'=>$rate['comment'],
-                        'serviceid'=>$value['oder_id'],
+                        'serviceid'=>$value['order_id'],
                         'price'=>$price
                     ];
                     array_push($data,$item);

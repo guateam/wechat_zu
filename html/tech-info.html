@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="../vendor/iview/dist/styles/iview.css">
     <link rel="stylesheet" href="../css/weui-min.css" />
     <link rel="stylesheet" href="../css/example.css" />
+    <link rel="stylesheet" type="text/css" href="../css/overlay.css">
     <style>
 
     </style>
@@ -32,7 +33,7 @@
                     </div>
                 </div>
                 <div class="item weui-flex__item" style="text-align: center;border-right: 1px solid #f2f2f2">
-                    <h1 style="color: #ff9933;font-size: 24px"><span style="font-size: 14px">工号</span>{{data.technician.jobnumber}}</h1>
+                    <h1 style="color: #ff9933;font-size: 24px"><span style="font-size: 14px">工号</span>{{job_number}}</h1>
                     <div><img src="../src/网红技师.png" alt=""> 网红技师
                     </div>
                 </div>
@@ -57,7 +58,6 @@
                         <i-col span="6" v-for='item in data.technician.skills'>
                             <i-button long>{{item.name}}</i-button>
                         </i-col>
-
                     </row>
                 </card>
             </row>
@@ -74,8 +74,8 @@
             <span style="margin-left: 20px;color: #ff0033;">
                 <rate show-text allow-half v-model="data.technician.rate" disabled style="font-size: 15px">
                     <span style="color: #f5a623; margin-left: -20px">{{data.technician.rate}}分</span>
-            </rate>
-            （共{{count}}条）
+                </rate>
+                （共{{count}}条）
             </span>
         </div>
         <div class="weui-panel weui-panel_access" style="background-color: white;border-radius: 5px;margin-bottom: 20%">
@@ -123,7 +123,12 @@
                 </div>
             </div>
             <div style="height: 100%;flex: 0 75%;display: flex;align-items: center;justify-content: center">
-                <button style="width: 85%;height: 70%;background-color: #ff3399;color: white;border-radius: 5px;font-size: 18px">选{{data.technician.gender}}</button>
+                <button @click="down_order" style="width: 85%;height: 70%;background-color: #ff3399;color: white;border-radius: 5px;font-size: 18px">选{{data.technician.gender}}</button>
+            </div>
+        </div>
+        <div id="modal-overlay" v-show="overlay">
+            <div class="modal-data">
+                <img src="../src/loading.gif" />
             </div>
         </div>
     </div>
@@ -137,6 +142,7 @@
 <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
 <script type="text/javascript" src="../vendor/iview/dist/iview.min.js"></script>
 <script type="text/javascript">
+    //获取url参数
     function getQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
         var r = window.location.search.substr(1).match(reg);
@@ -161,32 +167,45 @@
         }
         return get_par;
     }
-
-    var id = getPar('job_number')
-    var back = {};
-    $.ajax({
-        type: 'POST',
-        async: false,
-        data: {
-            id: id
-        },
-        dataType: 'json',
-        url: '../php/gettechnicianpage.php',
-    }).done((data) => {
-        if (data.status == 1) {
-            back = data.data
-        }
-    })
-
-    new Vue({
+    let app = new Vue({
         el: '#app',
         data: {
             data: {},
-            count: 0
+            count: 0,
+            job_number: "",
+            start_time: "",
+            overlay:true,
+        },
+        methods: {
+            down_order() {
+                var that = this;
+                window.location.href = "confirm-order.html?job_number=" + that.job_number +
+                    "&start-time=" + that.start_time
+            },
         },
         created() {
-            this.data = back
-            this.count = this.data.feedback.length
+            var that = this;
+
+            that.job_number = getPar('job_number');
+            that.start_time = getQueryString("start-time");
+            var back = {};
+            $.ajax({
+                type: 'POST',
+                async: false,
+                data: {
+                    id: that.job_number
+                },
+                dataType: 'json',
+                url: '../php/gettechnicianpage.php',
+            }).done((data) => {
+                if (data.status == 1) {
+                    back = data.data
+                    that.data = back
+                    that.count = that.data.feedback.length
+                }
+                that.overlay = false
+            })
+
         }
     })
 </script>
