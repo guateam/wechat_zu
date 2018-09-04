@@ -54,8 +54,9 @@
                 <card :bordered="false" dis-hover>
                     <span>请选择服务</span>
                     <row :gutter="2">
-                        <i-col span="6" v-for='item in data.technician.skills'>
-                            <i-button long>{{item.name}}</i-button>
+                        <i-col span="6" v-for='item in skill_list'>
+                            <i-button :type="item.check==true? 'primary':'default'" @click="choose_service(item.name)"
+                                long>{{item.name}}</i-button>
                         </i-col>
                     </row>
                 </card>
@@ -174,16 +175,40 @@
             job_number: "",
             start_time: "",
             overlay: true,
+            skill_list: [],
         },
         methods: {
             down_order() {
                 var that = this;
-                window.location.href = "confirm-order.html?job_number=" + that.job_number +
-                    "&start-time=" + that.start_time
+                var str = "";
+                var uncheck = 0;
+                for (var i in that.skill_list) {
+                    if (that.skill_list[i].check == true) {
+                        str += that.skill_list[i].id + "-"
+                    } else {
+                        uncheck++;
+                    }
+                }
+                if (uncheck == that.skill_list.length) {
+                    alert('需要选择至少一项服务');
+                } else {
+                    str = str.substring(0, str.length - 1);
+                    window.location.href = "confirm-order.html?job_number=" + that.job_number +
+                        "&start-time=" + that.start_time + "&sv=" + str
+                }
             },
-            to_album(){
+            to_album() {
                 var that = this;
                 window.location.href = "album.html?id=" + that.job_number
+            },
+            choose_service(name) {
+                var that = this;
+                for (var i in that.skill_list) {
+                    if (that.skill_list[i].name == name) {
+                        that.skill_list[i].check = !that.skill_list[i].check;
+                        break;
+                    }
+                }
             }
         },
         created() {
@@ -205,6 +230,14 @@
                     back = data.data
                     that.data = back
                     that.count = that.data.feedback.length
+                    var skills = that.data.technician.skills
+                    for (var i in skills) {
+                        that.skill_list.push({
+                            "check": false,
+                            "name": skills[i].name,
+                            'id': skills[i].id,
+                        })
+                    }
                 }
                 that.overlay = false
             })

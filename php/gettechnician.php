@@ -48,7 +48,7 @@ function gettechnician($id){
             'favoate'=>0,
             'entrytime'=>$entrytime,
             'skills'=>$skilllist,
-            'gender'=>$gender
+            'gender'=>$gender,
         ];
         return $data;
     }

@@ -136,6 +136,11 @@
                 var that = this;
                 that.job_number = getQueryString('job_number');
                 that.start_time = getQueryString('start-time');
+
+                var choosen = getQueryString('sv');
+                console.log(choosen);
+                choosen = choosen.split('-');
+                console.log(choosen);
                 var h = parseInt(that.start_time.substring(0, 2));
                 var m = parseInt(that.start_time.substring(3, 5));
                 console.log(h);
@@ -146,15 +151,25 @@
                 }).done((result) => {
                     result = JSON.parse(result)
                     if (result.status == 1) {
+                        if (choosen[0] == 'all') {
+                            for (var j = 0; j < result.data.length - 1; j++) choosen.push('all');
+                        }
                         for (var i = 0; i < result.data.length; i++) {
                             var info = result.data[i];
-                            duration += parseInt(info.duration);
-                            that.skill.push({
-                                "name": info.name,
-                                'duration': info.duration,
-                                'price': info.price,
-                            })
-                            that.total_price += parseInt(info.price);
+                            for (var j in choosen) {
+                                if (choosen[j] == info.ID || choosen[j] == 'all') {
+                                    duration += parseInt(info.duration);
+                                    that.skill.push({
+                                        "name": info.name,
+                                        'duration': info.duration,
+                                        'price': info.price,
+                                        'id':info.ID,
+                                    })
+                                    that.total_price += parseInt(info.price);
+                                    break;
+                                }
+                            }
+
                         }
 
                         m += duration % 60;
