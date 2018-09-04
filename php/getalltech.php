@@ -8,6 +8,7 @@ foreach($all_tech as $tech){
     $skills = get("skill","job_number",$tech['job_number']);
     $order = get("service_order","job_number",$tech['job_number']);
     $busy = 2;
+    $save_order=[];
     foreach($order as $so){
         $consumed_order = get('consumed_order','order_id',$so['order_id']);
         $latest_time = "0";
@@ -18,7 +19,9 @@ foreach($all_tech as $tech){
         $now_time = date('Y-m-d H:i:s');
         $now_time = strtotime($now_time);
         $leap  = $now_time-$latest_time;
-        if($leap<3600)$busy = 1;
+        if($leap<3600){
+            $busy = 1;
+        }
     }
     $photo_list = [];
     foreach($photos as $photo){
