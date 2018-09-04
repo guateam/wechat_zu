@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>确认信息</title>
+    <link rel="stylesheet" href="../css/weui-min.css" />
+    <link rel="stylesheet" href="../css/example.css" />
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div id="app" class="page" style="opacity: 1;margin-bottom: 90px">
+        <div class="page__hd">
+            <h1 class="page__title">订单信息</h1>
+        </div>
+        <div style="background-color: white">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>技师</p>
+                </div>
+                <div class="weui-cell__ft">{{job_number}}</div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>预约时间</p>
+                </div>
+                <div class="weui-cell__ft">09-04 &nbsp;23:00&nbsp;&nbsp;/&nbsp;&nbsp;09-05 &nbsp;02:30</div>
+            </div>
+        </div>
+        <div class="weui-cells__title">服务项目</div>
+        <div class="weui-cells">
+            <div v-for="item in skill" class="weui-cell weui-cell_swiped">
+                <div class="weui-cell__bd" style="transform: translateX(-68px)">
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <p style="margin-left: 20%">{{item.name}}<span style="color: #29a3a3;margin-left: 10px;font-family: 华文雅黑;">
+                                ￥{{item.price}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="weui-cell__ft">
+                    <a @click="remove(item.name)"class="weui-swiped-btn weui-swiped-btn_warn" href="javascript:">删除</a>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="weui-cells">
+            <a class="weui-cell weui-cell_access" href="javascript:;">
+                <div class="weui-cell__hd"><img src="../src/优惠券.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+                <div class="weui-cell__bd">
+                    <p>优惠券</p>
+                </div>
+                <div class="weui-cell__ft">暂无可用</div>
+            </a>
+        </div> -->
+        <div class="weui-cells">
+            <div class="weui-cells__title">支付方式</div>
+            <a class="weui-cell weui-cell_access" href="javascript:;">
+                <div class="weui-cell__hd"><img src="../src/线下支付.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+                <div class="weui-cell__bd">
+                    <p>线下支付</p>
+                </div>
+                <div class="weui-cell__ft"></div>
+            </a>
+        </div>
+        <div class="" style="position: fixed;bottom: 0;height: 70px;width: 100%;z-index: 100;border-top: 1px solid #f2f2f2;display: flex;align-items: center">
+            <span style="margin-left: 20px;width: 80px;">预计支付</span><span style="color: #29a3a3;font-size: 22px"v-text="'￥'+total_price"></span>
+            <button style="position:absolute;right: 15px; width: 100px;height: 40px;border-radius: 5px;background-color: #2b85e4;color: white;outline: none">确认预约</button>
+        </div>
+    </div>
+    <script type="text/javascript" src="../js/jweixin.js"></script>
+    <script type="text/javascript" src="../js/example.js"></script>
+    <script type="text/javascript" src="../js/weui-min.js"></script>
+    <script type="text/javascript" src="../js/zepto.js"></script>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script type="text/javascript" src="../js/echarts-simple-min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
+    <script type="text/javascript">
+        function getQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]);
+            return null;
+        }
+        let app = new Vue({
+            el: '#app',
+            data: {
+                rate: 4.5,
+                job_number: "",
+                skill: [],
+                total_price:0,
+                start_time:""
+            },
+            methods:{
+                remove(name){
+                    var that = this;
+                    var skill = that.skill
+                    for(var i in skill){
+                        if(skill[i].name == name){
+                            that.total_price-=skill[i].price;
+                            that.skill.splice(i,1);
+                        }
+                    }
+                },
+            },
+            created() {
+                var that = this;
+                that.job_number = getQueryString('job_number');
+                that.start_time = getQueryString('start-time');
+                $.post("../php/getskill.php", {
+                    job_number: that.job_number
+                }).done((result) => {
+                    result= JSON.parse(result)
+                    if (result.status == 1) {
+                        for (var i = 0; i < result.data.length; i++) {
+                            var info = result.data[i];
+                            that.skill.push({
+                                "name": info.name,
+                                'duration': info.duration,
+                                'price': info.price,
+                            })
+                            that.total_price+=info.price;
+                        }
+                    }
+                })
+            }
+        })
+    </script>
+
+</html>
