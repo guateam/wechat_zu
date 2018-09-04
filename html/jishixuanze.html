@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>技师选择</title>
-    <link rel="stylesheet" type="text/css" href="http://unpkg.com/iview/dist/styles/iview.css">
+    <link href="https://cdn.bootcss.com/iview/2.14.0/styles/iview.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/element-ui/2.4.0/theme-chalk/index.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../css/overlay.css">
     <style>
         #app {
@@ -17,7 +18,7 @@
             height: 40px;
             border-radius: 150px;
             margin: auto;
-            border: 1px solid #D5B32B;
+            border: 2px solid;
             text-align: center;
             line-height: 40px;
             color: #D5B32B;
@@ -32,11 +33,24 @@
                 <row>请选择预约时间:</row>
                 <row :gutter="16" type="flex" justify="space-between">
                     <i-col span="11" offset="1">
-                        <time-picker v-model="timePick" format="HH:mm" placeholder="选择预约时间" :steps="[1, 15, 1]" confirm style="width: 120px"></time-picker>
+                            <el-time-picker
+                            v-model="timePick"
+                            :picker-options="{
+                                selectableRange: '00:00:00 - 23:59:59'
+                            }"
+                            editable="flase"
+                            format="HH:mm"
+                            value-format="HH:mm"
+                            style="width: 120px"
+                            size="small"
+                            placeholder="预约时间">
+                          </el-time-picker>
+                        <!-- <time-picker v-model="timePick" format="HH:mm" placeholder="选择预约时间" :steps="[1, 15, 1]" style="width: 120px"></time-picker> -->
                     </i-col>
                     <i-col span="12">
                         <i-select @on-change="select_service" v-model="selector" placeholder="选择服务">
-                            <i-option v-for="service in serviceList" :value="service.value" :key="service.value">{{ service.label }}</i-option>
+                            <i-option v-for="service in serviceList" :value="service.value" :key="service.value">{{
+                                service.label }}</i-option>
                         </i-select>
                     </i-col>
                 </row>
@@ -103,8 +117,9 @@
                     </i-col>
 
                     <i-col span="4">
-                        <div @click="choose_tech(item.job_number)" class="circle" :style="{'font-size': (item.state === 1 ? '10' : '12') + 'px','color':(item.check === 0 ? '#875522':'#91df6f')}">
-                            {{ item.state === 1 ? '不可选' : '可选' }}
+                        <div @click="choose_tech(item)" class="circle" :style="[{'font-size': (item.state === 1 ? '10' : '12') + 'px'}, {'color':(item.check === 0 ? '#875522':'#91df6f')}, {'border-color': (item.state === 1 ? '#875522' : '#D5B32B')}]">
+                            <span v-if="item.check === 1" style="font-size: 16px">√</span>
+                            <span v-else>{{ item.state === 1 ? '繁忙' : '可选' }}</span>
                         </div>
                     </i-col>
                 </row>
@@ -150,8 +165,9 @@
 </body>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
-<script type="text/javascript" src="http://unpkg.com/iview/dist/iview.min.js"></script>
-<!--<script src="https://cdn.bootcss.com/iview/2.14.0/iview.min.js"></script>-->
+<!-- <script type="text/javascript" src="http://unpkg.com/iview/dist/iview.min.js"></script> -->
+<script src="https://cdn.bootcss.com/element-ui/2.4.0/index.js"></script>
+<script src="https://cdn.bootcss.com/iview/2.14.0/iview.min.js"></script>
 <script>
     function getQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
@@ -171,7 +187,7 @@
                     "default",
                     "default",
                 ],
-                timePick: new Date(),
+                timePick: '',
                 vip_discount: 100,
                 serviceList: [{
                     value: -1,
@@ -186,10 +202,11 @@
             }
         },
         methods: {
-            choose_tech(job_number) {
+            choose_tech(item) {
+                if (item.state === 1) return;
                 var that = this;
                 for (var i = 0; i < that.list.length; i++) {
-                    if (job_number == that.list[i].job_number) {
+                    if (item.job_number == that.list[i].job_number) {
                         if (that.list[i].check == 1) {
                             that.list[i].check = 0;
                         } else that.list[i].check = 1;
@@ -201,15 +218,16 @@
             navi(url, job_number) {
                 window.location.href = url + "?job_number=" + job_number
             },
-            tech_info(job_number){
+            tech_info(job_number) {
                 var that = this;
-                window.location.href ="tech-info.html?job_number=" + job_number+"&start-time="+that.timePick
+                window.location.href = "tech-info.html?job_number=" + job_number + "&start-time=" + that.timePick
             },
             down_order() {
                 var that = this;
                 for (var i = 0; i < that.list.length; i++) {
                     if (that.list[i].check == 1) {
-                        window.location.href = "confirm-order.html?job_number="+that.list[i].job_number+"&start-time="+that.timePick
+                        window.location.href = "confirm-order.html?job_number=" + that.list[i].job_number +
+                            "&start-time=" + that.timePick
                         break;
                     }
                 }
@@ -243,8 +261,8 @@
             sort_by(idx, keyName) {
                 this.button_click(idx);
                 var that = this;
-                var sort = function(keyName) {
-                    return function(objectN, objectM) {
+                var sort = function (keyName) {
+                    return function (objectN, objectM) {
                         var valueN = objectN[keyName]
                         var valueM = objectM[keyName]
                         if (valueN < valueM) return 1
