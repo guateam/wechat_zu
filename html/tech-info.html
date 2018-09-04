@@ -55,8 +55,7 @@
                     <span>请选择服务</span>
                     <row :gutter="2">
                         <i-col span="6" v-for='item in skill_list'>
-                            <i-button :type="item.check==true? 'primary':'default'" @click="choose_service(item.name)"
-                                long>{{item.name}}</i-button>
+                            <i-button :type="item.check==true? 'primary':'default'" @click="choose_service(item.name)" long>{{item.name}}</i-button>
                         </i-col>
                     </row>
                 </card>
@@ -74,8 +73,8 @@
             <span style="margin-left: 20px;color: #ff0033;">
                 <rate show-text allow-half v-model="data.technician.rate" disabled style="font-size: 15px">
                     <span style="color: #f5a623; margin-left: -20px">{{data.technician.rate}}分</span>
-                </rate>
-                （共{{count}}条）
+            </rate>
+            （共{{count}}条）
             </span>
         </div>
         <div class="weui-panel weui-panel_access" style="background-color: white;border-radius: 5px;margin-bottom: 20%">

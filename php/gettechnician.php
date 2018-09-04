@@ -17,9 +17,16 @@ function gettechnician($id){
         $service=get('service_order','job_number',$id);
         $photo=get('technician_photo','job_number',$id);
         $photodata=[];
-        foreach($photo as $value){
-            array_push($photodata,str_replace('..',$url,$value['img']));
+        if(count($photo)>=4){
+            for($i=0;$i<4;$i++){
+                array_push($photodata,str_replace('..',$url,$photo[$i]['img']));
+            }
+        }else{
+            foreach($photo as $value){
+                array_push($photodata,str_replace('..',$url,$value['img']));
+            }
         }
+        
         $entrytime='';
         $date=(time()-strtotime($technician['entry_date']));
         if($date>365*24*60*60){
