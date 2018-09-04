@@ -19,7 +19,7 @@
         <div>
             <img src="../src/head.png" alt="" style="width: 60px;height: 60px;border-radius: 50%">
             <div style="width: 200px;height: 50px">
-                <h1 style="font-size: 14px;font-weight: 200;color: white" v-text="'资历：'+entry_period">资历：2年</h1>
+                <h1 style="font-size: 14px;font-weight: 200;color: white" >资历：2年</h1>
                 <h1 style="font-size: 14px;font-weight: 200;color: white">技能：spa、足疗</h1>
             </div>
         </div>
@@ -70,7 +70,7 @@
         <span style="margin-left: 10px">评价</span>
         <span style="margin-left: 20px;color: #ff0033;">
                 <rate show-text allow-half v-model="rate" disabled style="font-size: 15px">
-                    <span style="color: #f5a623; margin-left: -20px">{{ rate }}分</span>
+                    <span style="color: #f5a623; margin-left: -20px">4分</span>
                 </rate>
                 （共两条）
             </span>
@@ -85,7 +85,7 @@
                     <h4 class="weui-media-box__title" style="font-size: 14px">
                         <div>
                             <rate show-text allow-half v-model="rate" disabled style="font-size: 15px">
-                                <span style="color: #f5a623; margin-left: -20px">{{ rate }}分</span>
+                                <span style="color: #f5a623; margin-left: -20px">4分</span>
                             </rate>
                         </div>
                     </h4>
@@ -118,7 +118,7 @@
                     <h4 class="weui-media-box__title" style="font-size: 14px">
                         <div>
                             <rate show-text allow-half v-model="rate" disabled style="font-size: 15px">
-                                <span style="color: #f5a623; margin-left: -20px">{{ rate }}分</span>
+                                <span style="color: #f5a623; margin-left: -20px">4分</span>
                             </rate>
                         </div>
                     </h4>
@@ -177,56 +177,9 @@
     new Vue({
         el: '#app',
         data: {
-            job_number:"",
-            name:"",
-            phone_number:"",
-            id_number:"",
-            photo:"",
-            gender:0,
-            birthday:"",
-            description:"",
-            vcr:"",
-            entry_period:"",
-            inviter:"",
-            in_job:"",
-            rate:0
         },
         created(){
             var that = this;
-            $.post("../php/gettechdetail.php",{
-                job_number:getQueryString('job_number')
-            }).done((result) => {
-                result = JSON.parse(result);
-                if(result.status==1){
-                    info = result.data[0];
-
-                    that.job_number =  info['job_number'];
-                    that.name = info['name'];
-                    that.phone_number = info['phone_number'];
-                    that.id_number = info['id_number'];
-                    that.photo = info['photo'];
-                    that.gender = info['photo'] == 1?"男":"女";
-                    that.birthday = info['birthday'];
-                    that.description = info['description'];
-                    that.vcr = info['vcr'];
-                    that.entry_period = info['entry_date'];
-                    that.inviter = info['inviter'];
-                    that.in_job = info['in_job']==1?"在职":"离职";
-                    that.rate = info['rate'];
-
-                    var date = new Date();
-                    var time = that.entry_period;
-                    year = date.getFullYear();
-                    in_year = parseInt(time.substring(0,4));
-                    that.entry_period = year-in_year+"年";
-                    month = date.getMonth();
-                    console.log(time);
-                    in_month = parseInt(time.substring(4,2))
-                    that.entry_period += (month-in_month)+"月"
-
-                }
-                that.overlay = false;
-            })
         }
     })
 </script>
