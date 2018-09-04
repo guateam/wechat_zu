@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
     <title>技师相册</title>
-    <link rel="stylesheet" href="../css/weui-min.css" />
-    <link rel="stylesheet" href="../css/example.css" />
+    <link rel="stylesheet" href="../css/weui-min.css"/>
+    <link rel="stylesheet" href="../css/example.css"/>
+    <link rel="stylesheet" href="../css/animate.css"/>
     <link rel="stylesheet" type="text/css" href="../css/overlay.css">
     <style>
 
@@ -14,26 +15,29 @@
 </head>
 
 <body>
-    <div id="app" style="width:100%;height:100%;background-color: white">
-        <div style="height: 7%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;display: flex;align-items: center;">
-            <span style="margin-left: 10px;font-size: 21px;font-family: '华文行楷';font-weight: 500">技师相册</span>
-        </div>
-        <div v-for="item in photolist_by_time" class="weui-flex" style="align-items: center;height: 13%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;margin-top: 10px">
-            <div class="box weui-flex" style="width: 100%; height: 100%;align-items: center;">
-                <div class="item weui-flex__item" style="height: 100%;flex: 0 0 25%;">
-                    <span style="font-weight: 500;font-size: 15px"><span style="font-size: 28px; font-weight: 600;margin-left: 5px">{{item.day}}</span>{{item.month}}月</span>
-                </div>
-                <div v-for="img in item.photos" class="item weui-flex__item" style="text-align: center;height: 100%;flex: 0 0 25%;">
-                    <img :src="img.url" alt="" style="height: 100%;width: 100%;">
-                </div>
+<div id="app" style="width:100%;height:100%;background-color: white">
+    <div style="height: 7%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;display: flex;align-items: center;">
+        <span style="margin-left: 10px;font-size: 21px;font-family: '华文行楷';font-weight: 500">技师相册</span>
+    </div>
+    <div v-for="item in photolist_by_time" class="weui-flex"
+         style="align-items: center;height: 13%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;margin-top: 10px">
+        <div class="box weui-flex" style="width: 100%; height: 100%;align-items: center;">
+            <div class="item weui-flex__item" style="height: 100%;flex: 0 0 25%;">
+                <span style="font-weight: 500;font-size: 15px"><span
+                        style="font-size: 28px; font-weight: 600;margin-left: 5px">{{item.day}}</span>{{item.month}}月</span>
             </div>
-        </div>
-        <div id="modal-overlay" v-show="overlay">
-            <div class="modal-data">
-                <img src="../src/loading.gif" />
+            <div v-for="img in item.photos" class="item weui-flex__item"
+                 style="text-align: center;height: 100%;flex: 0 0 25%;">
+                <img :src="img.url" alt="" style="height: 100%;width: 100%;" class="user-img deImg imgJs exampleImg" onClick="$(this).ImgZoomIn();">
             </div>
         </div>
 
+    </div>
+
+    <div id="modal-overlay" v-show="overlay">
+        <div class="modal-data">
+            <img src="../src/loading.gif"/>
+        </div>
     </div>
 
 </body>
@@ -45,6 +49,31 @@
 <script type="text/javascript" src="../js/echarts-simple-min.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
 <script type="text/javascript">
+
+    $.fn.ImgZoomIn = function () {
+        bgstr = '<div id="ImgZoomInBG" style=" background:#000000; filter:Alpha(Opacity=70); opacity:0.7; position:fixed; left:0; top:0; z-index:10000; width:100%; height:100%; display:none;"><iframe src="about:blank" frameborder="5px" scrolling="yes" style="width:100%; height:100%;"></iframe></div>';
+        imgstr = '<img id="ImgZoomInImage" src="' + $(this).attr('src') + '" onclick=$(\'#ImgZoomInImage\').hide();$(\'#ImgZoomInBG\').hide(); style="cursor:pointer; display:none; position:absolute; z-index:10001;" />';
+        if ($('#ImgZoomInBG').length < 1) {
+            $('body').append(bgstr);
+        }
+        if ($('#ImgZoomInImage').length < 1) {
+            $('body').append(imgstr);
+        }
+        else {
+            $('#ImgZoomInImage').attr('src', $(this).attr('src'));
+        }
+        $('#ImgZoomInImage').css('left', $(window).scrollLeft() + ($(window).width() - $('#ImgZoomInImage').width()) / 2);
+        $('#ImgZoomInImage').css('top', $(window).scrollTop() + ($(window).height() - $('#ImgZoomInImage').height()) / 2);
+        $('#ImgZoomInBG').show();
+        $('#ImgZoomInImage').show();
+    };
+    $(document).ready(function () {
+        $("#imgTest").bind("click", function () {
+            $(this).ImgZoomIn();
+        });
+    });
+
+
     function getQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
         var r = window.location.search.substr(1).match(reg);
@@ -60,6 +89,8 @@
             job_number: "",
             overlay: true,
         },
+
+
         methods: {
             sort_by(keyName) {
                 var that = this;
@@ -140,6 +171,16 @@
         $gallery.on("click", function () {
             $gallery.fadeOut(100);
         });
+    });
+
+
+    /*图片*/
+    $('.imgJs').each(function () {
+        var imgHeight = $(this).height(),
+            aHeight = $(this).parent().height();
+        if (imgHeight < aHeight) {
+            $(this).css({'height': aHeight, 'width': 'auto'})
+        }
     });
 </script>
 
