@@ -103,7 +103,7 @@
                     </i-col>
 
                     <i-col span="4">
-                        <div class="circle" :style="{'font-size': (item.state === 1 ? '10' : '12') + 'px'}">
+                        <div @click="choose_tech(item.job_number)" class="circle" :style="{'font-size': (item.state === 1 ? '10' : '12') + 'px','color':(item.check === 0 ? '#875522':'#91df6f')}">
                             {{ item.state === 1 ? '不可选' : '可选' }}
                         </div>
                     </i-col>
@@ -174,10 +174,20 @@
                     discount: 100,
                 }],
                 selector: null,
-                list: []
+                list: [],
             }
         },
         methods: {
+            choose_tech(job_number) {
+                var that = this;
+                for (var i = 0; i < that.list.length; i++) {
+                    if (job_number == that.list[i].job_number) {
+                        if (that.list[i].check == 1) {
+                            that.list[i].check = 0;
+                        } else that.list[i].check = 1;
+                    }
+                }
+            },
             navi(url, job_number) {
                 window.location.href = url + "?job_number=" + job_number
             },
@@ -254,6 +264,7 @@
                         skills: tech.skill,
                         level: tech.level,
                         hot: tech.hot,
+                        check: 0,
                         show: true
                     })
                 }
