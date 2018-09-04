@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>技师相册</title>
+    <link rel="stylesheet" href="../css/weui-min.css" />
+    <link rel="stylesheet" href="../css/example.css" />
+    <link rel="stylesheet" type="text/css" href="../css/overlay.css">
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div id="app" style="width:100%;height:100%">
+        <div style="height: 7%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;display: flex;align-items: center;">
+            <span style="margin-left: 10px;font-size: 21px;font-family: '华文行楷';font-weight: 500">技师相册</span>
+        </div>
+        <div v-for="item in photolist_by_time" class="weui-flex" style="align-items: center;height: 13%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;margin-top: 10px">
+            <div class="box weui-flex" style="width: 100%; height: 100%;justify-content: center;align-items: center;">
+                <div class="item weui-flex__item" style="height: 100%;flex: 0 0 25%;">
+                    <span style="font-weight: 500;font-size: 15px"><span style="font-size: 28px; font-weight: 600">{{item.month}}月</span>{{item.day}}</span>
+                </div>
+                <div v-for="img in item.photos" class="item weui-flex__item" style="text-align: center;height: 100%;flex: 0 0 25%;">
+                    <img :src="img.url" alt="" style="height: 100%;width: 100%;">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../js/jweixin.js"></script>
+<script type="text/javascript" src="../js/example.js"></script>
+<script type="text/javascript" src="../js/weui-min.js"></script>
+<script type="text/javascript" src="../js/zepto.js"></script>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../js/echarts-simple-min.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
+<script type="text/javascript">
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+    let app = new Vue({
+        el: '#app',
+        data: {
+            photolist: [],
+            photolist_by_time: [],
+            job_number: "",
+        },
+        created() {
+            var that = this;
+            that.job_number = getQueryString('id');
+            $.post("../php/getphoto.php", {
+                job_number: that.job_number
+            }).done((result) => {
+                result = JSON.parse(result);
+                if (result.status == 1) {
+                    for (var i = 0; i < result.data.length; i++) {
+                        var info = result.data[i];
+                        that.photolist.push({
+                            "url": info.img,
+                            "time": info.time.substring(0, 10)
+                        })
+                    }
+                    var time_list = [];
+                    for (var i = 0; i < that.photolist.length; i++) {
+                        var dt = that.photolist[i].time;
+                        var time_photo = [];
+                        //记录重复的时间，若时间重复则跳过
+                        var jump = false;
+                        if (time_list.length == 0) time_list.push(dt);
+                        else {
+                            for (var j = 0; j < time_list.length; j++) {
+                                if (dt == time_list[i]){
+                                    jump = true
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (jump) continue;
+                        else  time_list.push(dt);
+
+                        for (var j = 0; j < that.photolist.length; j++) {
+                            if (that.photolist[j].time == dt) {
+                                time_photo.push(that.photolist[j]);
+                            }
+                        }
+                        that.photolist_by_time.push({
+                            "year": dt.substring(0,4),
+                            "month": dt.substring(5,7),
+                            "day": dt.substring(8,10),
+                            "photos": time_photo
+                        });
+                    }
+                }
+            })
+        }
+    })
+    $(function () {
+        $uploaderFiles.on("click", "li", function () {
+            $galleryImg.attr("style", this.getAttribute("style"));
+            $gallery.fadeIn(100);
+        });
+        $gallery.on("click", function () {
+            $gallery.fadeOut(100);
+        });
+    });
+</script>
+
+</html>

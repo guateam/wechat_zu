@@ -51,10 +51,10 @@
                         <i-button v-bind:type="button_type[0]" @click="sort_by(0,'rate')" long>评价</i-button>
                     </i-col>
                     <i-col span="6">
-                        <i-button :type="button_type[1]"  @click="sort_by(1,'hot')"long>人气</i-button>
+                        <i-button :type="button_type[1]" @click="sort_by(1,'hot')" long>人气</i-button>
                     </i-col>
                     <i-col span="6">
-                        <i-button :type="button_type[2]"  @click="sort_by(2,'level')"long>级别</i-button>
+                        <i-button :type="button_type[2]" @click="sort_by(2,'level')" long>级别</i-button>
                     </i-col>
                     <i-col span="6">
                         <i-button :type="button_type[3]" @click="sort_by(3,'state')" long>状态</i-button>
@@ -64,8 +64,8 @@
         </row>
 
         <row style="margin-top: 6px" v-for="item in list" v-show="item.show">
-            <card  :bordered="false" dis-hover>
-                <row  type="flex" justify="space-between" align="middle" :gutter="16">
+            <card :bordered="false" dis-hover>
+                <row type="flex" justify="space-between" align="middle" :gutter="16">
                     <i-col span="5">
                         <row type="flex">
                             <i-col span="24">
@@ -104,7 +104,7 @@
                     </i-col>
 
                     <i-col span="4">
-                        <div class="circle" :style="{'font-size': (item.state === 1 ? '10' : '12') + 'px'}">
+                        <div @click="choose_tech(item.job_number)" class="circle" :style="{'font-size': (item.state === 1 ? '10' : '12') + 'px','color':(item.check === 0 ? '#875522':'#91df6f')}">
                             {{ item.state === 1 ? '不可选' : '可选' }}
                         </div>
                     </i-col>
@@ -157,8 +157,8 @@
     let Main = {
         data() {
             return {
-                overlay:true,
-                button_type:[
+                overlay: true,
+                button_type: [
                     "primary",
                     "default",
                     "default",
@@ -175,16 +175,26 @@
                     discount: 100,
                 }],
                 selector: null,
-                list: []
+                list: [],
             }
         },
         methods: {
-            navi(url,job_number){
-                window.location.href=url+"?job_number="+job_number
+            choose_tech(job_number) {
+                var that = this;
+                for (var i = 0; i < that.list.length; i++) {
+                    if (job_number == that.list[i].job_number) {
+                        if (that.list[i].check == 1) {
+                            that.list[i].check = 0;
+                        } else that.list[i].check = 1;
+                    }
+                }
             },
-            button_click(idx){
-                for(var i=0;i<this.button_type.length;i++){
-                    if(i==idx)this.button_type[i] = "primary"
+            navi(url, job_number) {
+                window.location.href = url + "?job_number=" + job_number
+            },
+            button_click(idx) {
+                for (var i = 0; i < this.button_type.length; i++) {
+                    if (i == idx) this.button_type[i] = "primary"
                     else this.button_type[i] = "default"
                 }
             },
@@ -208,7 +218,7 @@
                     }
                 }
             },
-            sort_by(idx,keyName) {
+            sort_by(idx, keyName) {
                 this.button_click(idx);
                 var that = this;
                 var sort = function (keyName) {
@@ -253,12 +263,13 @@
                         rate: tech.rate,
                         state: 2,
                         skills: tech.skill,
-                        level:tech.level,
-                        hot:tech.hot,
+                        level: tech.level,
+                        hot: tech.hot,
+                        check: 0,
                         show: true
                     })
                 }
-                that.sort_by(0,'rate');
+                that.sort_by(0, 'rate');
                 that.overlay = false;
             })
 
