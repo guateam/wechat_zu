@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
     <title>技师相册</title>
-    <link rel="stylesheet" href="../css/weui-min.css" />
-    <link rel="stylesheet" href="../css/example.css" />
+    <link rel="stylesheet" href="../css/weui-min.css"/>
+    <link rel="stylesheet" href="../css/example.css"/>
     <link rel="stylesheet" type="text/css" href="../css/overlay.css">
     <style>
 
@@ -14,26 +14,30 @@
 </head>
 
 <body>
-    <div id="app" style="width:100%;height:100%">
-        <div style="height: 7%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;display: flex;align-items: center;">
-            <span style="margin-left: 10px;font-size: 21px;font-family: '华文行楷';font-weight: 500">技师相册</span>
-        </div>
-        <div v-for="item in photolist_by_time" class="weui-flex" style="align-items: center;height: 13%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;margin-top: 10px">
-            <div class="box weui-flex" style="width: 100%; height: 100%;justify-content: center;align-items: center;">
-                <div class="item weui-flex__item" style="height: 100%;flex: 0 0 25%;">
-                    <span style="font-weight: 500;font-size: 15px"><span style="font-size: 28px; font-weight: 600">{{item.month}}月</span>{{item.day}}</span>
-                </div>
-                <div v-for="img in item.photos" class="item weui-flex__item" style="text-align: center;height: 100%;flex: 0 0 25%;">
-                    <img :src="img.url" alt="" style="height: 100%;width: 100%;">
-                </div>
-            </div>
-        </div>
-        <div id="modal-overlay" v-show="overlay">
-                <div class="modal-data">
-                    <img src="../src/loading.gif" />
-                </div>
-            </div>
+<div id="app" style="width:100%;height:100%;background-color: white">
+    <div style="height: 7%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;display: flex;align-items: center;">
+        <span style="margin-left: 10px;font-size: 21px;font-family: '华文行楷';font-weight: 500">技师相册</span>
     </div>
+    <div v-for="item in photolist_by_time" class="weui-flex"
+         style="align-items: center;height: 13%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;margin-top: 10px">
+        <div class="box weui-flex" style="width: 100%; height: 100%;align-items: center;">
+            <div class="item weui-flex__item" style="height: 100%;flex: 0 0 25%;">
+                <span style="font-weight: 500;font-size: 15px"><span style="font-size: 28px; font-weight: 600;margin-left: 5px">{{item.day}}</span>{{item.month}}月</span>
+            </div>
+            <div v-for="img in item.photos" class="item weui-flex__item"
+                 style="text-align: center;height: 100%;flex: 0 0 25%;">
+                <img :src="img.url" alt="" style="height: 100%;width: 100%;">
+            </div>
+        </div>
+    </div>
+    <div id="modal-overlay" v-show="overlay">
+        <div class="modal-data">
+            <img src="../src/loading.gif"/>
+        </div>
+    </div>
+
+</div>
+
 </body>
 <script type="text/javascript" src="../js/jweixin.js"></script>
 <script type="text/javascript" src="../js/example.js"></script>
@@ -49,13 +53,14 @@
         if (r != null) return unescape(r[2]);
         return null;
     }
+
     let app = new Vue({
         el: '#app',
         data: {
             photolist: [],
             photolist_by_time: [],
             job_number: "",
-            overlay:true,
+            overlay: true,
         },
         created() {
             var that = this;
@@ -81,7 +86,7 @@
                         if (time_list.length == 0) time_list.push(dt);
                         else {
                             for (var j = 0; j < time_list.length; j++) {
-                                if (dt == time_list[i]){
+                                if (dt == time_list[i]) {
                                     jump = true
                                     break;
                                 }
@@ -89,7 +94,7 @@
                         }
 
                         if (jump) continue;
-                        else  time_list.push(dt);
+                        else time_list.push(dt);
 
                         for (var j = 0; j < that.photolist.length; j++) {
                             if (that.photolist[j].time == dt) {
@@ -97,15 +102,16 @@
                             }
                         }
                         that.photolist_by_time.push({
-                            "year": dt.substring(0,4),
-                            "month": dt.substring(5,7),
-                            "day": dt.substring(8,10),
+                            "year": dt.substring(0, 4),
+                            "month": dt.substring(5, 7),
+                            "day": dt.substring(8, 10),
                             "photos": time_photo
                         });
 
                     }
                 }
                 that.overlay = false;
+                console.log(that.overlay)
             })
         }
     })
