@@ -51,10 +51,10 @@
                         <i-button v-bind:type="button_type[0]" @click="sort_by(0,'rate')" long>评价</i-button>
                     </i-col>
                     <i-col span="6">
-                        <i-button :type="button_type[1]"  long>人气</i-button>
+                        <i-button :type="button_type[1]"  @click="sort_by(1,'hot')"long>人气</i-button>
                     </i-col>
                     <i-col span="6">
-                        <i-button :type="button_type[2]" long>级别</i-button>
+                        <i-button :type="button_type[2]"  @click="sort_by(2,'level')"long>级别</i-button>
                     </i-col>
                     <i-col span="6">
                         <i-button :type="button_type[3]" @click="sort_by(3,'state')" long>状态</i-button>
@@ -64,13 +64,13 @@
         </row>
 
         <row style="margin-top: 6px" v-for="item in list" v-show="item.show">
-            <card :bordered="false" dis-hover>
-                <row type="flex" justify="space-between" align="middle" :gutter="16">
+            <card  :bordered="false" dis-hover>
+                <row  type="flex" justify="space-between" align="middle" :gutter="16">
                     <i-col span="5">
                         <row type="flex">
                             <i-col span="24">
                                 <div style="text-align: center">
-                                    <img :src="item.avatar_url" style="height: 60px; width: 60px; border-radius: 50px;" />
+                                    <img @click="navi('tech-info.html',item.job_number)" :src="item.avatar_url" style="height: 60px; width: 60px; border-radius: 50px;" />
                                 </div>
                             </i-col>
                         </row>
@@ -112,7 +112,7 @@
                 <row type="flex" justify="start" style="margin-top: 5px" :gutter="16">
                     <i-col span="5">
                         <p style="text-align: center">
-                            {{ item.description }}
+                            {{ item.level }}级技师
                         </p>
                     </i-col>
                     <i-col span="15">
@@ -125,6 +125,23 @@
             </card>
         </row>
         <back-top></back-top>
+        <div style="height: 10%;width: 100%;position: fixed;bottom: 0;background-color: white;display: flex;">
+            <div style="height: 100%;flex: 0 0 25%;display: flex;align-items: center;justify-content: center">
+                <div style="width: 40px">
+                    <img src="../src/电话.png" alt="" style="height: 25px;width:25px">
+                    <h1 style="font-size: 14px;font-weight: 200;">客服</h1>
+                </div>
+            </div>
+            <div style="height: 100%;flex: 0 0 25%;display: flex;align-items: center;justify-content: center">
+                <div style="width: 40px">
+                    <img src="../src/分享.png" alt="" style="height: 25px;width:25px">
+                    <h1 style="font-size: 14px;font-weight: 200;">分享</h1>
+                </div>
+            </div>
+            <div style="height: 100%;flex: 0 50%;display: flex;align-items: center;justify-content: center">
+                <button style="width: 85%;height: 70%;background-color: #2b85e4;color: white;border-radius: 5px;font-size: 18px">立即下单</button>
+            </div>
+        </div>
         <div id="modal-overlay" v-show="overlay">
             <div class="modal-data">
                 <img src="../src/loading.gif" />
@@ -142,7 +159,7 @@
             return {
                 overlay:true,
                 button_type:[
-                    "default",
+                    "primary",
                     "default",
                     "default",
                     "default",
@@ -158,24 +175,13 @@
                     discount: 100,
                 }],
                 selector: null,
-                list: [{
-                    avatar_url: 'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=3637558653,1735813698&fm=58',
-                    job_number: 'AKB48',
-                    description: '网红技师',
-                    photo_list: [
-                        'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3382581011,2165830761&fm=58',
-                        'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2090470704,2601273190&fm=58',
-                        'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=299702052,510253287&fm=58',
-                    ],
-                    rate: 4.2,
-                    price: 199,
-                    state: 1,
-                    show: false,
-                    skills: [],
-                }, ]
+                list: []
             }
         },
         methods: {
+            navi(url,job_number){
+                window.location.href=url+"?job_number="+job_number
+            },
             button_click(idx){
                 for(var i=0;i<this.button_type.length;i++){
                     if(i==idx)this.button_type[i] = "primary"
@@ -247,11 +253,15 @@
                         rate: tech.rate,
                         state: 2,
                         skills: tech.skill,
+                        level:tech.level,
+                        hot:tech.hot,
                         show: true
                     })
                 }
+                that.sort_by(0,'rate');
                 that.overlay = false;
             })
+
         }
     };
     let Component = Vue.extend(Main);

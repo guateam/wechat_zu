@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>个人详情</title>
+    <link rel="stylesheet" type="text/css" href="http://unpkg.com/iview/dist/styles/iview.css">
+    <link rel="stylesheet" href="../css/weui-min.css" />
+    <link rel="stylesheet" href="../css/example.css" />
+    <style>
+
+    </style>
+</head>
+
+<body>
+<div id="app" style="height: 100%;">
+    <div style="width: 100%;height: 31%;background-image: url(../src/head-pic.png);background-repeat: no-repeat;display: flex;align-items: center;justify-content: center">
+        <div>
+            <img src="../src/head.png" alt="" style="width: 60px;height: 60px;border-radius: 50%">
+            <div style="width: 200px;height: 50px">
+                <h1 style="font-size: 14px;font-weight: 200;color: white" v-text="'资历：'+entry_period">资历：2年</h1>
+                <h1 style="font-size: 14px;font-weight: 200;color: white">技能：spa、足疗</h1>
+            </div>
+        </div>
+    </div>
+    <div class="weui-flex" style="justify-content: center;align-items: center;height: 13%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;">
+        <div class="box weui-flex" style="width: 100%; height: 100%;justify-content: center;align-items: center;">
+            <div class="item weui-flex__item" style="text-align: center;border-right: 1px solid #f2f2f2">
+                <h1 style="color: #33cccc;font-size: 24px">21</h1>
+                <div><img src="../src/总接单数.png" alt="">
+                    总接单数
+                </div>
+            </div>
+            <div class="item weui-flex__item" style="text-align: center;border-right: 1px solid #f2f2f2">
+                <h1 style="color: #ff9933;font-size: 24px"><span style="font-size: 14px">工号</span>A23-1</h1>
+                <div><img src="../src/网红技师.png" alt="">
+                    网红技师
+                </div>
+            </div>
+            <div class="item weui-flex__item" style="text-align: center;">
+                <h1 style="color: #ff3333;font-size: 24px">11</h1>
+                <div><img src="../src/收藏数量.png" alt="">
+                    收藏数量
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="height: 5%;width: 100%;background-color: white;display: flex;align-items: center;">
+        <span style="margin-left: 10px">当前状态</span>
+        <span style="margin-left: 20px;color: #ff0033;">空闲</span>
+    </div>
+    <div class="weui-flex" style="justify-content: center;align-items: center;height: 13%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;margin-top: 10px">
+        <div class="box weui-flex" style="width: 100%; height: 100%;justify-content: center;align-items: center;">
+            <div class="item weui-flex__item" style="text-align: center;">
+                <img src="../src/head.png" alt="" style="height: 100%;width: 100%;">
+            </div>
+            <div class="item weui-flex__item" style="text-align: center;">
+                <img src="../src/head.png" alt="" style="height: 100%;width: 100%;">
+            </div>
+            <div class="item weui-flex__item" style="text-align: center;">
+                <img src="../src/head.png" alt="" style="height: 100%;width: 100%;">
+            </div>
+            <div class="item weui-flex__item" style="text-align: center;">
+                <img src="../src/head.png" alt="" style="height: 100%;width: 100%;">
+            </div>
+        </div>
+    </div>
+    <div style="height: 5%;width: 100%;background-color: white;display: flex;align-items: center;margin-top: 10px">
+        <span style="margin-left: 10px">评价</span>
+        <span style="margin-left: 20px;color: #ff0033;">
+                <rate show-text allow-half v-model="rate" disabled style="font-size: 15px">
+                    <span style="color: #f5a623; margin-left: -20px">{{ rate }}分</span>
+                </rate>
+                （共两条）
+            </span>
+    </div>
+    <div class="weui-panel weui-panel_access" style="background-color: white;border-radius: 5px;margin-bottom: 20%">
+        <div class="display-block" style="border-bottom: 1px solid #f2f2f2;">
+            <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg ">
+                <div class="weui-media-box__hd" style="border-radius: 50%;background-color: #ffcc99;background-image: url(../src/head.png)">
+                </div>
+                <div class="weui-media-box__bd">
+                    <h4 class="weui-media-box__title" style="font-size: 16px;color: #336666">尼古拉斯赵四</h4>
+                    <h4 class="weui-media-box__title" style="font-size: 14px">
+                        <div>
+                            <rate show-text allow-half v-model="rate" disabled style="font-size: 15px">
+                                <span style="color: #f5a623; margin-left: -20px">{{ rate }}分</span>
+                            </rate>
+                        </div>
+                    </h4>
+                    <p class="weui-media-box__desc">不错，器大活好</p>
+                </div>
+                <div class="weui-media-box__bd" style="float: right;text-align: right">
+                    <h4 class="weui-media-box__title" style="color: #cc99cc">08-20</h4>
+                </div>
+            </a>
+            <div class="weui-panel__bd display-none" style="display: none;background-color: #f2f2f2">
+                <div class="weui-media-box weui-media-box_text">
+                    <div style="border: 1px solid #cc99cc;border-radius: 2px;width: 4px;height: 4px;"></div>
+                    <div style="margin-left: 2px;border-left: 1px solid #cc99cc;height:50px;">
+                        <h4 class="weui-media-box__desc " style="margin-left: 15px;margin-bottom: 0;">业绩流水号</h4>
+                        <p class="weui-media-box__title" style="margin-left: 15px;color:#cc99cc ">W-001-023563</p>
+                    </div>
+                    <div style="border: 1px solid #cc99cc;border-radius: 2px;width: 4px;height: 4px;"></div>
+                    <h4 class="weui-media-box__desc " style="margin-left: 15px;margin-bottom: 0;margin-top: -10px">
+                        业绩金额（元）</h4>
+                    <p class="weui-media-box__title" style="margin-left: 15px;color:#cc99cc">199</p>
+                </div>
+            </div>
+        </div>
+        <div class="display-block" style="border-bottom: 1px solid #f2f2f2;">
+            <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg ">
+                <div class="weui-media-box__hd" style="border-radius: 50%;background-color: #ffcc99;background-image: url(../src/head.png)">
+                </div>
+                <div class="weui-media-box__bd">
+                    <h4 class="weui-media-box__title" style="font-size: 16px;color: #336666">尼古拉斯赵四</h4>
+                    <h4 class="weui-media-box__title" style="font-size: 14px">
+                        <div>
+                            <rate show-text allow-half v-model="rate" disabled style="font-size: 15px">
+                                <span style="color: #f5a623; margin-left: -20px">{{ rate }}分</span>
+                            </rate>
+                        </div>
+                    </h4>
+                    <p class="weui-media-box__desc">不错，器大活好</p>
+                </div>
+                <div class="weui-media-box__bd" style="float: right;text-align: right">
+                    <h4 class="weui-media-box__title" style="color: #cc99cc">08-20</h4>
+                </div>
+            </a>
+            <div class="weui-panel__bd display-none" style="display: none;background-color: #f2f2f2">
+                <div class="weui-media-box weui-media-box_text">
+                    <div style="border: 1px solid #cc99cc;border-radius: 2px;width: 4px;height: 4px;"></div>
+                    <div style="margin-left: 2px;border-left: 1px solid #cc99cc;height:50px;">
+                        <h4 class="weui-media-box__desc " style="margin-left: 15px;margin-bottom: 0;">业绩流水号</h4>
+                        <p class="weui-media-box__title" style="margin-left: 15px;color:#cc99cc ">W-001-023563</p>
+                    </div>
+                    <div style="border: 1px solid #cc99cc;border-radius: 2px;width: 4px;height: 4px;"></div>
+                    <h4 class="weui-media-box__desc " style="margin-left: 15px;margin-bottom: 0;margin-top: -10px">
+                        业绩金额（元）</h4>
+                    <p class="weui-media-box__title" style="margin-left: 15px;color:#cc99cc">199</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="height: 10%;width: 100%;position: fixed;bottom: 0;background-color: white;display: flex;">
+        <div style="height: 100%;flex: 0 0 25%;display: flex;align-items: center;justify-content: center;border-right: 1px solid #f2f2f2">
+            <div style="width: 40px">
+                <img src="../src/分享.png" alt="" style="height: 25px;width:25px">
+                <h1 style="font-size: 14px;font-weight: 200;">分享</h1>
+            </div>
+        </div>
+        <div style="height: 100%;flex: 0 75%;display: flex;align-items: center;justify-content: center">
+            <button style="width: 85%;height: 70%;background-color: #ff3399;color: white;border-radius: 5px;font-size: 18px">选她</button>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="../js/jweixin.js"></script>
+<script type="text/javascript" src="../js/example.js"></script>
+<script type="text/javascript" src="../js/weui-min.js"></script>
+<script type="text/javascript" src="../js/zepto.js"></script>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../js/echarts-simple-min.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
+<script type="text/javascript" src="http://unpkg.com/iview/dist/iview.min.js"></script>
+<script type="text/javascript">
+    
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+    
+    new Vue({
+        el: '#app',
+        data: {
+            job_number:"",
+            name:"",
+            phone_number:"",
+            id_number:"",
+            photo:"",
+            gender:0,
+            birthday:"",
+            description:"",
+            vcr:"",
+            entry_period:"",
+            inviter:"",
+            in_job:"",
+            rate:0
+        },
+        created(){
+            var that = this;
+            $.post("../php/gettechdetail.php",{
+                job_number:getQueryString('job_number')
+            }).done((result) => {
+                result = JSON.parse(result);
+                if(result.status==1){
+                    info = result.data[0];
+
+                    that.job_number =  info['job_number'];
+                    that.name = info['name'];
+                    that.phone_number = info['phone_number'];
+                    that.id_number = info['id_number'];
+                    that.photo = info['photo'];
+                    that.gender = info['photo'] == 1?"男":"女";
+                    that.birthday = info['birthday'];
+                    that.description = info['description'];
+                    that.vcr = info['vcr'];
+                    that.entry_period = info['entry_date'];
+                    that.inviter = info['inviter'];
+                    that.in_job = info['in_job']==1?"在职":"离职";
+                    that.rate = info['rate'];
+
+                    var date = new Date();
+                    var time = that.entry_period;
+                    year = date.getFullYear();
+                    in_year = parseInt(time.substring(0,4));
+                    that.entry_period = year-in_year+"年";
+                    month = date.getMonth();
+                    console.log(time);
+                    in_month = parseInt(time.substring(4,2))
+                    that.entry_period += (month-in_month)+"月"
+
+                }
+                that.overlay = false;
+            })
+        }
+    })
+</script>
+
+</html>

@@ -9,6 +9,16 @@
     z-index: 1000;
     background-color: #fff;
 }
+#img-overlay {
+    position: absolute;   /* 使用绝对定位或固定定位  */
+    left: 0px;    
+    top: 0px;
+    width:100%;
+    height:100%;
+    text-align:center;
+    z-index: 500;
+    background-color: #000;
+}
 /* 模态框样式 */
 .modal-data{
     margin: 80% auto;

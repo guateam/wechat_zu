@@ -42,7 +42,7 @@
             <img src="../src/top-img.png" alt="" style="height: 22%;width: 100%;">
             <div style="height: 7%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;display: flex;align-items: center;">
                 <span style="margin-left: 10px">{{data.name}}</span>
-                <span style="margin-left: 20px">12:00~23:59</span>
+                <span style="margin-left: 20px">{{data.open_time}}--{{data.close_time}}</span>
             </div>
             <div style="height: 7%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;display: flex;align-items: center;background-image: url(../src/定位.png);background-repeat:no-repeat;background-position: 1%;">
                 <span style="margin-left: 25px"><a v-bind:href="data.location">{{data.position}}</a></span>
@@ -104,10 +104,10 @@
                                 <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">{{item.name}}</div>
                             </div>
                             <div class="weui-flex weui-flex__item" style="flex: 0 0 30%;">
-                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">{{item.price}}</div>
+                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">￥{{item.price}}</div>
                             </div>
                             <div class="weui-flex weui-flex__item" style="flex: 0 0 30%;">
-                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center;color: #ff6666;">{{item.discount}}</div>
+                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center;color: #ff6666;">￥{{item.discount}}</div>
                             </div>
                         </div>
                     </div>
@@ -131,7 +131,7 @@
                                 <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">{{item.time}}</div>
                             </div>
                             <div class="weui-flex weui-flex__item" style="flex: 0 0 30%;">
-                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center;color: #1aad19">{{item.price}}</div>
+                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center;color: #1aad19">￥{{item.price}}</div>
                             </div>
                         </div>
                     </div>

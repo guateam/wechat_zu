@@ -6,6 +6,7 @@ $result = [];
 foreach($all_tech as $tech){
     $photos = get("technician_photo","job_number",$tech['job_number']);
     $skills = get("skill","job_number",$tech['job_number']);
+    $order = get("service_order","job_number",$tech['job_number']);
     $photo_list = [];
     foreach($photos as $photo){
         array_push($photo_list,$photo['img']);
@@ -16,8 +17,9 @@ foreach($all_tech as $tech){
         "description"=>$tech['description'],
         "photo_list"=>$photo_list,
         "rate"=>$tech['rate'],
-        "skill"=>$skills
-
+        "skill"=>$skills,
+        "level"=>$tech['level'],
+        "hot"=>count($order),
     ]);
 }
 
