@@ -31,6 +31,7 @@
                 <img :src="img.url" alt="" style="height: 100%;width: 100%;" class="user-img deImg imgJs exampleImg" onClick="$(this).ImgZoomIn();">
             </div>
         </div>
+
     </div>
 
     <div id="modal-overlay" v-show="overlay">
@@ -38,8 +39,6 @@
             <img src="../src/loading.gif"/>
         </div>
     </div>
-
-</div>
 
 </body>
 <script type="text/javascript" src="../js/jweixin.js"></script>
@@ -92,6 +91,21 @@
         },
 
 
+        methods: {
+            sort_by(keyName) {
+                var that = this;
+                var sort = function (keyName) {
+                    return function (objectN, objectM) {
+                        var valueN = objectN[keyName]
+                        var valueM = objectM[keyName]
+                        if (valueN < valueM) return 1
+                        else if (valueN > valueM) return -1
+                        else return 0
+                    }
+                }
+                this.photolist_by_time.sort(sort(keyName));
+            },
+        },
         created() {
             var that = this;
             that.job_number = getQueryString('id');
@@ -102,30 +116,33 @@
                 if (result.status == 1) {
                     for (var i = 0; i < result.data.length; i++) {
                         var info = result.data[i];
+                        if (info.time === null) info.time = "未知";
                         that.photolist.push({
                             "url": info.img,
                             "time": info.time.substring(0, 10)
                         })
                     }
+                    //记录已经录入过的时间
                     var time_list = [];
+
                     for (var i = 0; i < that.photolist.length; i++) {
                         var dt = that.photolist[i].time;
                         var time_photo = [];
                         //记录重复的时间，若时间重复则跳过
                         var jump = false;
-                        if (time_list.length == 0) time_list.push(dt);
+                        if (time_list.length == 0);
                         else {
                             for (var j = 0; j < time_list.length; j++) {
-                                if (dt == time_list[i]) {
+                                if (dt == time_list[j]) {
                                     jump = true
                                     break;
                                 }
                             }
                         }
-
                         if (jump) continue;
-                        else time_list.push(dt);
-
+                        else {
+                            time_list.push(dt);
+                        }
                         for (var j = 0; j < that.photolist.length; j++) {
                             if (that.photolist[j].time == dt) {
                                 time_photo.push(that.photolist[j]);
@@ -135,9 +152,10 @@
                             "year": dt.substring(0, 4),
                             "month": dt.substring(5, 7),
                             "day": dt.substring(8, 10),
-                            "photos": time_photo
+                            "photos": time_photo,
+                            "time":dt,
                         });
-
+                        that.sort_by("time");
                     }
                 }
                 that.overlay = false;
