@@ -5,11 +5,13 @@ function gettechnician($id){
         $technician=$technician[0];
         $url='/wechat_zu_technician/';
         $skill='';
+        $skilllist=[];
         $skills=get('skill','job_number',$id);
         foreach($skills as $value){
             $service=get('service_type','ID',$value['service_id']);
             if($service){
                 $skill.=$service[0]['name'].' ';
+                array_push($skilllist,['name'=>$service[0]['name'],'id'=>$service[0]['ID']]);
             }
         }
         $service=get('service_order','job_number',$id);
@@ -29,6 +31,12 @@ function gettechnician($id){
         }else{
             $entrytime='新人';
         }
+        $gender='';
+        if($technician['gender']==1){
+            $gender='他';
+        }else if($technician['gender']==2){
+            $gender='她';
+        }
         $data=[
             'name'=>$technician['name'],
             'jobnumber'=>$id,
@@ -38,7 +46,9 @@ function gettechnician($id){
             'service'=>count($service),
             'photo'=>$photodata,
             'favoate'=>0,
-            'entrytime'=>$entrytime
+            'entrytime'=>$entrytime,
+            'skills'=>$skilllist,
+            'gender'=>$gender
         ];
         return $data;
     }
