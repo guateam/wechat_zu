@@ -138,7 +138,7 @@
                 </div>
             </div>
             <div style="height: 100%;flex: 0 50%;display: flex;align-items: center;justify-content: center">
-                <button @click="navi()" style="width: 85%;height: 70%;background-color: #2b85e4;color: white;border-radius: 5px;font-size: 18px">立即下单</button>
+                <button @click="down_order" style="width: 85%;height: 70%;background-color: #2b85e4;color: white;border-radius: 5px;font-size: 18px">立即下单</button>
             </div>
         </div>
         <div id="modal-overlay" v-show="overlay">
@@ -205,7 +205,7 @@
                 var that = this;
                 for (var i = 0; i < that.list.length; i++) {
                     if (that.list[i].check == 1) {
-                        window.location.href = "order.html?job_number="+that.list[i].job_number+"&start-time="+that.timePick
+                        window.location.href = "confirm-order.html?job_number="+that.list[i].job_number+"&start-time="+that.timePick
                         break;
                     }
                 }

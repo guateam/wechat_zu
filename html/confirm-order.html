@@ -7,6 +7,7 @@
     <title>确认信息</title>
     <link rel="stylesheet" href="../css/weui-min.css" />
     <link rel="stylesheet" href="../css/example.css" />
+    <link rel="stylesheet" type="text/css" href="../css/overlay.css">
     <style>
 
     </style>
@@ -28,7 +29,7 @@
                 <div class="weui-cell__bd">
                     <p>预约时间</p>
                 </div>
-                <div class="weui-cell__ft">09-04 &nbsp;23:00&nbsp;&nbsp;/&nbsp;&nbsp;09-05 &nbsp;02:30</div>
+                <div class="weui-cell__ft">{{start_time}}&nbsp;&nbsp;/&nbsp;&nbsp;{{end_time}}</div>
             </div>
         </div>
         <div class="weui-cells__title">服务项目</div>
@@ -37,14 +38,19 @@
                 <div class="weui-cell__bd" style="transform: translateX(-68px)">
                     <div class="weui-cell">
                         <div class="weui-cell__bd">
-                            <p style="margin-left: 20%">{{item.name}}<span style="color: #29a3a3;margin-left: 10px;font-family: 华文雅黑;">
-                                ￥{{item.price}}
+                            <p style="margin-left: 20%">{{item.name}}
+                                <span style="color: #29a3a3;margin-left: 10px;font-family: 华文雅黑;">
+                                    ￥{{item.price}}
+                                </span>
+                                <span style="color: #29a3a3;margin-left: 10px;font-family: 华文雅黑;">
+                                    {{item.duration}}分钟
+                                </span>
                             </p>
                         </div>
                     </div>
                 </div>
                 <div class="weui-cell__ft">
-                    <a @click="remove(item.name)"class="weui-swiped-btn weui-swiped-btn_warn" href="javascript:">删除</a>
+                    <a @click="remove(item.name)" class="weui-swiped-btn weui-swiped-btn_warn" href="javascript:">删除</a>
                 </div>
             </div>
         </div>
@@ -67,10 +73,15 @@
                 <div class="weui-cell__ft"></div>
             </a>
         </div>
-        <div class="" style="position: fixed;bottom: 0;height: 70px;width: 100%;z-index: 100;border-top: 1px solid #f2f2f2;display: flex;align-items: center">
-            <span style="margin-left: 20px;width: 80px;">预计支付</span><span style="color: #29a3a3;font-size: 22px"v-text="'￥'+total_price"></span>
+        <div class="" style="position: fixed;bottom: 0;height: 70px;width: 100%;z-index:5;border-top: 1px solid #f2f2f2;display: flex;align-items: center">
+            <span style="margin-left: 20px;width: 80px;">预计支付</span><span style="color: #29a3a3;font-size: 22px" v-text="'￥'+total_price"></span>
             <button style="position:absolute;right: 15px; width: 100px;height: 40px;border-radius: 5px;background-color: #2b85e4;color: white;outline: none">确认预约</button>
         </div>
+        <div id="modal-overlay" v-show="overlay">
+                <div class="modal-data">
+                    <img src="../src/loading.gif" />
+                </div>
+            </div>
     </div>
     <script type="text/javascript" src="../js/jweixin.js"></script>
     <script type="text/javascript" src="../js/example.js"></script>
@@ -92,17 +103,31 @@
                 rate: 4.5,
                 job_number: "",
                 skill: [],
-                total_price:0,
-                start_time:""
+                total_price: 0,
+                start_time: "",
+                end_time: "",
+                overlay : true,
             },
-            methods:{
-                remove(name){
+            methods: {
+                remove(name) {
                     var that = this;
                     var skill = that.skill
-                    for(var i in skill){
-                        if(skill[i].name == name){
-                            that.total_price-=skill[i].price;
-                            that.skill.splice(i,1);
+                    for (var i in skill) {
+                        if (skill[i].name == name) {
+                            var h = that.end_time.substring(0, 2)
+                            var m = that.end_time.substring(3, 5)
+                            m -= parseInt(skill[i].duration) % 60;
+                            if (m < 0) {
+                                m += 60;
+                                h -= 1;
+                            }
+                            if(m<10)m="0"+m;
+                            h -= parseInt(skill[i].duration / 60);
+                            if (h < 0) h += 24;
+                            that.end_time = h + ":" + m;
+
+                            that.total_price -= skill[i].price;
+                            that.skill.splice(i, 1);
                         }
                     }
                 },
@@ -111,20 +136,37 @@
                 var that = this;
                 that.job_number = getQueryString('job_number');
                 that.start_time = getQueryString('start-time');
+                var h = parseInt(that.start_time.substring(0, 2));
+                var m = parseInt(that.start_time.substring(3, 5));
+                console.log(h);
+                console.log(m);
+                var duration = 0;
                 $.post("../php/getskill.php", {
                     job_number: that.job_number
                 }).done((result) => {
-                    result= JSON.parse(result)
+                    result = JSON.parse(result)
                     if (result.status == 1) {
                         for (var i = 0; i < result.data.length; i++) {
                             var info = result.data[i];
+                            duration += parseInt(info.duration);
                             that.skill.push({
                                 "name": info.name,
                                 'duration': info.duration,
                                 'price': info.price,
                             })
-                            that.total_price+=info.price;
+                            that.total_price += parseInt(info.price);
                         }
+                        
+                        m += duration % 60;
+                        if (m >= 60) {
+                            m -= 60;
+                            h += 1;
+                        }
+                        h += parseInt(duration / 60);
+                        if (h >= 24) h -= 24;
+                        if(m<10)m="0"+m;
+                        that.end_time = h + ":" + m;
+                        that.overlay = false;
                     }
                 })
             }
