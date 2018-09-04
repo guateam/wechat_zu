@@ -11,11 +11,12 @@
         #app {
             font-family: Cursive;
         }
+        
         .circle {
             width: 40px;
             height: 40px;
             border-radius: 150px;
-            margin:auto;
+            margin: auto;
             border: 1px solid #D5B32B;
             text-align: center;
             line-height: 40px;
@@ -31,13 +32,11 @@
                 <row>请选择预约时间:</row>
                 <row :gutter="16" type="flex" justify="space-between">
                     <i-col span="11" offset="1">
-                        <time-picker v-model="timePick" format="HH:mm" placeholder="选择预约时间" :steps="[1, 15, 1]" confirm
-                            style="width: 120px"></time-picker>
+                        <time-picker v-model="timePick" format="HH:mm" placeholder="选择预约时间" :steps="[1, 15, 1]" confirm style="width: 120px"></time-picker>
                     </i-col>
                     <i-col span="12">
                         <i-select @on-change="select_service" v-model="selector" placeholder="选择服务">
-                            <i-option v-for="service in serviceList" :value="service.value" :key="service.value">{{
-                                service.label }}</i-option>
+                            <i-option v-for="service in serviceList" :value="service.value" :key="service.value">{{ service.label }}</i-option>
                         </i-select>
                     </i-col>
                 </row>
@@ -240,8 +239,8 @@
             sort_by(idx, keyName) {
                 this.button_click(idx);
                 var that = this;
-                var sort = function (keyName) {
-                    return function (objectN, objectM) {
+                var sort = function(keyName) {
+                    return function(objectN, objectM) {
                         var valueN = objectN[keyName]
                         var valueM = objectM[keyName]
                         if (valueN < valueM) return 1
@@ -275,7 +274,7 @@
                 for (var i = 0; i < result.data.length; i++) {
                     var tech = result.data[i];
                     that.list.push({
-                        avatar_url: tech.avatar_url,
+                        avatar_url: tech.avatar_url.replace('..', '/wechat_zu_technician/'),
                         job_number: tech.job_number,
                         //description: '网红技师',
                         photo_list: tech.photo_list,

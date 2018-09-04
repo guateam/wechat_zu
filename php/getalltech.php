@@ -9,7 +9,7 @@ foreach($all_tech as $tech){
     $order = get("service_order","job_number",$tech['job_number']);
     $photo_list = [];
     foreach($photos as $photo){
-        array_push($photo_list,$photo['img']);
+        array_push($photo_list,str_replace('..','/wechat_zu_technician/',$photo['img']));
     }
     array_push($result,[
         "avatar_url"=>$tech['photo'],
