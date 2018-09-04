@@ -14,148 +14,116 @@
 </head>
 
 <body>
-<div id="app" style="height: 100%;">
-    <div style="width: 100%;height: 31%;background-image: url(../src/head-pic.png);background-repeat: no-repeat;display: flex;align-items: center;justify-content: center">
-        <div>
-            <img src="../src/head.png" alt="" style="width: 60px;height: 60px;border-radius: 50%">
-            <div style="width: 200px;height: 50px">
-                <h1 style="font-size: 14px;font-weight: 200;color: white" >资历：2年</h1>
-                <h1 style="font-size: 14px;font-weight: 200;color: white">技能：spa、足疗</h1>
-            </div>
-        </div>
-    </div>
-    <div class="weui-flex" style="justify-content: center;align-items: center;height: 13%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;">
-        <div class="box weui-flex" style="width: 100%; height: 100%;justify-content: center;align-items: center;">
-            <div class="item weui-flex__item" style="text-align: center;border-right: 1px solid #f2f2f2">
-                <h1 style="color: #33cccc;font-size: 24px">21</h1>
-                <div><img src="../src/总接单数.png" alt="">
-                    总接单数
-                </div>
-            </div>
-            <div class="item weui-flex__item" style="text-align: center;border-right: 1px solid #f2f2f2">
-                <h1 style="color: #ff9933;font-size: 24px"><span style="font-size: 14px">工号</span>A23-1</h1>
-                <div><img src="../src/网红技师.png" alt="">
-                    网红技师
-                </div>
-            </div>
-            <div class="item weui-flex__item" style="text-align: center;">
-                <h1 style="color: #ff3333;font-size: 24px">11</h1>
-                <div><img src="../src/收藏数量.png" alt="">
-                    收藏数量
+    <div id="app" style="height: 100%;">
+        <div style="width: 100%;height: 31%;background-image: url(../src/head-pic.png);background-repeat: no-repeat;display: flex;align-items: center;justify-content: center">
+            <div>
+                <img v-bind:src="data.technician.head" alt="" style="width: 60px;height: 60px;border-radius: 50%">
+                <div style="width: 200px;height: 50px">
+                    <h1 style="font-size: 14px;font-weight: 200;color: white">资历：{{data.technician.entrytime}}</h1>
+                    <h1 style="font-size: 14px;font-weight: 200;color: white">技能：{{data.technician.skill}}</h1>
                 </div>
             </div>
         </div>
-    </div>
-    <div style="height: 5%;width: 100%;background-color: white;display: flex;align-items: center;">
-        <span style="margin-left: 10px">当前状态</span>
-        <span style="margin-left: 20px;color: #ff0033;">空闲</span>
-    </div>
-    <div class="weui-flex" style="justify-content: center;align-items: center;height: 13%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;margin-top: 10px">
-        <div class="box weui-flex" style="width: 100%; height: 100%;justify-content: center;align-items: center;">
-            <div class="item weui-flex__item" style="text-align: center;">
-                <img src="../src/head.png" alt="" style="height: 100%;width: 100%;">
-            </div>
-            <div class="item weui-flex__item" style="text-align: center;">
-                <img src="../src/head.png" alt="" style="height: 100%;width: 100%;">
-            </div>
-            <div class="item weui-flex__item" style="text-align: center;">
-                <img src="../src/head.png" alt="" style="height: 100%;width: 100%;">
-            </div>
-            <div class="item weui-flex__item" style="text-align: center;">
-                <img src="../src/head.png" alt="" style="height: 100%;width: 100%;">
+        <div class="weui-flex" style="justify-content: center;align-items: center;height: 13%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;">
+            <div class="box weui-flex" style="width: 100%; height: 100%;justify-content: center;align-items: center;">
+                <div class="item weui-flex__item" style="text-align: center;border-right: 1px solid #f2f2f2">
+                    <h1 style="color: #33cccc;font-size: 24px">{{data.technician.service}}</h1>
+                    <div><img src="../src/总接单数.png" alt=""> 总接单数
+                    </div>
+                </div>
+                <div class="item weui-flex__item" style="text-align: center;border-right: 1px solid #f2f2f2">
+                    <h1 style="color: #ff9933;font-size: 24px"><span style="font-size: 14px">工号</span>{{data.technician.jobnumber}}</h1>
+                    <div><img src="../src/网红技师.png" alt=""> 网红技师
+                    </div>
+                </div>
+                <div class="item weui-flex__item" style="text-align: center;">
+                    <h1 style="color: #ff3333;font-size: 24px">{{data.technician.favoate}}</h1>
+                    <div><img src="../src/收藏数量.png" alt=""> 收藏数量
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div style="height: 5%;width: 100%;background-color: white;display: flex;align-items: center;margin-top: 10px">
-        <span style="margin-left: 10px">评价</span>
-        <span style="margin-left: 20px;color: #ff0033;">
-                <rate show-text allow-half v-model="rate" disabled style="font-size: 15px">
-                    <span style="color: #f5a623; margin-left: -20px">4分</span>
-                </rate>
-                （共两条）
+        <div style="height: 5%;width: 100%;background-color: white;display: flex;align-items: center;">
+            <span style="margin-left: 10px">当前状态</span>
+            <span style="margin-left: 20px;color: #ff0033;">空闲</span>
+        </div>
+        <div class="weui-flex" style="justify-content: center;align-items: center;height: 13%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;margin-top: 10px">
+            <div class="box weui-flex" style="width: 100%; height: 100%;justify-content: center;align-items: center;">
+                <div class="item weui-flex__item" style="text-align: center;" v-for='item in data.technician.photo'>
+                    <img v-bind:src="item" alt="" style="height: 100%;width: 100%;">
+                </div>
+            </div>
+        </div>
+        <div style="height: 5%;width: 100%;background-color: white;display: flex;align-items: center;margin-top: 10px">
+            <span style="margin-left: 10px">评价</span>
+            <span style="margin-left: 20px;color: #ff0033;">
+                <rate show-text allow-half v-model="data.technician.rate" disabled style="font-size: 15px">
+                    <span style="color: #f5a623; margin-left: -20px">{{data.technician.rate}}分</span>
+            </rate>
+            （共{{count}}条）
             </span>
-    </div>
-    <div class="weui-panel weui-panel_access" style="background-color: white;border-radius: 5px;margin-bottom: 20%">
-        <div class="display-block" style="border-bottom: 1px solid #f2f2f2;">
-            <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg ">
-                <div class="weui-media-box__hd" style="border-radius: 50%;background-color: #ffcc99;background-image: url(../src/head.png)">
-                </div>
-                <div class="weui-media-box__bd">
-                    <h4 class="weui-media-box__title" style="font-size: 16px;color: #336666">尼古拉斯赵四</h4>
-                    <h4 class="weui-media-box__title" style="font-size: 14px">
-                        <div>
-                            <rate show-text allow-half v-model="rate" disabled style="font-size: 15px">
-                                <span style="color: #f5a623; margin-left: -20px">4分</span>
-                            </rate>
-                        </div>
-                    </h4>
-                    <p class="weui-media-box__desc">不错，器大活好</p>
-                </div>
-                <div class="weui-media-box__bd" style="float: right;text-align: right">
-                    <h4 class="weui-media-box__title" style="color: #cc99cc">08-20</h4>
-                </div>
-            </a>
-            <div class="weui-panel__bd display-none" style="display: none;background-color: #f2f2f2">
-                <div class="weui-media-box weui-media-box_text">
-                    <div style="border: 1px solid #cc99cc;border-radius: 2px;width: 4px;height: 4px;"></div>
-                    <div style="margin-left: 2px;border-left: 1px solid #cc99cc;height:50px;">
-                        <h4 class="weui-media-box__desc " style="margin-left: 15px;margin-bottom: 0;">业绩流水号</h4>
-                        <p class="weui-media-box__title" style="margin-left: 15px;color:#cc99cc ">W-001-023563</p>
+        </div>
+        <div class="weui-panel weui-panel_access" style="background-color: white;border-radius: 5px;margin-bottom: 20%">
+            <div class="display-block" style="border-bottom: 1px solid #f2f2f2;" v-for='item in data.feedback'>
+                <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg ">
+                    <div class="weui-media-box__hd" v-bind:style="item.head">
                     </div>
-                    <div style="border: 1px solid #cc99cc;border-radius: 2px;width: 4px;height: 4px;"></div>
-                    <h4 class="weui-media-box__desc " style="margin-left: 15px;margin-bottom: 0;margin-top: -10px">
-                        业绩金额（元）</h4>
-                    <p class="weui-media-box__title" style="margin-left: 15px;color:#cc99cc">199</p>
+                    <div class="weui-media-box__bd">
+                        <h4 class="weui-media-box__title" style="font-size: 16px;color: #336666">{{item.name}}</h4>
+                        <h4 class="weui-media-box__title" style="font-size: 14px">
+                            <div>
+                                <rate show-text allow-half v-model="item.rate" disabled style="font-size: 15px">
+                                    <span style="color: #f5a623; margin-left: -20px">{{item.rate}}分</span>
+                                </rate>
+                            </div>
+                        </h4>
+                        <p class="weui-media-box__desc">{{item.text}}</p>
+                    </div>
+                    <div class="weui-media-box__bd" style="float: right;text-align: right">
+                        <h4 class="weui-media-box__title" style="color: #cc99cc">{{item.time}}</h4>
+                    </div>
+                </a>
+                <div class="weui-panel__bd display-none" style="display: none;background-color: #f2f2f2">
+                    <div class="weui-media-box weui-media-box_text">
+                        <div style="border: 1px solid #cc99cc;border-radius: 2px;width: 4px;height: 4px;"></div>
+                        <div style="margin-left: 2px;border-left: 1px solid #cc99cc;height:50px;">
+                            <h4 class="weui-media-box__desc " style="margin-left: 15px;margin-bottom: 0;">业绩流水号</h4>
+                            <p class="weui-media-box__title" style="margin-left: 15px;color:#cc99cc ">{{item.serviceid}}</p>
+                        </div>
+                        <div style="border: 1px solid #cc99cc;border-radius: 2px;width: 4px;height: 4px;"></div>
+                        <h4 class="weui-media-box__desc " style="margin-left: 15px;margin-bottom: 0;margin-top: -10px">
+                            业绩金额（元）</h4>
+                        <p class="weui-media-box__title" style="margin-left: 15px;color:#cc99cc">{{item.price}}</p>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="display-block" style="border-bottom: 1px solid #f2f2f2;">
-            <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg ">
-                <div class="weui-media-box__hd" style="border-radius: 50%;background-color: #ffcc99;background-image: url(../src/head.png)">
-                </div>
-                <div class="weui-media-box__bd">
-                    <h4 class="weui-media-box__title" style="font-size: 16px;color: #336666">尼古拉斯赵四</h4>
-                    <h4 class="weui-media-box__title" style="font-size: 14px">
-                        <div>
-                            <rate show-text allow-half v-model="rate" disabled style="font-size: 15px">
-                                <span style="color: #f5a623; margin-left: -20px">4分</span>
-                            </rate>
-                        </div>
-                    </h4>
-                    <p class="weui-media-box__desc">不错，器大活好</p>
-                </div>
-                <div class="weui-media-box__bd" style="float: right;text-align: right">
-                    <h4 class="weui-media-box__title" style="color: #cc99cc">08-20</h4>
-                </div>
-            </a>
-            <div class="weui-panel__bd display-none" style="display: none;background-color: #f2f2f2">
-                <div class="weui-media-box weui-media-box_text">
-                    <div style="border: 1px solid #cc99cc;border-radius: 2px;width: 4px;height: 4px;"></div>
-                    <div style="margin-left: 2px;border-left: 1px solid #cc99cc;height:50px;">
-                        <h4 class="weui-media-box__desc " style="margin-left: 15px;margin-bottom: 0;">业绩流水号</h4>
-                        <p class="weui-media-box__title" style="margin-left: 15px;color:#cc99cc ">W-001-023563</p>
-                    </div>
-                    <div style="border: 1px solid #cc99cc;border-radius: 2px;width: 4px;height: 4px;"></div>
-                    <h4 class="weui-media-box__desc " style="margin-left: 15px;margin-bottom: 0;margin-top: -10px">
-                        业绩金额（元）</h4>
-                    <p class="weui-media-box__title" style="margin-left: 15px;color:#cc99cc">199</p>
-                </div>
-            </div>
-        </div>
-    </div>
+        <row style="margin-top: 10px">
+            <card :bordered="false" dis-hover>
+                <row>
+                    <i-col span="6">
+                        <i-button long>评价</i-button>
+                    </i-col>
+                    <i-col span="6">
+                        <i-button long>评价</i-button>
+                    </i-col>
+                </row>
+            </card>
+        </row>
+        <div style="height: 10%;width: 100%;position: fixed;bottom: 0;background-color: white;display: flex;">
 
-    <div style="height: 10%;width: 100%;position: fixed;bottom: 0;background-color: white;display: flex;">
-        <div style="height: 100%;flex: 0 0 25%;display: flex;align-items: center;justify-content: center;border-right: 1px solid #f2f2f2">
-            <div style="width: 40px">
-                <img src="../src/分享.png" alt="" style="height: 25px;width:25px">
-                <h1 style="font-size: 14px;font-weight: 200;">分享</h1>
+
+            <div style="height: 100%;flex: 0 0 25%;display: flex;align-items: center;justify-content: center;border-right: 1px solid #f2f2f2">
+                <div style="width: 40px">
+                    <img src="../src/分享.png" alt="" style="height: 25px;width:25px">
+                    <h1 style="font-size: 14px;font-weight: 200;">分享</h1>
+                </div>
+            </div>
+            <div style="height: 100%;flex: 0 75%;display: flex;align-items: center;justify-content: center">
+                <button style="width: 85%;height: 70%;background-color: #ff3399;color: white;border-radius: 5px;font-size: 18px">选她</button>
             </div>
         </div>
-        <div style="height: 100%;flex: 0 75%;display: flex;align-items: center;justify-content: center">
-            <button style="width: 85%;height: 70%;background-color: #ff3399;color: white;border-radius: 5px;font-size: 18px">选她</button>
-        </div>
     </div>
-</div>
 </body>
 <script type="text/javascript" src="../js/jweixin.js"></script>
 <script type="text/javascript" src="../js/example.js"></script>
@@ -166,21 +134,56 @@
 <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
 <script type="text/javascript" src="http://unpkg.com/iview/dist/iview.min.js"></script>
 <script type="text/javascript">
-    
     function getQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
         var r = window.location.search.substr(1).match(reg);
         if (r != null) return unescape(r[2]);
         return null;
     }
-    
+
+    function getPar(par) {
+        //获取当前URL
+        var local_url = document.location.href;
+        //获取要取得的get参数位置
+        var get = local_url.indexOf(par + "=");
+        if (get == -1) {
+            return false;
+        }
+        //截取字符串
+        var get_par = local_url.slice(par.length + get + 1);
+        //判断截取后的字符串是否还有其他get参数
+        var nextPar = get_par.indexOf("&");
+        if (nextPar != -1) {
+            get_par = get_par.slice(0, nextPar);
+        }
+        return get_par;
+    }
+
+    var id = getPar('job_number')
+    var back = {};
+    $.ajax({
+        type: 'POST',
+        async: false,
+        data: {
+            id: id
+        },
+        dataType: 'json',
+        url: '../php/gettechnicianpage.php',
+    }).done((data) => {
+        if (data.status == 1) {
+            back = data.data
+        }
+    })
+
     new Vue({
         el: '#app',
         data: {
-            rate:0
+            data: {},
+            count: 0
         },
-        created(){
-            var that = this;
+        created() {
+            this.data = back
+            this.count = this.data.feedback.length
         }
     })
 </script>
