@@ -117,9 +117,10 @@
                     for (var i = 0; i < result.data.length; i++) {
                         var info = result.data[i];
                         if (info.time === null) info.time = "未知";
+                        else info.time = info.time.substring(0, 10)
                         that.photolist.push({
                             "url": info.img,
-                            "time": info.time.substring(0, 10)
+                            "time": info.time
                         })
                     }
                     //记录已经录入过的时间
