@@ -48,12 +48,11 @@
             <span>当前状态</span>
             <span style="margin-left: 20px;color: #ff0033;">空闲</span>
         </div>
-        <div style="height: 5%;width: 100%;background-color: white;display: flex;align-items: center;">
-            <span>请选择服务</span>
-        </div>
+
         <div>
             <row style="margin-top: 10px">
                 <card :bordered="false" dis-hover>
+                    <span>请选择服务</span>
                     <row :gutter="2">
                         <i-col span="6" v-for='item in data.technician.skills'>
                             <i-button long>{{item.name}}</i-button>
@@ -65,7 +64,7 @@
         <div class="weui-flex" style="justify-content: center;align-items: center;height: 14%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;margin-top: 10px">
             <div class="box weui-flex" style="width: 100%; height: 100%;justify-content: center;align-items: center;">
                 <div class="item weui-flex__item" style="text-align: center;height: 100%" v-for='item in data.technician.photo'>
-                    <img v-bind:src="item" alt="" style="height: 100%;width: 100%;">
+                    <img @click="to_album" v-bind:src="item" alt="" style="height: 100%;width: 100%;">
                 </div>
             </div>
         </div>
@@ -174,7 +173,7 @@
             count: 0,
             job_number: "",
             start_time: "",
-            overlay:true,
+            overlay: true,
         },
         methods: {
             down_order() {
@@ -182,6 +181,10 @@
                 window.location.href = "confirm-order.html?job_number=" + that.job_number +
                     "&start-time=" + that.start_time
             },
+            to_album(){
+                var that = this;
+                window.location.href = "album.html?id=" + that.job_number
+            }
         },
         created() {
             var that = this;

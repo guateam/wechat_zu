@@ -49,8 +49,9 @@
                     </i-col>
                     <i-col span="12">
                         <i-select @on-change="select_service" v-model="selector" placeholder="选择服务">
-                            <i-option v-for="service in serviceList" :value="service.value" :key="service.value">{{
-                                service.label }}</i-option>
+                            <i-option v-for="service in serviceList" :value="service.value" :key="service.value">
+                                {{service.label }}
+                            </i-option>
                         </i-select>
                     </i-col>
                 </row>
@@ -165,9 +166,9 @@
 </body>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
-<!-- <script type="text/javascript" src="http://unpkg.com/iview/dist/iview.min.js"></script> -->
+<script type="text/javascript" src="http://unpkg.com/iview/dist/iview.min.js"></script>
 <script src="https://cdn.bootcss.com/element-ui/2.4.0/index.js"></script>
-<script src="https://cdn.bootcss.com/iview/2.14.0/iview.min.js"></script>
+<!-- <script src="https://cdn.bootcss.com/iview/2.14.0/iview.min.js"></script> -->
 <script>
     function getQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
@@ -275,6 +276,11 @@
         },
         created() {
             var that = this;
+            var myDate = new Date();
+            h = myDate.getHours();
+            m = myDate.getMinutes();
+            if(m<10)m="0"+m;
+            that.timePick = h+":"+m;
             $.post("../php/getservice.php").done((result) => {
                 result = JSON.parse(result);
                 if (result.status) {
