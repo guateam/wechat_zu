@@ -34,7 +34,9 @@
                 <row :gutter="16" type="flex" justify="space-between">
                     <i-col span="11" offset="1">
                         <el-time-picker v-model="timePick" :picker-options="{
-                                selectableRange: '00:00:00 - 23:59:59'
+                                start:'8:00',
+                                end:'12:00',
+                                step:'00:15'
                             }"
                             editable="flase" format="HH:mm" value-format="HH:mm" style="width: 120px" size="small"
                             placeholder="预约时间">
@@ -194,6 +196,8 @@
                 }],
                 selector: null,
                 list: [],
+                open:"",
+                close:"",
             }
         },
         watch: {
@@ -203,8 +207,12 @@
                     var myDate = new Date();
                     h = myDate.getHours();
                     m = myDate.getMinutes();
+                    if(h<10)h = "0"+h;
                     if (m < 10) m = "0" + m;
-                    that.timePick = h + ":" + m;
+                    var str = h + ":" + m;
+                    if(str < that.open || str > that.close) that.timePick = that.open;
+                    else  that.timePick = str
+
                 }
             }
         },
@@ -301,6 +309,13 @@
                             discount: service['discount'],
                         })
                     }
+                }
+            });
+            $.post("../php/getshoptime.php").done((result)=>{
+                result = JSON.parse(result);
+                if(result.status == 1){
+                    that.open = result.data.open_time;
+                    that.close = result.data.close_time;
                 }
             });
             $.post("../php/getalltech.php").done((result) => {
