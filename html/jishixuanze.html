@@ -163,6 +163,7 @@
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
 <script type="text/javascript" src="../vendor/iview/dist/iview.min.js"></script>
+<script type="text/javascript" src="../js/sweetalert2.all.js"></script>
 <script src="https://cdn.bootcss.com/element-ui/2.4.0/index.js"></script>
 <!-- <script src="https://cdn.bootcss.com/iview/2.14.0/iview.min.js"></script> -->
 <script>
@@ -239,12 +240,22 @@
             },
             down_order() {
                 var that = this;
+                var count = 0;
                 for (var i = 0; i < that.list.length; i++) {
                     if (that.list[i].check == 1) {
                         window.location.href = "confirm-order.html?job_number=" + that.list[i].job_number +
                             "&start-time=" + that.timePick + "&sv=all"
                         break;
+                    }else{
+                        count++;
                     }
+                }
+                if(count== that.list.length){
+                    swal({
+                        text:"至少选择一位技师",
+                        confirmButtonText: "好的",
+                        width: 240,
+                    })
                 }
             },
             button_click(idx) {
