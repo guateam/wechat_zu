@@ -68,6 +68,11 @@
                 </div>
             </div>
         </div>
+        <div class="weui-flex" style="justify-content: center;align-items: center;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;margin-top: 10px">
+            <video alt="" style="height: 100%;width: 100%;" controls>
+                <source v-bind:src="data.technician.vcr" type="video/mp4">
+            </video>
+        </div>
         <div style="height: 5%;width: 100%;background-color: white;display: flex;align-items: center;margin-top: 20px">
             <span style="margin-left: 10px">评价</span>
             <span style="margin-left: 20px;color: #ff0033;">
@@ -191,8 +196,8 @@
                 }
                 if (uncheck == that.skill_list.length) {
                     swal({
-                        text:"请至少选择一项服务",
-                        width:220
+                        text: "请至少选择一项服务",
+                        width: 220
                     })
                 } else {
                     str = str.substring(0, str.length - 1);
