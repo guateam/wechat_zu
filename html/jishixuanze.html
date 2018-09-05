@@ -33,15 +33,15 @@
                 <row>请选择预约时间:</row>
                 <row :gutter="16" type="flex" justify="space-between">
                     <i-col span="11" offset="1">
-                        <el-time-picker v-model="timePick" :picker-options="{
-                                start:'8:00',
-                                end:'12:00',
-                                step:'00:15'
-                            }"
-                            editable="flase" format="HH:mm" value-format="HH:mm" style="width: 120px" size="small"
-                            placeholder="预约时间">
-                        </el-time-picker>
-                        <!-- <time-picker v-model="timePick" format="HH:mm" placeholder="选择预约时间" :steps="[1, 15, 1]" style="width: 120px"></time-picker> -->
+                        <el-time-select
+                                v-model="timePick"
+                                :picker-options="{ start: '00:00', step: '00:10', end: '23:50' }"
+                                :editable="false"
+                                :clearable="false"
+                                size="small"
+                                style="width: 120px"
+                                placeholder="选择时间">
+                        </el-time-select>
                     </i-col>
                     <i-col span="12">
                         <i-select @on-change="select_service" v-model="selector" placeholder="选择服务">
@@ -58,7 +58,7 @@
             <card :bordered="false" dis-hover>
                 <row :gutter="2">
                     <i-col span="6">
-                        <i-button v-bind:type="button_type[0]" @click="sort_by(0,'rate')" long>评价</i-button>
+                        <i-button :type="button_type[0]" @click="sort_by(0,'rate')" long>评价</i-button>
                     </i-col>
                     <i-col span="6">
                         <i-button :type="button_type[1]" @click="sort_by(1,'hot')" long>人气</i-button>
@@ -73,27 +73,27 @@
             </card>
         </row>
 
-        <row style="margin-top: 6px" v-for="item in list" v-show="item.show">
-            <card :bordered="false" dis-hover>
+        <row style="margin-bottom: 15%; margin-top: 6px;">
+            <card :bordered="false" dis-hover v-for="item in list" v-show="item.show" style="margin-bottom: 6px">
                 <row type="flex" justify="space-between" align="middle" :gutter="16">
-                    <i-col span="5">
-                        <row type="flex">
-                            <i-col span="24">
-                                <div style="text-align: center">
-                                    <img @click="tech_info(item.job_number)" :src="item.avatar_url" style="height: 60px; width: 60px; border-radius: 50px;" />
-                                </div>
-                            </i-col>
-                        </row>
+                    <i-col span="5" @click.native="tech_info(item.job_number)">
                         <row>
                             <i-col span="24">
-                                <p style="text-align: center; font-size: 12px; color: gray;">
+                                <p style="text-align: center; font-size: 12px; color: gray; transform: translateY(-40%);">
                                     {{ item.job_number }}号
                                 </p>
                             </i-col>
                         </row>
+                        <row type="flex">
+                            <i-col span="24">
+                                <div style="text-align: center">
+                                    <img :src="item.avatar_url" style="height: 60px; width: 60px; border-radius: 50px;" />
+                                </div>
+                            </i-col>
+                        </row>
                     </i-col>
 
-                    <i-col span="15">
+                    <i-col span="15" @click.native="tech_info(item.job_number)">
                         <row style="margin-top: -10px" type="flex" align="bottom">
                             <i-col span="18">
                                 <rate show-text allow-half v-model="item.rate" disabled style="font-size: 15px">
@@ -120,7 +120,8 @@
                         </div>
                     </i-col>
                 </row>
-                <row type="flex" justify="start" style="margin-top: 5px" :gutter="16">
+
+                <row type="flex" justify="start" style="margin-top: 5px" :gutter="16" @click.native="tech_info(item.job_number)">
                     <i-col span="5">
                         <p style="text-align: center">
                             {{ item.level }}级技师
@@ -135,24 +136,26 @@
                 </row>
             </card>
         </row>
-        <back-top></back-top>
-        <div style="height: 10%;width: 100%;position: fixed;bottom: 0;background-color: white;display: flex;">
-            <div style="height: 100%;flex: 0 0 25%;display: flex;align-items: center;justify-content: center">
-                <div style="width: 40px">
-                    <img src="../src/电话.png" alt="" style="height: 25px;width:25px">
-                    <h1 style="font-size: 14px;font-weight: 200;">客服</h1>
+        <!--<back-top></back-top>-->
+        <row>
+            <div style="height: 10%;width: 100%;position: fixed;bottom: 0;background-color: white;display: flex;">
+                <div style="height: 100%;flex: 0 0 25%;display: flex;align-items: center;justify-content: center">
+                    <div style="width: 40px">
+                        <img src="../src/电话.png" alt="" style="height: 25px;width:25px">
+                        <h1 style="font-size: 14px;font-weight: 200;">客服</h1>
+                    </div>
+                </div>
+                <div style="height: 100%;flex: 0 0 25%;display: flex;align-items: center;justify-content: center">
+                    <div style="width: 40px">
+                        <img src="../src/分享.png" alt="" style="height: 25px;width:25px">
+                        <h1 style="font-size: 14px;font-weight: 200;">分享</h1>
+                    </div>
+                </div>
+                <div style="height: 100%;flex: 0 50%;display: flex;align-items: center;justify-content: center">
+                    <button @click="down_order" style="width: 85%;height: 70%;background-color: #2b85e4;color: white;border-radius: 5px;font-size: 18px">立即下单</button>
                 </div>
             </div>
-            <div style="height: 100%;flex: 0 0 25%;display: flex;align-items: center;justify-content: center">
-                <div style="width: 40px">
-                    <img src="../src/分享.png" alt="" style="height: 25px;width:25px">
-                    <h1 style="font-size: 14px;font-weight: 200;">分享</h1>
-                </div>
-            </div>
-            <div style="height: 100%;flex: 0 50%;display: flex;align-items: center;justify-content: center">
-                <button @click="down_order" style="width: 85%;height: 70%;background-color: #2b85e4;color: white;border-radius: 5px;font-size: 18px">立即下单</button>
-            </div>
-        </div>
+        </row>
         <div id="modal-overlay" v-show="overlay">
             <div class="modal-data">
                 <img src="../src/loading.gif" />
@@ -185,7 +188,7 @@
                     "default",
                     "default",
                 ],
-                timePick: '',
+                timePick: new Date().toTimeString().slice(0, 5),  // 当前时间
                 vip_discount: 100,
                 serviceList: [{
                     value: -1,
@@ -196,25 +199,166 @@
                     discount: 100,
                 }],
                 selector: null,
-                list: [],
-                open:"",
-                close:"",
-            }
-        },
-        watch: {
-            timePick: () => {
-                var that = this;
-                if (that.timePick == '') {
-                    var myDate = new Date();
-                    h = myDate.getHours();
-                    m = myDate.getMinutes();
-                    if(h<10)h = "0"+h;
-                    if (m < 10) m = "0" + m;
-                    var str = h + ":" + m;
-                    if(str < that.open || str > that.close) that.timePick = that.open;
-                    else  that.timePick = str
-
-                }
+                list: [
+                    {
+                        avatar_url: 'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=3637558653,1735813698&fm=58',
+                        job_number: 'AKB48',
+                        description: '网红技师',
+                        photo_list: [
+                            'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3382581011,2165830761&fm=58',
+                            'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2090470704,2601273190&fm=58',
+                            'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=299702052,510253287&fm=58',
+                        ],
+                        rate: 4.2,
+                        price: 199,
+                        state: 1,
+                    },
+                    {
+                        avatar_url: 'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3382581011,2165830761&fm=58',
+                        job_number: 'SNH48',
+                        description: '技师',
+                        photo_list: [
+                            'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=3637558653,1735813698&fm=58',
+                            'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2090470704,2601273190&fm=58',
+                            'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=299702052,510253287&fm=58',
+                        ],
+                        rate: 3.8,
+                        price: 120,
+                        state: 2,
+                    },
+                    {
+                        avatar_url: 'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2090470704,2601273190&fm=58',
+                        job_number: 'AV314',
+                        description: '网约技师',
+                        photo_list: [
+                            'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3382581011,2165830761&fm=58',
+                            'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=3637558653,1735813698&fm=58',
+                            'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=299702052,510253287&fm=58',
+                        ],
+                        rate: 2.0,
+                        price: 100,
+                        state: 2,
+                    },
+                    {
+                        avatar_url: 'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=3637558653,1735813698&fm=58',
+                        job_number: 'AKB48',
+                        description: '网红技师',
+                        photo_list: [
+                            'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3382581011,2165830761&fm=58',
+                            'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2090470704,2601273190&fm=58',
+                            'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=299702052,510253287&fm=58',
+                        ],
+                        rate: 5,
+                        price: 500,
+                        state: 1,
+                    },
+                    {
+                        avatar_url: 'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3382581011,2165830761&fm=58',
+                        job_number: 'SNH48',
+                        description: '技师',
+                        photo_list: [
+                            'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=3637558653,1735813698&fm=58',
+                            'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2090470704,2601273190&fm=58',
+                            'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=299702052,510253287&fm=58',
+                        ],
+                        rate: 3.8,
+                        price: 120,
+                        state: 2,
+                    },
+                    {
+                        avatar_url: 'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2090470704,2601273190&fm=58',
+                        job_number: 'AV314',
+                        description: '网约技师',
+                        photo_list: [
+                            'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3382581011,2165830761&fm=58',
+                            'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=3637558653,1735813698&fm=58',
+                            'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=299702052,510253287&fm=58',
+                        ],
+                        rate: 2.0,
+                        price: 100,
+                        state: 2,
+                    },
+                    {
+                        avatar_url: 'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=3637558653,1735813698&fm=58',
+                        job_number: 'AKB48',
+                        description: '网红技师',
+                        photo_list: [
+                            'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3382581011,2165830761&fm=58',
+                            'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2090470704,2601273190&fm=58',
+                            'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=299702052,510253287&fm=58',
+                        ],
+                        rate: 4.2,
+                        price: 199,
+                        state: 1,
+                    },
+                    {
+                        avatar_url: 'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3382581011,2165830761&fm=58',
+                        job_number: 'SNH48',
+                        description: '技师',
+                        photo_list: [
+                            'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=3637558653,1735813698&fm=58',
+                            'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2090470704,2601273190&fm=58',
+                            'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=299702052,510253287&fm=58',
+                        ],
+                        rate: 3.8,
+                        price: 120,
+                        state: 2,
+                    },
+                    {
+                        avatar_url: 'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2090470704,2601273190&fm=58',
+                        job_number: 'AV314',
+                        description: '网约技师',
+                        photo_list: [
+                            'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3382581011,2165830761&fm=58',
+                            'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=3637558653,1735813698&fm=58',
+                            'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=299702052,510253287&fm=58',
+                        ],
+                        rate: 2.0,
+                        price: 100,
+                        state: 2,
+                    },
+                    {
+                        avatar_url: 'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=3637558653,1735813698&fm=58',
+                        job_number: 'AKB48',
+                        description: '网红技师',
+                        photo_list: [
+                            'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3382581011,2165830761&fm=58',
+                            'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2090470704,2601273190&fm=58',
+                            'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=299702052,510253287&fm=58',
+                        ],
+                        rate: 4.2,
+                        price: 199,
+                        state: 1,
+                    },
+                    {
+                        avatar_url: 'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3382581011,2165830761&fm=58',
+                        job_number: 'SNH48',
+                        description: '技师',
+                        photo_list: [
+                            'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=3637558653,1735813698&fm=58',
+                            'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2090470704,2601273190&fm=58',
+                            'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=299702052,510253287&fm=58',
+                        ],
+                        rate: 3.8,
+                        price: 120,
+                        state: 2,
+                    },
+                    {
+                        avatar_url: 'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2090470704,2601273190&fm=58',
+                        job_number: 'AV314',
+                        description: '网约技师',
+                        photo_list: [
+                            'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3382581011,2165830761&fm=58',
+                            'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=3637558653,1735813698&fm=58',
+                            'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=299702052,510253287&fm=58',
+                        ],
+                        rate: 0,
+                        price: 80,
+                        state: 2,
+                    },
+                ],
+                open: '',
+                close: '',
             }
         },
         methods: {
@@ -235,8 +379,9 @@
                 window.location.href = url + "?job_number=" + job_number
             },
             tech_info(job_number) {
-                var that = this;
-                window.location.href = "tech-info.html?job_number=" + job_number + "&start-time=" + that.timePick
+                let timepick = new Date((new Date().toDateString() + ' ' + app.timePick));
+                if (new Date() > timepick) this.timePick = new Date().toTimeString().slice(0, 5);
+                window.location.href = "tech-info.html?job_number=" + job_number + "&start-time=" + this.timePick
             },
             down_order() {
                 var that = this;
@@ -300,57 +445,57 @@
             },
         },
         created() {
-            var that = this;
-            var myDate = new Date();
-            h = myDate.getHours();
-            m = myDate.getMinutes();
-            if (m < 10) m = "0" + m;
-            that.timePick = h + ":" + m;
-            $.post("../php/getservice.php").done((result) => {
-                result = JSON.parse(result);
-                if (result.status) {
-                    for (var i = 0; i < result.data.length; i++) {
-                        var service = result.data[i];
-                        that.serviceList.push({
-                            value: service['ID'],
-                            label: service['name'],
-                            info: service['info'],
-                            duration: service['duration'],
-                            price: service['price'],
-                            discount: service['discount'],
-                        })
-                    }
-                }
-            });
-            $.post("../php/getshoptime.php").done((result)=>{
-                result = JSON.parse(result);
-                if(result.status == 1){
-                    that.open = result.data.open_time;
-                    that.close = result.data.close_time;
-                }
-            });
-            $.post("../php/getalltech.php").done((result) => {
-                result = JSON.parse(result);
-                for (var i = 0; i < result.data.length; i++) {
-                    var tech = result.data[i];
-                    that.list.push({
-                        avatar_url: tech.avatar_url.replace('..', '/wechat_zu_technician/'),
-                        job_number: tech.job_number,
-                        //description: '网红技师',
-                        photo_list: tech.photo_list,
-                        rate: tech.rate,
-                        state: tech.busy,
-                        skills: tech.skill,
-                        level: tech.level,
-                        hot: tech.hot,
-                        check: 0,
-                        show: true
-                    })
-                }
-                that.sort_by(0, 'rate');
-                that.overlay = false;
-            })
-
+            // var that = this;
+            // var myDate = new Date();
+            // h = myDate.getHours();
+            // m = myDate.getMinutes();
+            // if (m < 10) m = "0" + m;
+            // that.timePick = h + ":" + m;
+            // $.post("../php/getservice.php").done((result) => {
+            //     result = JSON.parse(result);
+            //     if (result.status) {
+            //         for (var i = 0; i < result.data.length; i++) {
+            //             var service = result.data[i];
+            //             that.serviceList.push({
+            //                 value: service['ID'],
+            //                 label: service['name'],
+            //                 info: service['info'],
+            //                 duration: service['duration'],
+            //                 price: service['price'],
+            //                 discount: service['discount'],
+            //             })
+            //         }
+            //     }
+            // });
+            // $.post("../php/getshoptime.php").done((result)=>{
+            //     result = JSON.parse(result);
+            //     if(result.status == 1){
+            //         that.open = result.data.open_time;
+            //         that.close = result.data.close_time;
+            //     }
+            // });
+            // $.post("../php/getalltech.php").done((result) => {
+            //     result = JSON.parse(result);
+            //     for (var i = 0; i < result.data.length; i++) {
+            //         var tech = result.data[i];
+            //         that.list.push({
+            //             avatar_url: tech.avatar_url.replace('..', '/wechat_zu_technician/'),
+            //             job_number: tech.job_number,
+            //             //description: '网红技师',
+            //             photo_list: tech.photo_list,
+            //             rate: tech.rate,
+            //             state: tech.busy,
+            //             skills: tech.skill,
+            //             level: tech.level,
+            //             hot: tech.hot,
+            //             check: 0,
+            //             show: true
+            //         })
+            //     }
+            //     that.sort_by(0, 'rate');
+            //     that.overlay = false;
+            // })
+            this.overlay = false;
         }
     };
     let Component = Vue.extend(Main);
