@@ -29,7 +29,7 @@
                 <div class="weui-cell__bd">
                     <p>预约时间</p>
                 </div>
-                <div class="weui-cell__ft">{{start_time}}&nbsp;&nbsp;/&nbsp;&nbsp;{{end_time}}</div>
+                <div class="weui-cell__ft">{{start_time}}&nbsp;&nbsp;~&nbsp;&nbsp;{{end_time}}</div>
             </div>
         </div>
         <div class="weui-cells__title">服务项目</div>
@@ -38,11 +38,12 @@
                 <div class="weui-cell__bd" style="transform: translateX(-68px)">
                     <div class="weui-cell">
                         <div class="weui-cell__bd">
-                            <p style="margin-left: 20%">{{item.name}}
-                                <span style="color: #29a3a3;margin-left: 10px;font-family: 华文雅黑;">
+                            <p style="margin-left: 20%">
+                                <span style="display:inline-block ;width:80px">{{item.name}}</span>
+                                <span style="display:inline-block ;width:80px;color: #29a3a3;margin-left: 10px;font-family: 华文雅黑;">
                                     ￥{{item.price}}
                                 </span>
-                                <span style="color: #29a3a3;margin-left: 10px;font-family: 华文雅黑;">
+                                <span style="display:inline-block ;width:80px;color: #29a3a3;margin-left: 10px;font-family: 华文雅黑;">
                                     {{item.duration}}分钟
                                 </span>
                             </p>
