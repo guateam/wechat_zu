@@ -88,6 +88,7 @@
     <script type="text/javascript" src="../js/weui-min.js"></script>
     <script type="text/javascript" src="../js/zepto.js"></script>
     <script type="text/javascript" src="../js/jquery.js"></script>
+    <script type="text/javascript" src="../js/sweetalert2.all.js"></script>
     <script type="text/javascript" src="../js/echarts-simple-min.js"></script>
     <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
     <script type="text/javascript">
@@ -112,25 +113,38 @@
                 remove(name) {
                     var that = this;
                     var skill = that.skill
-                    for (var i in skill) {
-                        if (skill[i].name == name) {
-                            var h = that.end_time.substring(0, 2)
-                            var m = that.end_time.substring(3, 5)
-                            m -= parseInt(skill[i].duration) % 60;
-                            if (m < 0) {
-                                m += 60;
-                                h -= 1;
-                            }
-                            if (m < 10) m = "0" + m;
-                            h -= parseInt(skill[i].duration / 60);
-                            if (h < 0) h += 24;
-                            that.end_time = h + ":" + m;
+                    swal({
+                        text: "确认移除该服务吗？",
+                        allowOutsideClick: false,
+                        showConfirmButton: true,
+                        showCancelButton: true,
+                        confirmButtonText: "删除",
+                        cancelButtonText: "取消",
+                        width: 280,
+                    }).then((res) => {
+                        if (res.value) {
+                            for (var i in skill) {
+                                if (skill[i].name == name) {
+                                    var h = parseInt(that.end_time.substring(0, 2))
+                                    var m = parseInt(that.end_time.substring(3, 5))
+                                    m -= parseInt(skill[i].duration) % 60;
+                                    if (m < 0) {
+                                        m += 60;
+                                        h -= 1;
+                                    }
+                                    if (m < 10) m = "0" + m;
+                                    h -= parseInt(skill[i].duration / 60);
+                                    if (h < 0) h += 24;
+                                    that.end_time = h + ":" + m;
 
-                            that.total_price -= skill[i].price;
-                            that.skill.splice(i, 1);
+                                    that.total_price -= skill[i].price;
+                                    that.skill.splice(i, 1);
+                                }
+                            }
+
                         }
-                    }
-                },
+                    });
+                }
             },
             created() {
                 var that = this;
@@ -163,7 +177,7 @@
                                         "name": info.name,
                                         'duration': info.duration,
                                         'price': info.price,
-                                        'id':info.ID,
+                                        'id': info.ID,
                                     })
                                     that.total_price += parseInt(info.price);
                                     break;

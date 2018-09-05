@@ -112,7 +112,7 @@
                 if (result.status == 1) {
                     for (var i = 0; i < result.data.length; i++) {
                         var info = result.data[i];
-                        if (info.time === null) info.time = "未知";
+                        if (info.time === null || info.time =='') info.time = "未知";
                         else info.time = info.time.substring(0, 10)
                         that.photolist.push({
                             "url": info.img.replace('..', '/wechat_zu_technician/'),

@@ -35,7 +35,9 @@
                     <i-col span="11" offset="1">
                         <el-time-picker v-model="timePick" :picker-options="{
                                 selectableRange: '00:00:00 - 23:59:59'
-                            }" editable="flase" format="HH:mm" value-format="HH:mm" style="width: 120px" size="small" placeholder="预约时间">
+                            }"
+                            editable="flase" format="HH:mm" value-format="HH:mm" style="width: 120px" size="small"
+                            placeholder="预约时间">
                         </el-time-picker>
                         <!-- <time-picker v-model="timePick" format="HH:mm" placeholder="选择预约时间" :steps="[1, 15, 1]" style="width: 120px"></time-picker> -->
                     </i-col>
@@ -194,6 +196,18 @@
                 list: [],
             }
         },
+        watch: {
+            timePick: () => {
+                var that = this;
+                if (that.timePick == '') {
+                    var myDate = new Date();
+                    h = myDate.getHours();
+                    m = myDate.getMinutes();
+                    if (m < 10) m = "0" + m;
+                    that.timePick = h + ":" + m;
+                }
+            }
+        },
         methods: {
             choose_tech(item) {
                 if (item.state === 1) return;
@@ -254,8 +268,8 @@
             sort_by(idx, keyName) {
                 this.button_click(idx);
                 var that = this;
-                var sort = function(keyName) {
-                    return function(objectN, objectM) {
+                var sort = function (keyName) {
+                    return function (objectN, objectM) {
                         var valueN = objectN[keyName]
                         var valueM = objectM[keyName]
                         if (valueN < valueM) return 1
