@@ -243,6 +243,7 @@
                         text:"至少选择一位技师",
                         confirmButtonText: "好的",
                         width: 240,
+                        
                     })
                 }
             },
@@ -288,57 +289,56 @@
             },
         },
         created() {
-            // var that = this;
-            // var myDate = new Date();
-            // h = myDate.getHours();
-            // m = myDate.getMinutes();
-            // if (m < 10) m = "0" + m;
-            // that.timePick = h + ":" + m;
-            // $.post("../php/getservice.php").done((result) => {
-            //     result = JSON.parse(result);
-            //     if (result.status) {
-            //         for (var i = 0; i < result.data.length; i++) {
-            //             var service = result.data[i];
-            //             that.serviceList.push({
-            //                 value: service['ID'],
-            //                 label: service['name'],
-            //                 info: service['info'],
-            //                 duration: service['duration'],
-            //                 price: service['price'],
-            //                 discount: service['discount'],
-            //             })
-            //         }
-            //     }
-            // });
-            // $.post("../php/getshoptime.php").done((result)=>{
-            //     result = JSON.parse(result);
-            //     if(result.status == 1){
-            //         that.open = result.data.open_time;
-            //         that.close = result.data.close_time;
-            //     }
-            // });
-            // $.post("../php/getalltech.php").done((result) => {
-            //     result = JSON.parse(result);
-            //     for (var i = 0; i < result.data.length; i++) {
-            //         var tech = result.data[i];
-            //         that.list.push({
-            //             avatar_url: tech.avatar_url.replace('..', '/wechat_zu_technician/'),
-            //             job_number: tech.job_number,
-            //             //description: '网红技师',
-            //             photo_list: tech.photo_list,
-            //             rate: tech.rate,
-            //             state: tech.busy,
-            //             skills: tech.skill,
-            //             level: tech.level,
-            //             hot: tech.hot,
-            //             check: 0,
-            //             show: true
-            //         })
-            //     }
-            //     that.sort_by(0, 'rate');
-            //     that.overlay = false;
-            // })
-            this.overlay = false;
+            var that = this;
+            var myDate = new Date();
+            h = myDate.getHours();
+            m = myDate.getMinutes();
+            if (m < 10) m = "0" + m;
+            that.timePick = h + ":" + m;
+            $.post("../php/getservice.php").done((result) => {
+                result = JSON.parse(result);
+                if (result.status) {
+                    for (var i = 0; i < result.data.length; i++) {
+                        var service = result.data[i];
+                        that.serviceList.push({
+                            value: service['ID'],
+                            label: service['name'],
+                            info: service['info'],
+                            duration: service['duration'],
+                            price: service['price'],
+                            discount: service['discount'],
+                        })
+                    }
+                }
+            });
+            $.post("../php/getshoptime.php").done((result)=>{
+                result = JSON.parse(result);
+                if(result.status == 1){
+                    that.open = result.data.open_time;
+                    that.close = result.data.close_time;
+                }
+            });
+            $.post("../php/getalltech.php").done((result) => {
+                result = JSON.parse(result);
+                for (var i = 0; i < result.data.length; i++) {
+                    var tech = result.data[i];
+                    that.list.push({
+                        avatar_url: tech.avatar_url.replace('..', '/wechat_zu_technician/'),
+                        job_number: tech.job_number,
+                        //description: '网红技师',
+                        photo_list: tech.photo_list,
+                        rate: tech.rate,
+                        state: tech.busy,
+                        skills: tech.skill,
+                        level: tech.level,
+                        hot: tech.hot,
+                        check: 0,
+                        show: true
+                    })
+                }
+                that.sort_by(0, 'rate');
+                that.overlay = false;
+            })
         }
     };
     let Component = Vue.extend(Main);
