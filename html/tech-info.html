@@ -17,9 +17,9 @@
 
 <body>
     <div id="app" style="height: 100%;">
-        <div style="width: 100%;height: 31%;background-image: url(../src/head-pic.png);background-repeat: no-repeat;display: flex;align-items: center;justify-content: center">
+        <div style="width: 100%;height: 33%;background-image: url(../src/head-pic.png);background-repeat: no-repeat;display: flex;align-items: center;justify-content: center">
             <div>
-                <img v-bind:src="data.technician.head" alt="" style="width: 60px;height: 60px;border-radius: 50%">
+                <img v-bind:src="data.technician.head" alt="" style="width: 80px;height: 80px;border-radius: 50%">
                 <div style="width: 200px;height: 50px">
                     <!-- <h1 style="font-size: 14px;font-weight: 200;color: white">资历：{{data.technician.entrytime}}</h1> -->
                     <h1 style="font-size: 14px;font-weight: 200;color: white">技能：{{data.technician.skill}}</h1>
@@ -84,7 +84,7 @@
                 （共{{count}}条）
             </span>
         </div>
-        <div class="weui-panel weui-panel_access" style="background-color: white;border-radius: 5px;margin-bottom: 20%">
+        <div class="weui-panel weui-panel_access" style="background-color: white;border-radius: 5px;margin-bottom: 30%">
             <div class="display-block" style="border-bottom: 1px solid #f2f2f2;" v-for='item in data.feedback'>
                 <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg ">
                     <div class="weui-media-box__hd" v-bind:style="item.head">
