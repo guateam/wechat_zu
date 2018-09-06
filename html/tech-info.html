@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="item weui-flex__item" style="text-align: center;border-right: 1px solid #f2f2f2">
-                    <h1 style="color: #ff9933;font-size: 24px"><span style="font-size: 14px">工号</span>{{job_number}}</h1>
+                    <h1 style="color: #ff9933;font-size: 24px"><span style="font-size: 14px"></span>{{job_number}}</h1>
                     <div><img src="../src/网红技师.png" alt=""> 网红技师
                     </div>
                 </div>
@@ -245,6 +245,10 @@
                             "name": skills[i].name,
                             'id': skills[i].id,
                         })
+                    }
+                    total_rate = 0;
+                    for(var i in data.feedback){
+                        total_rate+=data.feedback[i].rate;
                     }
                 }
                 that.overlay = false
