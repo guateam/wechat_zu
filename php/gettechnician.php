@@ -56,7 +56,8 @@ function gettechnician($id){
             'entrytime'=>$entrytime,
             'skills'=>$skilllist,
             'gender'=>$gender,
-            'vcr'=>$technician['vcr']
+            'vcr'=>$technician['vcr'],
+            'level'=>$technician['level']
         ];
         return $data;
     }

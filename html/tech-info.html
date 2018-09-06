@@ -21,7 +21,7 @@
             <div>
                 <img v-bind:src="data.technician.head" alt="" style="width: 60px;height: 60px;border-radius: 50%">
                 <div style="width: 200px;height: 50px">
-                    <h1 style="font-size: 14px;font-weight: 200;color: white">资历：{{data.technician.entrytime}}</h1>
+                    <!-- <h1 style="font-size: 14px;font-weight: 200;color: white">资历：{{data.technician.entrytime}}</h1> -->
                     <h1 style="font-size: 14px;font-weight: 200;color: white">技能：{{data.technician.skill}}</h1>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                 </div>
                 <div class="item weui-flex__item" style="text-align: center;border-right: 1px solid #f2f2f2">
                     <h1 style="color: #ff9933;font-size: 24px"><span style="font-size: 14px"></span>{{job_number}}</h1>
-                    <div><img src="../src/网红技师.png" alt=""> 网红技师
+                    <div><img src="../src/网红技师.png" alt=""> {{data.technician.level}}
                     </div>
                 </div>
                 <div class="item weui-flex__item" style="text-align: center;">
