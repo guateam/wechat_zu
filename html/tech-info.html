@@ -56,7 +56,8 @@
                     <span>请选择服务</span>
                     <row :gutter="2">
                         <i-col span="6" v-for='item in skill_list'>
-                            <i-button :type="item.check==true? 'primary':'default'" @click="choose_service(item.name)" long>{{item.name}}</i-button>
+                            <i-button :type="item.check==true? 'primary':'default'" @click="choose_service(item.name)"
+                                long>{{item.name}}</i-button>
                         </i-col>
                     </row>
                 </card>
@@ -69,7 +70,7 @@
                 </div>
             </div>
         </div>
-        <div  v-if="data.technician.vcr != ''" class="weui-flex" style="justify-content: center;align-items: center;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;margin-top: 10px">
+        <div v-if="data.technician.vcr != ''" class="weui-flex" style="justify-content: center;align-items: center;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;margin-top: 10px">
             <video alt="" style="height: 200px;width: 100%;" controls>
                 <source v-bind:src="data.technician.vcr" type="video/mp4">
             </video>
@@ -77,10 +78,10 @@
         <div style="height: 5%;width: 100%;background-color: white;display: flex;align-items: center;margin-top: 20px">
             <span style="margin-left: 10px">评价</span>
             <span style="margin-left: 20px;color: #ff0033;">
-                <rate show-text allow-half v-model="data.technician.rate" disabled style="font-size: 15px">
-                    <span style="color: #f5a623; margin-left: -20px">{{data.technician.rate}}分</span>
-            </rate>
-            （共{{count}}条）
+                <rate show-text allow-half v-model="total_rate" disabled style="font-size: 15px">
+                    <span style="color: #f5a623; margin-left: -20px">{{total_rate}}分</span>
+                </rate>
+                （共{{count}}条）
             </span>
         </div>
         <div class="weui-panel weui-panel_access" style="background-color: white;border-radius: 5px;margin-bottom: 20%">
@@ -183,14 +184,15 @@
             start_time: "",
             overlay: true,
             skill_list: [],
-            is_busy:false,
+            is_busy: false,
+            total_rate: 0,
         },
         methods: {
             down_order() {
                 var that = this;
-                if(that.is_busy){
-                    $(this).openWindow("",'该技师目前繁忙，不能选择',['好的']);
-                    return ;
+                if (that.is_busy) {
+                    $(this).openWindow("", '该技师目前繁忙，不能选择', ['好的']);
+                    return;
                 }
                 var str = "";
                 var uncheck = 0;
@@ -202,7 +204,7 @@
                     }
                 }
                 if (uncheck == that.skill_list.length) {
-                    $(this).openWindow("",'请至少选择一项服务',['好的']);
+                    $(this).openWindow("", '请至少选择一项服务', ['好的']);
                 } else {
                     str = str.substring(0, str.length - 1);
                     window.location.href = "confirm-order.html?job_number=" + that.job_number +
@@ -225,10 +227,10 @@
         },
         created() {
             var that = this;
-            
+
             that.job_number = getPar('job_number');
             that.start_time = getQueryString("start-time");
-            that.is_busy = getQueryString('state')=='1'?true:false;
+            that.is_busy = getQueryString('state') == '1' ? true : false;
             var back = {};
             $.ajax({
                 type: 'POST',
@@ -242,12 +244,20 @@
                 if (data.status == 1) {
                     back = data.data
                     that.data = back
-                    if(that.data.technician.vcr === null)
-                    {
+                    if (that.data.technician.vcr === null) {
                         console.log("null！！！！")
                         that.data.technician.vcr = '';
-                    } 
+                    }
                     that.count = that.data.feedback.length
+                    if (that.count > 0) {
+                        var total_rate = 0;
+                        for (var i in that.data.feedback) {
+                            var info = that.data.feedback[i];
+                            total_rate += parseInt(info.rate);
+                            console.log(total_rate);
+                        }
+                        that.total_rate = total_rate / that.count;
+                    }
                     var skills = that.data.technician.skills
                     for (var i in skills) {
                         that.skill_list.push({
@@ -256,10 +266,7 @@
                             'id': skills[i].id,
                         })
                     }
-                    total_rate = 0;
-                    for(var i in data.feedback){
-                        total_rate+=data.feedback[i].rate;
-                    }
+
                 }
                 that.overlay = false
             })
