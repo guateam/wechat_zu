@@ -294,6 +294,7 @@
             h = myDate.getHours();
             m = myDate.getMinutes();
             if (m < 10) m = "0" + m;
+            if(h<10)h="0"+h;
             that.timePick = h + ":" + m;
             $.post("../php/getservice.php").done((result) => {
                 result = JSON.parse(result);

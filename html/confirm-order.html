@@ -129,8 +129,9 @@
                                     if (m < 10) m = "0" + m;
                                     h -= parseInt(skill[i].duration / 60);
                                     if (h < 0) h += 24;
-                                    that.end_time = h + ":" + m;
+                                    if(h<10)h="0"+h;
 
+                                    that.end_time = h + ":" + m;
                                     that.total_price -= skill[i].price;
                                     that.skill.splice(i, 1);
                                 }
@@ -187,6 +188,8 @@
                         }
                         h += parseInt(duration / 60);
                         if (h >= 24) h -= 24;
+                        if(h<10)h="0"+h;
+                        
                         if (m < 10) m = "0" + m;
                         that.end_time = h + ":" + m;
                         that.overlay = false;

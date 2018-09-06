@@ -10,7 +10,7 @@ function getshop($id){
             'open_time'=>$shop[0]['open_time'],
             'close_time'=>$shop[0]['close_time'],
             'phone'=>$shop[0]['phone'],
-            'ip_adress'=>$shop[0]['ip_adress'],
+            'ip_adress'=>$shop[0]['ip_address'],
             ]
         ];
 }
