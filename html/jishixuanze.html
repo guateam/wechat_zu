@@ -77,7 +77,7 @@
         <row style="margin-bottom: 15%; margin-top: 6px;">
             <card :bordered="false" dis-hover v-for="item in list" v-show="item.show" style="margin-bottom: 6px">
                 <row type="flex" justify="space-between" align="middle" :gutter="16">
-                    <i-col span="5" @click.native="tech_info(item.job_number)">
+                    <i-col span="5" @click.native="tech_info(item.job_number,item.state)">
                         <row>
                             <i-col span="24">
                                 <p style="text-align: center; font-size: 12px; color: gray; transform: translateY(-40%);">
@@ -223,10 +223,10 @@
             navi(url, job_number) {
                 window.location.href = url + "?job_number=" + job_number
             },
-            tech_info(job_number) {
+            tech_info(job_number,state) {
                 let timepick = new Date((new Date().toDateString() + ' ' + app.timePick));
                 if (new Date() > timepick) this.timePick = new Date().toTimeString().slice(0, 5);
-                window.location.href = "tech-info.html?job_number=" + job_number + "&start-time=" + this.timePick
+                window.location.href = "tech-info.html?job_number=" + job_number + "&start-time=" + this.timePick + "&state=" + state
             },
             down_order() {
                 var that = this;
