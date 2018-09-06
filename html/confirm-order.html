@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../css/weui-min.css" />
     <link rel="stylesheet" href="../css/example.css" />
     <link rel="stylesheet" type="text/css" href="../css/overlay.css">
+    <link rel="stylesheet" href="../css/global.css" />
     <style>
 
     </style>
@@ -85,6 +86,7 @@
     <script type="text/javascript" src="../js/sweetalert2.all.js"></script>
     <script type="text/javascript" src="../js/echarts-simple-min.js"></script>
     <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
+    <script type="text/javascript" src="../js/windowOpen.js"></script>
     <script type="text/javascript">
         function getQueryString(name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
@@ -107,17 +109,10 @@
                 remove(name) {
                     var that = this;
                     var skill = that.skill
-                    swal({
-                        text: "确认移除该服务吗？",
-                        allowOutsideClick: false,
-                        showConfirmButton: true,
-                        showCancelButton: true,
-                        confirmButtonText: "删除",
-                        cancelButtonText: "取消",
-                        width: 280,
-                    }).then((res) => {
-                        if (res.value) {
-                            for (var i in skill) {
+                    
+                    $(this).openWindow("",'确认移除该服务吗',['不','好的'],()=>{
+                        console.log("函数执行了")
+                        for (var i in skill) {
                                 if (skill[i].name == name) {
                                     var h = parseInt(that.end_time.substring(0, 2))
                                     var m = parseInt(that.end_time.substring(3, 5))
@@ -136,8 +131,6 @@
                                     that.skill.splice(i, 1);
                                 }
                             }
-
-                        }
                     });
                 }
             },
@@ -189,7 +182,7 @@
                         h += parseInt(duration / 60);
                         if (h >= 24) h -= 24;
                         if(h<10)h="0"+h;
-                        
+
                         if (m < 10) m = "0" + m;
                         that.end_time = h + ":" + m;
                         that.overlay = false;

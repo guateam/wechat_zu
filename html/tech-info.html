@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../css/weui-min.css" />
     <link rel="stylesheet" href="../css/example.css" />
     <link rel="stylesheet" type="text/css" href="../css/overlay.css">
+    <link rel="stylesheet" href="../css/global.css" />
     <style>
 
     </style>
@@ -146,6 +147,7 @@
 <script type="text/javascript" src="../js/sweetalert.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
 <script type="text/javascript" src="../vendor/iview/dist/iview.min.js"></script>
+<script type="text/javascript" src="../js/windowOpen.js"></script>
 <script type="text/javascript">
     //获取url参数
     function getQueryString(name) {
@@ -195,10 +197,7 @@
                     }
                 }
                 if (uncheck == that.skill_list.length) {
-                    swal({
-                        text: "请至少选择一项服务",
-                        width: 220
-                    })
+                    $(this).openWindow("",'请至少选择一项服务',['好的']);
                 } else {
                     str = str.substring(0, str.length - 1);
                     window.location.href = "confirm-order.html?job_number=" + that.job_number +

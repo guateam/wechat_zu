@@ -4,7 +4,7 @@
 	var $oMasking;
 	var $oWindowContainer;
 	//打开弹窗方法
-	$.fn.openWindow = function(setTitle,setContents,setButton){
+	$.fn.openWindow = function(setTitle,setContents,setButton,setCallBack = null){
 		
 		//拼接弹窗内容，并且在调用打开弹窗方法时将内容塞进body
 		var _html ='<div class="window-masking"></div>'+
@@ -27,6 +27,11 @@
 		$('.cancel-button,.window-masking,.ack-button').on('click',function(){
 			closeWindow();
 		});
+		$(".confirm-button").on("click",()=>{
+			console.log("点了")
+			setCallBack();
+			closeWindow();
+		})
 		//设置蒙版展示
 		modal = new Modal();
 		console.log(setButton+","+setContents+","+setButton)
@@ -68,7 +73,7 @@
 		    //解析传过来的参数json
 		    var json=eval(obj);
 		   
-		    
+		    console.log(json);
 		    if(json.length==1){
 		    	//一个按钮
 		    	thismodal.find('a.ack-button').show().html(json[0]);
@@ -79,7 +84,7 @@
 		    	thismodal.find('a.confirm-button').show().html(json[1]);
 
 		    }
-		}
+		},
 	}
 	
 	})()

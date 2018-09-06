@@ -8,6 +8,7 @@
     <link href="https://cdn.bootcss.com/iview/2.14.0/styles/iview.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/element-ui/2.4.0/theme-chalk/index.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../css/overlay.css">
+    <link rel="stylesheet" href="../css/global.css" />
     <style>
         #app {
             font-family: Cursive;
@@ -168,6 +169,7 @@
 <script type="text/javascript" src="../vendor/iview/dist/iview.min.js"></script>
 <script type="text/javascript" src="../js/sweetalert2.all.js"></script>
 <script src="https://cdn.bootcss.com/element-ui/2.4.0/index.js"></script>
+<script type="text/javascript" src="../js/windowOpen.js"></script>
 <!-- <script src="https://cdn.bootcss.com/iview/2.14.0/iview.min.js"></script> -->
 <script>
     function getQueryString(name) {
@@ -239,12 +241,7 @@
                     }
                 }
                 if(count== that.list.length){
-                    swal({
-                        text:"至少选择一位技师",
-                        confirmButtonText: "好的",
-                        width: 240,
-                        
-                    })
+                    $(this).openWindow("",'请至少选择一位技师',['好的']);
                 }
             },
             button_click(idx) {
@@ -299,7 +296,7 @@
             if (m < 10) m = "0" + m;
             if(h<10)h="0"+h;
             that.timePick = h + ":" + m;
-            
+
             $.post("../php/getservice.php").done((result) => {
                 result = JSON.parse(result);
                 if (result.status) {
