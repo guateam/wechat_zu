@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>充值记录</title>
+    <link rel="stylesheet" href="../css/weui-min.css"/>
+    <link rel="stylesheet" href="../css/example.css"/>
+</head>
+
+<body>
+<div class="weui-cells__title">充值记录</div>
+<div class="weui-cells">
+    <div class="weui-flex" style="height: 40px;border-bottom: 1px #f2f2f2 solid;">
+        <div class="weui-flex weui-flex__item" style="flex: 0 0 40%;">
+            <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">时间</div>
+        </div>
+        <div class="weui-flex weui-flex__item" style="flex: 0 0 30%;">
+            <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">指定人</div>
+        </div>
+        <div class="weui-flex weui-flex__item" style="flex: 0 0 30%;">
+            <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">金额/元</div>
+        </div>
+    </div>
+    <div class="weui-flex" style="height: 40px;border-bottom: 1px #f2f2f2 solid;" v-for="item in items">
+        <div class="weui-flex weui-flex__item" style="flex: 0 0 40%;">
+            <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">2018-08-31</div>
+        </div>
+        <div class="weui-flex weui-flex__item" style="flex: 0 0 30%;">
+            <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center;color: #ff6666;">AKB48</div>
+        </div>
+        <div class="weui-flex weui-flex__item" style="flex: 0 0 30%;">
+            <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">￥998</div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript" src="../js/jweixin.js"></script>
+<script type="text/javascript" src="../js/example.js"></script>
+<script type="text/javascript" src="../js/weui-min.js"></script>
+<script type="text/javascript" src="../js/zepto.js"></script>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../js/echarts-simple-min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('.weui-tabbar__item').on('click', function () {
+            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
+            $(this).children('.weui-tabbar__icon').attr("src", $(this).children('.weui-tabbar__icon').attr('data-original'));
+        });
+    });
+</script>
+
+</html>
