@@ -6,7 +6,6 @@
     <title>地图</title>
     <script src="http://api.map.baidu.com/api?v=2.0&ak=A1LU7iHS0avqQwPLAxbhKn0UYSQCuRVH"></script>
     <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
-    <script src="../js/jquery.baiduMap.min.js"></script>
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
     <style>
         * {
@@ -113,21 +112,34 @@
             console.info(data)
             lng = data.result.location.lng
             lat = data.result.location.lat
-            var map = new BaiduMap({
-                id: "container1",
-                title: {
-                    text: decodeURI(position),
-                    className: "title"
-                },
-                content: {
-                    className: "content",
-                    text: ["地址：" + decodeURI(position)]
-                },
-                point: {
-                    lng: lng.toString(),
-                    lat: lat.toString()
-                }
-            });
+            var map = new BMap.Map("container1");
+
+            var geolocation = new BMap.Geolocation();
+            geolocation.getCurrentPosition(function(r) {
+                if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+                    var mk = new BMap.Marker(r.point);
+                    map.addOverlay(mk);
+                    map.panTo(r.point);
+                    start = r.point;
+                    var end = position;
+                    //三种驾车策略：最少时间，最短距离，避开高速
+                    map.centerAndZoom(new BMap.Point(lng, lat), 8);
+                    var p1 = new BMap.Point(start.lng, start.lat);
+                    var p2 = new BMap.Point(lng, lat);
+                    console.info(p1)
+                    console.info(p2)
+                    var driving = new BMap.DrivingRoute(map, {
+                        renderOptions: {
+                            map: map,
+                            autoViewport: true
+                        }
+                    });
+                    driving.search(p1, p2);
+                } else {}
+            }, {
+                enableHighAccuracy: true
+            })
+            map.enableScrollWheelZoom();
         })
     </script>
 </body>

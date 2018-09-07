@@ -34,14 +34,7 @@
                 <row>请选择预约时间:</row>
                 <row :gutter="16" type="flex" justify="space-between">
                     <i-col span="11" offset="1">
-                        <el-time-select
-                                v-model="timePick"
-                                :picker-options="{ start: '00:00', step: '00:10', end: '23:50' }"
-                                :editable="false"
-                                :clearable="false"
-                                size="small"
-                                style="width: 120px"
-                                placeholder="选择时间">
+                        <el-time-select v-model="timePick" :picker-options="{ start: '00:00', step: '00:10', end: '23:50' }" :editable="false" :clearable="false" size="small" style="width: 120px" placeholder="选择时间">
                         </el-time-select>
                     </i-col>
                     <i-col span="12">
@@ -146,7 +139,7 @@
                         <h1 style="font-size: 14px;font-weight: 200;">客服</h1>
                     </div>
                 </div>
-                <div style="height: 100%;flex: 0 0 25%;display: flex;align-items: center;justify-content: center">
+                <div style="height: 100%;flex: 0 0 25%;display: flex;align-items: center;justify-content: center" onclick="call()">
                     <div style="width: 40px">
                         <img src="../src/分享.png" alt="" style="height: 25px;width:25px">
                         <h1 style="font-size: 14px;font-weight: 200;">分享</h1>
@@ -170,8 +163,18 @@
 <script type="text/javascript" src="../js/sweetalert2.all.js"></script>
 <script src="https://cdn.bootcss.com/element-ui/2.4.0/index.js"></script>
 <script type="text/javascript" src="../js/windowOpen.js"></script>
+<script src="../vendor/soshm/dist/soshm.min.js"></script>
 <!-- <script src="https://cdn.bootcss.com/iview/2.14.0/iview.min.js"></script> -->
 <script>
+    function call() {
+        soshm.popIn({
+            title: '技师分享',
+            sites: ['weixin', 'weixintimeline', 'weibo', 'yixin', 'qzone', 'tqq', 'qq'],
+            url: location.href,
+            digest: ''
+        });
+    }
+
     function getQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
         var r = window.location.search.substr(1).match(reg);
@@ -190,7 +193,7 @@
                     "default",
                     "default",
                 ],
-                timePick: new Date().toTimeString().slice(0, 5),  // 当前时间
+                timePick: new Date().toTimeString().slice(0, 5), // 当前时间
                 vip_discount: 100,
                 serviceList: [{
                     value: -1,
@@ -223,7 +226,7 @@
             navi(url, job_number) {
                 window.location.href = url + "?job_number=" + job_number
             },
-            tech_info(job_number,state) {
+            tech_info(job_number, state) {
                 let timepick = new Date((new Date().toDateString() + ' ' + app.timePick));
                 if (new Date() > timepick) this.timePick = new Date().toTimeString().slice(0, 5);
                 window.location.href = "tech-info.html?job_number=" + job_number + "&start-time=" + this.timePick + "&state=" + state
@@ -236,12 +239,12 @@
                         window.location.href = "confirm-order.html?job_number=" + that.list[i].job_number +
                             "&start-time=" + that.timePick + "&sv=all"
                         break;
-                    }else{
+                    } else {
                         count++;
                     }
                 }
-                if(count== that.list.length){
-                    $(this).openWindow("",'请至少选择一位技师',['好的']);
+                if (count == that.list.length) {
+                    $(this).openWindow("", '请至少选择一位技师', ['好的']);
                 }
             },
             button_click(idx) {
@@ -273,8 +276,8 @@
             sort_by(idx, keyName) {
                 this.button_click(idx);
                 var that = this;
-                var sort = function (keyName) {
-                    return function (objectN, objectM) {
+                var sort = function(keyName) {
+                    return function(objectN, objectM) {
                         var valueN = objectN[keyName]
                         var valueM = objectM[keyName]
                         if (valueN < valueM) return 1
@@ -290,11 +293,11 @@
             var myDate = new Date();
             h = myDate.getHours();
             m = myDate.getMinutes();
-            if(m%10<5)m-=m%10;
-            else m+=(10-m%10);
+            if (m % 10 < 5) m -= m % 10;
+            else m += (10 - m % 10);
 
             if (m < 10) m = "0" + m;
-            if(h<10)h="0"+h;
+            if (h < 10) h = "0" + h;
             that.timePick = h + ":" + m;
 
             $.post("../php/getservice.php").done((result) => {
@@ -313,9 +316,9 @@
                     }
                 }
             });
-            $.post("../php/getshoptime.php").done((result)=>{
+            $.post("../php/getshoptime.php").done((result) => {
                 result = JSON.parse(result);
-                if(result.status == 1){
+                if (result.status == 1) {
                     that.open = result.data.open_time;
                     that.close = result.data.close_time;
                 }
