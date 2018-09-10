@@ -95,7 +95,16 @@
 </body>
 <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
 <script src="https://cdn.bootcss.com/iview/2.14.0/iview.min.js"></script>
+<script type="text/javascript" src="../js/jquery.js"></script>
 <script>
+
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+
     let Main = {
         data () {
             return {
@@ -124,9 +133,6 @@
                     },  // 价格
                 ],  // 服务列信息
                 serviceData: [
-                    { serviceName: '足疗', counts: 1, servicePrice: 20 },
-                    { serviceName: '那啥全套大保健', counts: 2, servicePrice: 9999 },
-                    { serviceName: '单人豪华大保健', counts: 1, servicePrice: 18888 },
                 ],  // 服务数据
 
                 tncColumns: [
@@ -135,22 +141,16 @@
                     { title: 'Service', key: 'service', align: 'right' },  // 对应服务
                 ],  // 技师列信息
                 tncData: [
-                    { tncName: '小玲', roomNum: 'A302', service: '足疗' },
-                    { tncName: '小李', roomNum: 'B302', service: '那啥全套大保健' },
-                    { tncName: '小王', roomNum: 'D666', service: '单人豪华大保健' },
                 ],  // 技师数据
 
                 orderData: {
-                    id: 'XFD120210210210210201',
+                    id: getQueryString('id'),
                     payment: '微信支付',
                     date: '2018-10-01 12:00',
                     customer: '王先生',
                 },  // 订单数据
 
-                appointmentData: {
-                    count: 4,
-                    date: '2018-10-02 16:00',
-                },  // 预约信息, 如果不是预约订单则变量值应该为null
+                appointmentData: null // 预约信息, 如果不是预约订单则变量值应该为null
             }
         },
         computed: {
@@ -165,8 +165,34 @@
         methods: {
 
         },
-        create () {
+        created() {
+            var that = this;
+            $.post("../php/getorderdetail.php",{
+                id:getQueryString('id')
+            }).done((res)=>{
+                res = JSON.parse(res)
+                for(var i=0;i<res.length;i++){
+                    that.serviceData.push({
+                        serviceName: res[i].service_name, 
+                        counts: 1, 
+                        servicePrice: res[i].price
+                    })
+                    that.tncData.push({
+                        tncName: res[i].name, 
+                        roomNum:  res[i].job_number, 
+                        service: res[i].service_name
+                    })
+                    if(res[i].appo === null){
 
+                    }else{
+                        that.appointmentData = res[i].appo
+                    }
+                    that.orderData.payment =  res[i].pay_way
+                    that.orderData.date =  res[i].time
+                    that.orderData.customer =  res[i].user_id
+                }
+
+            })
         },
     };
     let Component = Vue.extend(Main);
