@@ -8,13 +8,14 @@
     <link rel="stylesheet" href="../css/weui-min.css" />
     <link rel="stylesheet" href="../css/example.css" />
     <link rel="stylesheet" type="text/css" href="../css/overlay.css">
+    <link rel="stylesheet" href="../css/global.css" />
     <style>
 
     </style>
 </head>
 
 <body>
-    <div id="app" class="page" style="opacity: 1;margin-bottom: 90px">
+    <div id="app" class="page" style="opacity: 1;">
         <div class="page__hd">
             <h1 class="page__title">订单信息</h1>
         </div>
@@ -29,7 +30,7 @@
                 <div class="weui-cell__bd">
                     <p>预约时间</p>
                 </div>
-                <div class="weui-cell__ft">{{start_time}}&nbsp;&nbsp;/&nbsp;&nbsp;{{end_time}}</div>
+                <div class="weui-cell__ft">{{start_time}}&nbsp;&nbsp;~&nbsp;&nbsp;{{end_time}}</div>
             </div>
         </div>
         <div class="weui-cells__title">服务项目</div>
@@ -38,11 +39,12 @@
                 <div class="weui-cell__bd" style="transform: translateX(-68px)">
                     <div class="weui-cell">
                         <div class="weui-cell__bd">
-                            <p style="margin-left: 20%">{{item.name}}
-                                <span style="color: #29a3a3;margin-left: 10px;font-family: 华文雅黑;">
+                            <p style="margin-left: 20%">
+                                <span style="display:inline-block ;width:80px">{{item.name}}</span>
+                                <span style="display:inline-block ;width:80px;color: #29a3a3;margin-left: 10px;font-family: 华文雅黑;">
                                     ￥{{item.price}}
                                 </span>
-                                <span style="color: #29a3a3;margin-left: 10px;font-family: 华文雅黑;">
+                                <span style="display:inline-block ;width:80px;color: #29a3a3;margin-left: 10px;font-family: 华文雅黑;">
                                     {{item.duration}}分钟
                                 </span>
                             </p>
@@ -54,15 +56,7 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="weui-cells">
-            <a class="weui-cell weui-cell_access" href="javascript:;">
-                <div class="weui-cell__hd"><img src="../src/优惠券.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
-                <div class="weui-cell__bd">
-                    <p>优惠券</p>
-                </div>
-                <div class="weui-cell__ft">暂无可用</div>
-            </a>
-        </div> -->
+
         <div class="weui-cells">
             <div class="weui-cells__title">支付方式</div>
             <a class="weui-cell weui-cell_access" href="javascript:;">
@@ -73,8 +67,9 @@
                 <div class="weui-cell__ft"></div>
             </a>
         </div>
-        <div class="" style="position: fixed;bottom: 0;height: 70px;width: 100%;z-index:5;border-top: 1px solid #f2f2f2;display: flex;align-items: center">
-            <span style="margin-left: 20px;width: 80px;">预计支付</span><span style="color: #29a3a3;font-size: 22px" v-text="'￥'+total_price"></span>
+        <div class="" style="background-color: white;position: absolute; bottom: 0;height: 50px;width: 100%;z-index:100;border-top: 1px solid #f2f2f2;display:flex;align-items: center">
+            <span style="margin-left: 20px;width: 80px;">预计支付</span>
+            <span style="color: #29a3a3;font-size: 22px" v-text="'￥'+total_price"></span>
             <button style="position:absolute;right: 15px; width: 100px;height: 40px;border-radius: 5px;background-color: #2b85e4;color: white;outline: none">确认预约</button>
         </div>
         <div id="modal-overlay" v-show="overlay">
@@ -91,6 +86,7 @@
     <script type="text/javascript" src="../js/sweetalert2.all.js"></script>
     <script type="text/javascript" src="../js/echarts-simple-min.js"></script>
     <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
+    <script type="text/javascript" src="../js/windowOpen.js"></script>
     <script type="text/javascript">
         function getQueryString(name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
@@ -113,17 +109,10 @@
                 remove(name) {
                     var that = this;
                     var skill = that.skill
-                    swal({
-                        text: "确认移除该服务吗？",
-                        allowOutsideClick: false,
-                        showConfirmButton: true,
-                        showCancelButton: true,
-                        confirmButtonText: "删除",
-                        cancelButtonText: "取消",
-                        width: 280,
-                    }).then((res) => {
-                        if (res.value) {
-                            for (var i in skill) {
+                    
+                    $(this).openWindow("",'确认移除该服务吗',['不','好的'],()=>{
+                        console.log("函数执行了")
+                        for (var i in skill) {
                                 if (skill[i].name == name) {
                                     var h = parseInt(that.end_time.substring(0, 2))
                                     var m = parseInt(that.end_time.substring(3, 5))
@@ -135,14 +124,13 @@
                                     if (m < 10) m = "0" + m;
                                     h -= parseInt(skill[i].duration / 60);
                                     if (h < 0) h += 24;
-                                    that.end_time = h + ":" + m;
+                                    if(h<10)h="0"+h;
 
+                                    that.end_time = h + ":" + m;
                                     that.total_price -= skill[i].price;
                                     that.skill.splice(i, 1);
                                 }
                             }
-
-                        }
                     });
                 }
             },
@@ -193,6 +181,8 @@
                         }
                         h += parseInt(duration / 60);
                         if (h >= 24) h -= 24;
+                        if(h<10)h="0"+h;
+
                         if (m < 10) m = "0" + m;
                         that.end_time = h + ":" + m;
                         that.overlay = false;

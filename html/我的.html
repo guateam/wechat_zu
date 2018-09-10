@@ -10,16 +10,59 @@
 </head>
 
 <body>
-    <div class="weui-tab">
+    <div id="app" class="weui-tab">
         <div class="weui-tab__panel">
+            <div style="width: 100%;height: 33%;background-image: url(../src/head-pic.png);background-repeat: no-repeat;display: flex;align-items: center;justify-content: center">
+                <div style="">
+                    <img src="/photo/AuhwYHa180903063148a.jpg" alt="" style="width: 80px;height: 80px;border-radius: 50%">
+                    <h1 style="font-size: 14px;font-weight: 400;text-align: center" v-text="phone"></h1>
+                </div>
+            </div>
+            <div class="weui-cells">
 
+                <a class="weui-cell weui-cell_access" :href="'customer-info.html?phone='+phone">
+                    <div class="weui-cell__hd"><img src="../src/个人信息.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+                    <div class="weui-cell__bd">
+                        <p>个人信息</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="javascript:;">
+                    <div class="weui-cell__hd"><img src="../src/会员卡.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+                    <div class="weui-cell__bd">
+                        <p>我的会员卡</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" :href="'recharge-record.html?phone='+phone">
+                    <div class="weui-cell__hd"><img src="../src/充值记录.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+                    <div class="weui-cell__bd">
+                        <p>充值记录</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="javascript:;">
+                    <div class="weui-cell__hd"><img src="../src/历史订单.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+                    <div class="weui-cell__bd">
+                        <p>历史订单</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="my-rate.html">
+                    <div class="weui-cell__hd"><img src="../src/我的评价.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+                    <div class="weui-cell__bd">
+                        <p>我的评价</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+            </div>
         </div>
         <div class="weui-tabbar">
             <a href="../html/index.html" class="weui-tabbar__item">
                 <img src="../src/主页.png" data-original="../src/主页.png" alt="" class="weui-tabbar__icon">
                 <p class="weui-tabbar__label">首页</p>
             </a>
-            <a href="../html/订单.html" class="weui-tabbar__item">
+            <a href="../html/order.html" class="weui-tabbar__item">
                 <img src="../src/订单.png" data-original="../src/订单激活.png" alt="" class="weui-tabbar__icon">
                 <p class="weui-tabbar__label">订单</p>
             </a>
@@ -36,6 +79,7 @@
 <script type="text/javascript" src="../js/zepto.js"></script>
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/echarts-simple-min.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
 <script type="text/javascript">
     $(function() {
         $('.weui-tabbar__item').on('click', function() {
@@ -43,6 +87,19 @@
             $(this).children('.weui-tabbar__icon').attr("src", $(this).children('.weui-tabbar__icon').attr('data-original'));
         });
     });
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+
+    let app = new Vue({
+        el:"#app",
+        data:{
+            phone:"13777579230"
+        }
+    })
 </script>
 
 </html>

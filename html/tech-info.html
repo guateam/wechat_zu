@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../css/weui-min.css" />
     <link rel="stylesheet" href="../css/example.css" />
     <link rel="stylesheet" type="text/css" href="../css/overlay.css">
+    <link rel="stylesheet" href="../css/global.css" />
     <style>
 
     </style>
@@ -16,11 +17,11 @@
 
 <body>
     <div id="app" style="height: 100%;">
-        <div style="width: 100%;height: 31%;background-image: url(../src/head-pic.png);background-repeat: no-repeat;display: flex;align-items: center;justify-content: center">
+        <div style="width: 100%;height: 33%;background-image: url(../src/head-pic.png);background-repeat: no-repeat;display: flex;align-items: center;justify-content: center">
             <div>
-                <img v-bind:src="data.technician.head" alt="" style="width: 60px;height: 60px;border-radius: 50%">
+                <img v-bind:src="data.technician.head" alt="" style="width: 80px;height: 80px;border-radius: 50%">
                 <div style="width: 200px;height: 50px">
-                    <h1 style="font-size: 14px;font-weight: 200;color: white">资历：{{data.technician.entrytime}}</h1>
+                    <!-- <h1 style="font-size: 14px;font-weight: 200;color: white">资历：{{data.technician.entrytime}}</h1> -->
                     <h1 style="font-size: 14px;font-weight: 200;color: white">技能：{{data.technician.skill}}</h1>
                 </div>
             </div>
@@ -33,8 +34,8 @@
                     </div>
                 </div>
                 <div class="item weui-flex__item" style="text-align: center;border-right: 1px solid #f2f2f2">
-                    <h1 style="color: #ff9933;font-size: 24px"><span style="font-size: 14px">工号</span>{{job_number}}</h1>
-                    <div><img src="../src/网红技师.png" alt=""> 网红技师
+                    <h1 style="color: #ff9933;font-size: 24px"><span style="font-size: 14px"></span>{{job_number}}</h1>
+                    <div><img src="../src/网红技师.png" alt=""> {{data.technician.level}}
                     </div>
                 </div>
                 <div class="item weui-flex__item" style="text-align: center;">
@@ -68,16 +69,21 @@
                 </div>
             </div>
         </div>
+        <div v-if="data.technician.vcr != ''" class="weui-flex" style="justify-content: center;align-items: center;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;margin-top: 10px">
+            <video alt="" style="height: 200px;width: 100%;" controls>
+                <source v-bind:src="data.technician.vcr" type="video/mp4">
+            </video>
+        </div>
         <div style="height: 5%;width: 100%;background-color: white;display: flex;align-items: center;margin-top: 20px">
             <span style="margin-left: 10px">评价</span>
             <span style="margin-left: 20px;color: #ff0033;">
-                <rate show-text allow-half v-model="data.technician.rate" disabled style="font-size: 15px">
-                    <span style="color: #f5a623; margin-left: -20px">{{data.technician.rate}}分</span>
+                <rate show-text allow-half v-model="total_rate" disabled style="font-size: 15px">
+                    <span style="color: #f5a623; margin-left: -20px">{{total_rate}}分</span>
             </rate>
             （共{{count}}条）
             </span>
         </div>
-        <div class="weui-panel weui-panel_access" style="background-color: white;border-radius: 5px;margin-bottom: 20%">
+        <div class="weui-panel weui-panel_access" style="background-color: white;border-radius: 5px;margin-bottom: 30%">
             <div class="display-block" style="border-bottom: 1px solid #f2f2f2;" v-for='item in data.feedback'>
                 <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg ">
                     <div class="weui-media-box__hd" v-bind:style="item.head">
@@ -116,7 +122,7 @@
 
 
             <div style="height: 100%;flex: 0 0 25%;display: flex;align-items: center;justify-content: center;border-right: 1px solid #f2f2f2">
-                <div style="width: 40px">
+                <div style="width: 40px" onclick="call()">
                     <img src="../src/分享.png" alt="" style="height: 25px;width:25px">
                     <h1 style="font-size: 14px;font-weight: 200;">分享</h1>
                 </div>
@@ -141,6 +147,8 @@
 <script type="text/javascript" src="../js/sweetalert.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
 <script type="text/javascript" src="../vendor/iview/dist/iview.min.js"></script>
+<script type="text/javascript" src="../js/windowOpen.js"></script>
+<script src="../vendor/soshm/dist/soshm.min.js"></script>
 <script type="text/javascript">
     //获取url参数
     function getQueryString(name) {
@@ -176,10 +184,16 @@
             start_time: "",
             overlay: true,
             skill_list: [],
+            is_busy: false,
+            total_rate: 0,
         },
         methods: {
             down_order() {
                 var that = this;
+                if (that.is_busy) {
+                    $(this).openWindow("", '该技师目前繁忙，不能选择', ['好的']);
+                    return;
+                }
                 var str = "";
                 var uncheck = 0;
                 for (var i in that.skill_list) {
@@ -190,10 +204,7 @@
                     }
                 }
                 if (uncheck == that.skill_list.length) {
-                    swal({
-                        text:"请至少选择一项服务",
-                        width:220
-                    })
+                    $(this).openWindow("", '请至少选择一项服务', ['好的']);
                 } else {
                     str = str.substring(0, str.length - 1);
                     window.location.href = "confirm-order.html?job_number=" + that.job_number +
@@ -219,6 +230,7 @@
 
             that.job_number = getPar('job_number');
             that.start_time = getQueryString("start-time");
+            that.is_busy = getQueryString('state') == '1' ? true : false;
             var back = {};
             $.ajax({
                 type: 'POST',
@@ -232,7 +244,20 @@
                 if (data.status == 1) {
                     back = data.data
                     that.data = back
+                    if (that.data.technician.vcr === null) {
+                        console.log("null！！！！")
+                        that.data.technician.vcr = '';
+                    }
                     that.count = that.data.feedback.length
+                    if (that.count > 0) {
+                        var total_rate = 0;
+                        for (var i in that.data.feedback) {
+                            var info = that.data.feedback[i];
+                            total_rate += parseInt(info.rate);
+                            console.log(total_rate);
+                        }
+                        that.total_rate = total_rate / that.count;
+                    }
                     var skills = that.data.technician.skills
                     for (var i in skills) {
                         that.skill_list.push({
@@ -241,12 +266,22 @@
                             'id': skills[i].id,
                         })
                     }
+
                 }
                 that.overlay = false
             })
 
         }
     })
+
+    function call() {
+        soshm.popIn({
+            title: '技师分享',
+            sites: ['weixin', 'weixintimeline', 'weibo', 'yixin', 'qzone', 'tqq', 'qq'],
+            url: location.href,
+            digest: ''
+        });
+    }
 </script>
 
 </html>

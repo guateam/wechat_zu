@@ -7,6 +7,7 @@
     <title>铂金宫</title>
     <link rel="stylesheet" href="../css/weui-min.css" />
     <link rel="stylesheet" href="../css/example.css" />
+    <link rel="stylesheet" href="../css/global.css" />
 </head>
 
 <body>
@@ -19,7 +20,7 @@
                 <img src="../src/主页.png" data-original="../src/主页.png" alt="" class="weui-tabbar__icon">
                 <p class="weui-tabbar__label">首页</p>
             </a>
-            <a href="../html/订单.html" class="weui-tabbar__item weui-bar__item_on">
+            <a href="../html/order.html" class="weui-tabbar__item weui-bar__item_on">
                 <img src="../src/订单激活.png" data-original="../src/订单激活.png" alt="" class="weui-tabbar__icon">
                 <p class="weui-tabbar__label">订单</p>
             </a>
@@ -37,6 +38,7 @@
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/echarts-simple-min.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
+<script type="text/javascript" src="../js/windowOpen.js"></script>
 <script type="text/javascript">
 
     function getQueryString(name) {
@@ -48,7 +50,7 @@
     let app = new Vue({
         el:"#app",
         data:{
-            
+
         }
     })
     $(function() {

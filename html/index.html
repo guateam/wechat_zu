@@ -4,9 +4,11 @@
 <head id="">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-    <title>铂金宫</title>
+    <title>铂晶宫</title>
     <link rel="stylesheet" href="../css/weui-min.css" />
     <link rel="stylesheet" href="../css/example.css" />
+    <!-- <link href="https://cdn.bootcss.com/toastr.js/2.1.4/toastr.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="../css/global.css" />
     <style>
         .marquee {
             margin: 0 auto;
@@ -39,35 +41,39 @@
 <body style="line-height: 0;">
     <div class="weui-tab">
         <div class="weui-tab__panel" id='shop'>
-            <img src="../src/wash-foot.jpg" alt="" style="height: 22%;width: 100%;">
+            <img src="../src/wash-foot.jpg" alt="" style="height: 30%;width: 100%;">
             <div style="height: 7%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;display: flex;align-items: center;">
                 <span style="margin-left: 10px">{{data.name}}</span>
                 <span style="margin-left: 20px">{{data.open_time}}--{{data.close_time}}</span>
             </div>
             <div style="height: 7%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;display: flex;align-items: center;background-image: url(../src/定位.png);background-repeat:no-repeat;background-position: 1%;">
-                <span style="margin-left: 25px"><a v-bind:href="data.location">{{data.position}}</a></span>
-                <span style="width: 20%;text-align: center;border-left: 1px #f2f2f2 solid;position: absolute;right: 10px"><img
-                        src="../src/电话.png" alt=""></span></div>
-            <div class="weui-flex" style="justify-content: center;align-items: center;height: 16%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;">
+                <span @click="navi(data.location)" style="display:inline-block;width:260px;margin-left: 25px">{{data.position}}</span>
+                <span style="width: 20%;text-align: center;border-left: 1px #f2f2f2 solid;right: 10px;margin-left: 20px">
+                    <a :href="'tel:'+data.phone">
+                        <img  src="../src/电话.png" alt="">
+                    </a>
+                </span>
+            </div>
+            <div class="weui-flex" style="justify-content: center;align-items: center;height: 20%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;">
                 <div class="box weui-flex" style="width: 100%; height: 100%;">
                     <div class="item weui-flex__item" style="text-align: center">
                         <div onClick="navi('jishixuanze.html')" style="height: 60px;width: 60px;border-radius: 50%;background-color: #ffcc66;margin: 10px auto;background-image: url(../src/技师预约.png);background-repeat: no-repeat"></div>技师预约
                     </div>
                     <div class="item weui-flex__item" style="text-align: center">
                         <div style="height: 60px;width: 60px;border-radius: 50%;background-color: #ffcc66;margin: 10px auto;display: flex;justify-content: center;align-items: center;">
-                            <img src="../src/包厢预约.png" alt="" style="width: 34px;height: 34px;"></div>包厢预约
+                            <img @click="sorry" src="../src/包厢预约.png" alt="" style="width: 34px;height: 34px;"></div>包厢预约
                     </div>
                     <div class="item weui-flex__item" style="text-align: center">
                         <div style="height: 60px;width: 60px;border-radius: 50%;background-color: #ff9966;margin: 10px auto;display: flex;justify-content: center;align-items: center;">
-                            <img src="../src/闪付买单.png" alt="" style="width: 34px;height: 34px;"></div>闪付买单
+                            <img @click="sorry" src="../src/闪付买单.png" alt="" style="width: 34px;height: 34px;"></div>闪付买单
                     </div>
                     <div class="item weui-flex__item" style="text-align: center">
                         <div style="height: 60px;width: 60px;border-radius: 50%;background-color: #66ccff;margin: 10px auto;display: flex;justify-content: center;align-items: center;">
-                            <img src="../src/会员充值.png" alt="" style="width: 34px;height: 34px;"></div>会员充值
+                            <img @click="sorry" src="../src/会员充值.png" alt="" style="width: 34px;height: 34px;"></div>会员充值
                     </div>
                     <div class="item weui-flex__item" style="text-align: center">
                         <div style="height: 60px;width: 60px;border-radius: 50%;background-color: #ff6666;margin: 10px auto;display: flex;justify-content: center;align-items: center;">
-                            <img src="../src/打赏技师.png" alt="" style="width: 34px;height: 34px;"></div>打赏技师
+                            <img @click="sorry" src="../src/打赏技师.png" alt="" style="width: 34px;height: 34px;"></div>打赏技师
                     </div>
                 </div>
             </div>
@@ -76,10 +82,9 @@
                 <p class="microsoft marquee" id='notice'>
                     <a v-for='item in items'>{{item.title}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                 </p>
-                <div style="background:#ff9966;line-height: 1.6;width: 62px;height: 32px;display: flex;justify-content: center;align-items: center;border-radius: 4px;margin-right: 25px">优惠券</div>
             </div>
-            <div class="weui-tab" style="background-color: white;">
-                <div class="weui-navbar" style="height: 7%;background-color: white">
+            <div class="" style="background-color: white;">
+                <div class="weui-navbar" style="height: 7%;background-color: white;position: relative">
                     <div class="weui-navbar__item weui-bar__item_on two" style="display: flex;justify-content: center;line-height: 1.6">
                         <span>项目分类</span>
                     </div>
@@ -87,7 +92,7 @@
                         <span>优惠活动</span>
                     </div>
                 </div>
-                <div class="weui-tab__panel">
+                <div class="weui-tab__panel" style="padding-top: 0">
                     <div class="weui-tab__panel-item-one" style="display: none" id='app1'>
                         <div class="weui-flex" style="height: 40px;border-bottom: 1px #f2f2f2 solid;">
                             <div class="weui-flex weui-flex__item" style="flex: 0 0 40%;">
@@ -145,7 +150,7 @@
             <img src="../src/主页激活.png " data-original="../src/主页激活.png " alt=" " class="weui-tabbar__icon ">
             <p class="weui-tabbar__label ">首页</p>
         </a>
-        <a href="../html/订单.html " class="weui-tabbar__item ">
+        <a href="../html/order.html " class="weui-tabbar__item ">
             <img src="../src/订单.png " data-original="../src/订单激活.png " alt=" " class="weui-tabbar__icon ">
             <p class="weui-tabbar__label ">订单</p>
         </a>
@@ -161,6 +166,8 @@
 <script type="text/javascript " src="../js/zepto.js "></script>
 <script type="text/javascript " src="../js/jquery.js "></script>
 <script type="text/javascript " src="../js/echarts-simple-min.js "></script>
+<script type="text/javascript" src="../js/sweetalert.js"></script>
+<script type="text/javascript" src="../js/windowOpen.js"></script>
 <script src="../js/vue.js "></script>
 <script type="text/javascript ">
     $(function () {
@@ -233,10 +240,20 @@
             }
         },
     })
-    new Vue({
+    let shop = new Vue({
         el: '#shop',
         data: {
             data: {}
+        },
+        methods:{
+            phone(){
+                var that = this;
+                $(this).openWindow("店内热线",that.data.phone,['好的']);
+            },
+            sorry(){
+                var that = this;
+                $(this).openWindow("抱歉","本功能暂未上线，敬请期待",['好的']);
+            }
         },
         created() {
             if (back.shop.status == 1) {
