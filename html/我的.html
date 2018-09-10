@@ -14,7 +14,7 @@
         <div class="weui-tab__panel">
             <div style="width: 100%;height: 33%;background-image: url(../src/head-pic.png);background-repeat: no-repeat;display: flex;align-items: center;justify-content: center">
                 <div style="">
-                    <img src="/photo/AuhwYHa180903063148a.jpg" alt="" style="width: 80px;height: 80px;border-radius: 50%">
+                    <img v-bind:src="head" alt="" style="width: 80px;height: 80px;border-radius: 50%">
                     <h1 style="font-size: 14px;font-weight: 400;text-align: center" v-text="phone"></h1>
                 </div>
             </div>
@@ -41,13 +41,13 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" :href="'recharge-record.html?phone='+phone">
+                <!--<a class="weui-cell weui-cell_access" :href="'order_record.html?phone='+phone">
                     <div class="weui-cell__hd"><img src="../src/消费记录.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
                     <div class="weui-cell__bd">
                         <p>消费记录</p>
                     </div>
                     <div class="weui-cell__ft"></div>
-                </a>
+                </a>-->
                 <a class="weui-cell weui-cell_access" href="order.html">
                     <div class="weui-cell__hd"><img src="../src/历史订单.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
                     <div class="weui-cell__bd">
@@ -88,12 +88,40 @@
 <script type="text/javascript" src="../js/echarts-simple-min.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
 <script type="text/javascript">
+    // var token = ''
+    // $.post('../php/token.php', {
+    //     url: 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx73493f7974f2c73f&secret=a681d61fbeae3312bc58fb21d03270d1'
+    // }).done((data) => {
+    //     data = JSON.parse(data)
+    //     token = data.access_token
+    //     var openid = ''
+    //     openidurl = 'https://api.weixin.qq.com/cgi-bin/user/info/updateremark?access_token=' + token
+    //     $.post('../php/post.php', {
+    //         url: openidurl,
+    //         data: ''
+    //     }).done((data) => {
+    //         data = JSON.parse(data)
+    //         openid = data.openid
+    //         userurl = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token=' + token + '&openid=' + openid + '&lang=zh_CN'
+    //         $.post('../php/token.php', {
+    //             url: userurl
+    //         }).done((data) => {
+    //             data = JSON.parse(data)
+    //             console.info(data)
+    //         })
+    //     })
+
+    // })
+    // appid = 'wx73493f7974f2c73f'
+    // location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + location.href + '&response_type=code&scope=snsapi_base#wechat_redirect'
+    var openid = '1'
     $(function() {
         $('.weui-tabbar__item').on('click', function() {
             $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
             $(this).children('.weui-tabbar__icon').attr("src", $(this).children('.weui-tabbar__icon').attr('data-original'));
         });
     });
+
     function getQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
         var r = window.location.search.substr(1).match(reg);
@@ -102,9 +130,19 @@
     }
 
     let app = new Vue({
-        el:"#app",
-        data:{
-            phone:"13777579230"
+        el: "#app",
+        data: {
+            phone: "13777579230",
+            head: ''
+        }
+    })
+    $.post('../php/getmypage.php', {
+        openid: openid
+    }).done((data) => {
+        data = JSON.parse(data)
+        if (data.status == 1) {
+            app.phone = data.data.phone
+            app.head = data.data.head
         }
     })
 </script>
