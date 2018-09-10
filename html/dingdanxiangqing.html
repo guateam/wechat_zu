@@ -157,7 +157,7 @@
             totalPrice () {
                 let totalPrice = 0;
                 this.serviceData.forEach((data)=>{
-                    totalPrice += data.servicePrice
+                    totalPrice += data.servicePrice * data.counts
                 });
                 return totalPrice;
             },  // 订单总价格
