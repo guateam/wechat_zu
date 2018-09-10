@@ -43,11 +43,11 @@
         <div class="weui-tab__panel" id='shop'>
             <img src="../src/wash-foot.jpg" alt="" style="height: 30%;width: 100%;">
             <div style="height: 7%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;display: flex;align-items: center;">
-                <span style="margin-left: 10px">{{data.name}}</span>
-                <span style="margin-left: 20px">{{data.open_time}}--{{data.close_time}}</span>
+                <span style="margin-left: 10px" v-text='data.name'></span>
+                <span style="margin-left: 20px" v-text="data.open_time+'--'+data.close_time"></span>
             </div>
             <div style="height: 7%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;display: flex;align-items: center;background-image: url(../src/定位.png);background-repeat:no-repeat;background-position: 1%;">
-                <span @click="navi(data.location)" style="display:inline-block;width:260px;margin-left: 25px">{{data.position}}</span>
+                <span @click="navi(data.location)" style="display:inline-block;width:260px;margin-left: 25px" v-text='data.position'></span>
                 <span style="width: 20%;text-align: center;border-left: 1px #f2f2f2 solid;right: 10px;margin-left: 20px">
                     <a :href="'tel:'+data.phone">
                         <img  src="../src/电话.png" alt="">
@@ -107,13 +107,13 @@
                         </div>
                         <div class="weui-flex" style="height: 40px;border-bottom: 1px #f2f2f2 solid;" v-for="item in items">
                             <div class="weui-flex weui-flex__item" style="flex: 0 0 40%;">
-                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">{{item.name}}</div>
+                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center" v-text='item.name'></div>
                             </div>
                             <div class="weui-flex weui-flex__item" style="flex: 0 0 30%;">
-                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">￥{{item.price}}</div>
+                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center" v-text="'￥'+item.price"></div>
                             </div>
                             <div class="weui-flex weui-flex__item" style="flex: 0 0 30%;">
-                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center;color: #ff6666;">￥{{item.discount}}</div>
+                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center;color: #ff6666;" v-text="'￥'+item.discount"></div>
                             </div>
                         </div>
                     </div>
@@ -131,13 +131,13 @@
                         </div>
                         <div class="weui-flex" style="height: 40px;border-bottom: 1px #f2f2f2 solid;" v-for="item in items">
                             <div class="weui-flex weui-flex__item" style="flex: 0 0 40%;">
-                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">{{item.name}}</div>
+                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center" v-text='item.name'></div>
                             </div>
                             <div class="weui-flex weui-flex__item" style="flex: 0 0 30%;">
-                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">{{item.time}}</div>
+                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center" v-text='item.time'></div>
                             </div>
                             <div class="weui-flex weui-flex__item" style="flex: 0 0 30%;">
-                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center;color: #1aad19">￥{{item.price}}</div>
+                                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center;color: #1aad19" v-text="'￥'+item.price"></div>
                             </div>
                         </div>
                     </div>
@@ -170,24 +170,24 @@
 <script type="text/javascript" src="../js/windowOpen.js"></script>
 <script src="../js/vue.js "></script>
 <script type="text/javascript ">
-    $(function () {
-        $('.weui-tabbar__item').on('click', function () {
+    $(function() {
+        $('.weui-tabbar__item').on('click', function() {
             $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass(
                 'weui-bar__item_on');
             $(this).children('.weui-tabbar__icon').attr("src ", $(this).children('.weui-tabbar__icon').attr(
                 'data-original'));
         });
     });
-    $(function () {
-        $('.weui-navbar__item').on('click', function () {
+    $(function() {
+        $('.weui-navbar__item').on('click', function() {
             $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass(
                 'weui-bar__item_on');
         });
-        $('.one').on('click', function () {
+        $('.one').on('click', function() {
             $('.weui-tab__panel-item-one').css('display', 'block');
             $('.weui-tab__panel-item-two').css('display', 'none');
         });
-        $('.two').on('click', function () {
+        $('.two').on('click', function() {
             $('.weui-tab__panel-item-two').css('display', 'block');
             $('.weui-tab__panel-item-one').css('display', 'none');
         });
@@ -245,14 +245,14 @@
         data: {
             data: {}
         },
-        methods:{
-            phone(){
+        methods: {
+            phone() {
                 var that = this;
-                $(this).openWindow("店内热线",that.data.phone,['好的']);
+                $(this).openWindow("店内热线", that.data.phone, ['好的']);
             },
-            sorry(){
+            sorry() {
                 var that = this;
-                $(this).openWindow("抱歉","本功能暂未上线，敬请期待",['好的']);
+                $(this).openWindow("抱歉", "本功能暂未上线，敬请期待", ['好的']);
             }
         },
         created() {
