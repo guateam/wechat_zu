@@ -13,58 +13,33 @@
 <div class="page__hd">
     <h1 class="page__title">我的评价</h1>
 </div>
-<div class="page__bd">
+<div class="page__bd" id="app">
     <div class="weui-form-preview">
         <div class="weui-form-preview__hd">
             <div class="weui-form-preview__item">
                 <label class="weui-form-preview__label">服务项目</label>
-                <em class="weui-form-preview__value">足疗</em>
+                <em class="weui-form-preview__value"v-text="record.name"></em>
             </div>
         </div>
         <div class="weui-form-preview__bd">
             <div class="weui-form-preview__item">
                 <label class="weui-form-preview__label">技师</label>
-                <span class="weui-form-preview__value"><a href="#" style="color:#ee5e7b;">AKB48</a></span>
+                <span class="weui-form-preview__value"><a href="#" style="color:#ee5e7b;" v-text="record.job_number"></a></span>
             </div>
             <div class="weui-form-preview__item">
                 <label class="weui-form-preview__label">日期</label>
-                <span class="weui-form-preview__value">2018-09-04</span>
+                <span class="weui-form-preview__value"v-text="record.generated_time"></span>
             </div>
             <div class="weui-form-preview__item">
                 <label class="weui-form-preview__label">评论内容</label>
-                <span class="weui-form-preview__value">技师或者项目这里加一个超链接进入前面的技师详情页或者什么的吧方便二次下单</span>
+                <span class="weui-form-preview__value"v-text="record.comment"></span>
             </div>
         </div>
         <div class="weui-form-preview__ft">
-            <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:">假如这里需要操作的话</a>
+            <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:"></a>
         </div>
     </div>
     <br>
-    <div class="weui-form-preview">
-        <div class="weui-form-preview__hd">
-            <div class="weui-form-preview__item">
-                <label class="weui-form-preview__label">服务项目</label>
-                <em class="weui-form-preview__value">足疗</em>
-            </div>
-        </div>
-        <div class="weui-form-preview__bd">
-            <div class="weui-form-preview__item">
-                <label class="weui-form-preview__label">技师</label>
-                <span class="weui-form-preview__value"><a href="#" style="color:#ee5e7b;">AKB48</a></span>
-            </div>
-            <div class="weui-form-preview__item">
-                <label class="weui-form-preview__label">日期</label>
-                <span class="weui-form-preview__value">2018-09-04</span>
-            </div>
-            <div class="weui-form-preview__item">
-                <label class="weui-form-preview__label">评论内容</label>
-                <span class="weui-form-preview__value">建议限制一下评论的字数这样这里显示两排效果最好还不用做一个查看详情了</span>
-            </div>
-        </div>
-        <div class="weui-form-preview__ft">
-            <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:">假如这里需要操作的话</a>
-        </div>
-    </div>
 </div>
 </body>
 <script type="text/javascript" src="../js/jweixin.js"></script>
@@ -73,8 +48,43 @@
 <script type="text/javascript" src="../js/zepto.js"></script>
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/echarts-simple-min.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
 <script type="text/javascript">
+function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
 
+let app = new Vue({
+        el: "#app",
+        data: {
+            overlay: true,
+            record:[{
+                name:"",
+                generated_time:"",
+                comment:"",
+                jpb_number:"",
+            }
+            ],
+        },
+        methods:{
+
+        },
+        created(){
+            var that = this
+            $.post("../php/getrate.php",{
+                id:getQueryString('id')
+            }).done((res)=>{
+                res = JSON.parse(res);
+                if(res.status == 1){
+                    res = res.data[0];
+                    that.record = res;
+                }
+            })
+        }
+})
 </script>
 
 </html>

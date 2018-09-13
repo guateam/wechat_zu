@@ -47,7 +47,7 @@
                         <a class="weui-form-preview__btn weui-form-preview__btn_primary" @click="detail(od.order_id)">查看详情</a>
                     </div>
                     <div class="weui-form-preview__ft">
-                        <a class="weui-form-preview__btn weui-form-preview__btn_primary" @click="detail(od.order_id)">查看评价</a>
+                        <a class="weui-form-preview__btn weui-form-preview__btn_primary" @click="comment(od.order_id)">查看评价</a>
                     </div>
                 </div>
                 <br>
@@ -93,6 +93,9 @@
         methods:{
             detail(id){
                 window.location.href = 'dingdanxiangqing.html?id='+id
+            },
+            comment(id){
+                window.location.href = 'my-rate.html?id='+id
             }
         },
         created(){
