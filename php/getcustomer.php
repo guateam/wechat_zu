@@ -17,6 +17,7 @@ if($cus){
         'id_number'=>$cus[0]['id_number'],
         'level'=>$lv,
         'gender'=>$cus[0]['gender']==1?"男":"女",
+        'cash'=>$cus[0]['cash']/100
         
     ]);
 }else{
