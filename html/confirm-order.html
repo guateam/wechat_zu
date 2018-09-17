@@ -39,7 +39,7 @@
                 <div class="weui-cell__ft">
                     <a @click="change_people(-1)" style="font-size: 17px;color: #ffffff;padding-left: 7px;padding-right: 7px;border-radius: 4px;background-color:#2b85e4">-</a>
                     <input disabled type="number" min="1" max="6" v-model="people_num">
-                    <a @click="change_people(1)"style="font-size: 17px;color: #ffffff;padding-left: 5px;padding-right: 5px;border-radius: 4px;background-color:#2b85e4">+</a>
+                    <a @click="change_people(1)" style="font-size: 17px;color: #ffffff;padding-left: 5px;padding-right: 5px;border-radius: 4px;background-color:#2b85e4">+</a>
                 </div>
             </div>
         </div>
@@ -113,32 +113,32 @@
                 total_price: 0,
                 start_time: "",
                 end_time: "",
-                people_num:1,
+                people_num: 1,
                 overlay: true,
             },
             methods: {
-                change_people(val){
-                    this.people_num+=val;
-                    if(this.people_num>6)this.people_num = 6;
-                    else if(this.people_num <1)this.people_num = 1;
+                change_people(val) {
+                    this.people_num += val;
+                    if (this.people_num > 6) this.people_num = 6;
+                    else if (this.people_num < 1) this.people_num = 1;
                 },
                 confirm_od() {
                     var that = this;
                     var item_id = [];
-                    for(var i=0;i<that.skill.length;i++){
+                    for (var i = 0; i < that.skill.length; i++) {
                         item_id.push(that.skill[i].id);
                     }
                     $(that).openWindow("", "确认下单吗？", ["不", "是的"], () => {
                         $.post("../php/addco.php", {
                             phone: "13777579230",
-                            item_id:item_id,
-                            people_num:that.people_num,
-                            job_number:that.job_number
+                            item_id: item_id,
+                            people_num: that.people_num,
+                            job_number: that.job_number
                         }).done((res) => {
                             res = JSON.parse(res);
                             if (res.state == 1) {
-                                $(that).openWindow("","您已成功预约",["好的"],()=>{
-                                    window.location.href="index.html"
+                                $(that).openWindow("", "您已成功预约", ["好的"], () => {
+                                    window.location.href = "index.html"
                                 })
                             }
                         })
