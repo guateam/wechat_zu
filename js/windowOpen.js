@@ -27,7 +27,7 @@
 		$('.cancel-button,.window-masking,.ack-button').on('click',function(){
 			closeWindow();
 		});
-		$(".confirm-button").on("click",()=>{
+		$(".confirm-button .ack-button").on("click",()=>{
 			console.log("点了")
 			setCallBack();
 			closeWindow();

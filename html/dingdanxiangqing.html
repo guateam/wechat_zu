@@ -52,8 +52,8 @@
 
     <row v-if="appointmentData"> <i-col span="24">
         <card dis-hover	 title="预约信息" style="font-size: 12px; color: #657180;">
-            <row>预约时间: {{ appointmentData.date }}</row>
-            <row>预约人数: {{ appointmentData.count }}人</row>
+            <row>预约时间: {{ appointmentData[0].appointment_time }}</row>
+            <row>预约人数: {{ appointmentData[0].user_num }}人</row>
         </card>
     </i-col> </row>
 
@@ -187,7 +187,10 @@
                     }else{
                         that.appointmentData = res[i].appo
                     }
-                    that.orderData.payment =  res[i].pay_way
+                    var pay = [];
+                    pay['0'] = '未支付'; pay['1'] = '微信';
+                    pay['2'] = '支付宝'; pay['3'] = '会员卡';pay['4'] = '现金';
+                    that.orderData.payment =  pay[res[i].pay_way]
                     that.orderData.date =  res[i].time
                     that.orderData.customer =  res[i].user_id
                 }

@@ -32,6 +32,16 @@
                 </div>
                 <div class="weui-cell__ft">{{start_time}}&nbsp;&nbsp;~&nbsp;&nbsp;{{end_time}}</div>
             </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>预约人数</p>
+                </div>
+                <div class="weui-cell__ft">
+                    <a @click="change_people(-1)" style="font-size: 17px;color: #ffffff;padding-left: 7px;padding-right: 7px;border-radius: 4px;background-color:#2b85e4">-</a>
+                    <input disabled type="number" min="1" max="6" v-model="people_num">
+                    <a @click="change_people(1)"style="font-size: 17px;color: #ffffff;padding-left: 5px;padding-right: 5px;border-radius: 4px;background-color:#2b85e4">+</a>
+                </div>
+            </div>
         </div>
         <div class="weui-cells__title">服务项目</div>
         <div class="weui-cells">
@@ -70,7 +80,7 @@
         <div class="" style="background-color: white;position: absolute; bottom: 0;height: 50px;width: 100%;z-index:100;border-top: 1px solid #f2f2f2;display:flex;align-items: center">
             <span style="margin-left: 20px;width: 80px;">预计支付</span>
             <span style="color: #29a3a3;font-size: 22px" v-text="'￥'+total_price"></span>
-            <button style="position:absolute;right: 15px; width: 100px;height: 40px;border-radius: 5px;background-color: #2b85e4;color: white;outline: none">确认预约</button>
+            <button @click="confirm_od()" style="position:absolute;right: 15px; width: 100px;height: 40px;border-radius: 5px;background-color: #2b85e4;color: white;outline: none">确认预约</button>
         </div>
         <div id="modal-overlay" v-show="overlay">
             <div class="modal-data">
@@ -103,36 +113,66 @@
                 total_price: 0,
                 start_time: "",
                 end_time: "",
+                people_num:1,
                 overlay: true,
             },
             methods: {
+                change_people(val){
+                    this.people_num+=val;
+                    if(this.people_num>6)this.people_num = 6;
+                    else if(this.people_num <1)this.people_num = 1;
+                },
+                confirm_od() {
+                    var that = this;
+                    var item_id = [];
+                    for(var i=0;i<that.skill.length;i++){
+                        item_id.push(that.skill[i].id);
+                    }
+                    $(that).openWindow("", "确认下单吗？", ["不", "是的"], () => {
+                        $.post("../php/addco.php", {
+                            phone: "13777579230",
+                            item_id:item_id,
+                            people_num:that.people_num,
+                            job_number:that.job_number
+                        }).done((res) => {
+                            res = JSON.parse(res);
+                            if (res.state == 1) {
+                                $(that).openWindow("","您已成功预约",["好的"],()=>{
+                                    window.location.href="index.html"
+                                })
+                            }
+                        })
+                    })
+                },
                 remove(name) {
                     var that = this;
                     var skill = that.skill
-                    
-                    $(this).openWindow("",'确认移除该服务吗',['不','好的'],()=>{
+
+                    $(this).openWindow("", '确认移除该服务吗', ['不', '好的'], () => {
                         console.log("函数执行了")
                         for (var i in skill) {
-                                if (skill[i].name == name) {
-                                    var h = parseInt(that.end_time.substring(0, 2))
-                                    var m = parseInt(that.end_time.substring(3, 5))
-                                    m -= parseInt(skill[i].duration) % 60;
-                                    if (m < 0) {
-                                        m += 60;
-                                        h -= 1;
-                                    }
-                                    if (m < 10) m = "0" + m;
-                                    h -= parseInt(skill[i].duration / 60);
-                                    if (h < 0) h += 24;
-                                    if(h<10)h="0"+h;
-
-                                    that.end_time = h + ":" + m;
-                                    that.total_price -= skill[i].price;
-                                    that.skill.splice(i, 1);
+                            if (skill[i].name == name) {
+                                var h = parseInt(that.end_time.substring(0, 2))
+                                var m = parseInt(that.end_time.substring(3, 5))
+                                m -= parseInt(skill[i].duration) % 60;
+                                if (m < 0) {
+                                    m += 60;
+                                    h -= 1;
                                 }
+                                if (m < 10) m = "0" + m;
+                                h -= parseInt(skill[i].duration / 60);
+                                if (h < 0) h += 24;
+                                if (h < 10) h = "0" + h;
+
+                                that.end_time = h + ":" + m;
+                                that.total_price -= skill[i].price;
+                                that.skill.splice(i, 1);
                             }
+                        }
                     });
                 }
+
+
             },
             created() {
                 var that = this;
@@ -181,11 +221,12 @@
                         }
                         h += parseInt(duration / 60);
                         if (h >= 24) h -= 24;
-                        if(h<10)h="0"+h;
+                        if (h < 10) h = "0" + h;
 
                         if (m < 10) m = "0" + m;
                         that.end_time = h + ":" + m;
                         that.overlay = false;
+                        that.people_num = 1;
                     }
                 })
             }
