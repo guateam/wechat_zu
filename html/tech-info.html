@@ -77,7 +77,7 @@
             （共{{count}}条）
             </span>
         </div>
-        <div class="weui-panel weui-panel_access" style="background-color: white;border-radius: 5px;margin-bottom: 30%">
+        <div class="weui-panel weui-panel_access" style="background-color: white;border-radius: 5px;margin-bottom: 20%">
             <div class="display-block" style="border-bottom: 1px solid #f2f2f2;" v-for='item in data.feedback'>
                 <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg ">
                     <div class="weui-media-box__hd" v-bind:style="item.head">
@@ -112,9 +112,10 @@
                 </div>
             </div>
         </div>
+        
+        <div style="height:1px"></div>
+
         <div style="height: 10%;width: 100%;position: fixed;bottom: 0;background-color: white;display: flex;">
-
-
             <div style="height: 100%;flex: 0 0 25%;display: flex;align-items: center;justify-content: center;border-right: 1px solid #f2f2f2">
                 <div style="width: 40px" onclick="call()">
                     <img src="../src/分享.png" alt="" style="height: 25px;width:25px">
