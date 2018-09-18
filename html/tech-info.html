@@ -7,18 +7,82 @@
     <title>个人详情</title>
     <link rel="stylesheet" type="text/css" href="../vendor/iview/dist/styles/iview.css">
     <link rel="stylesheet" href="../css/weui-min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/css/swiper.min.css">
+
     <link rel="stylesheet" href="../css/example.css" />
     <link rel="stylesheet" type="text/css" href="../css/overlay.css">
     <link rel="stylesheet" href="../css/global.css" />
-    <style>
+    <style type="text/css">
+        @charset "utf-8";
+        /* CSS Document */
 
+        body {
+            max-width: 640px;
+        }
+
+        img {
+            display: block;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        #comment-list {
+            margin: 1em 0;
+        }
+
+        #comment-list li {
+            display: flex;
+            margin-top: 1.3em;
+        }
+
+        .guest {
+            width: 82%;
+        }
+
+        .thumb {
+            margin: 1em 0;
+        }
+
+        .thumb img {
+            width: 23%;
+            margin-right: 0.5%;
+            display: inline-block;
+        }
+
+        #origin-img {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+        }
+
+        #origin-img .swiper-slide img {
+            width: 100%;
+            vertical-align: middle;
+        }
+
+        .swiper-pagination {
+            top: 1em;
+            bottom: auto;
+            color: #fff;
+        }
     </style>
 </head>
 
 <body>
     <div id="app" style="height: 100%;">
         <div style="width: 100%;height: 33%;background-image: url(../src/head-pic.png);background-repeat: no-repeat;display: flex;align-items: center;justify-content: center">
-                <img v-bind:src="data.technician.head" alt="" style="width: 80px;height: 80px;border-radius: 50%">
+            <img v-bind:src="data.technician.head" alt="" style="width: 80px;height: 80px;border-radius: 50%">
         </div>
         <div class="weui-flex" style="justify-content: center;align-items: center;height: 13%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;">
             <div class="box weui-flex" style="width: 100%; height: 100%;justify-content: center;align-items: center;">
@@ -50,16 +114,27 @@
                     <span>请选择服务</span>
                     <row :gutter="2">
                         <i-col span="6" v-for='item in skill_list'>
-                            <i-button :type="item.check==true? 'primary':'default'" @click="choose_service(item.name)" long>{{item.name}}</i-button>
+                            <i-button :type="item.check==true? 'primary':'default'" @click="choose_service(item.name)"
+                                long>{{item.name}}</i-button>
                         </i-col>
                     </row>
                 </card>
             </row>
         </div>
-        <div class="weui-flex" style="justify-content: center;align-items: center;height: 14%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;margin-top: 10px">
-            <div class="box weui-flex" style="width: 100%; height: 100%;justify-content: center;align-items: center;">
-                <div class="item weui-flex__item" style="text-align: center;height: 100%" v-for='item in data.technician.photo'>
-                    <img @click="to_album" v-bind:src="item" alt="" style="height: 100%;width: 100%;">
+        <div class="weui-flex list" style="justify-content: center;align-items: center;height: 14%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;margin-top: 10px">
+            <div class="box weui-flex guest" style="width: 100%; height: 100%;justify-content: center;align-items: center;">
+                <div class="item weui-flex__item thumb" thumblist="list1" style="text-align: center;height: 100%" v-for='(item, index) in data.technician.photo'>
+                    <!-- <ul id="comment-list"> -->
+                    <!-- <li class="list"> -->
+                    <!-- <div class="guest"> -->
+                    <!-- <div class="thumb" thumblist="list1"> -->
+                    <img @click="show_pic(index)" v-bind:src="item" style="height: 100%;width: 100%;">
+                    <!-- </div> -->
+                    <!-- </div> -->
+                    <!-- </li> -->
+                    <!-- </ul> -->
+
+
                 </div>
             </div>
         </div>
@@ -73,8 +148,8 @@
             <span style="margin-left: 20px;color: #ff0033;">
                 <rate show-text allow-half v-model="total_rate" disabled style="font-size: 15px">
                     <span style="color: #f5a623; margin-left: -20px">{{total_rate}}分</span>
-            </rate>
-            （共{{count}}条）
+                </rate>
+                （共{{count}}条）
             </span>
         </div>
         <div class="weui-panel weui-panel_access" style="background-color: white;border-radius: 5px;margin-bottom: 20%">
@@ -112,7 +187,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div style="height:1px"></div>
 
         <div style="height: 10%;width: 100%;position: fixed;bottom: 0;background-color: white;display: flex;">
@@ -132,6 +207,11 @@
             </div>
         </div>
     </div>
+    <!-- Swiper -->
+    <div class="swiper-container" id="origin-img">
+        <div class="swiper-wrapper"></div>
+        <div class="swiper-pagination"></div>
+    </div>
 </body>
 <script type="text/javascript" src="../js/jweixin.js"></script>
 <script type="text/javascript" src="../js/example.js"></script>
@@ -144,6 +224,54 @@
 <script type="text/javascript" src="../vendor/iview/dist/iview.min.js"></script>
 <script type="text/javascript" src="../js/windowOpen.js"></script>
 <script src="../vendor/soshm/dist/soshm.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/js/swiper.min.js"></script>
+<script>
+    imgsdata = {
+        "list1": [],
+    }
+
+    var swiper = new Swiper('.swiper-container', {
+        zoom: true,
+        width: window.innerWidth,
+        virtual: true,
+        spaceBetween: 20,
+        pagination: {
+            el: '.swiper-pagination',
+            type: 'fraction',
+        },
+        on: {
+            click: function () {
+                $('#origin-img').fadeOut('fast');
+                this.virtual.slides.length = 0;
+                this.virtual.cache = [];
+                swiperStatus = false;
+
+            },
+        },
+
+    });
+
+    //切换图状态禁止页面缩放	
+    document.addEventListener('touchstart', function (event) {
+        if (event.touches.length > 1 && swiperStatus) {
+            event.preventDefault();
+        }
+    })
+    var lastTouchEnd = 0;
+    document.addEventListener('touchend', function (event) {
+        var now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) {
+            event.preventDefault();
+        }
+        lastTouchEnd = now;
+    }, false)
+
+    document.addEventListener('touchmove', function (e) {
+        if (swiperStatus) {
+            e.preventDefault();
+        }
+    })
+</script>
 <script type="text/javascript">
     //获取url参数
     function getQueryString(name) {
@@ -206,9 +334,16 @@
                         "&start-time=" + that.start_time + "&sv=" + str
                 }
             },
-            to_album() {
-                var that = this;
-                window.location.href = "album.html?id=" + that.job_number
+            show_pic(index) {
+                clickIndex = index;
+                imgs = imgsdata['list1'];
+                for (i = 0; i < imgs.length; i++) {
+                    swiper.virtual.appendSlide('<div class="swiper-zoom-container"><img src="' + imgs[i] +
+                        '" /></div>');
+                }
+                swiper.slideTo(clickIndex);
+                $('#origin-img').fadeIn('fast');
+                swiperStatus = true;
             },
             choose_service(name) {
                 var that = this;
@@ -231,7 +366,7 @@
                 async: false,
                 data: {
                     id: that.job_number,
-                    time:that.start_time
+                    time: that.start_time
                 },
                 dataType: 'json',
                 url: '../php/gettechnicianpage.php',
@@ -239,7 +374,8 @@
                 if (data.status == 1) {
                     back = data.data
                     that.data = back
-                    that.is_busy = that.data.technician.busy == '1'?true:false;
+                    imgsdata.list1 = that.data.technician.photo;
+                    that.is_busy = that.data.technician.busy == '1' ? true : false;
                     if (that.data.technician.vcr === null) {
                         console.log("null！！！！")
                         that.data.technician.vcr = '';
