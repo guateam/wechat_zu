@@ -8,6 +8,7 @@ if($user_id){
     if($order){
         for($i=0;$i<count($order);$i++){
             $order[$i]['generated_time']=substr($order[$i]['generated_time'],0,10);
+            $order[$i]['charge']/=100;
         }
         echo json_encode(['status'=>1,'data'=>$order]);
     }

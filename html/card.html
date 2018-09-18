@@ -1,20 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>我的会员卡</title>
+    <link rel="stylesheet" type="text/css" href="../css/overlay.css">
 </head>
+
 <body>
- <div class="box" style="width: 90%;margin-left: 5%;height: 400px;border: 1px solid #fff0f6;background-image: url(../src/card-background.jpg);background-repeat: no-repeat;margin-top: 53px;border-radius: 5px">
-     <h2 style="font-size: 4.5em;margin-left: 32px">至尊金卡</h2>
-     <p style="font-size: 2em;margin-left: 32px">至尊金卡，至尊享受</p>
- </div>
- <div style="width: 90%;margin-left: 5%;height: 400px;background-color: #f2f2f2;margin-top: 53px;border-radius: 5px;padding-top: 32px;position: relative;">
-     <h1 style="margin-left: 32px">当前权益</h1>
-     <h2 style="margin-left: 32px">1.全场6折</h2>
-     <h2 style="margin-left: 32px">2.每月一次免费spa</h2>
-     <h2 style="margin-left: 32px">3.茶水5折</h2>
-     <h1 style="bottom: 10px;position: absolute;margin-left: 32px">距离<span style="font-size: 1.5em;color: #fe736c;">至尊钻石卡</span>仅需再消费<span style="font-size: 2em;color: #409eff" >￥9999</span></h1>
- </div>
+    <div id="app">
+        <div class="box" style="width: 90%;margin-left: 5%;height: 400px;border: 1px solid #fff0f6;background-image: url(../src/card-background.jpg);background-repeat: no-repeat;margin-top: 53px;border-radius: 5px">
+            <h2 style="font-size: 4.5em;margin-left: 32px" v-text="name"></h2>
+            <!-- <p style="font-size: 2em;margin-left: 32px">至尊金卡，至尊享受</p> -->
+        </div>
+        <div style="width: 90%;margin-left: 5%;height: 400px;background-color: #f2f2f2;margin-top: 53px;border-radius: 5px;padding-top: 32px;position: relative;">
+            <h1 style="margin-left: 32px">当前权益</h1>
+            <h2 style="margin-left: 32px" v-text="'全场享受原价的'+discount+'%'"></h2>
+            <h2 style="margin-left: 32px" v-text="'每项服务获得额外'+extra_time+'分钟时间'"></h2>
+            <h1 style="bottom: 10px;position: absolute;margin-left: 32px">距离<span style="font-size: 1.5em;color: #fe736c;"
+                    v-text="next_name"></span>仅需再消费<span style="font-size: 2em;color: #409eff" v-text="'￥'+lv_up"></span></h1>
+        </div>
+        <div id="modal-overlay" v-show="overlay">
+            <div class="modal-data">
+                <img src="../src/loading.gif" />
+            </div>
+        </div>
+    </div>
 </body>
+<script type="text/javascript" src="../js/weui-min.js"></script>
+<script type="text/javascript" src="../js/zepto.js"></script>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../js/echarts-simple-min.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
+<script>
+    let app = new Vue({
+        el: "#app",
+        data: {
+            discount: "",
+            extra_time: '',
+            lv_up: "",
+            name: "",
+            next_name: "",
+            overlay: true,
+        },
+        created() {
+            var that = this;
+            $.post('../php/get_card_info.php', {
+                user_id: "apple"
+            }).done((data) => {
+                data = JSON.parse(data)
+                console.log(data);
+                if (data.status == 1) {
+                    var info = data.data;
+                    console.log(info)
+                    that.discount = info.discount;
+                    that.extra_time = info.duration;
+                    that.lv_up = info.lvup;
+                    that.name = info.lv;
+                    that.next_name = info.next_lv
+                    that.overlay = false
+                }
+            })
+        }
+    })
+</script>
+
 </html>
