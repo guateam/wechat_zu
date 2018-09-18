@@ -101,8 +101,8 @@
                 res = JSON.parse(res);
                 if(res.status == 1){
                     that.user_info.push(res);
+                    that.overlay = false;
                 }
-                that.overlay = false;
             })
         }
     })

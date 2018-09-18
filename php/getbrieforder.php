@@ -1,6 +1,7 @@
 <?php
 require("database.php");
 $consumed_order = get("consumed_order");
+$info_rev = [];
 $info = [];
 foreach($consumed_order as $co){
     $so = get("service_order","order_id",$co['order_id']);
@@ -27,4 +28,7 @@ foreach($consumed_order as $co){
         }
     }
 }
-echo json_encode($info);
+for($i = count($info)-1;$i>=0;$i--){
+    array_push($info_rev,$info[$i]);
+}
+echo json_encode($info_rev);

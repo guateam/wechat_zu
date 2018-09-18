@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>订单详情</title>
     <link href="https://cdn.bootcss.com/iview/2.14.0/styles/iview.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../css/overlay.css">
     <style>
         /*页面总样式*/
         body {
@@ -91,6 +92,11 @@
             <row>下单用户: {{ orderData.customer }}</row>
         </card>
     </i-col> </row>
+    <div id="modal-overlay" v-show="overlay">
+        <div class="modal-data">
+            <img src="../src/loading.gif" />
+        </div>
+    </div>
 </div>
 </body>
 <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
@@ -150,7 +156,8 @@
                     customer: '王先生',
                 },  // 订单数据
 
-                appointmentData: null // 预约信息, 如果不是预约订单则变量值应该为null
+                appointmentData: null, // 预约信息, 如果不是预约订单则变量值应该为null
+                overlay:true,
             }
         },
         computed: {
@@ -194,7 +201,7 @@
                     that.orderData.date =  res[i].time
                     that.orderData.customer =  res[i].user_id
                 }
-
+                that.overlay = false;
             })
         },
     };
