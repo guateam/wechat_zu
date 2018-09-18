@@ -96,7 +96,7 @@
         el: "#app",
         data: {
             order: [],
-            overlay:true,
+            overlay: true,
         },
         methods: {
             detail(id) {
@@ -159,7 +159,14 @@
                 res = JSON.parse(res);
                 console.log(res);
                 for (var i = 0; i < res.length; i++) {
-                    that.order.push(res[i]);
+                    that.order.push({
+                        job_number:res[i]['job_number'],
+                        price:res[i]['price'],
+                        order_id:res[i]['order_id'],
+                        state:res[i]['state'],
+                        time:res[i]['time'],
+                        show:true
+                    });
                     if (that.order[i].state == 0) that.order[i].state = "订单取消"
                     else if (that.order[i].state == 1) that.order[i].state = "预约"
                     else if (that.order[i].state == 2) that.order[i].state = "服务中"
