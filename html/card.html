@@ -59,6 +59,14 @@
                     that.name = info.lv;
                     that.next_name = info.next_lv
                     that.overlay = false
+                }else{
+                    var info = data.data;
+                    that.discount = 100;
+                    that.extra_time = 0;
+                    that.lv_up = "任意";
+                    that.name = "非会员";
+                    that.next_name = info.next_lv
+                    that.overlay = false
                 }
             })
         }
