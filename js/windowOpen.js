@@ -4,7 +4,7 @@
 	var $oMasking;
 	var $oWindowContainer;
 	//打开弹窗方法
-	$.fn.openWindow = function(setTitle,setContents,setButton,setCallBack = null){
+	$.fn.openWindow = function(setTitle,setContents,setButton,setCallBack =()=>{}){
 		
 		//拼接弹窗内容，并且在调用打开弹窗方法时将内容塞进body
 		var _html ='<div class="window-masking"></div>'+
