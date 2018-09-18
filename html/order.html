@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <link href="https://cdn.bootcss.com/element-ui/2.4.0/theme-chalk/index.css" rel="stylesheet">
     <title>历史订单</title>
     <link rel="stylesheet" href="../css/weui-min.css" />
     <link rel="stylesheet" href="../css/example.css" />
@@ -16,7 +17,10 @@
         <div class="weui-tab__panel">
             <div class="page__hd" style="display: flex;align-items: center;justify-content: space-between">
                 <h1 class="page__title">我的评价</h1>
-                <a @click="picker()" href="javascript:;" class="weui-btn weui-btn_default" style="width: 200px;">快速查找</a>
+                <i-select v-model="model1" style="width:200px">
+                    <i-option v-for="item in iot" :value="item.value" :key="item.value">{{ item.label }}</i-option>
+                </i-select>
+                <!--<a @click="picker()" href="javascript:;" class="weui-btn weui-btn_default" style="width: 200px;">快速查找</a>-->
             </div>
             <div class="page__bd">
                 <div class="weui-form-preview" v-for="od in order">
@@ -84,6 +88,7 @@
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/echarts-simple-min.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
+<script type="text/javascript" src="../vendor/iview/dist/iview.min.js"></script>
 <script type="text/javascript" src="../js/windowOpen.js"></script>
 <script type="text/javascript">
     function getQueryString(name) {
@@ -96,7 +101,7 @@
         el: "#app",
         data: {
             order: [],
-            overlay:true,
+            overlay:false,
         },
         methods: {
             detail(id) {
@@ -160,11 +165,11 @@
                 console.log(res);
                 for (var i = 0; i < res.length; i++) {
                     that.order.push(res[i]);
-                    if (that.order[i].state == 0) that.order[i].state = "订单取消"
-                    else if (that.order[i].state == 1) that.order[i].state = "预约"
-                    else if (that.order[i].state == 2) that.order[i].state = "服务中"
-                    else if (that.order[i].state == 3) that.order[i].state = "等待支付"
-                    else if (that.order[i].state == 4) that.order[i].state = "支付完成"
+                    if (that.order[i].state == 0) that.order[i].state = "订单取消";
+                    else if (that.order[i].state == 1) that.order[i].state = "预约";
+                    else if (that.order[i].state == 2) that.order[i].state = "服务中";
+                    else if (that.order[i].state == 3) that.order[i].state = "等待支付";
+                    else if (that.order[i].state == 4) that.order[i].state = "支付完成";
                     else that.order[i].state = "评价完成"
 
                     that.order[i]['show'] = true;
