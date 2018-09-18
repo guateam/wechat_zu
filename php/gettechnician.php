@@ -1,7 +1,23 @@
 <?php
-function gettechnician($id){
+function gettechnician($id,$tm){
     $technician=get('technician','job_number',$id);
+
     if($technician){
+        //判断繁忙情况
+        $order = get("service_order","job_number",$id);
+        //2表示空闲，1表示繁忙
+        $busy = 2;
+        foreach($order as $so){
+            $consumed_order = get('consumed_order','order_id',$so['order_id']);
+            foreach($consumed_order as $co){
+                //如果有订单时间距离选中时间差小于1小时，则认为该订单还未完成，繁忙
+                $leap = abs(   strtotime($co['generated_time'])-strtotime($tm)   );
+                if($leap<3600){
+                    $busy = 1;
+                    break;
+                }
+            }
+        }
         $technician=$technician[0];
         $url='/wechat_zu_technician/';
         $skill='';
@@ -57,7 +73,8 @@ function gettechnician($id){
             'skills'=>$skilllist,
             'gender'=>$gender,
             'vcr'=>$technician['vcr'],
-            'level'=>$technician['level']
+            'level'=>$technician['level'],
+            'busy'=>$busy
         ];
         return $data;
     }

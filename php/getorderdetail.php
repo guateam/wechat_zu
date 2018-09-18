@@ -3,6 +3,8 @@ require("database.php");
 $order_id = $_POST['id'];
 $co = get("consumed_order","order_id",$order_id);
 $so = get("service_order","order_id",$order_id);
+$shop = get("shop");
+$shop = $shop[0]['phone'];
 $info = [];
 foreach($so as $svod){
     $tech = get("technician","job_number",$svod['job_number']);
@@ -20,7 +22,8 @@ foreach($so as $svod){
             "time"=>$co[0]['generated_time'],
             "pay_way"=>$co[0]['payment_method'],
             "user_id"=>$co[0]['user_id'],
-            "appo"=>$appo
+            "appo"=>$appo,
+            "phone"=>$shop,
         ]);
     }else{
         array_push($info,[
@@ -31,7 +34,8 @@ foreach($so as $svod){
             "time"=>"",
             "pay_way"=>"",
             "user_id"=>"",
-            "appo"=>$appo
+            "appo"=>$appo,
+            "phone"=>$shop,
         ]);
     }
 }

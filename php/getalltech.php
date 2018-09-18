@@ -1,7 +1,13 @@
 <?php
 require("database.php");
-
+date_default_timezone_set('PRC'); 
 $all_tech = get("technician");
+
+$now = "";
+if(!isset($_POST['time']))$now = date('Y-m-d H:i:s',time());
+else $now = date('Y-m-d ').$_POST['time'].":00";
+
+
 $result = [];
 foreach($all_tech as $tech){
     $photos = get("technician_photo","job_number",$tech['job_number']);
@@ -13,14 +19,12 @@ foreach($all_tech as $tech){
         $consumed_order = get('consumed_order','order_id',$so['order_id']);
         $latest_time = "0";
         foreach($consumed_order as $co){
-            if($co['generated_time']>$latest_time)$latest_time = $co['generated_time'];
-        }
-        $latest_time = strtotime($latest_time);
-        $now_time = date('Y-m-d H:i:s');
-        $now_time = strtotime($now_time);
-        $leap  = $now_time-$latest_time;
-        if($leap<3600){
-            $busy = 1;
+            //如果有订单时间距离现在的时间差小于1小时，则认为该订单还未完成，繁忙
+            $leap = abs(   strtotime($co['generated_time'])-strtotime($now)   );
+            if($leap<3600){
+                $busy = 1;
+                break;
+            }
         }
     }
     $photo_list = [];

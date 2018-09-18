@@ -34,7 +34,9 @@
                 <row>请选择预约时间:</row>
                 <row :gutter="16" type="flex" justify="space-between">
                     <i-col span="11" offset="1">
-                        <el-time-select v-model="timePick" :picker-options="{ start: '00:00', step: '00:10', end: '23:50' }" :editable="false" :clearable="false" size="small" style="width: 120px" placeholder="选择时间">
+                        <el-time-select v-model="timePick" :picker-options="{ start: '00:00', step: '00:10', end: '23:50' }"
+                            @blur="check_busy" :editable="false" :clearable="false" size="small" style="width: 120px"
+                            placeholder="选择时间">
                         </el-time-select>
                     </i-col>
                     <i-col span="12">
@@ -87,7 +89,7 @@
                         </row>
                     </i-col>
 
-                    <i-col span="15" @click.native="tech_info(item.job_number)">
+                    <i-col span="15" @click.native="tech_info(item.job_number,item.state)">
                         <row style="margin-top: -10px" type="flex" align="bottom">
                             <i-col span="18">
                                 <rate show-text allow-half v-model="item.rate" disabled style="font-size: 15px">
@@ -115,7 +117,7 @@
                     </i-col>
                 </row>
 
-                <row type="flex" justify="start" style="margin-top: 5px" :gutter="16" @click.native="tech_info(item.job_number)">
+                <row type="flex" justify="start" style="margin-top: 5px" :gutter="16" @click.native="tech_info(item.job_number,item.state)">
                     <i-col span="5">
                         <p style="text-align: center">
                             {{ item.level }}
@@ -139,7 +141,8 @@
                         <h1 style="font-size: 14px;font-weight: 200;">客服</h1>
                     </div>
                 </div>
-                <div style="height: 100%;flex: 0 0 25%;display: flex;align-items: center;justify-content: center" onclick="call()">
+                <div style="height: 100%;flex: 0 0 25%;display: flex;align-items: center;justify-content: center"
+                    onclick="call()">
                     <div style="width: 40px">
                         <img src="../src/分享.png" alt="" style="height: 25px;width:25px">
                         <h1 style="font-size: 14px;font-weight: 200;">分享</h1>
@@ -210,6 +213,33 @@
             }
         },
         methods: {
+            check_busy() {
+                var that = this;
+                that.overlay = true;
+                that.list = [];
+                $.post("../php/getalltech.php",{
+                    time:that.timePick
+                }).done((result) => {
+                    result = JSON.parse(result);
+                    for (var i = 0; i < result.data.length; i++) {
+                        var tech = result.data[i];
+                        that.list.push({
+                            avatar_url: tech.avatar_url.replace('..', '/wechat_zu_technician/'),
+                            job_number: tech.job_number,
+                            photo_list: tech.photo_list,
+                            rate: tech.rate,
+                            state: tech.busy,
+                            skills: tech.skill,
+                            level: tech.level,
+                            hot: tech.hot,
+                            check: 0,
+                            show: true
+                        })
+                    }
+                    that.sort_by(0, 'rate');
+                    that.overlay = false;
+                })
+            },
             choose_tech(item) {
                 if (item.state === 1) return;
                 var that = this;
@@ -227,9 +257,9 @@
                 window.location.href = url + "?job_number=" + job_number
             },
             tech_info(job_number, state) {
-                let timepick = new Date((new Date().toDateString() + ' ' + app.timePick));
-                if (new Date() > timepick) this.timePick = new Date().toTimeString().slice(0, 5);
-                window.location.href = "tech-info.html?job_number=" + job_number + "&start-time=" + this.timePick + "&state=" + state
+                // let timepick = new Date((new Date().toDateString() + ' ' + app.timePick));
+                // if (new Date() > timepick) this.timePick = new Date().toTimeString().slice(0, 5);
+                window.location.href = "tech-info.html?job_number=" + job_number + "&start-time=" + this.timePick
             },
             down_order() {
                 var that = this;
@@ -276,8 +306,8 @@
             sort_by(idx, keyName) {
                 this.button_click(idx);
                 var that = this;
-                var sort = function(keyName) {
-                    return function(objectN, objectM) {
+                var sort = function (keyName) {
+                    return function (objectN, objectM) {
                         var valueN = objectN[keyName]
                         var valueM = objectM[keyName]
                         if (valueN < valueM) return 1
@@ -289,13 +319,18 @@
             },
         },
         created() {
+            console.log(this)
             var that = this;
             var myDate = new Date();
             h = myDate.getHours();
             m = myDate.getMinutes();
             if (m % 10 < 5) m -= m % 10;
             else m += (10 - m % 10);
-
+            if (m >= 60) {
+                m -= 60;
+                h += 1;
+            }
+            if (h >= 24) h = 0;
             if (m < 10) m = "0" + m;
             if (h < 10) h = "0" + h;
             that.timePick = h + ":" + m;

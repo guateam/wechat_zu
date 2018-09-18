@@ -225,13 +225,13 @@
 
             that.job_number = getPar('job_number');
             that.start_time = getQueryString("start-time");
-            that.is_busy = getQueryString('state') == '1' ? true : false;
             var back = {};
             $.ajax({
                 type: 'POST',
                 async: false,
                 data: {
-                    id: that.job_number
+                    id: that.job_number,
+                    time:that.start_time
                 },
                 dataType: 'json',
                 url: '../php/gettechnicianpage.php',
@@ -239,6 +239,7 @@
                 if (data.status == 1) {
                     back = data.data
                     that.data = back
+                    that.is_busy = that.data.technician.busy == '1'?true:false;
                     if (that.data.technician.vcr === null) {
                         console.log("null！！！！")
                         that.data.technician.vcr = '';
