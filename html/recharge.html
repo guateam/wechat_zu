@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>会员充值</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            background-color: white;
+        }
+
+        .row {
+            display: flex;
+            width: 50%;
+            float: left;
+        }
+
+        .box {
+            flex: 0 0 48%;
+            margin: 1%;
+            height: 100px;
+            border-radius: 10px;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            position: relative;
+            border: 1px black solid;
+            color: black;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .row {
+                width: 100%
+            }
+
+            .box {
+                flex: 0 0 31%;
+                height: 60px;
+                border-radius: 7px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div style="border-bottom: 1px grey solid;margin: 20px 0">
+    <h1 style="font-size: 1.6em;margin: 5px">王老三</h1>
+    <h1 style="font-size: 1.1em;margin: 8px">当前余额：<span style="font-size: 1.5em;color: #fe736c">￥1414</span></h1>
+    <h1 style="margin: 5px;margin-top: 10px;font-size: 0.9em;margin-bottom: 20px">距离<span style="font-size: 1.5em;color: #fe736c;">VIP3</span>仅需再消费<span style="font-size: 1.7em;color: #409eff">￥21212</span></h1>
+</div>
+<div class="row">
+    <div class="box ">666</div>
+    <div class="box ">888</div>
+    <div class="box ">999</div>
+</div>
+<div class="row">
+    <div class="box ">6666</div>
+    <div class="box ">8888</div>
+    <div class="box ">9999</div>
+</div>
+<div class="row">
+    <div class="box ">66666</div>
+    <div class="box ">88888</div>
+    <div class="box "><input type="text" placeholder="自定义" style="border: none;height: 80%;outline: none;text-align: center;width: 50px"></div>
+</div>
+<button style="width: 94%;margin-left: 3%;margin-top: 25px;height: 50px;border-radius: 20px;background-color: #00e4e6;border: none;color: white">确认充值</button>
+</body>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script>
+    $('.box').on('click', function () {
+        $('div').siblings(".box").css({'color':'black','border':'1px black solid'});
+        $(this).css({'color':'#00e4e6','border':'1px #00e4e6 solid'});
+    })
+    $('input').on('click', function () {
+        $(this).css({'color':'#00e4e6','border':'none'});
+        $('div').siblings(".box").css({'color':'black','border':'1px black solid'});
+    })
+</script>
+</html>
