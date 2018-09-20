@@ -10,10 +10,9 @@ $rnd = "";
 for($i=0;$i<3;$i++){
     for($j=0;$j<4;$j++)
         $rnd.=$dict[rand(0,count($dict)-1)];
-    $rnd.=" ";
 }
 if($user){
-    $time = "OD".date("Y md")." ".$rnd;
+    $time = date("Y md").$rnd;
     add("consumed_order",[["order_id",$time],['user_id',$user[0]['ID']],['state',1]]);
     foreach($item_id as $id){
         add("service_order",[['order_id',$time],['service_type',1],["item_id",$id],["job_number",$job_number]]);
