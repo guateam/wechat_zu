@@ -69,6 +69,7 @@
 <script type="text/javascript">
     openid = '1'
 
+
     function getQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
         var r = window.location.search.substr(1).match(reg);
@@ -92,6 +93,7 @@
             })
         }
     })
+    var that = app;
 
     function send() {
         $.post('../php/setcomment.php', {
@@ -102,10 +104,12 @@
         }).done((data) => {
             data = JSON.parse(data)
             if (data.status == 1) {
-                alert('success')
-                location.href = history.go(-1)
+                $(that).openWindow("", "您已成功评价", ["好的"], () => {
+                    location.href = 'index.html'
+                })
+
             } else {
-                alert('error')
+                $(that).openWindow("", "评价失败", ["好的"], () => {})
             }
         })
     }
