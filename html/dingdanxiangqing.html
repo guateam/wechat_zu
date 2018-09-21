@@ -35,7 +35,7 @@
     <row> <i-col span="24">
         <card dis-hover	style="text-align: center">
             <row>
-                <img src="http://thyrsi.com/t6/369/1536558999x-1404750082.png" alt="" style="width: 60px; height: 60px;border-radius: 150px;">
+                <img :src="logo" alt="" style="width: 60px; height: 60px;border-radius: 150px;">
             </row>
             <row>
                 <strong style="font-size: 16px; color: #464c5b;">订单已完成</strong>
@@ -159,6 +159,7 @@
                 appointmentData: null, // 预约信息, 如果不是预约订单则变量值应该为null
                 overlay:true,
                 phone:'',
+                logo:'',
             }
         },
         computed: {
@@ -182,6 +183,7 @@
             }).done((res)=>{
                 res = JSON.parse(res)
                 that.phone = res[0]['phone']
+                that.logo = res[0]['logo']
                 for(var i=0;i<res.length;i++){
                     that.serviceData.push({
                         serviceName: res[i].service_name, 

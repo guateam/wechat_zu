@@ -151,7 +151,6 @@
         methods: {
             select_service() {
                 var val = this.selector;
-                console.log(val)
                 if (val == 0) {
                     for (var i = 0; i < this.order.length; i++) {
                         this.order[i].show = true;
@@ -159,12 +158,9 @@
                     return
                 } else {
                     for (var i = 0; i < this.order.length; i++) {
-                        console.log(i)
                         if (this.order[i].state == val) {
-                            console.log(i + "显示")
                             this.order[i].show = true;
                         } else {
-                            console.log(i + "不显示")
                             this.order[i].show = false;
                         }
                     }
@@ -176,53 +172,6 @@
             comment(id) {
                 window.location.href = 'my-rate.html?id=' + id
             },
-            picker() {
-                var that = this;
-
-                weui.picker([{
-                    label: '全部',
-                    value: 0
-                }, {
-                    label: '预约',
-                    value: '预约'
-                }, {
-                    label: '服务中',
-                    value: '服务中'
-                }, {
-                    label: '等待支付',
-                    value: '等待支付'
-                }, {
-                    label: '支付完成',
-                    value: '支付完成'
-                }], {
-                    onChange: function (result) {
-
-                    },
-                    onConfirm: function (result) {
-                        var val = result[0];
-                        console.log(val)
-                        if (val == 0) {
-                            for (var i = 0; i < that.order.length; i++) {
-                                that.order[i].show = true;
-                            }
-                            return
-                        } else {
-                            for (var i = 0; i < that.order.length; i++) {
-                                console.log(i)
-                                if (that.order[i].state == val) {
-                                    console.log(i + "显示")
-                                    that.order[i].show = true;
-                                } else {
-                                    console.log(i + "不显示")
-                                    that.order[i].show = false;
-                                }
-                            }
-                        }
-
-                    }
-                });
-
-            }
         },
         created() {
             var that = this;

@@ -4,7 +4,10 @@ $order_id = $_POST['id'];
 $co = get("consumed_order","order_id",$order_id);
 $so = get("service_order","order_id",$order_id);
 $shop = get("shop");
+$logo = $shop[0]['logo'];
 $shop = $shop[0]['phone'];
+if(is_null($logo))$logo="/photo/wash-foot.jpg";
+
 $info = [];
 foreach($so as $svod){
     $tech = get("technician","job_number",$svod['job_number']);
@@ -24,6 +27,7 @@ foreach($so as $svod){
             "user_id"=>$co[0]['user_id'],
             "appo"=>$appo,
             "phone"=>$shop,
+            "logo"=>$logo,
         ]);
     }else{
         array_push($info,[
@@ -36,6 +40,7 @@ foreach($so as $svod){
             "user_id"=>"",
             "appo"=>$appo,
             "phone"=>$shop,
+            "logo"=>$logo,
         ]);
     }
 }
