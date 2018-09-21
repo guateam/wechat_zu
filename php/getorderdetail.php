@@ -19,12 +19,14 @@ foreach($so as $svod){
     if($tech && $svs){
         array_push($info,[
             "technician_name"=>$tech[0]['name'],
+            "technician_head"=>$tech[0]['photo'],
             "job_number"=>$tech[0]['job_number'],
             "service_name"=>$svs[0]['name'],
             "price"=>$svs[0]['price']*$svs[0]['discount']*0.01*0.01,
             "time"=>$co[0]['generated_time'],
             "pay_way"=>$co[0]['payment_method'],
             "user_id"=>$co[0]['user_id'],
+            "service_time"=>$svs[0]['duration'],
             "appo"=>$appo,
             "phone"=>$shop,
             "logo"=>$logo,
