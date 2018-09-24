@@ -9,6 +9,7 @@ $shop = $shop[0]['phone'];
 if(is_null($logo))$logo="/photo/wash-foot.jpg";
 
 $info = [];
+
 foreach($so as $svod){
     $tech = get("technician","job_number",$svod['job_number']);
     $svs = get("service_type","ID",$svod['item_id']);
