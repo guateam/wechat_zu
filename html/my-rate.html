@@ -84,7 +84,7 @@
             }).done((res) => {
                 res = JSON.parse(res);
                 if (res.status == 1) {
-                    res = res.data[0];
+                    res = res.data;
                     that.record = res;
 
                 } else {

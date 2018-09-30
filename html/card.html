@@ -107,6 +107,11 @@
             <p class="weui-tabbar__label">我的</p>
         </a>
     </div>
+    <div id="modal-overlay" v-show="overlay">
+        <div class="modal-data">
+            <img src="../src/loading.gif" />
+        </div>
+    </div>
 </div>
 </body>
 <script type="text/javascript" src="../js/weui-min.js"></script>
@@ -138,10 +143,10 @@
                     console.log(info)
                     that.head = data.head
                     that.discount = info.discount;
-                    that.extra_time = info.duration;
-                    that.lv_up = info.lvup;
-                    that.name = info.lv;
-                    that.next_name = info.next_lv
+                    that.extra_time = info.extradura;
+                    that.lv_up = info.exp;
+                    that.name = info.nowlv;
+                    that.next_name = info.nxlv
                     that.overlay = false
                 } else {
                     var info = data.data;
