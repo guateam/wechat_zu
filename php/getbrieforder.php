@@ -6,10 +6,14 @@ $info = [];
 foreach($consumed_order as $co){
     $so = get("service_order","order_id",$co['order_id']);
     foreach($so as $svod){
+        if($svod['show'] != 1){
+            continue;
+        }
         $tech = get("technician","job_number",$svod['job_number']);
         $svs = get("service_type","ID",$svod['item_id']);
         if($tech && $svs){
             array_push($info,[
+                "ID"=>$svod['ID'],
                 "job_number"=>$tech[0]['job_number'],
                 "price"=>$svs[0]['price']*$svs[0]['discount']*0.01*0.01,
                 "order_id"=>$co['order_id'],
@@ -18,6 +22,7 @@ foreach($consumed_order as $co){
             ]);
         }else{
             array_push($info,[
+                "ID"=>"",
                 "technician_name"=>"",
                 "job_number"=>"",
                 "price"=>0,

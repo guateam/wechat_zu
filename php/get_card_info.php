@@ -33,7 +33,7 @@ foreach($result as $row){
     }
 }
     
-if($result && $is_vip){
+if($result && $is_vip){ 
     $result['exp']/=100;
     $result['total_charge']/=100;
     echo json_encode(['status'=>1,'data'=>$result,'head'=>$head]);

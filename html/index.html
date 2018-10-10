@@ -62,11 +62,14 @@
                     </div>
                     <div class="item weui-flex__item" style="text-align: center">
                         <div style="height: 60px;width: 60px;border-radius: 50%;background-color: #ffcc66;margin: 10px auto;display: flex;justify-content: center;align-items: center;">
-                            <img @click="sorry" src="../src/包厢预约.png" alt="" style="width: 34px;height: 34px;"></div>包厢预约
+                            <a :href="'tel:'+data.phone">
+                                <img  src="../src/包厢预约.png" alt="" style="width: 34px;height: 34px;">
+                            </a>
+                        </div>包厢预约
                     </div>
                     <div class="item weui-flex__item" style="text-align: center">
                         <div style="height: 60px;width: 60px;border-radius: 50%;background-color: #ff9966;margin: 10px auto;display: flex;justify-content: center;align-items: center;">
-                            <img @click="sorry" src="../src/闪付买单.png" alt="" style="width: 34px;height: 34px;"></div>闪付买单
+                            <img @click="sorry" src="../src/闪付买单.png" alt="" style="width: 34px;height: 34px;"></div>企业文化
                     </div>
                     <div class="item weui-flex__item" style="text-align: center">
                         <div onClick="navi('recharge.html')" style="height: 60px;width: 60px;border-radius: 50%;background-color: #66ccff;margin: 10px auto;display: flex;justify-content: center;align-items: center;">

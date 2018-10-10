@@ -2,6 +2,7 @@
 require("database.php");
 $job_number = $_POST['job_number'];
 $skill =  get("skill","job_number",$job_number);
+$phone = (get("shop"))[0]['phone'];
 $data = [];
 if($skill){
     foreach($skill as $sk){
@@ -14,7 +15,7 @@ if($skill){
             'job_number'=>$sk['job_number'],
         ]);
     }
-    echo json_encode(['status'=>1,'data'=>$data]);
+    echo json_encode(['status'=>1,'data'=>$data,'phone'=>$phone]);
 }else{
     echo json_encode(['status'=>0,'data'=>[]]);
 }

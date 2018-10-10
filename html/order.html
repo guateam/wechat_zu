@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
     <!-- <link href="https://cdn.bootcss.com/element-ui/2.4.0/theme-chalk/index.css" rel="stylesheet"> -->
-    <link href="https://cdn.bootcss.com/iview/2.14.0/styles/iview.css" rel="stylesheet">
+    <link href="../css/iview.css" rel="stylesheet">
     <title>历史订单</title>
     <link rel="stylesheet" href="../css/weui-min.css" />
     <link rel="stylesheet" href="../css/example.css" />
@@ -75,8 +75,8 @@
                         </div>
                         <div class="weui-form-preview__ft">
                             <a class="weui-form-preview__btn weui-form-preview__btn_primary" @click="detail(od.order_id)">查看详情</a>
-                            <a class="weui-form-preview__btn weui-form-preview__btn_primary"
-                                @click="comment(od.order_id)">查看评价</a>
+                            <a class="weui-form-preview__btn weui-form-preview__btn_primary" @click="comment(od.order_id)">查看评价</a>
+                            <a class="weui-form-preview__btn weui-form-preview__btn_primary" @click="del(od.ID)">删除记录</a>
                         </div>
                     </div>
                 </div>
@@ -110,7 +110,7 @@
 <script type="text/javascript" src="../js/zepto.js"></script>
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/echarts-simple-min.js"></script>
-<script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
+<script src="../js/vue.js"></script>
 <script type="text/javascript" src="../vendor/iview/dist/iview.min.js"></script>
 <script type="text/javascript" src="../js/windowOpen.js"></script>
 <script type="text/javascript">
@@ -172,6 +172,21 @@
             comment(id) {
                 window.location.href = 'my-rate.html?id=' + id
             },
+            del(id){
+                $.post("../php/delete_sv_order.php",{
+                    id:id
+                }).done((res)=>{
+                    res = JSON.parse(res);
+                    if(res.tatus == 1){
+
+                    }
+                })
+                for(var i = 0;i<this.order.length;i++){
+                    if(this.order[i]['ID'] == id){
+                        this.order.splice(i,1)
+                    }
+                }
+            }
         },
         created() {
             var that = this;
@@ -180,6 +195,7 @@
                 console.log(res);
                 for (var i = 0; i < res.length; i++) {
                     that.order.push({
+                        ID:res[i]['ID'],
                         job_number: res[i]['job_number'],
                         price: res[i]['price'],
                         order_id: res[i]['order_id'],

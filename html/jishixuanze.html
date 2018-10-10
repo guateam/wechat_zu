@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>技师选择</title>
-    <link href="https://cdn.bootcss.com/iview/2.14.0/styles/iview.css" rel="stylesheet">
-    <link href="https://cdn.bootcss.com/element-ui/2.4.0/theme-chalk/index.css" rel="stylesheet">
+    <link href="../css/iview.css" rel="stylesheet">
+    <!-- <link href="https://cdn.bootcss.com/element-ui/2.4.0/theme-chalk/index.css" rel="stylesheet"> -->
     <link rel="stylesheet" type="text/css" href="../css/overlay.css">
     <link rel="stylesheet" href="../css/global.css" />
     <style>
@@ -65,6 +65,18 @@
                     <i-col span="6">
                         <i-button :type="button_type[3]" @click="sort_by(3,'state')" long>状态</i-button>
                     </i-col>
+                </row>
+                <row :gutter="2">
+                    <i-col span="8">
+                        <i-button :type="button_type[4]" @click="select_level(4,'金牌沐浴')" long>金牌沐浴</i-button>
+                    </i-col>
+                    <i-col span="8">
+                        <i-button :type="button_type[5]" @click="select_level(5,'魅力天使')" long>魅力天使</i-button>
+                    </i-col>
+                    <i-col span="8">
+                        <i-button :type="button_type[6]" @click="select_level(6,'至尊国色')" long>至尊国色</i-button>
+                    </i-col>
+
                 </row>
             </card>
         </row>
@@ -160,11 +172,11 @@
         </div>
     </div>
 </body>
-<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
+<script src="../js/jquery.js"></script>
+<script src="../js/vue.js"></script>
 <script type="text/javascript" src="../vendor/iview/dist/iview.min.js"></script>
 <script type="text/javascript" src="../js/sweetalert2.all.js"></script>
-<script src="https://cdn.bootcss.com/element-ui/2.4.0/index.js"></script>
+<!-- <script src="https://cdn.bootcss.com/element-ui/2.4.0/index.js"></script> -->
 <script type="text/javascript" src="../js/windowOpen.js"></script>
 <script src="../vendor/soshm/dist/soshm.min.js"></script>
 <!-- <script src="https://cdn.bootcss.com/iview/2.14.0/iview.min.js"></script> -->
@@ -195,6 +207,9 @@
                     "default",
                     "default",
                     "default",
+                    "default",
+                    "default",
+                    "default",
                 ],
                 timePick: new Date().toTimeString().slice(0, 5), // 当前时间
                 vip_discount: 100,
@@ -217,8 +232,8 @@
                 var that = this;
                 that.overlay = true;
                 that.list = [];
-                $.post("../php/getalltech.php",{
-                    time:that.timePick
+                $.post("../php/getalltech.php", {
+                    time: that.timePick
                 }).done((result) => {
                     result = JSON.parse(result);
                     for (var i = 0; i < result.data.length; i++) {
@@ -279,13 +294,15 @@
             },
             button_click(idx) {
                 for (var i = 0; i < this.button_type.length; i++) {
-                    if (i == idx) this.button_type[i] = "primary"
-                    else this.button_type[i] = "default"
+                    if (i == idx) Vue.set(this.button_type, i, "primary")
+                    else Vue.set(this.button_type, i, "default")
                 }
             },
             select_service() {
                 var that = this;
                 var val = that.selector;
+                if(val === undefined)return;
+                that.reshow();
                 if (val != -1) {
                     for (var i = 0; i < that.list.length; i++) {
                         var sk = that.list[i].skills;
@@ -303,6 +320,18 @@
                     }
                 }
             },
+            select_level(idx, str) {
+                this.selector = "";
+                this.button_click(idx);
+                var that = this;
+                that.reshow();
+                for (var i = 0; i < that.list.length; i++) {
+                    if (that.list[i].level != str) {
+                        that.list[i].show = false;
+                        console.log(that.list[i].job_number+"不显示，"+that.list[i].level)
+                    }
+                }
+            },
             sort_by(idx, keyName) {
                 this.button_click(idx);
                 var that = this;
@@ -317,6 +346,11 @@
                 }
                 this.list.sort(sort(keyName));
             },
+            reshow() {
+                for (var i = 0; i < this.list.length; i++) {
+                    this.list[i].show = true;
+                }
+            }
         },
         created() {
             console.log(this)

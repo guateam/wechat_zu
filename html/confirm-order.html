@@ -34,6 +34,12 @@
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
+                    <p>预留手机号</p>
+                </div>
+                <input type="text" v-model="input_phone">
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
                     <p>预约人数</p>
                 </div>
                 <div class="weui-cell__ft">
@@ -41,6 +47,12 @@
                     <a v-text="people_num" style="padding-left:21px;padding-right:21px;background-color: white;text-align: center;border: none;font-size: 23px;color: #ac1d00"></a>
                     <a @click="change_people(1)" style="font-size: 17px;color: #ffffff;padding-left: 5px;padding-right: 5px;border-radius: 4px;background-color:#2b85e4">+</a>
                 </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>店内热线</p>
+                </div>
+                <div class="weui-cell__ft">{{shop_phone}}</div>
             </div>
         </div>
         <div class="weui-cells__title">服务项目</div>
@@ -77,6 +89,7 @@
                 <div class="weui-cell__ft"></div>
             </a>
         </div>
+
         <div class="" style="background-color: white;position: absolute; bottom: 0;height: 50px;width: 100%;z-index:100;border-top: 1px solid #f2f2f2;display:flex;align-items: center">
             <span style="margin-left: 20px;width: 80px;">预计支付</span>
             <span style="color: #29a3a3;font-size: 22px" v-text="'￥'+total_price"></span>
@@ -95,7 +108,7 @@
     <script type="text/javascript" src="../js/jquery.js"></script>
     <script type="text/javascript" src="../js/sweetalert2.all.js"></script>
     <script type="text/javascript" src="../js/echarts-simple-min.js"></script>
-    <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
+    <script src="../js/vue.js"></script>
     <script type="text/javascript" src="../js/windowOpen.js"></script>
     <script type="text/javascript">
         function getQueryString(name) {
@@ -114,6 +127,8 @@
                 start_time: "",
                 end_time: "",
                 people_num: 1,
+                input_phone: "",
+                shop_phone: "",
                 overlay: true,
             },
             methods: {
@@ -193,6 +208,7 @@
                 }).done((result) => {
                     result = JSON.parse(result)
                     if (result.status == 1) {
+                        that.shop_phone = result.phone;
                         if (choosen[0] == 'all') {
                             for (var j = 0; j < result.data.length - 1; j++) choosen.push('all');
                         }
