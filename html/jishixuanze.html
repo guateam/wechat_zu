@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>技师选择</title>
     <link href="../css/iview.css" rel="stylesheet">
-    <!-- <link href="https://cdn.bootcss.com/element-ui/2.4.0/theme-chalk/index.css" rel="stylesheet"> -->
+    <link href="https://cdn.bootcss.com/element-ui/2.4.0/theme-chalk/index.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../css/overlay.css">
     <link rel="stylesheet" href="../css/global.css" />
     <style>
@@ -176,6 +176,7 @@
 <script src="../js/vue.js"></script>
 <script type="text/javascript" src="../vendor/iview/dist/iview.min.js"></script>
 <script type="text/javascript" src="../js/sweetalert2.all.js"></script>
+<!-- element的cdn爆炸了，没办法加载 -->
 <!-- <script src="https://cdn.bootcss.com/element-ui/2.4.0/index.js"></script> -->
 <script type="text/javascript" src="../js/windowOpen.js"></script>
 <script src="../vendor/soshm/dist/soshm.min.js"></script>
@@ -292,7 +293,13 @@
                     $(this).openWindow("", '请至少选择一位技师', ['好的']);
                 }
             },
-            button_click(idx) {
+            button_click(idx = -1) {
+                if(idx == -1){
+                    for(var i in this.button_type){
+                        Vue.set(this.button_type, i, "default");
+                    }
+                    return;
+                }
                 for (var i = 0; i < this.button_type.length; i++) {
                     if (i == idx) Vue.set(this.button_type, i, "primary")
                     else Vue.set(this.button_type, i, "default")
@@ -300,6 +307,7 @@
             },
             select_service() {
                 var that = this;
+                this.button_click();
                 var val = that.selector;
                 if(val === undefined)return;
                 that.reshow();
