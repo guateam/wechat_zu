@@ -120,6 +120,7 @@
         let app = new Vue({
             el: '#app',
             data: {
+                id:"1",//之后登陆功能添加了就换成获取的open_id，目前写死
                 rate: 4.5,
                 job_number: "",
                 skill: [],
@@ -145,7 +146,8 @@
                     }
                     $(that).openWindow("", "确认下单吗？", ["不", "是的"], () => {
                         $.post("../php/addco.php", {
-                            phone: "13777579230",
+                            id:that.id,
+                            phone: that.input_phone,
                             item_id: item_id,
                             people_num: that.people_num,
                             job_number: that.job_number
