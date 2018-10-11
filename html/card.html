@@ -134,7 +134,7 @@
         created() {
             var that = this;
             $.post('../php/get_card_info.php', {
-                user_id: "apple"
+                user_id: "test"
             }).done((data) => {
                 data = JSON.parse(data)
                 console.log(data);

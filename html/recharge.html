@@ -94,7 +94,7 @@
     </div>
 </body>
 <script type="text/javascript" src="../js/jquery.js"></script>
-<script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
+<script src="../js/vue.js"></script>
 <script type="text/javascript" src="../js/windowOpen.js"></script>
 <script>
 /**
@@ -159,7 +159,7 @@
                 }else{
                     $.post('../php/recharge.php',{
                         charge:that.fee,
-                        user_id:"apple",
+                        user_id:"test",
                         job_number:that.job_number,
                         pay:that.pay
                     }).done((res)=>{
