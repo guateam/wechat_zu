@@ -128,7 +128,8 @@
                     <!-- <li class="list"> -->
                     <!-- <div class="guest"> -->
                     <!-- <div class="thumb" thumblist="list1"> -->
-                    <img @click="show_pic(index)" v-bind:src="item" style="height: 100%;width: 100%;">
+                    <!--<img @click="show_pic(index)" v-bind:src="item" style="height: 100%;width: 100%;">-->
+                    <img onClick="navi('pyquan.html')" style="height: 100%;width: 100%;" src="../../photo/bhDrpQG180904123135g.jpg">
                     <!-- </div> -->
                     <!-- </div> -->
                     <!-- </li> -->
@@ -414,6 +415,11 @@
             digest: ''
         });
     }
+
+    function navi(url) {
+        window.location.href = url;
+    }
+
 </script>
 
 </html>
