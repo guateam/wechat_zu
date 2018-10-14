@@ -36,7 +36,7 @@
                 <div class="weui-cell__bd">
                     <p>预留手机号</p>
                 </div>
-                <input type="text" v-model="input_phone">
+                <input type="text" v-model="input_phone" style="outline: none;border: none;text-align: right" placeholder="请输入手机号">
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
@@ -75,6 +75,25 @@
                 </div>
                 <div class="weui-cell__ft">
                     <a @click="remove(item.name)" class="weui-swiped-btn weui-swiped-btn_warn" href="javascript:">删除</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="weui-cells__title">本次优惠</div>
+        <div class="weui-cells">
+            <div class="weui-cell weui-cell_swiped">
+                <div class="weui-cell__bd" style="transform: translateX(-68px)">
+                    <div class="weui-cell" onclick="navi('recharge.html')">
+                        <div class="weui-cell__bd">
+                            <p style="margin-left: 20%">
+                                <span style="display:inline-block ;width:40px">会员</span>
+                                <span style="display:inline-block ;font-family: 华文雅黑;background-color: #fe736c;color: white;border-radius: 6px;padding: 0 2px;font-size: 15px">
+                                    充返
+                                </span>
+                                <span style="display:inline-block;font-size: 13px;font-weight: 100;color: gray;">充500送500，充1000送2000</span>
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -249,6 +268,10 @@
                 })
             }
         })
-    </script>
 
+        function navi(url) {
+            window.location.href = url;
+        }
+    </script>
+</body>
 </html>
