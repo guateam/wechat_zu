@@ -34,12 +34,6 @@
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
-                    <p>预留手机号</p>
-                </div>
-                <input type="text" v-model="input_phone" style="outline: none;border: none;text-align: right" placeholder="请输入手机号">
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
                     <p>预约人数</p>
                 </div>
                 <div class="weui-cell__ft">
@@ -76,6 +70,12 @@
                 <div class="weui-cell__ft">
                     <a @click="remove(item.name)" class="weui-swiped-btn weui-swiped-btn_warn" href="javascript:">删除</a>
                 </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>预留手机号</p>
+                </div>
+                <input type="text" v-model="input_phone" style="outline: none;border: none;text-align: right" placeholder="请输入手机号">
             </div>
         </div>
 
