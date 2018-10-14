@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>会员充值</title>
     <link rel="stylesheet" type="text/css" href="../css/overlay.css">
-    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" type="text/css" href="../vendor/iview/dist/styles/iview.css">
+    <link rel="stylesheet" href="../css/global.css"/>
     <style type="text/css">
         * {
             margin: 0;
@@ -67,37 +68,51 @@
 </head>
 
 <body>
-    <div id='app' style="width:100%;height:100%">
-        <div style="border-bottom: 1px grey solid;margin: 20px 0">
-            <h1 style="font-size: 1.6em;margin: 5px" v-text="name"></h1>
-            <h1 style="font-size: 1.1em;margin: 8px">当前余额：<span style="font-size: 1.5em;color: #fe736c" v-text="'￥'+cash"></span></h1>
-        </div>
-        <div class="row">
-            <div v-for="(val, index) in [100,200,500]" @click="choose(index)" v-bind:class="{box:box_list[index]==0,'choosen-box':box_list[index]==1}" v-text="val"></div>
-        </div>
-        <div class="row">
-            <div v-for="(val, index) in [1000,2000,5000]"  @click="choose(index+3)":class="{box:box_list[index+3]==0,'choosen-box':box_list[index+3]==1}" v-text="val"></div>
-        </div>
-        <div class="row">
-            <div v-for="(val, index) in [10000,20000,'自定义']"  @click="choose(index+6)" :class="{box:box_list[index+6]==0,'choosen-box':box_list[index+6]==1}" v-text="val"></div>
-            <!-- <input type="text" placeholder="自定义" style="border: none;height: 80%;outline: none;text-align: center;width: 50px"></div> -->
-        </div>
-        <div class = "row">
-                <input v-show="box_list[8]==1" v-model="fee" style="border-radius:7px;height: 30px;margin-left:10px;margin-right:10px;margin-top:10px;text-align: center;width: 95%" type="number">
-        </div>
-        <button @click = "recharge()" style="width: 94%;margin-left: 3%;margin-top: 25px;height: 50px;border-radius: 20px;background-color: #00e4e6;border: none;color: white">确认充值</button>
-        <div id="modal-overlay" v-show="overlay">
-            <div class="modal-data">
-                <img src="../src/loading.gif" />
-            </div>
+<div id='app' style="width:100%;height:100%">
+    <div style="margin: 20px 0;text-align: center;line-height: 1.6;">
+        <!--<h1 style="font-size: 1.6em;margin: 5px" v-text="name"></h1>-->
+        <h2 style="font-size: 1.1em;margin: 8px">余额</h2>
+        <h1 style="font-size: 30px;color: #fe736c" v-text="'￥'+cash"></h1>
+    </div>
+    <div style="height: 10px;background-color: #f5f5f0;width: 100%"></div>
+    <input type="text" type="number"
+           style="width: 94%;border: 1px gray solid;height: 38px;border-radius: 8px;margin-left: 3%;outline: none;padding-left: 10px;margin-bottom: 15px;margin-top: 10px;background-color: #f5f5f0"
+           placeholder="手动输入充值金额">
+    <div class="row">
+        <div v-for="(val, index) in [100,200,500]" @click="choose(index)"
+             v-bind:class="{box:box_list[index]==0,'choosen-box':box_list[index]==1}" v-text="val"
+             style="font-size: 20px"></div>
+    </div>
+    <div class="row">
+        <div v-for="(val, index) in [1000,2000,5000]" @click="choose(index+3)"
+             :class="{box:box_list[index+3]==0,'choosen-box':box_list[index+3]==1}" v-text="val"
+             style="font-size: 20px"></div>
+    </div>
+    <div class="row">
+        <div v-for="(val, index) in [10000,20000,'30000']" @click="choose(index+6)"
+             :class="{box:box_list[index+6]==0,'choosen-box':box_list[index+6]==1}" v-text="val"
+             style="font-size: 20px"></div>
+        <!-- <input type="text" placeholder="自定义" style="border: none;height: 80%;outline: none;text-align: center;width: 50px"></div> -->
+    </div>
+    <div style="position: fixed;bottom: 20px;width: 100%;height: 40px;">
+        <button @click="recharge()"
+                style="width: 94%;margin-left: 3%;height: 40px;border-radius: 15px;background-color: #00e4e6;border: none;color: white">
+            确认充值
+        </button>
+    </div>
+    <div id="modal-overlay" v-show="overlay">
+        <div class="modal-data">
+            <img src="../src/loading.gif"/>
         </div>
     </div>
+</div>
 </body>
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script src="../js/vue.js"></script>
 <script type="text/javascript" src="../js/windowOpen.js"></script>
+<script type="text/javascript" src="../vendor/iview/dist/iview.min.js"></script>
 <script>
-/**
+    /**
 
 
 
@@ -107,7 +122,7 @@
 
 
 
-    注意，大约在160行左右的post数据进行充值，user_id将在日后通过微信接口获得，目前只是静态数据，记得修改
+     注意，大约在160行左右的post数据进行充值，user_id将在日后通过微信接口获得，目前只是静态数据，记得修改
 
 
 
@@ -118,26 +133,26 @@
 
 
 
-*/
+     */
     let app = new Vue({
         el: "#app",
         data: {
             name: "",
             cash: 0,
-            job_number:"",
-            pay:0,
+            job_number: "",
+            pay: 0,
             overlay: true,
             box_list: [
                 0, 0, 0,
                 0, 0, 0,
                 0, 0, 0,
             ],
-            fee_list:[
-                100,200,500,
-                1000,2000,5000,
-                10000,20000,'自定义'
+            fee_list: [
+                100, 200, 500,
+                1000, 2000, 5000,
+                10000, 20000, '自定义'
             ],
-            fee:0,
+            fee: 0,
         },
         methods: {
             choose(idx) {
@@ -145,27 +160,27 @@
                 for (var i = 0; i < that.box_list.length; i++) {
                     if (i == idx) {
                         //不能直接赋值，vue无法通过数组索引的方式检测到数据变化，必须用Vue.set来改变数据
-                        Vue.set(that.box_list,i,1)//that.box_list[i] = 1;
+                        Vue.set(that.box_list, i, 1)//that.box_list[i] = 1;
                         that.fee = that.fee_list[i];
                     } else {
-                        Vue.set(that.box_list,i,0)//that.box_list[i] = 0;
+                        Vue.set(that.box_list, i, 0)//that.box_list[i] = 0;
                     }
                 }
             },
-            recharge(){
+            recharge() {
                 var that = this;
-                if(this.fee == 0 ||this.fee == '自定义' ){
-                    $(that).openWindow("注意","请选择充值金额",['好的']);
-                }else{
-                    $.post('../php/recharge.php',{
-                        charge:that.fee,
-                        user_id:"test",
-                        job_number:that.job_number,
-                        pay:that.pay
-                    }).done((res)=>{
+                if (this.fee == 0 || this.fee == '自定义') {
+                    $(that).openWindow("注意", "请选择充值金额", ['好的']);
+                } else {
+                    $.post('../php/recharge.php', {
+                        charge: that.fee,
+                        user_id: "test",
+                        job_number: that.job_number,
+                        pay: that.pay
+                    }).done((res) => {
                         res = JSON.parse(res);
-                        if(res.status==1){
-                            $(that).openWindow("","充值成功",['好的'],()=>{
+                        if (res.status == 1) {
+                            $(that).openWindow("", "充值成功", ['好的'], () => {
                                 window.location.href = "index.html";
                             })
                         }
