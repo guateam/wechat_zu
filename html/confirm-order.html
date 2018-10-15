@@ -5,273 +5,284 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
     <title>确认信息</title>
-    <link rel="stylesheet" href="../css/weui-min.css" />
-    <link rel="stylesheet" href="../css/example.css" />
+    <link rel="stylesheet" href="../css/weui-min.css"/>
+    <link rel="stylesheet" href="../css/example.css"/>
     <link rel="stylesheet" type="text/css" href="../css/overlay.css">
-    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" href="../css/global.css"/>
     <style>
 
     </style>
 </head>
 
 <body>
-    <div id="app" class="page" style="opacity: 1;">
-        <div class="page__hd">
-            <h1 class="page__title">订单信息</h1>
+<div id="app" class="page" style="opacity: 1;">
+    <div class="page__hd">
+        <h1 class="page__title">订单信息</h1>
+    </div>
+    <div style="background-color: white">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>技师</p>
+            </div>
+            <div class="weui-cell__ft">{{job_number}}</div>
         </div>
-        <div style="background-color: white">
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>技师</p>
-                </div>
-                <div class="weui-cell__ft">{{job_number}}</div>
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>预约时间</p>
             </div>
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>预约时间</p>
-                </div>
-                <div class="weui-cell__ft">{{start_time}}&nbsp;&nbsp;~&nbsp;&nbsp;{{end_time}}</div>
+            <div class="weui-cell__ft">{{start_time}}&nbsp;&nbsp;~&nbsp;&nbsp;{{end_time}}</div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>预约人数</p>
             </div>
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>预约人数</p>
-                </div>
-                <div class="weui-cell__ft">
-                    <a @click="change_people(-1)" style="font-size: 17px;color: #ffffff;padding-left: 7px;padding-right: 7px;border-radius: 4px;background-color:#2b85e4">-</a>
-                    <a v-text="people_num" style="padding-left:21px;padding-right:21px;background-color: white;text-align: center;border: none;font-size: 23px;color: #ac1d00"></a>
-                    <a @click="change_people(1)" style="font-size: 17px;color: #ffffff;padding-left: 5px;padding-right: 5px;border-radius: 4px;background-color:#2b85e4">+</a>
-                </div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>店内热线</p>
-                </div>
-                <div class="weui-cell__ft">{{shop_phone}}</div>
+            <div class="weui-cell__ft">
+                <a @click="change_people(-1)"
+                   style="font-size: 17px;color: #ffffff;padding-left: 7px;padding-right: 7px;border-radius: 4px;background-color:#2b85e4">-</a>
+                <a v-text="people_num"
+                   style="padding-left:21px;padding-right:21px;background-color: white;text-align: center;border: none;font-size: 23px;color: #ac1d00"></a>
+                <a @click="change_people(1)"
+                   style="font-size: 17px;color: #ffffff;padding-left: 5px;padding-right: 5px;border-radius: 4px;background-color:#2b85e4">+</a>
             </div>
         </div>
-        <div class="weui-cells__title">服务项目</div>
-        <div class="weui-cells">
-            <div v-for="item in skill" class="weui-cell weui-cell_swiped">
-                <div class="weui-cell__bd" style="transform: translateX(-68px)">
-                    <div class="weui-cell">
-                        <div class="weui-cell__bd">
-                            <p style="margin-left: 20%">
-                                <span style="display:inline-block ;width:80px">{{item.name}}</span>
-                                <span style="display:inline-block ;width:80px;color: #29a3a3;margin-left: 10px;font-family: 华文雅黑;">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>店内热线</p>
+            </div>
+            <div class="weui-cell__ft">{{shop_phone}}</div>
+        </div>
+    </div>
+    <div class="weui-cells__title">服务项目</div>
+    <div class="weui-cells">
+        <div v-for="item in skill" class="weui-cell weui-cell_swiped">
+            <div class="weui-cell__bd" style="transform: translateX(-68px)">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <p style="margin-left: 20%">
+                            <span style="display:inline-block ;width:80px">{{item.name}}</span>
+                            <span style="display:inline-block ;width:80px;color: #29a3a3;margin-left: 10px;font-family: 华文雅黑;">
                                     ￥{{item.price}}
                                 </span>
-                                <span style="display:inline-block ;width:80px;color: #29a3a3;margin-left: 10px;font-family: 华文雅黑;">
+                            <span style="display:inline-block ;width:80px;color: #29a3a3;margin-left: 10px;font-family: 华文雅黑;">
                                     {{item.duration}}分钟
                                 </span>
-                            </p>
-                        </div>
+                        </p>
                     </div>
                 </div>
-                <div class="weui-cell__ft">
-                    <a @click="remove(item.name)" class="weui-swiped-btn weui-swiped-btn_warn" href="javascript:">删除</a>
-                </div>
             </div>
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>预留手机号</p>
-                </div>
-                <input type="text" v-model="input_phone" style="outline: none;border: none;text-align: right" placeholder="请输入手机号">
+            <div class="weui-cell__ft">
+                <a @click="remove(item.name)" class="weui-swiped-btn weui-swiped-btn_warn" href="javascript:">删除</a>
             </div>
         </div>
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>预留手机号</p>
+            </div>
+            <input type="text" v-model="input_phone" style="outline: none;border: none;text-align: right"
+                   placeholder="请输入手机号">
+        </div>
+    </div>
 
-        <div class="weui-cells__title">本次优惠</div>
-        <div class="weui-cells">
-            <div class="weui-cell weui-cell_swiped">
-                <div class="weui-cell__bd" style="transform: translateX(-68px)">
-                    <div class="weui-cell" onclick="navi('recharge.html')">
-                        <div class="weui-cell__bd">
-                            <p style="margin-left: 20%">
-                                <span style="display:inline-block ;width:40px">会员</span>
-                                <span style="display:inline-block ;font-family: 华文雅黑;background-color: #fe736c;color: white;border-radius: 6px;padding: 0 2px;font-size: 15px">
+    <div class="weui-cells__title">本次优惠</div>
+    <div class="weui-cells">
+        <div class="weui-cell weui-cell_swiped">
+            <div class="weui-cell__bd" style="transform: translateX(-68px)">
+                <div class="weui-cell" onclick="navi('recharge.html')">
+                    <div class="weui-cell__bd">
+                        <p style="margin-left: 20%">
+                            <span style="display:inline-block ;width:40px">会员</span>
+                            <span style="display:inline-block ;font-family: 华文雅黑;background-color: #fe736c;color: white;border-radius: 6px;padding: 0 2px;font-size: 15px">
                                     充返
                                 </span>
-                                <span style="display:inline-block;font-size: 13px;font-weight: 100;color: gray;">充500送500，充1000送2000</span>
-                            </p>
-                        </div>
+                            <span style="display:inline-block;font-size: 13px;font-weight: 100;color: gray;">充500送500，充1000送2000</span>
+                        </p>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="weui-cells">
-            <div class="weui-cells__title">支付方式</div>
-            <a class="weui-cell weui-cell_access" href="javascript:;">
-                <div class="weui-cell__hd"><img src="../src/线下支付.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
-                <div class="weui-cell__bd">
-                    <p>线下支付</p>
-                </div>
-                <div class="weui-cell__ft"></div>
-            </a>
-        </div>
-
-        <div class="" style="background-color: white;position: absolute; bottom: 0;height: 50px;width: 100%;z-index:100;border-top: 1px solid #f2f2f2;display:flex;align-items: center">
-            <span style="margin-left: 20px;width: 80px;">预计支付</span>
-            <span style="color: #29a3a3;font-size: 22px" v-text="'￥'+total_price"></span>
-            <button @click="confirm_od()" style="position:absolute;right: 15px; width: 100px;height: 40px;border-radius: 5px;background-color: #2b85e4;color: white;outline: none">确认预约</button>
-        </div>
-        <div id="modal-overlay" v-show="overlay">
-            <div class="modal-data">
-                <img src="../src/loading.gif" />
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="../js/jweixin.js"></script>
-    <script type="text/javascript" src="../js/example.js"></script>
-    <script type="text/javascript" src="../js/weui-min.js"></script>
-    <script type="text/javascript" src="../js/zepto.js"></script>
-    <script type="text/javascript" src="../js/jquery.js"></script>
-    <script type="text/javascript" src="../js/sweetalert2.all.js"></script>
-    <script type="text/javascript" src="../js/echarts-simple-min.js"></script>
-    <script src="../js/vue.js"></script>
-    <script type="text/javascript" src="../js/windowOpen.js"></script>
-    <script type="text/javascript">
-        function getQueryString(name) {
-            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-            var r = window.location.search.substr(1).match(reg);
-            if (r != null) return unescape(r[2]);
-            return null;
-        }
-        let app = new Vue({
-            el: '#app',
-            data: {
-                id:"1",//之后登陆功能添加了就换成获取的open_id，目前写死
-                rate: 4.5,
-                job_number: "",
-                skill: [],
-                total_price: 0,
-                start_time: "",
-                end_time: "",
-                people_num: 1,
-                input_phone: "",
-                shop_phone: "",
-                overlay: true,
+
+    <div class="weui-cells" style="margin-bottom: 80px">
+        <div class="weui-cells__title">支付方式</div>
+        <a class="weui-cell weui-cell_access" href="javascript:;">
+            <div class="weui-cell__hd"><img src="../src/线下支付.png" alt=""
+                                            style="width:20px;margin-right:5px;display:block"></div>
+            <div class="weui-cell__bd">
+                <p>线下支付</p>
+            </div>
+            <div class="weui-cell__ft"></div>
+        </a>
+    </div>
+
+
+    <div class=""
+         style="background-color: white;position: fixed; bottom: 0;height: 50px;width: 100%;z-index:100;border-top: 1px solid #f2f2f2;display:flex;align-items: center">
+        <span style="margin-left: 20px;width: 80px;">预计支付</span>
+        <span style="color: #29a3a3;font-size: 22px" v-text="'￥'+total_price"></span>
+        <button @click="confirm_od()"
+                style="position:absolute;right: 15px; width: 100px;height: 40px;border-radius: 5px;background-color: #2b85e4;color: white;outline: none">
+            确认预约
+        </button>
+    </div>
+    <div id="modal-overlay" v-show="overlay">
+        <div class="modal-data">
+            <img src="../src/loading.gif"/>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../js/jweixin.js"></script>
+<script type="text/javascript" src="../js/example.js"></script>
+<script type="text/javascript" src="../js/weui-min.js"></script>
+<script type="text/javascript" src="../js/zepto.js"></script>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../js/sweetalert2.all.js"></script>
+<script type="text/javascript" src="../js/echarts-simple-min.js"></script>
+<script src="../js/vue.js"></script>
+<script type="text/javascript" src="../js/windowOpen.js"></script>
+<script type="text/javascript">
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+
+    let app = new Vue({
+        el: '#app',
+        data: {
+            id: "1",//之后登陆功能添加了就换成获取的open_id，目前写死
+            rate: 4.5,
+            job_number: "",
+            skill: [],
+            total_price: 0,
+            start_time: "",
+            end_time: "",
+            people_num: 1,
+            input_phone: "",
+            shop_phone: "",
+            overlay: true,
+        },
+        methods: {
+            change_people(val) {
+                this.people_num += val;
+                if (this.people_num > 6) this.people_num = 6;
+                else if (this.people_num < 1) this.people_num = 1;
             },
-            methods: {
-                change_people(val) {
-                    this.people_num += val;
-                    if (this.people_num > 6) this.people_num = 6;
-                    else if (this.people_num < 1) this.people_num = 1;
-                },
-                confirm_od() {
-                    var that = this;
-                    var item_id = [];
-                    for (var i = 0; i < that.skill.length; i++) {
-                        item_id.push(that.skill[i].id);
-                    }
-                    $(that).openWindow("", "确认下单吗？", ["不", "是的"], () => {
-                        $.post("../php/addco.php", {
-                            id:that.id,
-                            phone: that.input_phone,
-                            item_id: item_id,
-                            people_num: that.people_num,
-                            job_number: that.job_number
-                        }).done((res) => {
-                            res = JSON.parse(res);
-                            if (res.state == 1) {
-                                $(that).openWindow("", "您已成功预约", ["好的"], () => {
-                                    window.location.href = "index.html"
-                                })
-                            }
-                        })
-                    })
-                },
-                remove(name) {
-                    var that = this;
-                    var skill = that.skill
-
-                    $(this).openWindow("", '确认移除该服务吗', ['不', '好的'], () => {
-                        console.log("函数执行了")
-                        for (var i in skill) {
-                            if (skill[i].name == name) {
-                                var h = parseInt(that.end_time.substring(0, 2))
-                                var m = parseInt(that.end_time.substring(3, 5))
-                                m -= parseInt(skill[i].duration) % 60;
-                                if (m < 0) {
-                                    m += 60;
-                                    h -= 1;
-                                }
-                                if (m < 10) m = "0" + m;
-                                h -= parseInt(skill[i].duration / 60);
-                                if (h < 0) h += 24;
-                                if (h < 10) h = "0" + h;
-
-                                that.end_time = h + ":" + m;
-                                that.total_price -= skill[i].price;
-                                that.skill.splice(i, 1);
-                            }
-                        }
-                    });
-                }
-
-
-            },
-            created() {
+            confirm_od() {
                 var that = this;
-                that.job_number = getQueryString('job_number');
-                that.start_time = getQueryString('start-time');
-
-                var choosen = getQueryString('sv');
-                console.log(choosen);
-                choosen = choosen.split('-');
-                console.log(choosen);
-                var h = parseInt(that.start_time.substring(0, 2));
-                var m = parseInt(that.start_time.substring(3, 5));
-                console.log(h);
-                console.log(m);
-                var duration = 0;
-                $.post("../php/getskill.php", {
-                    job_number: that.job_number
-                }).done((result) => {
-                    result = JSON.parse(result)
-                    if (result.status == 1) {
-                        that.shop_phone = result.phone;
-                        if (choosen[0] == 'all') {
-                            for (var j = 0; j < result.data.length - 1; j++) choosen.push('all');
+                var item_id = [];
+                for (var i = 0; i < that.skill.length; i++) {
+                    item_id.push(that.skill[i].id);
+                }
+                $(that).openWindow("", "确认下单吗？", ["不", "是的"], () => {
+                    $.post("../php/addco.php", {
+                        id: that.id,
+                        phone: that.input_phone,
+                        item_id: item_id,
+                        people_num: that.people_num,
+                        job_number: that.job_number
+                    }).done((res) => {
+                        res = JSON.parse(res);
+                        if (res.state == 1) {
+                            $(that).openWindow("", "您已成功预约", ["好的"], () => {
+                                window.location.href = "index.html"
+                            })
                         }
-                        for (var i = 0; i < result.data.length; i++) {
-                            var info = result.data[i];
-                            for (var j in choosen) {
-                                if (choosen[j] == info.ID || choosen[j] == 'all') {
-                                    duration += parseInt(info.duration);
-                                    that.skill.push({
-                                        "name": info.name,
-                                        'duration': info.duration,
-                                        'price': info.price,
-                                        'id': info.ID,
-                                    })
-                                    that.total_price += parseInt(info.price);
-                                    break;
-                                }
-                            }
-
-                        }
-
-                        m += duration % 60;
-                        if (m >= 60) {
-                            m -= 60;
-                            h += 1;
-                        }
-                        h += parseInt(duration / 60);
-                        if (h >= 24) h -= 24;
-                        if (h < 10) h = "0" + h;
-
-                        if (m < 10) m = "0" + m;
-                        that.end_time = h + ":" + m;
-                        that.overlay = false;
-                        that.people_num = 1;
-                    }
+                    })
                 })
-            }
-        })
+            },
+            remove(name) {
+                var that = this;
+                var skill = that.skill
 
-        function navi(url) {
-            window.location.href = url;
+                $(this).openWindow("", '确认移除该服务吗', ['不', '好的'], () => {
+                    console.log("函数执行了")
+                    for (var i in skill) {
+                        if (skill[i].name == name) {
+                            var h = parseInt(that.end_time.substring(0, 2))
+                            var m = parseInt(that.end_time.substring(3, 5))
+                            m -= parseInt(skill[i].duration) % 60;
+                            if (m < 0) {
+                                m += 60;
+                                h -= 1;
+                            }
+                            if (m < 10) m = "0" + m;
+                            h -= parseInt(skill[i].duration / 60);
+                            if (h < 0) h += 24;
+                            if (h < 10) h = "0" + h;
+
+                            that.end_time = h + ":" + m;
+                            that.total_price -= skill[i].price;
+                            that.skill.splice(i, 1);
+                        }
+                    }
+                });
+            }
+
+
+        },
+        created() {
+            var that = this;
+            that.job_number = getQueryString('job_number');
+            that.start_time = getQueryString('start-time');
+
+            var choosen = getQueryString('sv');
+            console.log(choosen);
+            choosen = choosen.split('-');
+            console.log(choosen);
+            var h = parseInt(that.start_time.substring(0, 2));
+            var m = parseInt(that.start_time.substring(3, 5));
+            console.log(h);
+            console.log(m);
+            var duration = 0;
+            $.post("../php/getskill.php", {
+                job_number: that.job_number
+            }).done((result) => {
+                result = JSON.parse(result)
+                if (result.status == 1) {
+                    that.shop_phone = result.phone;
+                    if (choosen[0] == 'all') {
+                        for (var j = 0; j < result.data.length - 1; j++) choosen.push('all');
+                    }
+                    for (var i = 0; i < result.data.length; i++) {
+                        var info = result.data[i];
+                        for (var j in choosen) {
+                            if (choosen[j] == info.ID || choosen[j] == 'all') {
+                                duration += parseInt(info.duration);
+                                that.skill.push({
+                                    "name": info.name,
+                                    'duration': info.duration,
+                                    'price': info.price,
+                                    'id': info.ID,
+                                })
+                                that.total_price += parseInt(info.price);
+                                break;
+                            }
+                        }
+
+                    }
+
+                    m += duration % 60;
+                    if (m >= 60) {
+                        m -= 60;
+                        h += 1;
+                    }
+                    h += parseInt(duration / 60);
+                    if (h >= 24) h -= 24;
+                    if (h < 10) h = "0" + h;
+
+                    if (m < 10) m = "0" + m;
+                    that.end_time = h + ":" + m;
+                    that.overlay = false;
+                    that.people_num = 1;
+                }
+            })
         }
-    </script>
+    })
+
+    function navi(url) {
+        window.location.href = url;
+    }
+</script>
 </body>
 </html>
