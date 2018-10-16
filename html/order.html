@@ -111,6 +111,7 @@
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/echarts-simple-min.js"></script>
 <script src="../js/vue.js"></script>
+<script type="text/javascript" src="../js/sweetalert2.all.js"></script>
 <script type="text/javascript" src="../vendor/iview/dist/iview.min.js"></script>
 <script type="text/javascript" src="../js/windowOpen.js"></script>
 <script type="text/javascript">
@@ -172,20 +173,32 @@
             comment(id) {
                 window.location.href = 'my-rate.html?id=' + id
             },
-            del(id){
-                $.post("../php/delete_sv_order.php",{
-                    id:id
-                }).done((res)=>{
-                    res = JSON.parse(res);
-                    if(res.tatus == 1){
+            del(id) {
+                swal({
+                    text: "确认删除吗？该操作无法复原.",
+                    allowOutsideClick: false,
+                    showConfirmButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: "删除",
+                    cancelButtonText: "取消",
+                    width: 280,
+                }).then((res) => {
+                    if (res.value) {
+                        $.post("../php/delete_sv_order.php", {
+                            id: id
+                        }).done((res) => {
+                            res = JSON.parse(res);
+                            if (res.tatus == 1) {
 
+                            }
+                        })
+                        for (var i = 0; i < this.order.length; i++) {
+                            if (this.order[i]['ID'] == id) {
+                                this.order.splice(i, 1)
+                            }
+                        }
                     }
                 })
-                for(var i = 0;i<this.order.length;i++){
-                    if(this.order[i]['ID'] == id){
-                        this.order.splice(i,1)
-                    }
-                }
             }
         },
         created() {
@@ -195,7 +208,7 @@
                 console.log(res);
                 for (var i = 0; i < res.length; i++) {
                     that.order.push({
-                        ID:res[i]['ID'],
+                        ID: res[i]['ID'],
                         job_number: res[i]['job_number'],
                         price: res[i]['price'],
                         order_id: res[i]['order_id'],
