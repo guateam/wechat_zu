@@ -89,7 +89,7 @@
                 <div style="display: flex;justify-content: space-between;">
                     <div>
                         <h2>{{job_number}} <span style="border: 1px #fe736c solid;color: #fe736c;font-size: 11px">{{data.technician.level}}</span></h2>
-                        <h3 style="font-weight: 200;color: #fe736c;">服务：<span>233</span>次</h3>
+                        <h3 style="font-weight: 200;color: #fe736c;">服务：<span v-text="data.order_num"></span>次</h3>
                     </div>
                     <div>
                         <Rate disabled v-model="total_rate" style="font-size: 15px" />
@@ -141,13 +141,13 @@
         </div>
         <div class="weui-flex list" style="justify-content: center;align-items: center;height: 14%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;margin-top: 10px">
             <div class="box weui-flex guest" style="width: 100%; height: 100%;justify-content: center;align-items: center;">
-                <div class="item weui-flex__item thumb" thumblist="list1" style="text-align: center;height: 100%" v-for='(item, index) in data.technician.photo'>
+                <div class="item weui-flex__item thumb" thumblist="list1" style="text-align: center;height: 100%" v-for='(item, index) in data.technician.photo' v-if="index<3">
                     <!-- <ul id="comment-list"> -->
                     <!-- <li class="list"> -->
                     <!-- <div class="guest"> -->
                     <!-- <div class="thumb" thumblist="list1"> -->
                     <!--<img @click="show_pic(index)" v-bind:src="item" style="height: 100%;width: 100%;">-->
-                    <img onClick="navi('pyquan.html')" style="height: 100%;width: 100%;" src="../../photo/bhDrpQG180904123135g.jpg">
+                    <img onClick="navi('pyquan.html')" style="height: 100%;width: 100%;" :src="item">
                     <!-- </div> -->
                     <!-- </div> -->
                     <!-- </li> -->
@@ -191,19 +191,6 @@
                         <h4 class="weui-media-box__title" style="color: #cc99cc">{{item.time}}</h4>
                     </div>
                 </a>
-                <div class="weui-panel__bd display-none" style="display: none;background-color: #f2f2f2">
-                    <div class="weui-media-box weui-media-box_text">
-                        <div style="border: 1px solid #cc99cc;border-radius: 2px;width: 4px;height: 4px;"></div>
-                        <div style="margin-left: 2px;border-left: 1px solid #cc99cc;height:50px;">
-                            <h4 class="weui-media-box__desc " style="margin-left: 15px;margin-bottom: 0;">业绩流水号</h4>
-                            <p class="weui-media-box__title" style="margin-left: 15px;color:#cc99cc ">{{item.serviceid}}</p>
-                        </div>
-                        <div style="border: 1px solid #cc99cc;border-radius: 2px;width: 4px;height: 4px;"></div>
-                        <h4 class="weui-media-box__desc " style="margin-left: 15px;margin-bottom: 0;margin-top: -10px">
-                            业绩金额（元）</h4>
-                        <p class="weui-media-box__title" style="margin-left: 15px;color:#cc99cc">{{item.price}}</p>
-                    </div>
-                </div>
             </div>
         </div>
 
