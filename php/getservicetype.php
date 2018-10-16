@@ -4,9 +4,14 @@ function getservicetype($id){
     $data=[];
     foreach($servicetype as $value){
         $item=[
+            'id'=>$value['ID'],
+            'procedure'=>$value['procedure'],
+            'attention'=>$value['attention'],
+            'benefit'=>$value['benefit'],
             'name'=>$value['name'],
             'time'=>$value['duration'],
-            'price'=>$value['price']/100.0
+            'price'=>$value['price']/100.0,
+            'img'=>$value['image']
         ];
         array_push($data,$item);
     }

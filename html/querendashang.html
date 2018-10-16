@@ -93,7 +93,7 @@
 </div>
 </body>
 <script type="text/javascript" src="../js/jquery.js"></script>
-<script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
+<script src="../js/vue.js"></script>
 <script type="text/javascript" src="../js/windowOpen.js"></script>
 <script>
     /**
@@ -123,7 +123,7 @@
         data: {
             name: "技师名字",
             cash: 0,
-            job_number:"",
+            job_number:getQueryString('job_number'),
             pay:0,
             overlay: true,
             box_list: [
@@ -186,6 +186,12 @@
             })
         },
     })
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
 </script>
 
 </html>
