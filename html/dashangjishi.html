@@ -103,7 +103,7 @@
                 <i-col span="4">
                     <div @click="choose_tech(item)" class="circle" :style="[{'font-size': (item.state === 1 ? '10' : '12') + 'px'}, {'color':(item.check === 0 ? '#875522':'#91df6f')}, {'border-color': (item.state === 1 ? '#875522' : '#D5B32B')}]">
                         <span v-if="item.check === 1" style="font-size: 16px">√</span>
-                        <span v-else>{{ item.state === 1 ? '繁忙' : '可选' }}</span>
+                        <span v-else>选择</span>
                     </div>
                 </i-col>
             </row>
