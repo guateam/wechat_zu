@@ -62,6 +62,7 @@ function gettechnician($id,$tm){
         }
         $data=[
             'name'=>$technician['name'],
+            'description'=>$technician['description'],
             'jobnumber'=>$id,
             'head'=>str_replace('..',$url,$technician['photo']),
             'rate'=>$technician['rate'],
