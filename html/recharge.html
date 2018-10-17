@@ -48,24 +48,21 @@
             color: #00e4e6;
             border: 1px #00e4e6 solid
         }
-
-        .ivu-select-selection {
-            background-color: #f5f5f0;
-            border-radius: 8px;
+        .ivu-select-selection{
+            border: none;
+            outline: none;
+        }
+        .ivu-select-selection{
             outline: none;
             border: none;
         }
 
-        .ivu-select-selection-focused, .ivu-select-selection:hover {
-            border-color: gray;
+        .ivu-select .ivu-icon, .ivu-icon-ios-arrow-down, .ivu-select-arrow:before {
+            display: none;
         }
 
-        .ivu-select-selection :hover {
-            border: none;
-        }
-
-        .ivu-select-placeholder, .ivu-select-arrow {
-            background-color: #f5f5f0;
+        .ivu-select .ivu-icon .ivu-select-arrow:before {
+            content: none;
         }
 
         @media only screen and (max-width: 768px) {
@@ -76,13 +73,15 @@
             .box {
                 flex: 0 0 31%;
                 height: 60px;
-                border-radius: 7px;
+                border-radius: 3px;
+                border: 1px #1aad19 solid;
+                color: #1aad19;
             }
 
             .choosen-box {
                 flex: 0 0 31%;
                 height: 60px;
-                border-radius: 7px;
+                border-radius: 3px;
             }
         }
     </style>
@@ -92,58 +91,110 @@
 <div id='app' style="width:100%;height:100%">
     <div style="margin-top:-5px;text-align: center;padding-top:32px;padding-bottom:10px;line-height: 1.6;background-image: url(../src/background.png);background-repeat: no-repeat">
         <!--<h1 style="font-size: 1.6em;margin: 5px" v-text="name"></h1>-->
-        <h2 style="font-size: 1.1em;background: transparent">余额</h2>
+        <h2 style="font-size: 1.1em;background: transparent">本帐号余额</h2>
         <h1 style="font-size: 30px;color: #fe736c;background: transparent" v-text="'￥'+cash"></h1>
     </div>
     <row>
-        <i-select v-model="model1" style="width: 94%;margin-left: 3%;margin-top: 10px;border: 1px gray solid;"
+        <i-select v-model="model1" style="width: 94%;margin-left: 3%;margin-top: 20px;margin-bottom: 20px;border: 1px #e0ebeb solid"
                   size="large" placeholder="请选择本次充值的技师">
             <i-option v-for="item in jishi" :value="item.value" :key="item.value">{{ item.label }}</i-option>
         </i-select>
     </row>
-    <input type="text" type="number"
-           style="width: 94%;border: 1px gray solid;height: 38px;margin-left: 3%;outline: none;padding-left: 10px;margin-bottom: 15px;margin-top: 10px;background-color: #f5f5f0"
-           placeholder="手动输入充值金额">
     <div class="row">
         <!--<div v-for="(val, index) in [100,200,500]" @click="choose(index)"-->
         <!--v-bind:class="{box:box_list[index]==0,'choosen-box':box_list[index]==1}" v-text="val"-->
         <!--style="font-size: 20px">-->
         <!--<span>返还100</span>-->
         <!--</div>-->
+        <!--<div class="row">-->
+            <!--<div v-for="(val, index) in ['￥1000',2000,5000]" @click="choose(index+3)"-->
+                 <!--:class="{box:box_list[index+3]==0,'choosen-box':box_list[index+3]==1}" v-text="val"-->
+                 <!--style="font-size: 20px"></div>-->
+        <!--</div>-->
+        <!--<div class="row">-->
+            <!--<div v-for="(val, index) in [10000,20000,'30000']" @click="choose(index+6)"-->
+                 <!--:class="{box:box_list[index+6]==0,'choosen-box':box_list[index+6]==1}" v-text="val"-->
+                 <!--style="font-size: 20px;margin-bottom: 15px"></div>-->
+            <!--&lt;!&ndash; <input type="text" placeholder="自定义" style="border: none;height: 80%;outline: none;text-align: center;width: 50px"></div> &ndash;&gt;-->
+        <!--</div>-->
 
 
-        <!--修改了原来的dom结构,10/17/16:40-->
+
+
+
+
+        <!--修改了原来的dom结构,原来的被注释掉了（上面那一坨），10/17/16:40-->
+
+
+
 
 
 
         <div class="box" style="font-size: 20px;">
-            <span style="margin-bottom: 10px">100</span>
-            <span style="font-size: 10px;position: absolute;margin-top: 15px;color: rgb(254, 115, 108)">返还:￥100</span>
+            <span style="margin-bottom: 10px">￥100</span>
+            <span style="font-size: 10px;position: absolute;margin-top: 15px;color:#1aad19 ">返还:￥100</span>
         </div>
         <div class="box" style="font-size: 20px">
-            <span style="margin-bottom: 10px">200</span>
-            <span style="font-size: 10px;position: absolute;margin-top: 15px;color: rgb(254, 115, 108)">返还:￥200</span>
+            <span style="margin-bottom: 10px">￥200</span>
+            <span style="font-size: 10px;position: absolute;margin-top: 15px;color:#1aad19">返还:￥200</span>
         </div>
         <div class="box" style="font-size: 20px">
-            <span style="margin-bottom: 10px">500</span>
-            <span style="font-size: 10px;position: absolute;margin-top: 15px;color: rgb(254, 115, 108)">返还:￥500</span>
+            <span style="margin-bottom: 10px">￥500</span>
+            <span style="font-size: 10px;position: absolute;margin-top: 15px;color:#1aad19">返还:￥500</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="box" style="font-size: 20px;">
+            <span style="margin-bottom: 10px">￥1000</span>
+            <span style="font-size: 10px;position: absolute;margin-top: 15px;color:#1aad19 ">返还:￥1000</span>
+        </div>
+        <div class="box" style="font-size: 20px">
+            <span style="margin-bottom: 10px">￥2000</span>
+            <span style="font-size: 10px;position: absolute;margin-top: 15px;color:#1aad19">返还:￥2000</span>
+        </div>
+        <div class="box" style="font-size: 20px">
+            <span style="margin-bottom: 10px">￥5000</span>
+            <span style="font-size: 10px;position: absolute;margin-top: 15px;color:#1aad19">返还:￥5000</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="box" style="font-size: 20px;">
+            <span style="margin-bottom: 10px">￥10000</span>
+            <span style="font-size: 10px;position: absolute;margin-top: 15px;color:#1aad19 ">返还:￥10000</span>
+        </div>
+        <div class="box" style="font-size: 20px">
+            <span style="margin-bottom: 10px">￥20000</span>
+            <span style="font-size: 10px;position: absolute;margin-top: 15px;color:#1aad19">返还:￥20000</span>
+        </div>
+        <div class="box" style="font-size: 20px">
+            <span style="margin-bottom: 10px">￥50000</span>
+            <span style="font-size: 10px;position: absolute;margin-top: 15px;color:#1aad19">返还:￥50000</span>
         </div>
     </div>
 
 
-    <!--修改结束，后面的部分没有改，10/17/16:40-->
 
 
-    <div class="row">
-        <div v-for="(val, index) in [1000,2000,5000]" @click="choose(index+3)"
-             :class="{box:box_list[index+3]==0,'choosen-box':box_list[index+3]==1}" v-text="val"
-             style="font-size: 20px"></div>
-    </div>
-    <div class="row">
-        <div v-for="(val, index) in [10000,20000,'30000']" @click="choose(index+6)"
-             :class="{box:box_list[index+6]==0,'choosen-box':box_list[index+6]==1}" v-text="val"
-             style="font-size: 20px;margin-bottom: 15px"></div>
-        <!-- <input type="text" placeholder="自定义" style="border: none;height: 80%;outline: none;text-align: center;width: 50px"></div> -->
+
+
+
+    <!--修改结束，10/17/16:40-->
+
+
+
+
+
+    <div class="weui-cells__title" v-on:click="userxuanzejine()">更多金额</div>
+    <div class="weui-cells" v-if="xuanzejine">
+        <div class="weui-cell weui-cell_swiped">
+            <div class="weui-cell__bd">
+                <div class="weui-cell">
+                    <input type="text" type="number"
+                           style="width: 94%;height: 38px;margin-left: 3%;outline: none;padding-left: 10px;border: 1px #e0ebeb solid"
+                           placeholder="手动输入充值金额">
+                </div>
+            </div>
+        </div>
     </div>
     <div class="weui-cells__title">本次优惠</div>
     <div class="weui-cells">
@@ -212,6 +263,7 @@
     let app = new Vue({
         el: "#app",
         data: {
+            xuanzejine: false,
             jishi: [
                 {
                     value: 'AKB48',
@@ -257,6 +309,9 @@
             fee: 0,
         },
         methods: {
+            userxuanzejine() {
+                this.xuanzejine = !this.xuanzejine;
+            },
             choose(idx) {
                 var that = this;
                 for (var i = 0; i < that.box_list.length; i++) {
