@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>会员充值</title>
+    <link rel="stylesheet" href="../css/weui-min.css"/>
+    <link rel="stylesheet" href="../css/example.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/overlay.css">
+    <link rel="stylesheet" href="../css/global.css"/>
+    <link rel="stylesheet" type="text/css" href="../vendor/iview/dist/styles/iview.css">
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            background-color: white;
+        }
+
+        .row {
+            display: flex;
+            width: 50%;
+            float: left;
+        }
+
+        .box {
+            flex: 0 0 48%;
+            margin: 1%;
+            height: 100px;
+            border-radius: 10px;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            position: relative;
+            border: 1px black solid;
+            color: black;
+        }
+
+        .choosen-box {
+            flex: 0 0 48%;
+            margin: 1%;
+            height: 100px;
+            border-radius: 10px;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            position: relative;
+            color: #00e4e6;
+            border: 1px #00e4e6 solid
+        }
+
+        .ivu-select-selection {
+            border: none;
+            outline: none;
+        }
+
+        .ivu-select-selection {
+            outline: none;
+            border: none;
+        }
+
+        .ivu-select .ivu-icon, .ivu-icon-ios-arrow-down, .ivu-select-arrow:before {
+            display: none;
+        }
+
+        .ivu-select .ivu-icon .ivu-select-arrow:before {
+            content: none;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .row {
+                width: 100%
+            }
+
+            .box {
+                flex: 0 0 31%;
+                height: 60px;
+                border-radius: 3px;
+                border: 1px #1aad19 solid;
+                color: #1aad19;
+            }
+
+            .choosen-box {
+                flex: 0 0 31%;
+                height: 60px;
+                border-radius: 3px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div id='app' style="width:100%;height:100%">
+    <div style="margin-top:-5px;text-align: center;padding-top:32px;padding-bottom:10px;line-height: 1.6;">
+        <!--<h1 style="font-size: 1.6em;margin: 5px" v-text="name"></h1>-->
+        <h2 style="font-size: 1.4em;background: transparent">本次支付</h2>
+        <h1 style="font-size: 35px;color: #FFD700 ;background: transparent">￥6789</h1>
+    </div>
+
+    <div class="weui-cells__title">支付方式</div>
+    <div class="" style="display: flex;justify-content: space-between;margin-top: 20px">
+        <div style="margin-left: 50px" @click="goAway()">
+            <img src="../src/支付宝.png" alt="">
+        </div>
+        <div style="margin-right: 50px" @click="goAway()">
+            <img src="../src/微信.png" alt="">
+        </div>
+    </div>
+    <div id="modal-overlay" v-show="overlay">
+        <div class="modal-data">
+            <img src="../src/loading.gif"/>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="../js/jweixin.js"></script>
+<script type="text/javascript" src="../js/example.js"></script>
+<script type="text/javascript" src="../js/weui-min.js"></script>
+<script type="text/javascript" src="../js/zepto.js"></script>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../js/sweetalert2.all.js"></script>
+<script type="text/javascript" src="../js/echarts-simple-min.js"></script>
+<script src="../js/vue.js"></script>
+<script type="text/javascript" src="../js/windowOpen.js"></script>
+<script type="text/javascript" src="../vendor/iview/dist/iview.min.js"></script>
+<script>
+    /**
+
+
+
+
+
+
+
+
+
+     注意，大约在160行左右的post数据进行充值，user_id将在日后通过微信接口获得，目前只是静态数据，记得修改
+
+
+
+
+
+
+
+
+
+
+     */
+    let app = new Vue({
+        el: "#app",
+        data: {
+            xuanzejine: false,
+            jishi: [
+                {
+                    value: 'AKB48',
+                    label: 'AKB48'
+                },
+                {
+                    value: 'NNK43',
+                    label: 'NNK43'
+                },
+                {
+                    value: 'KJKF39',
+                    label: 'KJKF39'
+                },
+                {
+                    value: 'FEFE343',
+                    label: 'FEFE343'
+                },
+                {
+                    value: 'EDEF67',
+                    label: 'EDEF67'
+                },
+                {
+                    value: 'FER67',
+                    label: 'FER67'
+                }
+            ],
+            model1: '',
+            name: "",
+            cash: 0,
+            job_number: "",
+            pay: 0,
+            overlay: true,
+            box_list: [
+                0, 0, 0,
+                0, 0, 0,
+                0, 0, 0,
+            ],
+            fee_list: [
+                100, 200, 500,
+                1000, 2000, 5000,
+                10000, 20000, '自定义'
+            ],
+            fee: 0,
+        },
+        methods: {
+            goAway() {
+                var that = this;
+                $(that).openWindow("", "确认下单吗？", ["不", "是的"], () => {
+                    if (res.state == 1) {
+                        $(that).openWindow("", "您已成功预约", ["好的"], () => {
+                            window.location.href = "index.html"
+                        })
+                    }
+                })
+            }
+        },
+        created() {
+            var that = this
+            $.post("../php/getcustomer.php", {
+                phone: "13777579230"
+            }).done((res) => {
+                res = JSON.parse(res);
+                if (res.status == 1) {
+                    that.name = res.name;
+                    that.cash = res.cash;
+                    that.overlay = false;
+                }
+            })
+        },
+    })
+</script>
+
+</html>
