@@ -300,6 +300,17 @@
             })
         },
     })
+
+
+
+    $('.box').on('click', function () {
+        $('div').siblings(".box").css({'color':'#1aad19','border':'1px #1aad19 solid'});
+        $(this).css({'color':'#00e4e6','border':'1px #00e4e6 solid'});
+    })
+    $('input').on('click', function () {
+        $(this).css({'color':'#00e4e6','border':'none'});
+        $('div').siblings(".box").css({'color':'#1aad19','border':'1px #1aad19 solid'});
+    })
 </script>
 
 </html>
