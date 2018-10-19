@@ -8,8 +8,10 @@ $is_vip = $is_vip[0]['level']==0?false:true;
 $str = "select `recharge_record`.`user_id` AS `user_id`,sum(`recharge_record`.`charge`) AS `total_charge` from `recharge_record` group by `recharge_record`.`user_id`";
 $result = sql_str($str);
 $data=[];
-foreach($result as $row){
-    if($row['user_id'] == $user_id){
+foreach($result as $row)
+{
+    if($row['user_id'] == $user_id)
+	{
         $result = $row;
         $str = "SELECT `extra_duration` FROM vip_information WHERE necessary_charge_to_level_up > ".$result['total_charge']." LIMIT 1";
         $extradura = (sql_str($str))[0]['extra_duration'];
@@ -33,11 +35,14 @@ foreach($result as $row){
     }
 }
     
-if($result && $is_vip){ 
+if($result && $is_vip)
+{ 
     $result['exp']/=100;
     $result['total_charge']/=100;
     echo json_encode(['status'=>1,'data'=>$result,'head'=>$head]);
-}else{
+}
+else
+{
     $first_lv = get("vip_information",'level',1);
     echo json_encode(['status'=>0,'head'=>$head,'data'=>[
         'next_lv'=>$first_lv[0]['name'],

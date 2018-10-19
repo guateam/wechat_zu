@@ -21,14 +21,19 @@ JOIN `consumed_order` ON ( ( `consumed_order`.`order_id` = `rate`.`order_id` ) )
 
 $rates = sql_str($str);
 $this_rate = [];
-foreach($rates as $rate) {
- if($rate['order_id'] == $order_id){
-     array_push($this_rate,$rate);
- }
+foreach($rates as $rate) 
+{
+	if($rate['order_id'] == $order_id)
+	{
+		array_push($this_rate,$rate);
+	}
 }
 
-if($rate){
+if($rate)
+{
     echo json_encode(['status'=>1,'data'=>$rate]);
-}else{
+}
+else
+{
     echo json_encode(['status'=>0]);
 }

@@ -4,8 +4,10 @@ $job_number = $_POST['job_number'];
 $skill =  get("skill","job_number",$job_number);
 $phone = (get("shop"))[0]['phone'];
 $data = [];
-if($skill){
-    foreach($skill as $sk){
+if($skill)
+{
+    foreach($skill as $sk)
+	{
         $sv = get("service_type","ID",$sk['service_id']);
         array_push($data,[
             'name'=>$sv[0]['name'],
@@ -16,6 +18,8 @@ if($skill){
         ]);
     }
     echo json_encode(['status'=>1,'data'=>$data,'phone'=>$phone]);
-}else{
+}
+else
+{
     echo json_encode(['status'=>0,'data'=>[]]);
 }

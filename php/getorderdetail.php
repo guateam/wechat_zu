@@ -10,14 +10,17 @@ if(is_null($logo))$logo="/photo/wash-foot.jpg";
 
 $info = [];
 
-foreach($so as $svod){
+foreach($so as $svod)
+{
     $tech = get("technician","job_number",$svod['job_number']);
     $svs = get("service_type","ID",$svod['item_id']);
     $appo = null;
-    if($co[0]['state']==1){
+    if($co[0]['state']==1)
+	{
         $appo = get("appointment",'order_id',$order_id);
     }
-    if($tech && $svs){
+    if($tech && $svs)
+	{
         array_push($info,[
             "technician_name"=>$tech[0]['name'],
             "technician_head"=>$tech[0]['photo'],
@@ -32,7 +35,9 @@ foreach($so as $svod){
             "phone"=>$shop,
             "logo"=>$logo,
         ]);
-    }else{
+    }
+	else
+	{
         array_push($info,[
             "technician_name"=>"",
             "job_number"=>"",

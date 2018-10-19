@@ -4,7 +4,8 @@ require("getpromotion.php");
 $user = $_POST['user_id'];
 $us = get("customer","ID",$user);
 
-if($us){
+if($us)
+{
     $val = $_POST['charge']*100;
     $job_number = null;
     if(!isset($_POST['job_number']))$job_number = $_POST['job_number'];
@@ -14,10 +15,13 @@ if($us){
     $dict=['1','2','3','4','5','6','7','8','9','0'];
     $rnd = "";
     $rnd.=date("YmdHis");
-    for($i=0;$i<2;$i++){
+    
+	for($i=0;$i<2;$i++)
+	{
         $rnd.=$dict[rand(0,count($dict)-1)];
     }
-    for($i=0;$i<4;$i++){
+    for($i=0;$i<4;$i++)
+	{
         $rnd.=$dict[rand(0,count($dict)-1)];
     }
 
@@ -30,10 +34,6 @@ if($us){
         }
     }
     //这里添加扣钱的代码
-    
-    
-    
-    
     //
     add("recharge_record",[
         ["record_id",$rnd],
@@ -42,23 +42,29 @@ if($us){
         ['payment_method',$pay],
         ['job_number',$job_number],
         ]);
+		
     $all_recharge = get('recharge_record','user_id',$user);
     $all_level = get('vip_information');
     $total_recharge = 0;
     $new_level = 0;
-    foreach($all_recharge as $re){
+    
+	foreach($all_recharge as $re)
+	{
         $total_recharge+=$re['charge'];
     }
-    foreach($all_level as $lv){
-        if($lv['necessary_charge_to_level_up']>$total_recharge){
+    foreach($all_level as $lv)
+	{
+        if($lv['necessary_charge_to_level_up']>$total_recharge)
+		{
             $new_level = $lv['level'];
             break;
         }
     }
     set("customer","ID",$user,[['cash',$us[0]['cash']+$val],['level',$new_level]]);
 
-
     echo json_encode(['status'=>1]);
-}else{
+}
+else
+{
     echo json_encode(['status'=>0]);
 }

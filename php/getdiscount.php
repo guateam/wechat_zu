@@ -1,9 +1,12 @@
 <?php
-function getdiscount($id){
+function getdiscount($id)
+{
     $servicetype=get('service_type');
     $data=[];
-    foreach($servicetype as $value){
-        if($value['discount']<100){
+    foreach($servicetype as $value)
+	{
+        if($value['discount']<100)
+		{
             $item=[
                 'name'=>$value['name'],
                 'price'=>$value['price']/100.0,

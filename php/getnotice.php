@@ -1,8 +1,10 @@
 <?php
-function getnotice($id){
+function getnotice($id)
+{
     $notice=get('notice');
     $data=[];
-    foreach($notice as $value){
+    foreach($notice as $value)
+	{
         $item=[
             'text'=>$value['text'],
             'title'=>$value['title']

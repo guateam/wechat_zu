@@ -1,8 +1,10 @@
 <?php
-function getservicetype($id){
+function getservicetype($id)
+{
     $servicetype=get('service_type');
     $data=[];
-    foreach($servicetype as $value){
+    foreach($servicetype as $value)
+	{
         $item=[
             'id'=>$value['ID'],
             'procedure'=>$value['procedure'],

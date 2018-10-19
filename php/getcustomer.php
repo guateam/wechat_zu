@@ -2,13 +2,19 @@
 require("database.php");
 $phone = $_POST['phone'];
 $cus = get("customer","phone_number",$phone);
-if($cus){
+
+if($cus)
+{
     $lv = get("vip_information","level",$cus[0]['level']);
-    if($lv){
+    if($lv)
+	{
         $lv = $lv[0]['name'];
-    }else{
+    }
+	else
+	{
         $lv="非会员";
     }
+	
     echo json_encode([
         'status'=>1,
         'name'=>$cus[0]['name'],
@@ -20,7 +26,9 @@ if($cus){
         'cash'=>$cus[0]['cash']/100
         
     ]);
-}else{
+}
+else
+{
     echo json_encode(['status'=>0]);
 }
 ?>
