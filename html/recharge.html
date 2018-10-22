@@ -122,50 +122,47 @@
         <!--style="border: none;height: 80%;outline: none;text-align: center;width: 50px"></div>-->
         <!--</div>-->
 
-
         <!--修改了原来的dom结构,原来的被注释掉了（上面那一坨），10/17/16:40-->
-
-
 
         <!--传值改不来，不知道应该怎么弄-->
 
-        <div class="box" style="font-size: 20px;">
+        <div class="box" id="box1" style="font-size: 20px;" @click="chooseMoney(1)">
             <span style="margin-bottom: 10px">￥100</span>
             <span style="font-size: 10px;position: absolute;margin-top: 15px;">返还:￥100</span>
         </div>
-        <div class="box" style="font-size: 20px">
+        <div class="box" id="box2" style="font-size: 20px" @click="chooseMoney(2)">
             <span style="margin-bottom: 10px">￥200</span>
             <span style="font-size: 10px;position: absolute;margin-top: 15px;">返还:￥200</span>
         </div>
-        <div class="box" style="font-size: 20px">
+        <div class="box" id="box3" style="font-size: 20px" @click="chooseMoney(3)">
             <span style="margin-bottom: 10px">￥500</span>
             <span style="font-size: 10px;position: absolute;margin-top: 15px;">返还:￥500</span>
         </div>
     </div>
     <div class="row">
-        <div class="box" style="font-size: 20px;">
+        <div class="box" id="box4"  style="font-size: 20px;" @click="chooseMoney(4)">
             <span style="margin-bottom: 10px">￥1000</span>
             <span style="font-size: 10px;position: absolute;margin-top: 15px;">返还:￥1000</span>
         </div>
-        <div class="box" style="font-size: 20px">
+        <div class="box" id="box5" style="font-size: 20px" @click="chooseMoney(5)">
             <span style="margin-bottom: 10px">￥2000</span>
             <span style="font-size: 10px;position: absolute;margin-top: 15px;">返还:￥2000</span>
         </div>
-        <div class="box" style="font-size: 20px">
+        <div class="box" id="box6" style="font-size: 20px" @click="chooseMoney(6)">
             <span style="margin-bottom: 10px">￥5000</span>
             <span style="font-size: 10px;position: absolute;margin-top: 15px;">返还:￥5000</span>
         </div>
     </div>
     <div class="row" style="margin-bottom: 10px">
-        <div class="box" style="font-size: 20px;">
+        <div class="box" id="box7" style="font-size: 20px;" @click="chooseMoney(7)">
             <span style="margin-bottom: 10px">￥10000</span>
             <span style="font-size: 10px;position: absolute;margin-top: 15px;">返还:￥10000</span>
         </div>
-        <div class="box" style="font-size: 20px">
+        <div class="box" id="box8" style="font-size: 20px" @click="chooseMoney(8)">
             <span style="margin-bottom: 10px">￥20000</span>
             <span style="font-size: 10px;position: absolute;margin-top: 15px;">返还:￥20000</span>
         </div>
-        <div class="box" style="font-size: 20px">
+        <div class="box" id="box9" style="font-size: 20px" @click="chooseMoney(9)">
             <span style="margin-bottom: 10px">￥50000</span>
             <span style="font-size: 10px;position: absolute;margin-top: 15px;">返还:￥50000</span>
         </div>
@@ -218,11 +215,11 @@
     </div>
 </div>
 </body>
+<script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/jweixin.js"></script>
 <!-- <script type="text/javascript" src="../js/example.js"></script> -->
 <script type="text/javascript" src="../js/weui-min.js"></script>
 <script type="text/javascript" src="../js/zepto.js"></script>
-<script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/sweetalert2.all.js"></script>
 <script type="text/javascript" src="../js/echarts-simple-min.js"></script>
 <script src="../js/vue.js"></script>
@@ -279,8 +276,21 @@
                 10000, 20000, '自定义'
             ],
             fee: 0,
+            money:[]
         },
         methods: {
+            //选择金额;
+            chooseMoney(index){
+                console.log($('#box'+index).text());
+                // alert("选择的金额为:"+($('#box'+index).text())+"  "+"选择的技师为:"+this.model1);
+                if(this.money.length == 0){
+                    this.money.push($('#box'+index).text());
+                }else {
+                    this.money.splice(0,this.money.length);
+                    this.money.push($('#box'+index).text());
+                }
+                // alert("选择的金额为:"+($('#box'+index).text())+"  "+"选择的技师为:"+this.model1);
+            },
             userxuanzejine() {
                 this.xuanzejine = !this.xuanzejine;
             },
@@ -296,8 +306,16 @@
                     }
                 }
             },
-            recharge() {
+            recharge() { 
                 var that = this;
+                if(this.model1 == ""||this.model1 == null)
+				{
+                    alert("请选择技师!");
+                }
+				else 
+				{
+                    alert("选择的金额为:"+this.money[0]+' '+"选择的技师为:"+this.model1);
+                }
                 if (this.fee == 0 || this.fee == '自定义') 
 				{
                     //$(that).openWindow("传值改不动", "还未选择金额", ['好的']);
@@ -332,7 +350,7 @@
                     that.cash = res.cash;
                     that.overlay = false;
                 }
-            })
+            })  
         },
     })
 
