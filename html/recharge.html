@@ -298,9 +298,13 @@
             },
             recharge() {
                 var that = this;
-                if (this.fee == 0 || this.fee == '自定义') {
-                    $(that).openWindow("传值改不动", "还未选择金额", ['好的']);
-                } else {
+                if (this.fee == 0 || this.fee == '自定义') 
+				{
+                    //$(that).openWindow("传值改不动", "还未选择金额", ['好的']);
+					$(that).openWindow("", "", ['好的']);
+                } 
+				else 
+				{
                     $.post('../php/recharge.php', {
                         charge: that.fee,
                         user_id: "test",
