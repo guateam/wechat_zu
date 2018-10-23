@@ -46,7 +46,7 @@
                             <span style="color: #f5a623">{{ valueCustomText }}</span>
                         </Rate>
                     </Row>
-                    <textarea name="" id="comment" cols="30" rows="7" style="width: 100%;margin: 5px 0;border: 1px black solid;font-size: 1.5em;padding: 5px" placeholder="请输入评价"></textarea>
+                    <textarea name="" id="comment" cols="30" rows="7" style="width: 100%;margin: 5px 0;border: 1px black solid;font-size: 1.5em;padding: 5px" placeholder="请输入评价内容"></textarea>
                 </div>
             </div>
             <button style="width: 94%;margin-left: 3%;margin-top: 25px;height: 50px;border-radius: 20px;background-color: #00e4e6;border: none;color: white" onclick="send()">提交评论</button>
@@ -82,7 +82,7 @@
         el: "#app",
         data: {
             valueText: 3,
-            valueCustomText: 3.8,
+            valueCustomText: 0,
             data: {}
         },
         created() {
