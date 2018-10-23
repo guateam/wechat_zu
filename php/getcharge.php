@@ -10,15 +10,15 @@ if($user_id)
 	{
         for($i=0;$i<count($order);$i++)
 		{
-            $order[$i]['generated_time']=substr($order[$i]['generated_time'],0,10);
+            $order[$i]['generated_time'] = substr($order[$i]['generated_time'],0,10);
             $order[$i]['charge']/=100;
         }
-        echo json_encode(['status'=>1,'data'=>$order]);
+        echo json_encode(['status' => 1,'data'=>$order]);
     }
-    else echo json_encode(['status'=>-1]);
+    else echo json_encode(['status' => -1]);
 }
 else
 {
-    echo json_encode(['status'=>0]);
+    echo json_encode(['status' => 0]);
 }
 ?>

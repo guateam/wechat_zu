@@ -17,7 +17,7 @@
                 <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">时间</div>
             </div>
             <div class="weui-flex weui-flex__item" style="flex: 0 0 30%;">
-                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">推荐人</div>
+                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">技师</div>
             </div>
             <div class="weui-flex weui-flex__item" style="flex: 0 0 30%;">
                 <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">金额/元</div>
@@ -35,10 +35,7 @@
             <div class="weui-flex weui-flex__item" style="flex: 0 0 30%;">
                 <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center"
                     v-text="'￥'+item.charge"></div>
-            </div>
-            <div class="weui-flex weui-flex__item" style="flex: 0 0 30%;">
-                <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">推荐人</div>
-            </div>
+            </div>         
         </div>
         <div class="weui-tabbar" style="position: fixed;bottom: 0;">
             <a href="../html/index.html" class="weui-tabbar__item">
@@ -71,7 +68,8 @@
 
 <script type="text/javascript">
     $(function () {
-        $('.weui-tabbar__item').on('click', function () {
+        $('.weui-tabbar__item').on('click', function () 
+		{
             $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass(
                 'weui-bar__item_on');
             $(this).children('.weui-tabbar__icon').attr("src", $(this).children('.weui-tabbar__icon').attr(
@@ -79,12 +77,14 @@
         });
     });
 
-    function getQueryString(name) {
+    function getQueryString(name) 
+	{
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
         var r = window.location.search.substr(1).match(reg);
         if (r != null) return unescape(r[2]);
         return null;
     }
+	
     let app = new Vue({
         el: "#app",
         data: {
@@ -100,14 +100,17 @@
                 phone: getQueryString('phone'),
             }).done((res) => {
                 res = JSON.parse(res);
-                if (res.status == 1) {
-                    for (var i in res.data) {
+                if (res.status == 1) 
+				{
+                    for (var i in res.data) 
+					{
                         var info = res.data[i];
                         that.record.push(info);
                     }
                     that.overlay = false;
-                } else if (res.status == -1) {
-
+                } 
+				else if (res.status == -1) 
+				{
                     that.overlay = false;
                 }
             })
