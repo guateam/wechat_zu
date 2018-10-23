@@ -87,8 +87,8 @@
     </div>
     <div style="width: 90%;margin-left: 5%;height: 180px;background-color: #f2f2f2;margin-top: 33px;border-radius: 5px;padding-top: 12px;position: relative;line-height: 1.6;">
         <h1 style="font-size: 1.1em;margin: 5px">当前权益</h1>
-        <h1 style="font-size: 0.8em;margin: 5px" v-text="'全场享受原价的'+discount+'%'"></h1>
-        <h1 style="margin: 5px;font-size: 0.8em" v-text="'每项服务获得额外'+extra_time+'分钟时间'"></h1>
+        <!-- <h1 style="font-size: 0.8em;margin: 5px" v-text="'全场享受原价的'+discount+'%'"></h1>
+        <h1 style="margin: 5px;font-size: 0.8em" v-text="'每项服务获得额外'+extra_time+'分钟时间'"></h1> -->
         <h1 style="bottom: 1px;position: absolute;margin: 5px;font-size: 1.1em">距离<span style="font-size: 1em;color: #fe736c;"
                                                                               v-text="next_name"></span>仅需再消费<span
                 style="font-size: 1.3em;color: #409eff" v-text="'￥'+lv_up"></span></h1>
@@ -144,8 +144,6 @@
                     var info = data.data;
                     console.log(info)
                     that.head = data.head
-                    that.discount = info.discount;
-                    that.extra_time = info.extradura;
                     that.lv_up = info.exp;
                     that.name = info.nowlv;
                     that.next_name = info.nxlv

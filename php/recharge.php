@@ -41,6 +41,7 @@ if($us)
         ['charge',$val],
         ['payment_method',$pay],
         ['job_number',$job_number],
+        ['generated_time',time()]
         ]);
 		
     $all_recharge = get('recharge_record','user_id',$user);

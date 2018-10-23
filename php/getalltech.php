@@ -3,33 +3,20 @@ require("database.php");
 date_default_timezone_set('PRC'); 
 $all_tech = get("technician");
 
-$now = "";
-if(!isset($_POST['time']))$now = date('Y-m-d H:i:s',time());
-else $now = date('Y-m-d ').$_POST['time'].":00";
-
-
 $result = [];
 foreach($all_tech as $tech)
 {
-    $photos = get("technician_photo","job_number",$tech['job_number']);
-    $skills = get("skill","job_number",$tech['job_number']);
-    $order = get("service_order","job_number",$tech['job_number']);
+    $jbnb = $tech['job_number'];
+    $photos = get("technician_photo","job_number",$jbnb);
+    $skills = get("skill","job_number",$jbnb);
+    $order = get("service_order","job_number",$jbnb);
+    //表示是否繁忙，1为繁忙，2为不繁忙
     $busy = 2;
     $save_order=[];
-    foreach($order as $so)
-	{
-        $consumed_order = get('consumed_order','order_id',$so['order_id']);
-        $latest_time = "0";
-        foreach($consumed_order as $co)
-		{
-            //如果有订单时间距离现在的时间差小于1小时，则认为该订单还未完成，繁忙
-            $leap = abs(   strtotime($co['generated_time'])-strtotime($now)   );
-            if($leap<3600)
-			{
-                $busy = 1;
-                break;
-            }
-        }
+    $clock = sql_str("select * from clock WHERE (`job_number` = '$jbnb') ORDER BY `time` DESC");
+    if($clock){
+        if($clock[0]['state'] == 1)$busy = 1;
+        else $busy = 2;
     }
     $photo_list = [];
     foreach($photos as $photo)

@@ -199,7 +199,8 @@
                         phone: that.input_phone,
                         item_id: item_id,
                         people_num: that.people_num,
-                        job_number: that.job_number
+                        job_number: that.job_number,
+                        pay:that.total_price,
                     }).done((res) => {
                         res = JSON.parse(res);
                         if (res.state == 1) {
