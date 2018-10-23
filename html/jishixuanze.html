@@ -396,7 +396,7 @@
             $.post("../php/getshoptime.php").done((result) => {
                 result = JSON.parse(result);
                 if (result.status == 1) {
-                    that.tel = result.data.tel
+                    that.tel = result.data.tel;
                     that.open = result.data.open_time;
                     that.close = result.data.close_time;
                 }
