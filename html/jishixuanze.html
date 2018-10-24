@@ -56,19 +56,19 @@
         <card :bordered="false" dis-hover>
             <row :gutter="2">
                 <i-col span="6">
+                    <i-button :type="button_type[2]" long v-on:click="ClickJibie()">级别</i-button>
+                </i-col>
+                <i-col span="6">
                     <i-button :type="button_type[0]" @click="sort_by(0,'rate')" long>评价</i-button>
                 </i-col>
                 <i-col span="6">
                     <i-button :type="button_type[1]" @click="sort_by(1,'hot')" long>人气</i-button>
                 </i-col>
                 <i-col span="6">
-                    <i-button :type="button_type[2]" @click="sort_by(2,'level')" long>级别</i-button>
-                </i-col>
-                <i-col span="6">
                     <i-button :type="button_type[3]" @click="sort_by(3,'state')" long>状态</i-button>
                 </i-col>
             </row>
-            <row :gutter="2">
+            <row :gutter="2" v-if="clickjibie">
                 <i-col span="8">
                     <i-button :type="button_type[4]" @click="select_level(4,'金牌足浴')" long>金牌足浴</i-button>
                 </i-col>
@@ -104,16 +104,11 @@
                 </i-col>
 
                 <i-col span="15" @click.native="tech_info(item.job_number,item.state)">
-                    <row style="margin-top: -10px" type="flex" align="bottom">
-                        <i-col span="18">
-                            <rate show-text allow-half v-model="item.rate" disabled
-                                  style="font-size: 15px;font-family:'KaiTi'">
-                                <span style="color: #f5a623; margin-left: -20px">{{ item.rate }}分</span>
-                            </rate>
-                        </i-col>
-                        <i-col span="6">
-                            <p style="font-size: 10px; color: #19be6b;">
-                                <!--{{ item.price }}元/钟-->
+                    <row type="flex" justify="start" style="margin-bottom: 3px" :gutter="16"
+                         @click.native="tech_info(item.job_number,item.state)">
+                        <i-col span="15">
+                            <p>
+                                当前状态: <span :style="{color: item.state === 1 ? '#ed4014' : '#19be6b' }">{{ item.state === 1? '繁忙' : '空闲' }}</span>
                             </p>
                         </i-col>
                     </row>
@@ -133,16 +128,21 @@
                 </i-col>
             </row>
 
-            <row type="flex" justify="start" style="margin-top: 5px" :gutter="16"
-                 @click.native="tech_info(item.job_number,item.state)">
+            <row style="margin-top: 5px" type="flex" align="bottom">
                 <i-col span="5">
                     <p style="text-align: center">
                         {{ item.level }}
                     </p>
                 </i-col>
-                <i-col span="15">
-                    <p>
-                        当前状态: <span :style="{color: item.state === 1 ? '#ed4014' : '#19be6b' }">{{ item.state === 1? '繁忙' : '空闲' }}</span>
+                <i-col span="18">
+                    <rate show-text allow-half v-model="item.rate" disabled
+                          style="font-size: 15px;font-family:'KaiTi'">
+                        <span style="color: #f5a623; margin-left: -20px">{{ item.rate }}分</span>
+                    </rate>
+                </i-col>
+                <i-col span="6">
+                    <p style="font-size: 10px; color: #19be6b;">
+                        <!--{{ item.price }}元/钟-->
                     </p>
                 </i-col>
             </row>
@@ -215,6 +215,7 @@
     let Main = {
         data() {
             return {
+                clickjibie:false,
                 overlay: true,
                 button_type: [
                     "primary",
@@ -243,6 +244,9 @@
             }
         },
         methods: {
+            ClickJibie() {
+                this.clickjibie = !this.clickjibie;
+            },
             check_busy() {
                 var that = this;
                 that.overlay = true;
