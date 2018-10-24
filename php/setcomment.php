@@ -12,7 +12,7 @@ if($user)
 {
     $user=$user[0];
     foreach($service_id as $idx => $svid){
-        add('rate',[['order_id',$id],['score',$rate[$idx]],['comment',$comment[$idx]],['service_id',$svid]]);
+        add('rate',[['order_id',$id],['score',$rate[$idx]],['comment',$comment[$idx]],['service_id',$svid],['customer_id',$user[0]['ID']]]);
     }
     set('consumed_order','order_id',$id,[['state',5]]);
     echo(json_encode(['status'=>1]));
