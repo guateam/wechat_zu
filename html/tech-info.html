@@ -113,9 +113,9 @@
         <div>
             <row style="margin-top: 10px">
                 <card :bordered="false" dis-hover>
-                    <span>请选择服务</span>
-                    <row :gutter="2">
-                        <i-col span="6" v-for='item in skill_list'>
+                    <row><span>请选择服务</span></row>
+                    <row  :gutter="16" style="margin-top: 1rem;">
+                        <i-col  span="6" v-for='item in skill_list'>
                             <i-button :type="item.check==true? 'primary':'default'" @click="choose_service(item.name)"
                                 long>{{item.name}}
                             </i-button>
@@ -125,24 +125,23 @@
             </row>
         </div>
         <div class="weui-flex list" style="justify-content: center;align-items: center;height: 14%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;margin-top: 8px;margin-bottom: 8px">
-            <div class="box weui-flex guest" style="width: 100%; height: 100%;justify-content: center;align-items: center;">
-                <div style="display: flex;flex: 0 0 25%;align-items: center;justify-content: center;" onClick="navi('pyquan.html')">
-                    个人相册
+            <div class="box weui-flex guest" style="width: 100%; height: 100%;align-items: center;">
+                <div style=" position: relative; left: -1rem;top: 0rem;" onClick="navi('pyquan.html')">
+                    <span style="text-align: center;padding-left: 1.5rem;">个人相册</span>
                 </div>
-                <div class="item weui-flex__item thumb" thumblist="list1" style="text-align: center;height: 100%;display: flex;flex: 0 0 25%" v-for='(item, index) in data.technician.photo' v-if="index<3">
+                <div class="item weui-flex__item thumb" thumblist="list1" style="text-align: center;height: 100%;display: flex;flex: 0 0 18%" v-for='(item, index) in data.technician.photo' v-if="index<4">
                     <!-- <ul id="comment-list"> -->
                     <!-- <li class="list"> -->
                     <!-- <div class="guest"> -->
                     <!-- <div class="thumb" thumblist="list1"> -->
                     <!--<img @click="show_pic(index)" v-bind:src="item" style="height: 100%;width: 100%;">-->
-                    <img onClick="navi('pyquan.html')" style="height: 100%;width: 100%;display: block" :src="item">
+                    <img onClick="navi('pyquan.html')" style="position: relative;top: 12.5%; height: 75%;width: 75%;display: block;" :src="item">
                     <!-- </div> -->
                     <!-- </div> -->
                     <!-- </li> -->
                     <!-- </ul> -->
-
-
                 </div>
+                <div   onClick="navi('pyquan.html')" style="position: absolute;left: 95%; top: 60%; "><img style="width:90%;height: 30%"  src="../src/go2.png" /> </div>
             </div>
         </div>
         <!--这个页面的视频播放不需要了，朋友圈能看就好-->
