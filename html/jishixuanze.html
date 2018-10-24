@@ -34,16 +34,13 @@
             <row>请选择预约时间:</row>
             <row :gutter="16" type="flex" justify="space-between">
                 <i-col span="11" offset="1">
-                    <el-time-select v-model="timePick" :picker-options="{ start: '00:00', step: '00:10', end: '23:50' }"
-                                    @blur="check_busy" :editable="false" :clearable="false" size="small"
-                                    style="width: 120px;font-family:'KaiTi'"
-                                    placeholder="选择时间">
-                    </el-time-select>
+                    <i-input on-focus="navi('select-time.html')" style="width: 120px;" placeholder="选择时间">
+                    </i-input>
                 </i-col>
                 <i-col span="12">
                     <i-select @on-change="select_service" v-model="selector" placeholder="选择服务">
                         <i-option v-for="service in serviceList" :value="service.value" :key="service.value"
-                                  style="font-family:'KaiTi'">
+                                  style="">
                             {{service.label }}
                         </i-option>
                     </i-select>
