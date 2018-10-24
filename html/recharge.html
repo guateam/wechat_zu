@@ -49,6 +49,32 @@
             border: 1px #00e4e6 solid
         }
 
+        #box {
+            flex: 0 0 48%;
+            margin: 1%;
+            height: 100px;
+            border-radius: 10px;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            position: relative;
+            border: 1px #1aad19 solid;
+            color: #1aad19;
+        }
+
+        #choosen-box {
+            flex: 0 0 48%;
+            margin: 1%;
+            height: 100px;
+            border-radius: 10px;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            position: relative;
+            color: #00e4e6;
+            border: 1px #00e4e6 solid
+        }
+
         .ivu-select-selection {
             border: none;
             outline: none;
@@ -89,6 +115,22 @@
                 color: #00e4e6;
                 border: 1px #00e4e6 solid
             }
+
+            #box {
+                flex: 0 0 31%;
+                height: 60px;
+                border-radius: 3px;
+                border: 1px #1aad19 solid;
+                color: #1aad19;
+            }
+
+            #choosen-box {
+                flex: 0 0 31%;
+                height: 60px;
+                border-radius: 3px;
+                color: #00e4e6;
+                border: 1px #00e4e6 solid
+            }
         }
     </style>
 </head>
@@ -108,19 +150,22 @@
         </row>
         <div>
             <div class="row">
-                <div v-for="(val, index) in [100,200,500]" @click="choose(index)" :class="{box:box_list[index]==0,'choosen-box':box_list[index]==1}"
-                    v-text="val" >
-                    <span>返还100</span>
+                <div v-for="(val, index) in [100,200,500]" @click="choose(index)" :id="box_list[index]==0?'box':'choosen-box'">
+                    <span style="margin-bottom: 10px;font-size:20px" v-text="'￥'+val"></span>
+                    <span style="font-size: 10px;position: absolute;margin-top: 15px;" v-if="back_list[index]" v-text="'返还: ￥'+back_list[index]"></span>
                 </div>
             </div>
-
             <div class="row">
-                <div v-for="(val, index) in [1000,2000,5000]" @click="choose(index+3)" :class="{box:box_list[index+3]==0,'choosen-box':box_list[index+3]==1}"
-                    v-text="val" ></div>
+                <div v-for="(val, index) in [1000,2000,5000]" @click="choose(index+3)" :id="box_list[index+3]==0?'box':'choosen-box'">
+                    <span style="margin-bottom: 10px;font-size:20px" v-text="'￥'+val"></span>
+                    <span style="font-size: 10px;position: absolute;margin-top: 15px;" v-if="back_list[index+3]" v-text="'返还: ￥'+back_list[index+3]"></span>
+                </div>
             </div>
             <div class="row">
-                <div v-for="(val, index) in [10000,20000,50000]" @click="choose(index+6)" :class="{box:box_list[index+6]==0,'choosen-box':box_list[index+6]==1}"
-                    v-text="val"></div>
+                <div v-for="(val, index) in [10000,20000,50000]" @click="choose(index+6)" :id="box_list[index+6]==0?'box':'choosen-box'">
+                    <span style="margin-bottom: 10px;font-size:20px" v-text="'￥'+val"></span>
+                    <span style="font-size: 10px;position: absolute;margin-top: 15px;" v-if="back_list[index+6]" v-text="'返还: ￥'+back_list[index+6]"></span>
+                </div>
             </div>
         </div>
 
@@ -177,7 +222,7 @@
         <div class="weui-cells " v-if="xuanzejine">
             <div class="weui-cell weui-cell_swiped">
                 <div class="weui-cell__bd">
-                    <div class="weui-cell" >
+                    <div class="weui-cell">
                         <input type="number" class="inputmoney" style="width: 94%;height: 38px;margin-left: 3%;outline: none;padding-left: 10px;border: 1px #e0ebeb solid"
                             v-model="fee" placeholder="手动输入充值金额">
                     </div>
@@ -190,12 +235,12 @@
                 <div class="weui-cell__bd" style="transform: translateX(-68px)">
                     <div class="weui-cell" onclick="navi('recharge.html')">
                         <div class="weui-cell__bd">
-                            <p style="margin-left: 20%">
+                            <p v-for="pro in promotion" style="margin-left: 20%">
                                 <span style="display:inline-block ;width:40px">会员</span>
                                 <span style="display:inline-block ;font-family: 华文雅黑;background-color: #fe736c;color: white;border-radius: 6px;padding: 0 2px;font-size: 15px">
                                     充返
                                 </span>
-                                <span style="display:inline-block;font-size: 13px;font-weight: 100;color: gray;">充500送500，充1000送2000</span>
+                                <span style="display:inline-block;font-size: 13px;font-weight: 100;color: gray;" v-text="pro.content"></span>
                             </p>
                         </div>
                     </div>
@@ -249,27 +294,25 @@
                 1000, 2000, 5000,
                 10000, 20000, 50000
             ],
+            back_list:[],
             fee: 0,
             money: [],
-            pass:true,
+            promotion: [],
         },
         methods: {
-            //选择金额;
-            chooseMoney(index) {
-                console.log($('#box' + index).text());
-                // alert("选择的金额为:"+($('#box'+index).text())+"  "+"选择的技师为:"+this.model1);
-                if (this.money.length == 0) {
-                    this.money.push($('#box' + index).text());
-                } else {
-                    this.money.splice(0, this.money.length);
-                    this.money.push($('#box' + index).text());
+            judge_promotion(amount) {
+                can_get = 0;
+                for (var i=0;i< this.promotion.length;i++) {
+                    if (this.promotion[i].need <= amount)can_get = this.promotion[i].back;
+                    else break;
                 }
-                // alert("选择的金额为:"+($('#box'+index).text())+"  "+"选择的技师为:"+this.model1);
+                return can_get == 0?false:can_get;
             },
             userxuanzejine() {
                 this.xuanzejine = !this.xuanzejine;
                 this.choose(-1);
             },
+            //选择金额
             choose(idx) {
                 var that = this;
                 for (var i = 0; i < that.box_list.length; i++) {
@@ -284,18 +327,17 @@
                 //不能直接赋值，vue无法通过数组索引的方式检测到数据变化，必须用Vue.set来改变数据
                 Vue.set(that.box_list, 0, that.box_list[0]);
             },
+           
             recharge() {
                 var that = this;
-                
+
                 if (this.job_number == "" || this.job_number == null) {
                     alert("请选择技师!");
-                    that.pass = false;
                 }
                 if (this.fee == 0 || this.fee == '自定义') {
                     alert("请选择金额!");
-                    that.pass = false;
-                } 
-                if(this.job_number != "" && this.job_number != null && this.fee != 0 && this.fee != ''){
+                }
+                if (this.job_number != "" && this.job_number != null && this.fee != 0 && this.fee != '') {
                     $.post('../php/recharge.php', {
                         charge: that.fee,
                         user_id: "apple",
@@ -324,7 +366,18 @@
                     that.overlay = false;
                 }
             })
-            $.post("../php/getalltech.php").done((res)=>{
+            $.post("../php/getpromotion.php", {
+                ajax_get: true
+            }).done((res) => {
+                res = JSON.parse(res);
+                if (res.status == 1) {
+                    that.promotion = res.data
+                    for(var i in that.fee_list){
+                        that.back_list[i] =that.judge_promotion(that.fee_list[i]);
+                    }
+                }
+            })
+            $.post("../php/getalltech.php").done((res) => {
                 res = JSON.parse(res);
                 that.jishi = res.data
             })
