@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link href="../css/iview.css" rel="stylesheet">
+    <title>历史订单</title>
+    <link rel="stylesheet" href="../css/weui-min.css" />
+    <link rel="stylesheet" href="../css/example.css" />
+    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" type="text/css" href="../css/overlay.css">
+    <style>
+        #panel {
+            padding: 8px;
+
+        }
+        #list-item {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="weui-tab" id="app">
+    <div class="weui-tab__panel" id="panel">
+        <div class="page__bd">
+            <div class="weui-form-preview" v-for="od in order" id="list-item">
+                <div v-if="od.show">
+                    <div class="weui-form-preview__hd">
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">时间</label>
+                            <em class="weui-form-preview__value" v-text="od.time"></em>
+                        </div>
+                    </div>
+                    <div class="weui-form-preview__bd">
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">技师</label>
+                            <span class="weui-form-preview__value"><a href="#" style="color:#ee5e7b;" v-text="od.job_number"></a></span>
+                        </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">消费金额</label>
+                            <span class="weui-form-preview__value" v-text="'￥'+od.price"></span>
+                        </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">订单号</label>
+                            <span class="weui-form-preview__value" v-text="od.order_id"></span>
+                        </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">状态</label>
+                            <span class="weui-form-preview__value" style="color: red" v-text="od.state"></span>
+                        </div>
+                    </div>
+                    <div class="weui-form-preview__ft">
+                        <a class="weui-form-preview__btn weui-form-preview__btn_primary" @click="navi('confirm-order.html')">立即支付</a>
+                        <a class="weui-form-preview__btn weui-form-preview__btn_primary" @click="del(od.ID)">删除订单</a>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-bottom: 50px"></div>
+        </div>
+    </div>
+    <div id="modal-overlay" v-show="overlay">
+        <div class="modal-data">
+            <img src="../src/loading.gif" />
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="../js/jweixin.js"></script>
+<!-- <script type="text/javascript" src="../js/example.js"></script> -->
+<script type="text/javascript" src="../js/weui-min.js"></script>
+<script type="text/javascript" src="../js/zepto.js"></script>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../js/echarts-simple-min.js"></script>
+<script src="../js/vue.js"></script>
+<script type="text/javascript" src="../js/sweetalert2.all.js"></script>
+<script type="text/javascript" src="../vendor/iview/dist/iview.min.js"></script>
+<script type="text/javascript" src="../js/windowOpen.js"></script>
+<script type="text/javascript">
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+    let app = new Vue({
+        el: "#app",
+        data: {
+            order: [],
+            overlay: true,
+            serviceList: [{
+                label: '全部',
+                value: 0
+            },
+                {
+                    label: '预约',
+                    value: '预约'
+                },
+                {
+                    label: '服务中',
+                    value: '服务中'
+                },
+                {
+                    label: '等待支付',
+                    value: '等待支付'
+                },
+                {
+                    label: '支付完成',
+                    value: '支付完成'
+                },
+            ],
+            selector: null,
+        },
+        methods: {
+            select_service() {
+                var val = this.selector;
+                if (val == 0) {
+                    for (var i = 0; i < this.order.length; i++) {
+                        this.order[i].show = true;
+                    }
+                    return
+                } else {
+                    for (var i = 0; i < this.order.length; i++) {
+                        if (this.order[i].state == val) {
+                            this.order[i].show = true;
+                        } else {
+                            this.order[i].show = false;
+                        }
+                    }
+                }
+            },
+            detail(id) {
+                window.location.href = 'dingdanxiangqing.html?id=' + id
+            },
+            comment(id) {
+                window.location.href = 'my-rate.html?id=' + id
+            },
+            del(id) {
+                swal({
+                    text: "确认删除吗？该操作无法复原.",
+                    allowOutsideClick: false,
+                    showConfirmButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: "删除",
+                    cancelButtonText: "取消",
+                    width: 280,
+                }).then((res) => {
+                    if (res.value) {
+                        $.post("../php/delete_sv_order.php", {
+                            id: id
+                        }).done((res) => {
+                            res = JSON.parse(res);
+                            if (res.tatus == 1) {
+
+                            }
+                        })
+                        for (var i = 0; i < this.order.length; i++) {
+                            if (this.order[i]['ID'] == id) {
+                                this.order.splice(i, 1)
+                            }
+                        }
+                    }
+                })
+            }
+        },
+        created() {
+            var that = this;
+            $.post("../php/getbrieforder.php").done((res) => {
+                res = JSON.parse(res);
+                console.log(res);
+                for (var i = 0; i < res.length; i++) {
+                    that.order.push({
+                        ID: res[i]['ID'],
+                        job_number: res[i]['job_number'],
+                        price: res[i]['price'],
+                        order_id: res[i]['order_id'],
+                        state: res[i]['state'],
+                        time: res[i]['time'],
+                        show: true
+                    });
+                    if (that.order[i].state == 0) that.order[i].state = "订单取消"
+                    else if (that.order[i].state == 1) that.order[i].state = "预约"
+                    else if (that.order[i].state == 2) that.order[i].state = "服务中"
+                    else if (that.order[i].state == 3) that.order[i].state = "等待支付"
+                    else if (that.order[i].state == 4) that.order[i].state = "支付完成"
+                    else that.order[i].state = "评价完成"
+
+                    that.order[i]['show'] = true;
+                    that.overlay = false;
+                }
+            })
+        }
+    })
+    $(function () {
+        $('.weui-tabbar__item').on('click', function () {
+            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass(
+                'weui-bar__item_on');
+            $(this).children('.weui-tabbar__icon').attr("src", $(this).children('.weui-tabbar__icon').attr(
+                'data-original'));
+        });
+    });
+</script>
+
+</html>

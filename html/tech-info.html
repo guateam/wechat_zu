@@ -21,6 +21,7 @@
         }
         img {
             display: block;
+            object-fit: cover;
         }
         li {
             list-style: none;
@@ -125,7 +126,7 @@
         </div>
         <div class="weui-flex list" style="justify-content: center;align-items: center;height: 14%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;margin-top: 8px;margin-bottom: 8px">
             <div class="box weui-flex guest" style="width: 100%; height: 100%;justify-content: center;align-items: center;">
-                <div style="display: flex;flex: 0 0 25%;align-items: center;justify-content: center;">
+                <div style="display: flex;flex: 0 0 25%;align-items: center;justify-content: center;" onClick="navi('pyquan.html')">
                     个人相册
                 </div>
                 <div class="item weui-flex__item thumb" thumblist="list1" style="text-align: center;height: 100%;display: flex;flex: 0 0 25%" v-for='(item, index) in data.technician.photo' v-if="index<3">

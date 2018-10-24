@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>选择时间</title>
+    <link rel="stylesheet" href="../css/weui-min.css"/>
+    <link rel="stylesheet" href="../css/example.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/overlay.css">
+    <link rel="stylesheet" href="../css/global.css"/>
+    <link rel="stylesheet" type="text/css" href="../vendor/iview/dist/styles/iview.css">
+    <style type="text/css">
+        .ivu-tabs-nav-scroll{
+            display: flex;
+            justify-content: center;
+        }
+        .ivu-col-span-6{
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+<div id='app' style="width:100%;height:100%">
+    <row>
+        <tabs value="name1">
+            <tab-pane label="10/24" name="name1">
+                <tabs value="name1">
+                    <tab-pane label="08:00~17:30" name="name1">
+                        <i-col span="6">08:00</i-col>
+                        <i-col span="6">08:30</i-col>
+                        <i-col span="6">09:00</i-col>
+                        <i-col span="6">09:30</i-col>
+                        <i-col span="6">10:00</i-col>
+                        <i-col span="6">10:30</i-col>
+                        <i-col span="6">11:00</i-col>
+                        <i-col span="6">11:30</i-col>
+                        <i-col span="6">12:00</i-col>
+                        <i-col span="6">12:30</i-col>
+                        <i-col span="6">13:00</i-col>
+                        <i-col span="6">13:30</i-col>
+                        <i-col span="6">14:00</i-col>
+                        <i-col span="6">14:30</i-col>
+                        <i-col span="6">15:00</i-col>
+                        <i-col span="6">15:30</i-col>
+                        <i-col span="6">16:00</i-col>
+                        <i-col span="6">16:30</i-col>
+                        <i-col span="6">17:00</i-col>
+                        <i-col span="6">17:30</i-col>
+                    </tab-pane>
+                    <tab-pane label="18:00~23:00" name="name2">
+                        <i-col span="6">18:00</i-col>
+                        <i-col span="6">18:30</i-col>
+                        <i-col span="6">19:00</i-col>
+                        <i-col span="6">19:30</i-col>
+                        <i-col span="6">20:00</i-col>
+                        <i-col span="6">20:30</i-col>
+                        <i-col span="6">21:00</i-col>
+                        <i-col span="6">21:30</i-col>
+                        <i-col span="6">22:00</i-col>
+                        <i-col span="6">23:30</i-col>
+                    </tab-pane>
+                </tabs>
+            </tab-pane>
+            <tab-pane label="10/25" name="name2">标签二的内容</tab-pane>
+            <tab-pane label="10/26" name="name3">标签三的内容</tab-pane>
+        </tabs>
+    </row>
+
+</div>
+</body>
+<script type="text/javascript" src="../js/jweixin.js"></script>
+<!-- <script type="text/javascript" src="../js/example.js"></script> -->
+<script type="text/javascript" src="../js/weui-min.js"></script>
+<script type="text/javascript" src="../js/zepto.js"></script>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../js/sweetalert2.all.js"></script>
+<script type="text/javascript" src="../js/echarts-simple-min.js"></script>
+<script src="../js/vue.js"></script>
+<script type="text/javascript" src="../js/windowOpen.js"></script>
+<script type="text/javascript" src="../vendor/iview/dist/iview.min.js"></script>
+<script>
+    let app = new Vue({
+        el: "#app",
+        data: {
+
+        },
+        methods: {
+        },
+        created() {
+        },
+    })
+
+</script>
+
+</html>
