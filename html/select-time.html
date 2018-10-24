@@ -5,73 +5,114 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>选择时间</title>
-    <link rel="stylesheet" href="../css/weui-min.css"/>
-    <link rel="stylesheet" href="../css/example.css"/>
+    <link rel="stylesheet" href="../css/weui-min.css" />
+    <link rel="stylesheet" href="../css/example.css" />
     <link rel="stylesheet" type="text/css" href="../css/overlay.css">
-    <link rel="stylesheet" href="../css/global.css"/>
+    <link rel="stylesheet" href="../css/global.css" />
     <link rel="stylesheet" type="text/css" href="../vendor/iview/dist/styles/iview.css">
     <style type="text/css">
-        .ivu-tabs-nav-scroll{
+        .ivu-tabs-nav-scroll {
             display: flex;
             justify-content: center;
         }
-        .ivu-col-span-6{
+
+        .ivu-col-span-6 {
             height: 40px;
             display: flex;
             justify-content: center;
             align-items: center;
         }
+
+        .hidden-row {
+            background-color: #e6e3cd;
+            border-top: 1px #a1a1a1 solid;
+            border-bottom: 1px #a1a1a1 solid;
+            padding: 3px;
+        }
+
+        .hidden-row span {
+            font-size: 18px
+        }
+
+        #choosen-block {
+            background-color: #e6e3cd;
+            padding: 2px;
+            border-top: 1px #a1a1a1 solid;
+            border-left: 1px #a1a1a1 solid;
+            border-right: 1px #a1a1a1 solid;
+            border-bottom: 1px #a1a1a1 solid;
+            border-radius: 2px;
+        }
+        #disable-block{
+            background-color: #3b3b3b;
+            color:#ffffff;
+            padding: 2px;
+            border-top: 1px #a1a1a1 solid;
+            border-left: 1px #a1a1a1 solid;
+            border-right: 1px #a1a1a1 solid;
+            border-bottom: 1px #a1a1a1 solid;
+            border-radius: 2px;
+        }
+        #unchoosen-block {
+            padding: 2px;
+        }
     </style>
 </head>
 
 <body>
-<div id='app' style="width:100%;height:100%">
-    <row>
-        <tabs value="name1">
-            <tab-pane label="10/24" name="name1">
-                <tabs value="name1">
-                    <tab-pane label="08:00~17:30" name="name1">
-                        <i-col span="6">08:00</i-col>
-                        <i-col span="6">08:30</i-col>
-                        <i-col span="6">09:00</i-col>
-                        <i-col span="6">09:30</i-col>
-                        <i-col span="6">10:00</i-col>
-                        <i-col span="6">10:30</i-col>
-                        <i-col span="6">11:00</i-col>
-                        <i-col span="6">11:30</i-col>
-                        <i-col span="6">12:00</i-col>
-                        <i-col span="6">12:30</i-col>
-                        <i-col span="6">13:00</i-col>
-                        <i-col span="6">13:30</i-col>
-                        <i-col span="6">14:00</i-col>
-                        <i-col span="6">14:30</i-col>
-                        <i-col span="6">15:00</i-col>
-                        <i-col span="6">15:30</i-col>
-                        <i-col span="6">16:00</i-col>
-                        <i-col span="6">16:30</i-col>
-                        <i-col span="6">17:00</i-col>
-                        <i-col span="6">17:30</i-col>
-                    </tab-pane>
-                    <tab-pane label="18:00~23:00" name="name2">
-                        <i-col span="6">18:00</i-col>
-                        <i-col span="6">18:30</i-col>
-                        <i-col span="6">19:00</i-col>
-                        <i-col span="6">19:30</i-col>
-                        <i-col span="6">20:00</i-col>
-                        <i-col span="6">20:30</i-col>
-                        <i-col span="6">21:00</i-col>
-                        <i-col span="6">21:30</i-col>
-                        <i-col span="6">22:00</i-col>
-                        <i-col span="6">23:30</i-col>
-                    </tab-pane>
-                </tabs>
-            </tab-pane>
-            <tab-pane label="10/25" name="name2">标签二的内容</tab-pane>
-            <tab-pane label="10/26" name="name3">标签三的内容</tab-pane>
-        </tabs>
-    </row>
-
-</div>
+    <div id='app' style="width:100%;height:100%">
+        <row>
+            <tabs  @on-click="reset" value="name1">
+                <!-- 3天内的选择 -->
+                <tab-pane v-for="d in [today,today+(3600*24),today+(3600*48)]" :label="date('m-d',d)">
+                    <tabs @on-click="divide()" >
+                        <!-- 上半天的选择 -->
+                        <tab-pane :label="open +'~17:30'" name="name1">
+                            <row v-for="(row,idx) in time_block">
+                                <!-- 基础时间块 -->
+                                <row>
+                                    <i-col span="6" v-for="(block,idx2) in row" v-if="block.time <= '17:30'">
+                                        <span @click="divide(block,idx,idx2)" :id="(allow && block.allow) ? (block.choosen?'choosen-block':'unchoosen-block'):'disable-block' "
+                                            v-text="block.time"></span>
+                                    </i-col>
+                                </row>
+                                <!-- 隐藏层的时间块 -->
+                                <row class="hidden-row" v-show="divide_line[idx]==1">
+                                    <i-col span="6" offset="" v-for="block in divide_block">
+                                        <span v-text="block"></span>
+                                    </i-col>
+                                </row>
+                            </row>
+                        </tab-pane>
+                        <!-- 下半天的选择 -->
+                        <tab-pane :label="'18:00~'+close" name="name2">
+                            <row v-for="(row,idx) in time_block">
+                                <!-- 基础时间块 -->
+                                <row>
+                                    <i-col span="6" v-for="(block,idx2) in row" v-if="block.time>'17:30'">
+                                        <span @click="divide(block,idx,idx2)" :id="(allow && block.allow) ? (block.choosen?'choosen-block':'unchoosen-block'):'disable-block' "
+                                            v-text="block.time"></span>
+                                    </i-col>
+                                </row>
+                                <!-- 隐藏层的时间块 -->
+                                <row class="hidden-row" v-show="divide_line[idx]==1">
+                                    <i-col span="6" offset="" v-for="block in divide_block">
+                                        <span v-text="block"></span>
+                                    </i-col>
+                                </row>
+                            </row>
+                        </tab-pane>
+                    </tabs>
+                </tab-pane>
+               
+            </tabs>
+        </row>
+        <div id="modal-overlay" v-show="overlay">
+            <div class="modal-data">
+                <img src="../src/loading.gif" />
+            </div>
+        </div>
+    </div>
 </body>
 <script type="text/javascript" src="../js/jweixin.js"></script>
 <!-- <script type="text/javascript" src="../js/example.js"></script> -->
@@ -82,19 +123,130 @@
 <script type="text/javascript" src="../js/echarts-simple-min.js"></script>
 <script src="../js/vue.js"></script>
 <script type="text/javascript" src="../js/windowOpen.js"></script>
+<!-- 将时间戳转化为时间字符串格式 -->
+<script type="text/javascript" src="../js/date-format.js"></script>
 <script type="text/javascript" src="../vendor/iview/dist/iview.min.js"></script>
 <script>
     let app = new Vue({
         el: "#app",
         data: {
-
+            open: "",
+            close: "",
+            today: "",
+            time_block: [], //营业时间块
+            divide_block: [], //细分后的半小时内的时间块
+            divide_line: [0, 0, 0, 0, 0, 0], //是否显示细分的行
+            leap: 1800, //时间选择间隔，1800秒 = 30分钟
+            overlay: true,
         },
         methods: {
+            choose(idx, idx2) {
+                for (i = 0; i < this.time_block.length; i++) {
+                    for (j = 0; j < this.time_block[i].length; j++) {
+                        Vue.set(
+                            this.time_block[i],
+                            j, {
+                                time: this.time_block[i][j].time,
+                                choosen: (idx == i && idx2 == j) ? 1 : 0,
+                                allow:this.time_block[i][j].allow
+                            }
+                        )
+                    }
+                }
+            },
+            divide(block, idx, idx2) {
+                console.log(block)
+                if(block===undefined){
+                    this.divide_block = [];
+                    this.choose(idx, idx2);
+                    this.divide_line =[0,0,0,0,0,0,0,0];
+                    return;
+                }
+                if(!block.allow)return;
+
+                this.divide_block = [];
+                start = Date.parse(date("Y-m-d ", this.today) + block.time) / 1000;
+                //新的divide_line
+                tp = [];
+
+                for (i = start; i < start + this.leap; i += 300) {
+                    console.log(date("H:i", i))
+                    this.divide_block.push(date("H:i", i));
+                }
+
+                for (i = 0; i < this.time_block.length; i++) {
+                    tp.push(idx == i ? 1 : 0);
+                }
+                this.divide_line = tp;
+                this.choose(idx, idx2);
+            },
+            reset(mode){
+                var that = this;
+                for (i = 0; i < this.time_block.length; i++) {
+                    for (j = 0; j < this.time_block[i].length; j++) {
+                        if(mode == 0){
+                            str_tm = date("Y-m-d ",that.today) + this.time_block[i][j].time;
+                            tm_tm = Date.parse(str_tm);
+                            al = ( (new Date()/1) > tm_tm) ? 0:1
+                        } else{
+                            al = 1;
+                        }
+                        Vue.set(
+                            this.time_block[i],
+                            j, {
+                                time: this.time_block[i][j].time,
+                                choosen: 0,
+                                allow:al
+                            }
+                        )
+                    }
+                }
+            }
         },
         created() {
+            var that = this
+
+            $.post("../php/time_select_page.php").done((res) => {
+                res = JSON.parse(res);
+                if (res.status == 1) {
+                    that.open = res.data[0]['open']
+                    that.close = res.data[0]['close']
+                    that.today = res.data[0]['today']
+                    that.allow = res.data[0]['pre']
+                    //每行显示的时间块
+                    var row = [];
+                    //填充时间块变量
+                    for (var j = 0, i = Date.parse(date("Y-m-d ", res.data[0]['today']) + that.open) /
+                            1000; i <=
+                        Date.parse(date("Y-m-d ", res.data[0]['today']) + that.close) / 1000; i += that
+                        .leap,
+                        j++
+                    ) {
+                        if ((j + 1) % 4 == 0) {
+                            row.push({
+                                time: date("H:i", i),
+                                choosen: 0,
+                                allow:( (Date.parse(new Date())/1000) > i) ? 0:1,
+                            });
+                            that.time_block.push(row);
+                            row = [];
+                        } else {
+                            row.push({
+                                time: date("H:i", i),
+                                choosen: 0,
+                                allow:( (Date.parse(new Date())/1000) > i) ? 0:1,
+                            });
+                        }
+                        //that.time_block.push(date("H:i", i));
+                    }
+                    that.time_block.push(row);
+                    that.overlay = false;
+                } else {
+
+                }
+            })
         },
     })
-
 </script>
 
 </html>
