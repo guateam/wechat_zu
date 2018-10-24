@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>我的会员卡</title>
     <style>
         .weui-tabbar {
@@ -89,8 +89,9 @@
         <h1 style="font-size: 1.1em;margin: 5px">当前权益</h1>
         <!-- <h1 style="font-size: 0.8em;margin: 5px" v-text="'全场享受原价的'+discount+'%'"></h1>
         <h1 style="margin: 5px;font-size: 0.8em" v-text="'每项服务获得额外'+extra_time+'分钟时间'"></h1> -->
-        <h1 style="bottom: 1px;position: absolute;margin: 5px;font-size: 1.1em">距离<span style="font-size: 1em;color: #fe736c;"
-                                                                              v-text="next_name"></span>仅需再消费<span
+        <h1 style="bottom: 1px;position: absolute;margin: 5px;font-size: 1.1em">距离<span
+                style="font-size: 1em;color: #fe736c;"
+                v-text="next_name"></span>仅需再消费<span
                 style="font-size: 1.3em;color: #409eff" v-text="'￥'+lv_up"></span></h1>
     </div>
     <div class="weui-tabbar" style="margin-left: -9px">
@@ -109,7 +110,7 @@
     </div>
     <div id="modal-overlay" v-show="overlay">
         <div class="modal-data">
-            <img src="../src/loading.gif" />
+            <img src="../src/loading.gif"/>
         </div>
     </div>
 </div>
