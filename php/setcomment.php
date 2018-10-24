@@ -2,7 +2,8 @@
 require("database.php");
 
 $openid=$_POST['openid'];
-$id=$_POST['id'];
+$id=$_POST['order_id'];
+$service_id = $_POST['service_id'];
 $rate=$_POST['rate'];
 $comment=$_POST['comment'];
 
@@ -10,7 +11,10 @@ $user=get('customer','openid',$openid);
 if($user)
 {
     $user=$user[0];
-    add('rate',[['order_id',$id],['score',$rate],['comment',$comment]]);
+    foreach($service_id as $idx => $svid){
+        add('rate',[['order_id',$id],['score',$rate[$idx]],['comment',$comment[$idx]],['service_id',$svid]]);
+    }
+    set('consumed_order','order_id',$id,[['state',5]]);
     echo(json_encode(['status'=>1]));
 }
 else

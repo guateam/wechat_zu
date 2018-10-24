@@ -26,6 +26,7 @@ foreach($so as $svod)
             "technician_head"=>$tech[0]['photo'],
             "job_number"=>$tech[0]['job_number'],
             "service_name"=>$svs[0]['name'],
+            "service_id"=>$svs[0]['ID'],
             "price"=>$svs[0]['price']*$svs[0]['discount']*0.01*0.01,
             "time"=>$co[0]['generated_time'],
             "pay_way"=>$co[0]['payment_method'],
@@ -52,4 +53,4 @@ foreach($so as $svod)
         ]);
     }
 }
-echo json_encode($info);
+echo json_encode(['data'=>$info,'co'=>$co]);

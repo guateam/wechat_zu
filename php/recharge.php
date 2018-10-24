@@ -8,7 +8,7 @@ if($us)
 {
     $val = $_POST['charge']*100;
     $job_number = null;
-    if(!isset($_POST['job_number']))$job_number = $_POST['job_number'];
+    if(isset($_POST['job_number']))$job_number = $_POST['job_number'];
     //支付方式
     $pay = $_POST['pay'];
 

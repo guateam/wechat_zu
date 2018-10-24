@@ -3,9 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">	
-	<link rel="stylesheet" href="../css/iview.css" />
-	
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <link rel="stylesheet" href="../css/iview.css" />
+
     <title>订单评价</title>
     <link rel="stylesheet" href="../css/weui-min.css" />
     <link rel="stylesheet" href="../css/example.css" />
@@ -27,7 +27,7 @@
         <div class="page__bd">
             <div class="weui-panel weui-panel_access">
                 <div class="weui-panel__hd">请对技师进行评价</div>
-                <div class="weui-panel__bd">
+                <div v-for="(data,idx) in datas" class="weui-panel__bd">
                     <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
                         <div class="weui-media-box__hd">
                             <img class="weui-media-box__thumb" :src="data.technician_head" alt="" style="border-radius: 50%">
@@ -38,18 +38,22 @@
                             <h6 class="weui-media-box__desc">时长：<span style="color: #cc5522;">{{data.service_time}}min</span></h6>
                             <h6 class="weui-media-box__desc">价格：<span style="color: #cc5522;">￥{{data.price}}</span></h6>
                         </div>
+
                     </a>
+                    <div class="weui-panel__ft">
+                        <Row style="width: 100%;text-align: center">
+                            <Rate show-text allow-half v-model="rate[idx]" style="font-size: 40px;margin-bottom: 5px">
+                                <span style="color: #f5a623">{{ rate[idx] }}</span>
+                            </Rate>
+                        </Row>
+                        <textarea name="" v-model="text[idx]" id="comment" cols="30" rows="7" style="width: 100%;margin: 5px 0;border: 1px black solid;font-size: 1.5em;padding: 5px"
+                            placeholder="请输入评价内容"></textarea>
+                    </div>
                 </div>
-                <div class="weui-panel__ft">
-                    <Row style="width: 100%;text-align: center">
-                        <Rate show-text allow-half v-model="valueCustomText" style="font-size: 40px;margin-bottom: 5px">
-                            <span style="color: #f5a623">{{ valueCustomText }}</span>
-                        </Rate>
-                    </Row>
-                    <textarea name="" id="comment" cols="30" rows="7" style="width: 100%;margin: 5px 0;border: 1px black solid;font-size: 1.5em;padding: 5px" placeholder="请输入评价内容"></textarea>
-                </div>
+
             </div>
-            <button style="width: 94%;margin-left: 3%;margin-top: 25px;height: 50px;border-radius: 20px;background-color: #00e4e6;border: none;color: white" onclick="send()">提交评论</button>
+            <button style="width: 94%;margin-left: 3%;margin-top: 25px;height: 50px;border-radius: 20px;background-color: #00e4e6;border: none;color: white"
+                @click="send()">提交评论</button>
             <!--<div id="modal-overlay" v-show="overlay">-->
             <!--<div class="modal-data">-->
             <!--<img src="../src/loading.gif"/>-->
@@ -81,9 +85,37 @@
     let app = new Vue({
         el: "#app",
         data: {
-            valueText: 3,
-            valueCustomText: 0,
-            data: {}
+            text: [],
+            rate: [],
+            service_id:[],
+            datas: {}
+        },
+        methods: {
+            send() {
+                var that = this;
+                if (this.rate.length != this.datas.length) {
+                    $(that).openWindow("", "请至少为所有服务打分", ["好的"], () => {})
+                } else {
+                    $.post('../php/setcomment.php', {
+                        openid: openid,
+                        order_id: getQueryString('id'),
+                        service_id:that.service_id,
+                        comment: that.text,
+                        rate: that.rate
+                    }).done((data) => {
+                        data = JSON.parse(data)
+                        if (data.status == 1) {
+                            $(that).openWindow("", "您已成功评价", ["好的"], () => {
+                                location.href = 'index.html'
+                            })
+
+                        } else if(data.status == 0) {
+                            $(that).openWindow("", "评价失败,当前用户不存在", ["好的"], () => {})
+                        }
+                    })
+                }
+
+            }
         },
         created() {
             var that = this;
@@ -91,29 +123,17 @@
                 id: getQueryString('id')
             }).done((res) => {
                 res = JSON.parse(res)
-                that.data = res[0]
+                that.datas = res.data
+                for(var i in res.data){
+                    that.service_id.push(res.data[i]['service_id']);
+                }
             })
         }
     })
     var that = app;
 
     function send() {
-        $.post('../php/setcomment.php', {
-            openid: openid,
-            id: getQueryString('id'),
-            comment: $('#comment').val(),
-            rate: app.valueCustomText
-        }).done((data) => {
-            data = JSON.parse(data)
-            if (data.status == 1) {
-                $(that).openWindow("", "您已成功评价", ["好的"], () => {
-                    location.href = 'index.html'
-                })
 
-            } else {
-                $(that).openWindow("", "评价失败", ["好的"], () => {})
-            }
-        })
     }
 </script>
 

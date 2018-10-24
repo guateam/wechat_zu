@@ -15,7 +15,7 @@
         <h1 class="page__title">我的评价</h1>
     </div>
     <div class="page__bd" id="app">
-        <div class="weui-form-preview">
+        <div v-for="record in records" class="weui-form-preview">
             <div class="weui-form-preview__hd">
                 <div class="weui-form-preview__item">
                     <label class="weui-form-preview__label">服务项目</label>
@@ -69,7 +69,7 @@
         el: "#app",
         data: {
             overlay: true,
-            record: [{
+            records: [{
                 name: "",
                 generated_time: "",
                 comment: "",
@@ -87,14 +87,14 @@
                 res = JSON.parse(res);
                 if (res.status == 1) {
                     res = res.data;
-                    that.record = res;
+                    that.records = res;
 
                 } else {
-                    that.record = [{
+                    that.records = [{
                         name: "无",
                         generated_time: "无",
                         comment: "暂无评价",
-                        job_number: "",
+                        job_number: "无",
                     }]
                 }
                 that.overlay = false;
