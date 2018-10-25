@@ -89,39 +89,25 @@
 
 <body>
 <div id='app' style="width:100%;height:100%">
-    <row>
+ <!--    <row>
         <i-select v-model="model1" style="width: 94%;margin-left: 3%;margin-top: 20px;margin-bottom: 20px;border: 1px #e0ebeb solid"
                   size="large" placeholder="请选择本次打赏的技师">
             <i-option v-for="item in jishi" :value="item.value" :key="item.value">{{ item.label }}</i-option>
         </i-select>
-    </row>
-
-
+    </row> -->
 
     <!--这部分还为静态，需要修改-->
 
-
-
     <div class="row" style="margin-bottom: 15px">
-        <div class="box" style="font-size: 20px;">
-            <span >￥5</span>
+        <div class="box" style="font-size: 20px;" id="box1" @click="getMoney(1)">
+            <span >￥</span><span>5</span>
         </div>
-        <div class="box" style="font-size: 20px">
-            <span >￥10</span>
+        <div class="box" style="font-size: 20px"  id="box2" @click="getMoney(2)">
+            <span >￥</span><span>10</span>
         </div>
     </div>
-
-
-
     <!--end-->
-
-
-
-
-
     <!--打赏不需要更多金额-->
-
-
     <!--<div class="weui-cells__title" v-on:click="userxuanzejine()">更多金额</div>-->
     <!--<div class="weui-cells" v-if="xuanzejine">-->
         <!--<div class="weui-cell weui-cell_swiped">-->
@@ -134,9 +120,6 @@
             <!--</div>-->
         <!--</div>-->
     <!--</div>-->
-
-
-
     <div class="weui-cells__title">优惠活动</div>
     <div class="weui-cells">
         <div class="weui-cell weui-cell_swiped">
@@ -168,9 +151,10 @@
     </div>
 </div>
 </body>
+<script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/jweixin.js"></script>
-<!-- <script type="text/javascript" src="../js/example.js"></script> -->
-<script type="text/javascript" src="../js/weui-min.js"></script>
+<!-- <script type="text/javascript" src="../js/example.js"></script>
+ --><script type="text/javascript" src="../js/weui-min.js"></script>
 <script type="text/javascript" src="../js/zepto.js"></script>
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/sweetalert2.all.js"></script>
@@ -181,25 +165,7 @@
 <script>
     /**
 
-
-
-
-
-
-
-
-
      注意，大约在160行左右的post数据进行充值，user_id将在日后通过微信接口获得，目前只是静态数据，记得修改
-
-
-
-
-
-
-
-
-
-
      */
     let app = new Vue({
         el: "#app",
@@ -248,8 +214,18 @@
                 10000, 20000, '自定义'
             ],
             fee: 0,
+            moneyList:[],
         },
         methods: {
+            getMoney(index){
+                if(this.moneyList.length == 0){
+                    this.moneyList.push($("#box"+index+">span:nth-child(2)").text());
+                }else {
+                    this.moneyList.splice(0,this.moneyList.length);
+                    this.moneyList.push($("#box"+index+">span:nth-child(2)").text());
+                }
+                return index;
+            },  
             userxuanzejine() {
                 this.xuanzejine = !this.xuanzejine;
             },
@@ -267,22 +243,27 @@
             },
             recharge() {
                 var that = this;
-                if (this.fee == 0 || this.fee == '自定义') {
-                    $(that).openWindow("注意", "请选择充值金额", ['好的']);
-                } else {
-                    $.post('../php/recharge.php', {
-                        charge: that.fee,
-                        user_id: "test",
-                        job_number: that.job_number,
-                        pay: that.pay
-                    }).done((res) => {
-                        res = JSON.parse(res);
-                        if (res.status == 1) {
-                            $(that).openWindow("", "充值成功", ['好的'], () => {
-                                window.location.href = "index.html";
-                            })
-                        }
+                if(this.moneyList.length == 0){
+                     $(that).openWindow("注意", "请选择充值金额", ['好的']);
+                }
+                 else {
+                    $(that).openWindow("注意", "充值的金额:"+this.moneyList[0]+" "+"充值的技师工号:"+localStorage.getItem("job_number"), ['好的'],()=>{
+                        $.post('../php/recharge.php', {
+                            charge: that.fee,
+                            user_id: "test",
+                            job_number: that.job_number,
+                            pay: that.pay
+                        }).done((res) => {
+                            res = JSON.parse(res);
+                            if (res.status == 0) {
+                                $(that).openWindow("", "充值成功", ['好的'], () => {
+                                    localStorage.removeItem("job_number");
+                                    window.location.href = "index.html";
+                                })
+                            }
                     })
+                    });
+                    // alert("充值的金额:"+this.moneyList[0]+" "+"充值的技师工号:"+localStorage.getItem("job_number"));
                 }
             }
         },

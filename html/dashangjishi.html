@@ -9,6 +9,9 @@
 	
     <link rel="stylesheet" type="text/css" href="../css/overlay.css">
     <link rel="stylesheet" href="../css/global.css" />
+	<script src="../js/jquery.js"></script>
+	<script src="../js/vue.js"></script>
+	<script type="text/javascript" src="../vendor/iview/dist/iview.min.js"></script>
     <style>
         #app {
             font-family: Cursive;
@@ -29,6 +32,11 @@
 
 <body>
 <div id="app" style="background:#eee; padding-top: 10px; padding-bottom: 10px;">
+	<row>
+        <i-col :offset="1" span="22"> 
+            <i-input  id="searchinput"  v-model="model1" placeholder="Enter something..."  v-on:input="getSearchList" />
+        </i-col>
+     </row>
     <row style="margin-top: 10px">
         <card :bordered="false" dis-hover>
             <row :gutter="2">
@@ -60,7 +68,7 @@
         </card>
     </row>
 
-    <row style="margin-bottom: 15%; margin-top: 6px;">
+    <row id="content" style="margin-bottom: 15%; margin-top: 6px;">
         <card :bordered="false" dis-hover v-for="item in list" v-show="item.show" style="margin-bottom: 6px">
             <row type="flex" justify="space-between" align="middle" :gutter="16">
                 <i-col span="5" @click.native="tech_info(item.job_number,item.state)">
@@ -150,9 +158,7 @@
     </div>
 </div>
 </body>
-<script src="../js/jquery.js"></script>
-<script src="../js/vue.js"></script>
-<script type="text/javascript" src="../vendor/iview/dist/iview.min.js"></script>
+
 <script type="text/javascript" src="../js/sweetalert2.all.js"></script>
 <!-- <script src="https://cdn.bootcss.com/element-ui/2.4.0/index.js"></script> -->
 <script type="text/javascript" src="../js/windowOpen.js"></script>
@@ -176,7 +182,8 @@
         if (r != null) return unescape(r[2]);
         return null;
     }
-
+	var list = [];
+    var searchListOut = [];
     let Main = {
         data() {
             return {
@@ -190,6 +197,34 @@
                     "default",
                     "default",
                 ],
+				jishi: [
+                {
+                    value: 'AKB48',
+                    label: 'AKB48'
+                },
+                {
+                    value: 'NNK43',
+                    label: 'NNK43'
+                },
+                {
+                    value: 'KJKF39',
+                    label: 'KJKF39'
+                },
+                {
+                    value: 'FEFE343',
+                    label: 'FEFE343'
+                },
+                {
+                    value: 'EDEF67',
+                    label: 'EDEF67'
+                },
+                {
+                    value: 'FER67',
+                    label: 'FER67'
+                }
+            ],
+			model1: '',
+            jishiList:[],
                 timePick: new Date().toTimeString().slice(0, 5), // 当前时间
                 vip_discount: 100,
                 serviceList: [{
@@ -203,11 +238,62 @@
                 selector: null,
                 tel:"",
                 list: [],
+				searchList:[],
                 open: '',
                 close: '',
             }
         },
         methods: {
+			getSearchList(){
+                var that = this;
+                // $("#content").css('display','none');
+                $.post("../php/getSearch.php",{
+                    jobNumber:this.model1
+                }).done((result)=>{
+                    result = JSON.parse(result);
+                    if(this.searchList.length == 0){
+                    for (var i = 0; i < result.data.length; i++) {
+                        var tech = result.data[i];
+                            that.searchList.push({
+                                avatar_url: tech.avatar_url.replace('..', '/wechat_zu_technician/'),
+                                job_number: tech.job_number,
+                                photo_list: tech.photo_list,
+                                rate: tech.rate,
+                                state: tech.busy,
+                                skills: tech.skill,
+                                level: tech.level,
+                                hot: tech.hot,
+                                check: 0,
+                                show: true
+                            })
+                     
+                        }
+                    }else {
+                        this.searchList.splice(0,this.searchList.length);
+                        for (var i = 0; i < result.data.length; i++) {
+                        var tech = result.data[i];
+                            that.searchList.push({
+                                avatar_url: tech.avatar_url.replace('..', '/wechat_zu_technician/'),
+                                job_number: tech.job_number,
+                                photo_list: tech.photo_list,
+                                rate: tech.rate,
+                                state: tech.busy,
+                                skills: tech.skill,
+                                level: tech.level,
+                                hot: tech.hot,
+                                check: 0,
+                                show: true
+                            })
+                     
+                        }
+                    }
+               
+                    that.sort_by(0, 'rate');
+                    that.overlay = false;
+                    this.list = this.searchList;
+                })
+             },
+			 
             check_busy() //检查技师是否忙碌，这个页面没有用到
 			{
                 var that = this;
@@ -235,6 +321,20 @@
                     that.sort_by(0, 'rate');
                     that.overlay = false;
                 })
+            },
+			//下拉框实现选择技师;
+            choose_tech_select(job_number){
+                for(var i = 0;i < that.list.length;i++){
+                    if(job_number == that.list[i].job_number){
+                        if (item.job_number == that.list[i].job_number) {
+                            if (that.list[i].check == 1) {
+                                that.list[i].check = 0;
+                            } else that.list[i].check = 1;
+                        } else {
+                            that.list[i].check = 0;
+                        }
+                    }
+                }
             },
             choose_tech(item) //选择某个技师
 			{
@@ -280,6 +380,7 @@
                         // window.location.href = "confirm-order.html?job_number=" + that.list[i].job_number +
                         //     "&start-time=" + that.timePick + "&sv=all"
                         // 这里我改了一下，原来就是我注释掉的那两行
+						window.localStorage.setItem("job_number",that.list[i].job_number);
                         window.location.href = "querendashang.html?job_number=" + that.list[i].job_number
                         break;
                     } 
@@ -419,6 +520,7 @@
 			
             $.post("../php/getalltech.php").done((result) => {
                 result = JSON.parse(result);
+				this.jishiList = result.data;
                 for (var i = 0; i < result.data.length; i++) {
                     var tech = result.data[i];
                     that.list.push({
