@@ -8,6 +8,7 @@
     <link href="../css/pyquan.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../css/iview.css">
     <link rel="stylesheet" type="text/css" href="../css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/global.css">
     <style>
         img{
             object-fit: cover;
@@ -148,7 +149,7 @@
     <script type="text/javascript" src="../vendor/iview/dist/iview.min.js"></script>
     <script type="text/javascript" src="../js/sweetalert2.all.js"></script>
     <script type="text/javascript" src="../js/swiper.min.js"></script>
-
+    <script type="text/javascript" src="../js/windowOpen.js"></script>
     <script>
         // var tgt = [];
 
@@ -232,17 +233,19 @@
                 handleBeforeUpload() {
                     swal({
                         text: "正在更改封面背景，请稍候",
+                        width:250,
                         onOpen: () => {
                             swal.showLoading();
                         }
                     })
                 },
                 handleMax(file) {
-                    swal({
-                        text: "文件过大，不得超过5M",
-                        type: "error",
-                        width: 230,
-                    })
+                    $(this).openWindow("", "文件太大，不得超过5M", ["好的"])
+                    // swal({
+                    //     text: "文件过大，不得超过5M",
+                    //     type: "error",
+                    //     width: 230,
+                    // })
                 },
                 handleFail(res, file) {
                     alert("fail");
@@ -257,11 +260,12 @@
                         that.background = res.url;
                         swal.close();
                     } else {
-                        swal({
-                            text: res.state,
-                            type: "error",
-                            width: 230,
-                        })
+                        $(this).openWindow("", res.state, ["好的"]);
+                        // swal({
+                        //     text: res.state,
+                        //     type: "error",
+                        //     width: 230,
+                        // })
                     }
 
                 },
