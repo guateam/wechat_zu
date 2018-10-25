@@ -31,7 +31,7 @@
 
         }
 
-        .hidden-row p {
+        .hidden-row p#unchoosen-block{
             width: 100%;
             height: 1.5rem;
             text-align: center;
@@ -42,7 +42,19 @@
             border-radius: 3px;
             color: #2d8cf0;
         }
-
+        .hidden-row p#choosen-block{
+            width: 100%;
+            height: 1.5rem;
+            text-align: center;
+            border-top: 1px #2d8cf0 solid;
+            border-left: 1px #2d8cf0 solid;
+            border-right: 1px #2d8cf0 solid;
+            border-bottom: 1px #2d8cf0 solid;
+            border-radius: 3px;
+            color: #fff;
+            background-color: #2d8cf0;
+        }
+        
         #choosen-block {
             width: 5rem;
             height: 2rem;
@@ -185,7 +197,8 @@
             overlay: true,
             choosen_block: [],//选中的基础时间块下标
             choosen_small_block: [],//选中的细分时间块下标
-            choosen_day:"",//最终选定的预约时间，字符串，后台接受为时间戳
+            choosen_day:"",//最终选定的预约日期，字符串，后台接受为时间戳
+            choosen_time:"",//最终选定的预约时间
         },
         methods: {
             //取消选择所有块
@@ -257,7 +270,7 @@
                         allow: this.divide_block[i].allow
                     }
                 )
-                this.choosen_day += this.divide_block[i].time;
+                this.choosen_time = this.divide_block[i].time;
             },
             //显示细分的小时间块
             divide(block, idx, idx2,day) {
@@ -299,7 +312,7 @@
             },
             confirm(){
                 if(this.choosen_small_block.length==0)alert('请选择时间');
-                else console.log(this.choosen_day);
+                else console.log(this.choosen_day+this.choosen_time);
             }
         },
         created() {
