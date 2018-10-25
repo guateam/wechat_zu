@@ -24,37 +24,77 @@
         }
 
         .hidden-row {
-            background-color: #e6e3cd;
-            border-top: 1px #a1a1a1 solid;
-            border-bottom: 1px #a1a1a1 solid;
+            background-color: #fff;
+            /* border-top: 1px #a1a1a1 solid;
+            border-bottom: 1px #a1a1a1 solid; */
             padding: 3px;
+
         }
 
-        .hidden-row span {
-            font-size: 18px
+        .hidden-row p {
+            width: 100%;
+            height: 1.5rem;
+            text-align: center;
+            border-top: 1px #2d8cf0 solid;
+            border-left: 1px #2d8cf0 solid;
+            border-right: 1px #2d8cf0 solid;
+            border-bottom: 1px #2d8cf0 solid;
+            border-radius: 3px;
+            color: #2d8cf0;
         }
 
         #choosen-block {
-            background-color: #e6e3cd;
+            width: 5rem;
+            height: 2rem;
+            background-color: #2d8cf0;
+            padding: 2px;
+            text-align: center;
+            border-top: 1px #2d8cf0 solid;
+            border-left: 1px #2d8cf0 solid;
+            border-right: 1px #2d8cf0 solid;
+            border-bottom: 1px #2d8cf0 solid;
+            border-radius: 3px;
+            color: #fff;
+        }
+
+        #disable-block {
+
+            width: 5rem;
+            height: 2rem;
+
+            background-color: #aaa;
+            /* filter:alpha(opacity:30);  */
+            opacity: 0.2;
+            color: #000;
             padding: 2px;
             border-top: 1px #a1a1a1 solid;
             border-left: 1px #a1a1a1 solid;
             border-right: 1px #a1a1a1 solid;
             border-bottom: 1px #a1a1a1 solid;
-            border-radius: 2px;
+            border-radius: 3px;
+            text-align: center;
         }
-        #disable-block{
-            background-color: #3b3b3b;
-            color:#ffffff;
-            padding: 2px;
-            border-top: 1px #a1a1a1 solid;
-            border-left: 1px #a1a1a1 solid;
-            border-right: 1px #a1a1a1 solid;
-            border-bottom: 1px #a1a1a1 solid;
-            border-radius: 2px;
-        }
+
         #unchoosen-block {
+            width: 5rem;
+            height: 2rem;
+            border: 0.03rem #2d8cf0 solid;
             padding: 2px;
+            text-align: center;
+            color: #2d8cf0;
+            border-radius: 3px;
+        }
+
+        #button {
+            position: fixed;
+            bottom: 0px;
+            width: 100%;
+            height: 3rem;
+            text-align: center;
+            background-color: #2d8cf0;
+            color: #fff;
+            font-size: 1.1rem;
+            padding-top: 0.5rem;
         }
     </style>
 </head>
@@ -62,24 +102,25 @@
 <body>
     <div id='app' style="width:100%;height:100%">
         <row>
-            <tabs  @on-click="reset" value="name1">
+            <tabs @on-click="reset" value="name1">
                 <!-- 3天内的选择 -->
                 <tab-pane v-for="d in [today,today+(3600*24),today+(3600*48)]" :label="date('m-d',d)">
-                    <tabs @on-click="divide()" >
+                    <tabs @on-click="divide('',0,0,d)">
                         <!-- 上半天的选择 -->
                         <tab-pane :label="open +'~17:30'" name="name1">
                             <row v-for="(row,idx) in time_block">
                                 <!-- 基础时间块 -->
                                 <row>
                                     <i-col span="6" v-for="(block,idx2) in row" v-if="block.time <= '17:30'">
-                                        <span @click="divide(block,idx,idx2)" :id="(allow && block.allow) ? (block.choosen?'choosen-block':'unchoosen-block'):'disable-block' "
-                                            v-text="block.time"></span>
+                                        <span @click="divide(block,idx,idx2,d)" :id="(allow && block.allow) ? (block.choosen?'choosen-block':'unchoosen-block'):'disable-block' ">
+                                            <span style="position: relative;top: 0.3rem;">{{block.time}}</span>
+                                        </span>
                                     </i-col>
                                 </row>
                                 <!-- 隐藏层的时间块 -->
-                                <row class="hidden-row" v-show="divide_line[idx]==1">
-                                    <i-col span="6" offset="" v-for="block in divide_block">
-                                        <span v-text="block"></span>
+                                <row class="hidden-row" :gutter="16" v-show="divide_line[idx]==1">
+                                    <i-col span="4" v-for="(block,idx) in divide_block">
+                                        <p @click="choose_small(idx)" v-text="block.time"  :id="(allow && block.allow) ? (block.choosen?'choosen-block':'unchoosen-block'):'disable-block' " style="padding-top: 0.2rem;width: 100%; "></p>
                                     </i-col>
                                 </row>
                             </row>
@@ -90,23 +131,27 @@
                                 <!-- 基础时间块 -->
                                 <row>
                                     <i-col span="6" v-for="(block,idx2) in row" v-if="block.time>'17:30'">
-                                        <span @click="divide(block,idx,idx2)" :id="(allow && block.allow) ? (block.choosen?'choosen-block':'unchoosen-block'):'disable-block' "
-                                            v-text="block.time"></span>
+                                        <span @click="divide(block,idx,idx2,d)" :id="(allow && block.allow) ? (block.choosen?'choosen-block':'unchoosen-block'):'disable-block' ">
+                                            <span style="position: relative;top: 0.3rem;">{{block.time}}</span>
+                                        </span>
                                     </i-col>
                                 </row>
                                 <!-- 隐藏层的时间块 -->
-                                <row class="hidden-row" v-show="divide_line[idx]==1">
-                                    <i-col span="6" offset="" v-for="block in divide_block">
-                                        <span v-text="block"></span>
+                                <row class="hidden-row" :gutter="16" v-show="divide_line[idx]==1">
+                                    <i-col span="4" v-for="(block,idx) in divide_block">
+                                        <p @click="choose_small(idx)" v-text="block.time"  :id="(allow && block.allow) ? (block.choosen?'choosen-block':'unchoosen-block'):'disable-block' " style="padding-top: 0.2rem;width: 100%; "></p>
                                     </i-col>
                                 </row>
                             </row>
                         </tab-pane>
                     </tabs>
                 </tab-pane>
-               
+
             </tabs>
         </row>
+        <div @click="confirm()" id="button">
+            确认选择
+        </div>
         <div id="modal-overlay" v-show="overlay">
             <div class="modal-data">
                 <img src="../src/loading.gif" />
@@ -138,69 +183,123 @@
             divide_line: [0, 0, 0, 0, 0, 0], //是否显示细分的行
             leap: 1800, //时间选择间隔，1800秒 = 30分钟
             overlay: true,
+            choosen_block: [],//选中的基础时间块下标
+            choosen_small_block: [],//选中的细分时间块下标
+            choosen_day:"",//最终选定的预约时间，字符串，后台接受为时间戳
         },
         methods: {
-            choose(idx, idx2) {
-                for (i = 0; i < this.time_block.length; i++) {
-                    for (j = 0; j < this.time_block[i].length; j++) {
-                        Vue.set(
-                            this.time_block[i],
-                            j, {
-                                time: this.time_block[i][j].time,
-                                choosen: (idx == i && idx2 == j) ? 1 : 0,
-                                allow:this.time_block[i][j].allow
-                            }
-                        )
-                    }
+            //取消选择所有块
+            unchoose_all(){
+                if (this.choosen_block.length > 0) {
+                    old_i = this.choosen_block[0];
+                    old_j = this.choosen_block[1];
+                    Vue.set(
+                        this.time_block[old_i],
+                        old_j, {
+                            time: this.time_block[old_i][old_j].time,
+                            choosen: 0,
+                            allow: this.time_block[old_i][old_j].allow
+                        }
+                    )
+                    this.choosen_block = [];
                 }
+                if (this.choosen_small_block.length > 0) {
+                    old_i = this.choosen_small_block[0];
+                    Vue.set(
+                        this.divide_block,
+                        old_i, {
+                            time: this.divide_block[old_i].time,
+                            choosen: 0,
+                            allow: this.divide_block[old_i].allow
+                        }
+                    )
+                    this.choosen_small_block = [];
+                }
+                this.divide_line = [0, 0, 0, 0, 0, 0, 0, 0];
             },
-            divide(block, idx, idx2) {
-                console.log(block)
-                if(block===undefined){
+            //选择某个时间块，改变样式
+            choose(i, j) {
+                this.unchoose_all();
+                //更新选中的时间块
+                this.choosen_block = [i, j]
+                Vue.set(
+                    this.time_block[i],
+                    j, {
+                        time: this.time_block[i][j].time,
+                        choosen: 1,
+                        allow: this.time_block[i][j].allow
+                    }
+                )
+            },
+            //选择小时间块
+            choose_small(i) {
+                //不响应禁止选择的时间块
+                if(!this.divide_block[i].allow)return;
+                //取消之前选择的小时间块
+                if (this.choosen_small_block.length > 0) {
+                    old_i = this.choosen_small_block[0];
+                    Vue.set(
+                        this.divide_block,
+                        old_i, {
+                            time: this.divide_block[old_i].time,
+                            choosen: 0,
+                            allow: this.divide_block[old_i].allow
+                        }
+                    )
+                }
+                //更新选中的小时间块
+                this.choosen_small_block = [i]
+                Vue.set(
+                    this.divide_block,
+                    i, {
+                        time: this.divide_block[i].time,
+                        choosen: 1,
+                        allow: this.divide_block[i].allow
+                    }
+                )
+                this.choosen_day += this.divide_block[i].time;
+            },
+            //显示细分的小时间块
+            divide(block, idx, idx2,day) {
+                this.choosen_day = date("Y-m-d ",day);
+                if (block === undefined || block == '') {
+                    this.unchoose_all()
                     this.divide_block = [];
-                    this.choose(idx, idx2);
-                    this.divide_line =[0,0,0,0,0,0,0,0];
                     return;
                 }
-                if(!block.allow)return;
+                if (!block.allow) return;
 
-                this.divide_block = [];
-                start = Date.parse(date("Y-m-d ", this.today) + block.time) / 1000;
-                //新的divide_line
-                tp = [];
-
-                for (i = start; i < start + this.leap; i += 300) {
-                    console.log(date("H:i", i))
-                    this.divide_block.push(date("H:i", i));
-                }
-
-                for (i = 0; i < this.time_block.length; i++) {
-                    tp.push(idx == i ? 1 : 0);
-                }
-                this.divide_line = tp;
-                this.choose(idx, idx2);
-            },
-            reset(mode){
                 var that = this;
-                for (i = 0; i < this.time_block.length; i++) {
-                    for (j = 0; j < this.time_block[i].length; j++) {
-                        if(mode == 0){
-                            str_tm = date("Y-m-d ",that.today) + this.time_block[i][j].time;
-                            tm_tm = Date.parse(str_tm);
-                            al = ( (new Date()/1) > tm_tm) ? 0:1
-                        } else{
-                            al = 1;
-                        }
-                        Vue.set(
-                            this.time_block[i],
-                            j, {
-                                time: this.time_block[i][j].time,
-                                choosen: 0,
-                                allow:al
-                            }
-                        )
-                    }
-                }
+                $.post("../php/divide.php", {
+                    block: block,
+                    idx: idx,
+                    idx2: idx2,
+                    length: that.time_block.length,
+                    day:day
+                }).done((res) => {
+                    res = JSON.parse(res);
+                    that.divide_block = res.block;
+                    this.choose(idx, idx2);
+                    that.divide_line = res.tp;
+                })
+            },
+            //切换时间时候，重置时间块的可选状态
+            reset(mode) {
+                var that = this;
+                $.post("../php/reset_time_block.php", {
+                    mode: mode,
+                    block: that.time_block
+                }).done((res) => {
+                    res = JSON.parse(res);
+                    that.time_block = res.block;
+
+                    //重置选择状态
+                    this.unchoose_all();
+                })
+            },
+            confirm(){
+                if(this.choosen_small_block.length==0)alert('请选择时间');
+                else console.log(this.choosen_day);
             }
         },
         created() {
@@ -213,36 +312,8 @@
                     that.close = res.data[0]['close']
                     that.today = res.data[0]['today']
                     that.allow = res.data[0]['pre']
-                    //每行显示的时间块
-                    var row = [];
-                    //填充时间块变量
-                    for (var j = 0, i = Date.parse(date("Y-m-d ", res.data[0]['today']) + that.open) /
-                            1000; i <=
-                        Date.parse(date("Y-m-d ", res.data[0]['today']) + that.close) / 1000; i += that
-                        .leap,
-                        j++
-                    ) {
-                        if ((j + 1) % 4 == 0) {
-                            row.push({
-                                time: date("H:i", i),
-                                choosen: 0,
-                                allow:( (Date.parse(new Date())/1000) > i) ? 0:1,
-                            });
-                            that.time_block.push(row);
-                            row = [];
-                        } else {
-                            row.push({
-                                time: date("H:i", i),
-                                choosen: 0,
-                                allow:( (Date.parse(new Date())/1000) > i) ? 0:1,
-                            });
-                        }
-                        //that.time_block.push(date("H:i", i));
-                    }
-                    that.time_block.push(row);
+                    that.time_block = res.data[0]['time_block']
                     that.overlay = false;
-                } else {
-
                 }
             })
         },

@@ -31,14 +31,16 @@
 <div id="app" style="background:#eee; padding-top: 10px; padding-bottom: 10px;">
     <row>
         <card :bordered="false" dis-hover>
-            <row>请选择预约时间:</row>
+            <!-- <row>请选择预约时间:</row> -->
             <row :gutter="16" type="flex" justify="space-between">
-                <i-col span="11" offset="1">
-                    <i-input on-focus="navi('select-time.html')" style="width: 120px;" placeholder="选择时间">
-                    </i-input>
+                <i-col span="12">
+                    <i-button @click="navi('select-time.html')" type="default" long style="width: 148px;" >
+                        <icon type="ios-alarm-outline" size="17"></icon>
+                        <span style="font-size:12px;color:#c3c3c3">请选择服务时间</span>
+                    </i-button>
                 </i-col>
                 <i-col span="12">
-                    <i-select @on-change="select_service" v-model="selector" placeholder="选择服务">
+                    <i-select @on-change="select_service" v-model="selector" placeholder="请选择服务项目">
                         <i-option v-for="service in serviceList" :value="service.value" :key="service.value"
                                   style="">
                             {{service.label }}

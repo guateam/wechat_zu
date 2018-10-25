@@ -1,7 +1,8 @@
 <?php
 function getfeedback($id)
 {
-    $serivce = get('service_order', 'job_number', $id);
+    
+    $serivce = sql_str("select * from service_order WHERE (`job_number` = '$id') ORDER BY `ID` DESC");//get('service_order', 'job_number', $id);
     $data = [];
     foreach ($serivce as $value) 
 	{
@@ -48,8 +49,9 @@ function getfeedback($id)
 
                         $item = [
                             'name' => $user['name'],
-                            'head' => 'border-radius: 50%;background-color: #ffcc99;background-image: url("' . $head . '");background-size:cover',
+                            'head' => $head,
                             'rate' => $rate['score'],
+                            'time' => date("Y-m-d",$rate['time']),
                             'text' => $rate['comment'],
                             'serviceid' => $value['order_id'],
                             'price' => $price,
