@@ -3,11 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>技师相册</title>
-    <link rel="stylesheet" href="../css/weui-min.css" />
-    <link rel="stylesheet" href="../css/example.css" />
-    <link rel="stylesheet" href="../css/animate.css" />
+    <link rel="stylesheet" href="../css/weui-min.css"/>
+    <link rel="stylesheet" href="../css/example.css"/>
+    <link rel="stylesheet" href="../css/animate.css"/>
     <link rel="stylesheet" type="text/css" href="../css/overlay.css">
     <style>
 
@@ -15,28 +15,31 @@
 </head>
 
 <body>
-    <div id="app" style="width:100%;height:100%;background-color: white">
-        <div style="height: 7%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;display: flex;align-items: center;">
-            <span style="margin-left: 10px;font-size: 21px;font-family: '华文行楷';font-weight: 500">技师相册</span>
-        </div>
-        <div v-for="item in photolist_by_time" class="weui-flex" style="align-items: center;height: 13%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;margin-top: 10px">
-            <div class="box weui-flex" style="width: 100%; height: 100%;align-items: center;">
-                <div class="item weui-flex__item" style="height: 100%;flex: 0 0 25%;">
+<div id="app" style="width:100%;height:100%;background-color: white">
+    <div style="height: 7%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;display: flex;align-items: center;">
+        <span style="margin-left: 10px;font-size: 21px;font-family: '华文行楷';font-weight: 500">技师相册</span>
+    </div>
+    <div v-for="item in photolist_by_time" class="weui-flex"
+         style="align-items: center;height: 13%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;margin-top: 10px">
+        <div class="box weui-flex" style="width: 100%; height: 100%;align-items: center;">
+            <div class="item weui-flex__item" style="height: 100%;flex: 0 0 25%;">
                     <span style="font-weight: 500;font-size: 15px"><span
-                        style="font-size: 28px; font-weight: 600;margin-left: 5px">{{item.day}}</span>{{item.month}}月</span>
-                </div>
-                <div v-for="img in item.photos" class="item weui-flex__item" style="text-align: center;height: 100%;flex: 0 0 25%;">
-                    <img :src="img.url" alt="" style="height: 100%;width: 100%;" class="user-img deImg imgJs exampleImg" onClick="$(this).ImgZoomIn();">
-                </div>
+                            style="font-size: 28px; font-weight: 600;margin-left: 5px">{{item.day}}</span>{{item.month}}月</span>
             </div>
-
-        </div>
-
-        <div id="modal-overlay" v-show="overlay">
-            <div class="modal-data">
-                <img src="../src/loading.gif" />
+            <div v-for="img in item.photos" class="item weui-flex__item"
+                 style="text-align: center;height: 100%;flex: 0 0 25%;">
+                <img :src="img.url" alt="" style="height: 100%;width: 100%;" class="user-img deImg imgJs exampleImg"
+                     onClick="$(this).ImgZoomIn();">
             </div>
         </div>
+
+    </div>
+
+    <div id="modal-overlay" v-show="overlay">
+        <div class="modal-data">
+            <img src="../src/loading.gif"/>
+        </div>
+    </div>
 
 </body>
 <script type="text/javascript" src="../js/jweixin.js"></script>
@@ -49,7 +52,7 @@
 <script type="text/javascript" src="../js/vue.min.js"></script>
 
 <script type="text/javascript">
-    $.fn.ImgZoomIn = function() {
+    $.fn.ImgZoomIn = function () {
         bgstr = '<div id="ImgZoomInBG" style=" background:#000000; filter:Alpha(Opacity=70); opacity:1; position:fixed; left:0; top:0; z-index:10000; width:100%; height:100%; display:none;"><iframe src="about:blank" frameborder="5px" scrolling="yes" style="width:100%; height:100%;"></iframe></div>';
         imgstr = '<img id="ImgZoomInImage" src="' + $(this).attr('src') + '" onclick=$(\'#ImgZoomInImage\').hide();$(\'#ImgZoomInBG\').hide(); style="cursor:pointer; display:none; position:absolute; z-index:10001;" />';
         if ($('#ImgZoomInBG').length < 1) {
@@ -65,8 +68,8 @@
         $('#ImgZoomInBG').show();
         $('#ImgZoomInImage').show();
     };
-    $(document).ready(function() {
-        $("#imgTest").bind("click", function() {
+    $(document).ready(function () {
+        $("#imgTest").bind("click", function () {
             $(this).ImgZoomIn();
         });
     });
@@ -92,8 +95,8 @@
         methods: {
             sort_by(keyName) {
                 var that = this;
-                var sort = function(keyName) {
-                    return function(objectN, objectM) {
+                var sort = function (keyName) {
+                    return function (objectN, objectM) {
                         var valueN = objectN[keyName]
                         var valueM = objectM[keyName]
                         if (valueN < valueM) return 1
@@ -114,7 +117,7 @@
                 if (result.status == 1) {
                     for (var i = 0; i < result.data.length; i++) {
                         var info = result.data[i];
-                        if (info.time === null || info.time =='') info.time = "未知";
+                        if (info.time === null || info.time == '') info.time = "未知";
                         else info.time = info.time.substring(0, 10)
                         that.photolist.push({
                             "url": info.img.replace('..', '/wechat_zu_technician/'),
@@ -129,7 +132,7 @@
                         var time_photo = [];
                         //记录重复的时间，若时间重复则跳过
                         var jump = false;
-                        if (time_list.length == 0);
+                        if (time_list.length == 0) ;
                         else {
                             for (var j = 0; j < time_list.length; j++) {
                                 if (dt == time_list[j]) {
@@ -162,19 +165,19 @@
             })
         }
     })
-    $(function() {
-        $uploaderFiles.on("click", "li", function() {
+    $(function () {
+        $uploaderFiles.on("click", "li", function () {
             $galleryImg.attr("style", this.getAttribute("style"));
             $gallery.fadeIn(100);
         });
-        $gallery.on("click", function() {
+        $gallery.on("click", function () {
             $gallery.fadeOut(100);
         });
     });
 
 
     /*图片*/
-    $('.imgJs').each(function() {
+    $('.imgJs').each(function () {
         var imgHeight = $(this).height(),
             aHeight = $(this).parent().height();
         if (imgHeight < aHeight) {

@@ -4,14 +4,15 @@ if(isset($_POST['ajax_get']))
 function get_promotion()
 {
     $time = time();
-    $dates = get("promotion");
+   
+    $dates =  sql_str("select * from promotion ORDER BY `need` ASC");
     $result = [];
     foreach($dates as $date)
 	{
-        $start = strtotime($date['start']);
-        $end = strtotime($date['end']);
-        if($start <= $time && $time <= $end)
+        if($date['start'] <= $time && $time <= $date['end'])
 		{
+            $date['need']/=100;
+            $date['back']/=100;
             array_push($result,$date);
         }
     }

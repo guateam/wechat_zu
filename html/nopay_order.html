@@ -12,96 +12,60 @@
     <link rel="stylesheet" type="text/css" href="../css/overlay.css">
     <style>
         #panel {
-        padding: 8px;
+            padding: 8px;
 
-    }
-    #list-item {
-        margin-bottom: 8px;
-    }
+        }
+        #list-item {
+            margin-bottom: 8px;
+        }
     </style>
 </head>
 
 <body>
-    <div class="weui-tab" id="app">
-        <div class="weui-tab__panel" id="panel">
-            <!-- <div class="page__hd" style="display: flex;align-items: center;justify-content: space-between"> -->
-            <!-- <h4 class="page__title">我的评价</h4> -->
-            <!-- <i-select v-model="model1" style="width:200px">
-                    <i-option v-for="item in iot" :value="item.value" :key="item.value">{{ item.label }}</i-option>
-                </i-select> -->
-            <!-- <a @click="picker()" href="javascript:;" class="weui-btn weui-btn_default" style="width: 200px;">快速查找</a> -->
-            <!-- </div> -->
-            <row>
-                <card :bordered="false" dis-hover style="margin-bottom: 8px">
-                    <row :gutter="16" type="flex" justify="center">
-                        <i-col span="24">
-                            <i-select size="large" @on-change="select_service" v-model="selector" placeholder="快速查找"
-                                style="width: 100%;">
-                                <i-option v-for="service in serviceList" :value="service.value" :key="service.value">
-                                    {{service.label }}
-                                </i-option>
-                            </i-select>
-                        </i-col>
-                    </row>
-                </card>
-            </row>
-            <div class="page__bd">
-                <div class="weui-form-preview" v-for="od in order" id="list-item">
-                    <div v-if="od.show">
-                        <div class="weui-form-preview__hd">
-                            <div class="weui-form-preview__item">
-                                <label class="weui-form-preview__label">时间</label>
-                                <em class="weui-form-preview__value" v-text="od.time"></em>
-                            </div>
-                        </div>
-                        <div class="weui-form-preview__bd">
-                            <div class="weui-form-preview__item">
-                                <label class="weui-form-preview__label">技师</label>
-                                <span class="weui-form-preview__value"><a href="#" style="color:#ee5e7b;" v-text="od.job_number"></a></span>
-                            </div>
-                            <div class="weui-form-preview__item">
-                                <label class="weui-form-preview__label">消费金额</label>
-                                <span class="weui-form-preview__value" v-text="'￥'+od.price"></span>
-                            </div>
-                            <div class="weui-form-preview__item">
-                                <label class="weui-form-preview__label">订单号</label>
-                                <span class="weui-form-preview__value" v-text="od.order_id"></span>
-                            </div>
-                            <div class="weui-form-preview__item">
-                                <label class="weui-form-preview__label">状态</label>
-                                <span class="weui-form-preview__value" style="color: red" v-text="od.state"></span>
-                            </div>
-                        </div>
-                        <div class="weui-form-preview__ft">
-                            <a class="weui-form-preview__btn weui-form-preview__btn_primary" @click="detail(od.order_id)">查看详情</a>
-                            <a class="weui-form-preview__btn weui-form-preview__btn_primary" @click="comment(od.order_id)">查看评价</a>
-                            <a class="weui-form-preview__btn weui-form-preview__btn_primary" @click="del(od.ID)">删除记录</a>
+<div class="weui-tab" id="app">
+    <div class="weui-tab__panel" id="panel">
+        <div class="page__bd">
+            <div class="weui-form-preview" v-for="od in order" id="list-item">
+                <div v-if="od.show">
+                    <div class="weui-form-preview__hd">
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">时间</label>
+                            <em class="weui-form-preview__value" v-text="od.time"></em>
                         </div>
                     </div>
+                    <div class="weui-form-preview__bd">
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">技师</label>
+                            <span class="weui-form-preview__value"><a href="#" style="color:#ee5e7b;" v-text="od.job_number"></a></span>
+                        </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">消费金额</label>
+                            <span class="weui-form-preview__value" v-text="'￥'+od.price"></span>
+                        </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">订单号</label>
+                            <span class="weui-form-preview__value" v-text="od.order_id"></span>
+                        </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">状态</label>
+                            <span class="weui-form-preview__value" style="color: red" v-text="od.state"></span>
+                        </div>
+                    </div>
+                    <div class="weui-form-preview__ft">
+                        <a class="weui-form-preview__btn weui-form-preview__btn_primary" @click="navi('confirm-order.html')">立即支付</a>
+                        <a class="weui-form-preview__btn weui-form-preview__btn_primary" @click="del(od.ID)">删除订单</a>
+                    </div>
                 </div>
-                <div style="margin-bottom: 50px"></div>
             </div>
-        </div>
-        <div class="weui-tabbar">
-            <a href="../html/index.html" class="weui-tabbar__item">
-                <img src="../src/主页.png" data-original="../src/主页.png" alt="" class="weui-tabbar__icon">
-                <p class="weui-tabbar__label">首页</p>
-            </a>
-            <a href="../html/order.html" class="weui-tabbar__item weui-bar__item_on">
-                <img src="../src/订单激活.png" data-original="../src/订单激活.png" alt="" class="weui-tabbar__icon">
-                <p class="weui-tabbar__label">订单</p>
-            </a>
-            <a href="../html/customer.html" class="weui-tabbar__item">
-                <img src="../src/我的.png" data-original="../src/我的激活.png" alt="" class="weui-tabbar__icon">
-                <p class="weui-tabbar__label">我的</p>
-            </a>
-        </div>
-        <div id="modal-overlay" v-show="overlay">
-            <div class="modal-data">
-                <img src="../src/loading.gif" />
-            </div>
+            <div style="margin-bottom: 50px"></div>
         </div>
     </div>
+    <div id="modal-overlay" v-show="overlay">
+        <div class="modal-data">
+            <img src="../src/loading.gif" />
+        </div>
+    </div>
+</div>
 </body>
 <script type="text/javascript" src="../js/jweixin.js"></script>
 <!-- <script type="text/javascript" src="../js/example.js"></script> -->
@@ -126,9 +90,9 @@
             order: [],
             overlay: true,
             serviceList: [{
-                    label: '全部',
-                    value: 0
-                },
+                label: '全部',
+                value: 0
+            },
                 {
                     label: '预约',
                     value: '预约'

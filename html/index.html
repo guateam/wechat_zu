@@ -3,7 +3,7 @@
 
 <head id="">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title></title>
     <link rel="stylesheet" href="../css/weui-min.css"/>
     <link rel="stylesheet" href="../css/example.css"/>
@@ -22,24 +22,9 @@
             width: 60%;
             margin-left: 2.7em;
         }
-
-
-        /* Make it move */
-
-        @keyframes marquee {
-            0% {
-                text-indent: 15.5em
-            }
-            100% {
-                text-indent: -15em
-            }
-        }
-
-        /* Make it pretty */
-
-        .microsoft {
-            position: relative;
-            font: 16px 'Segoe UI', Tahoma, Helvetica, Sans-Serif;
+        .ivu-carousel-list{
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
@@ -47,7 +32,22 @@
 <body style="line-height: 0;">
 <div class="weui-tab" id="app">
     <div class="weui-tab__panel" id='shop'>
-        <img src="../src/wash-foot01.jpg" id="img" style="height: 30%;width: 100%;">
+        <row style="height: 30%;width: 100%;">
+            <carousel autoplay v-model="value2" loop radius-dot arrow="always" style="height: 100%;width: 100%;">
+                <carousel-item>
+                    <div class="demo-carousel"><img src="../src/wash-foot01.jpg" alt="" style="height: 100%;width: 100%;"></div>
+                </carousel-item>
+                <carousel-item>
+                    <div class="demo-carousel"><img src="../src/wash-foot02.jpg" alt="" style="height: 100%;width: 100%;"></div>
+                </carousel-item>
+                <carousel-item>
+                    <div class="demo-carousel"><img src="../src/wash-foot03.jpg" alt="" style="height: 100%;width: 100%;"></div>
+                </carousel-item>
+                <carousel-item>
+                    <div class="demo-carousel"><img src="../src/wash-foot04.jpg" alt="" style="height: 100%;width: 100%;"></div>
+                </carousel-item>
+            </carousel>
+        </row>
         <div style="height: 7%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;display: flex;align-items: center;">
             <span style="margin-left: 10px" v-text='data.name'></span>
             <span style="margin-left: 20px" v-text="data.open_time+'～'+data.close_time"></span>
@@ -65,7 +65,7 @@
              style="justify-content: center;align-items: center;height: 20%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;">
             <div class="box weui-flex" style="width: 100%; height: 100%;">
                 <div class="item weui-flex__item" style="text-align: center">
-                    <div onClick="navi('jishixuanze.html')"
+                    <div onClick="navi('select-time.html')"
                          style="height: 60px;width: 60px;border-radius: 50%;background-color: #ffcc66;margin: 10px auto;background-image: url(../src/技师预约.png);background-repeat: no-repeat"></div>
                     技师预约
                 </div>
@@ -266,6 +266,7 @@
             items2: {},
             items3: {},
             data: {},
+            value2: 0,
         },
         methods: {
             phone() {
@@ -321,29 +322,6 @@
     $("#app1").css({
         "height": $("#app2").height()
     });
-
-
-    // 轮播
-
-    var k=0;  //当前的索引
-    var ss = new Array(); //数组，用来存放图片
-    ss[0] = "../src/wash-foot01.jpg";
-    ss[1] = "../src/wash-foot02.jpg";
-    ss[2] = "../src/wash-foot03.jpg";
-    ss[3] = "../src/wash-foot04.jpg";
-    function scrollPic(){
-        if(k>ss.length-1){ //如果当前函数超过数组下标的最大值，k=0
-            k=0;
-        }
-        for(var i=0;i<ss.length;i++){ //遍历数组
-            if(i==k){ //如果当前索引等于当前数组下标
-                document.getElementById("img").src=ss[i]; //改变图片路径
-            }
-        }
-        k++; //k++,执行下一次操作
-    }
-
-    setInterval("scrollPic()",2000); //设置定时器
 
 </script>
 

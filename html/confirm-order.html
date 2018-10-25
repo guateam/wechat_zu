@@ -3,14 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>确认信息</title>
     <link rel="stylesheet" href="../css/weui-min.css"/>
     <link rel="stylesheet" href="../css/example.css"/>
     <link rel="stylesheet" type="text/css" href="../css/overlay.css">
     <link rel="stylesheet" href="../css/global.css"/>
     <style>
-
     </style>
 </head>
 
@@ -19,6 +18,24 @@
     <div class="page__hd">
         <h1 class="page__title">订单信息</h1>
     </div>
+    <div class="weui-cells__title">所选技师</div>
+    <div class="" style="background-color: transparent;border: none;width: 100%;display: flex;">
+        <div style="display: flex;flex: 0 0 25%;align-items: center;justify-content: center;">
+            <div style="height: 70px;width: 70px;position: relative;">
+                <div style="height: 20px;width: 20px;border-radius: 50%;background-color: red;color: white;font-size: 1em;display: flex;align-items: center;justify-content: center;position: absolute;top: 0;right: 0">X</div>
+                <img src="../../photo/bhDrpQG180904123135g.jpg" alt=""
+                     style="width: 70px;height: 70px;border-radius: 50%;object-fit: cover">
+            </div>
+        </div>
+        <div style="display: flex;flex: 0 0 25%;align-items: center;justify-content: center;">
+            <div style="height: 70px;width: 70px;position: relative;">
+                <div style="height: 20px;width: 20px;border-radius: 50%;background-color: red;color: white;font-size: 1em;display: flex;align-items: center;justify-content: center;position: absolute;top: 0;right: 0">X</div>
+                <img src="../../photo/bhDrpQG180904123135g.jpg" alt=""
+                     style="width: 70px;height: 70px;border-radius: 50%;object-fit: cover">
+            </div>
+        </div>
+    </div>
+    <div class="weui-cells__title">基本信息</div>
     <div style="background-color: white">
         <div class="weui-cell">
             <div class="weui-cell__bd">
@@ -74,15 +91,15 @@
                 <a @click="remove(item.name)" class="weui-swiped-btn weui-swiped-btn_warn" href="javascript:">删除</a>
             </div>
         </div>
-		
-		<div class="weui-cells__title">请留下手机号码</div>
-		<div class="weui-cell">
-			<div class="weui-cell__bd">
-				<p>手机号(方便联系)</p>
-			</div>
-			<input type="text" v-model="input_phone" style="outline: none;border: none;text-align: right"
-				   placeholder="请输入手机号">
-		</div>		
+
+        <div class="weui-cells__title">请留下手机号码</div>
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>手机号(方便联系)</p>
+            </div>
+            <input type="text" v-model="input_phone" style="outline: none;border: none;text-align: right"
+                   placeholder="请输入手机号">
+        </div>
     </div>
 
     <div class="weui-cells__title">本次优惠</div>
@@ -107,12 +124,12 @@
     <div class="weui-cells" style="margin-bottom: 80px">
         <div class="weui-cells__title">支付方式</div>
         <!--<a class="weui-cell weui-cell_access" href="javascript:;">-->
-            <!--<div class="weui-cell__hd"><img src="../src/线下支付.png" alt=""-->
-                                            <!--style="width:20px;margin-right:5px;display:block"></div>-->
-            <!--<div class="weui-cell__bd">-->
-                <!--<p>线下支付</p>-->
-            <!--</div>-->
-            <!--<div class="weui-cell__ft"></div>-->
+        <!--<div class="weui-cell__hd"><img src="../src/线下支付.png" alt=""-->
+        <!--style="width:20px;margin-right:5px;display:block"></div>-->
+        <!--<div class="weui-cell__bd">-->
+        <!--<p>线下支付</p>-->
+        <!--</div>-->
+        <!--<div class="weui-cell__ft"></div>-->
         <!--</a>-->
         <a class="weui-cell weui-cell_access" href="javascript:;">
             <div class="weui-cell__hd"><img src="../src/线下支付.png" alt=""
@@ -130,12 +147,8 @@
         <span style="color: #29a3a3;font-size: 22px" v-text="'￥'+total_price"></span>
 
 
-
-
         <!--这里click我改成直接跳到新页面，原来的confirm重新写-->
         <!--<button @click="confirm_od()"-->
-
-
 
 
         <button onClick="navi('zhifu.html')"
@@ -199,7 +212,8 @@
                         phone: that.input_phone,
                         item_id: item_id,
                         people_num: that.people_num,
-                        job_number: that.job_number
+                        job_number: that.job_number,
+                        pay: that.total_price,
                     }).done((res) => {
                         res = JSON.parse(res);
                         if (res.state == 1) {
