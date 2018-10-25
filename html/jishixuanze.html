@@ -36,7 +36,8 @@
                 <i-col span="12">
                     <i-button @click="navi('select-time.html')" type="default" long style="width: 148px;" >
                         <icon type="ios-alarm-outline" size="17"></icon>
-                        <span style="font-size:12px;color:#c3c3c3">请选择服务时间</span>
+                        <span v-if="time == ''" style="font-size:12px;color:#c3c3c3">请选择服务时间</span>
+                        <span v-else style="font-size:12px;color:#c3c3c3" v-text="time"></span>
                     </i-button>
                 </i-col>
                 <i-col span="12">
@@ -185,6 +186,7 @@
 </div>
 </body>
 <script src="../js/jquery.js"></script>
+<script src="../js/jquery.cookie.js"></script>
 <script src="../js/vue.js"></script>
 <script type="text/javascript" src="../vendor/iview/dist/iview.min.js"></script>
 <script type="text/javascript" src="../js/sweetalert2.all.js"></script>
@@ -225,7 +227,6 @@
                     "default",
                     "default",
                 ],
-                timePick: new Date().toTimeString().slice(0, 5), // 当前时间
                 vip_discount: 100,
                 serviceList: [{
                     value: -1,
@@ -240,6 +241,7 @@
                 list: [],
                 open: '',
                 close: '',
+                time:"",//选中的时间
             }
         },
         methods: {
@@ -380,20 +382,8 @@
         created() {
             console.log(this)
             var that = this;
-            var myDate = new Date();
-            h = myDate.getHours();
-            m = myDate.getMinutes();
-            if (m % 10 < 5) m -= m % 10;
-            else m += (10 - m % 10);
-            if (m >= 60) {
-                m -= 60;
-                h += 1;
-            }
-            if (h >= 24) h = 0;
-            if (m < 10) m = "0" + m;
-            if (h < 10) h = "0" + h;
-            that.timePick = h + ":" + m;
-
+            this.time = $.cookie("select_time");
+            if(this.time === undefined)this.time="";
             $.post("../php/getservice.php").done((result) => {
                 result = JSON.parse(result);
                 if (result.status) {

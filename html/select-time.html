@@ -31,7 +31,7 @@
 
         }
 
-        .hidden-row p#unchoosen-block{
+        .hidden-row p#unchoosen-block {
             width: 100%;
             height: 1.5rem;
             text-align: center;
@@ -42,7 +42,8 @@
             border-radius: 3px;
             color: #2d8cf0;
         }
-        .hidden-row p#choosen-block{
+
+        .hidden-row p#choosen-block {
             width: 100%;
             height: 1.5rem;
             text-align: center;
@@ -54,7 +55,23 @@
             color: #fff;
             background-color: #2d8cf0;
         }
-        
+
+        .hidden-row p#disable-block {
+            width: 100%;
+            height: 1.5rem;
+            background-color: #aaa;
+            /* filter:alpha(opacity:30);  */
+            opacity: 0.2;
+            color: #000;
+            padding: 2px;
+            border-top: 1px #a1a1a1 solid;
+            border-left: 1px #a1a1a1 solid;
+            border-right: 1px #a1a1a1 solid;
+            border-bottom: 1px #a1a1a1 solid;
+            border-radius: 3px;
+            text-align: center;
+        }
+
         #choosen-block {
             width: 5rem;
             height: 2rem;
@@ -132,7 +149,8 @@
                                 <!-- 隐藏层的时间块 -->
                                 <row class="hidden-row" :gutter="16" v-show="divide_line[idx]==1">
                                     <i-col span="4" v-for="(block,idx) in divide_block">
-                                        <p @click="choose_small(idx)" v-text="block.time"  :id="(allow && block.allow) ? (block.choosen?'choosen-block':'unchoosen-block'):'disable-block' " style="padding-top: 0.2rem;width: 100%; "></p>
+                                        <p @click="choose_small(idx)" v-text="block.time" :id="(allow && block.allow) ? (block.choosen?'choosen-block':'unchoosen-block'):'disable-block' "
+                                            style="padding-top: 0.2rem;width: 100%; "></p>
                                     </i-col>
                                 </row>
                             </row>
@@ -151,7 +169,8 @@
                                 <!-- 隐藏层的时间块 -->
                                 <row class="hidden-row" :gutter="16" v-show="divide_line[idx]==1">
                                     <i-col span="4" v-for="(block,idx) in divide_block">
-                                        <p @click="choose_small(idx)" v-text="block.time"  :id="(allow && block.allow) ? (block.choosen?'choosen-block':'unchoosen-block'):'disable-block' " style="padding-top: 0.2rem;width: 100%; "></p>
+                                        <p @click="choose_small(idx)" v-text="block.time" :id="(allow && block.allow) ? (block.choosen?'choosen-block':'unchoosen-block'):'disable-block' "
+                                            style="padding-top: 0.2rem;width: 100%; "></p>
                                     </i-col>
                                 </row>
                             </row>
@@ -176,6 +195,7 @@
 <script type="text/javascript" src="../js/weui-min.js"></script>
 <script type="text/javascript" src="../js/zepto.js"></script>
 <script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../js/jquery.cookie.js"></script>
 <script type="text/javascript" src="../js/sweetalert2.all.js"></script>
 <script type="text/javascript" src="../js/echarts-simple-min.js"></script>
 <script src="../js/vue.js"></script>
@@ -195,14 +215,14 @@
             divide_line: [0, 0, 0, 0, 0, 0], //是否显示细分的行
             leap: 1800, //时间选择间隔，1800秒 = 30分钟
             overlay: true,
-            choosen_block: [],//选中的基础时间块下标
-            choosen_small_block: [],//选中的细分时间块下标
-            choosen_day:"",//最终选定的预约日期，字符串，后台接受为时间戳
-            choosen_time:"",//最终选定的预约时间
+            choosen_block: [], //选中的基础时间块下标
+            choosen_small_block: [], //选中的细分时间块下标
+            choosen_day: "", //最终选定的预约日期，字符串，后台接受为时间戳
+            choosen_time: "", //最终选定的预约时间
         },
         methods: {
             //取消选择所有块
-            unchoose_all(){
+            unchoose_all() {
                 if (this.choosen_block.length > 0) {
                     old_i = this.choosen_block[0];
                     old_j = this.choosen_block[1];
@@ -247,7 +267,7 @@
             //选择小时间块
             choose_small(i) {
                 //不响应禁止选择的时间块
-                if(!this.divide_block[i].allow)return;
+                if (!this.divide_block[i].allow) return;
                 //取消之前选择的小时间块
                 if (this.choosen_small_block.length > 0) {
                     old_i = this.choosen_small_block[0];
@@ -273,8 +293,8 @@
                 this.choosen_time = this.divide_block[i].time;
             },
             //显示细分的小时间块
-            divide(block, idx, idx2,day) {
-                this.choosen_day = date("Y-m-d ",day);
+            divide(block, idx, idx2, day) {
+                this.choosen_day = date("Y-m-d ", day);
                 if (block === undefined || block == '') {
                     this.unchoose_all()
                     this.divide_block = [];
@@ -288,7 +308,7 @@
                     idx: idx,
                     idx2: idx2,
                     length: that.time_block.length,
-                    day:day
+                    day: day
                 }).done((res) => {
                     res = JSON.parse(res);
                     that.divide_block = res.block;
@@ -310,9 +330,12 @@
                     this.unchoose_all();
                 })
             },
-            confirm(){
-                if(this.choosen_small_block.length==0)alert('请选择时间');
-                else console.log(this.choosen_day+this.choosen_time);
+            confirm() {
+                if (this.choosen_small_block.length == 0) alert('请选择时间');
+                else{
+                    $.cookie('select_time', this.choosen_day+this.choosen_time,{path: 'jishixuanze.html' });
+                    window.location.href="jishixuanze.html"
+                }
             }
         },
         created() {
