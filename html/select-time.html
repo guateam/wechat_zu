@@ -332,7 +332,9 @@
                 })
             },
             confirm() {
-                if (this.choosen_small_block.length == 0) alert('请选择时间');
+                if (this.choosen_small_block.length == 0){
+                    $(this).openWindow("","请选择时间",['好的']);
+                }
                 else{
                     $.cookie('select_time', this.choosen_day+this.choosen_time,{path: '/' });
 
