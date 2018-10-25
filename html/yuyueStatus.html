@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head id="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title></title>
+  
+    <style>
+    	body {
+    		width: 100%;
+    		height: 100%;
+    		margin: 0px;
+    		padding: 0px;
+    	}
+      #row {
+      	background: #5cadff;
+      }
+      #headers {
+      	width: 100%;
+      	height: 2.5rem;
+      	background: #5cadff;
+      	text-align: center;
+      	color: #fff;
+      	padding-top: 0.5rem;
+      }
+      #img {
+      	width: 100%;
+      	height: 20%;
+      	text-align: center;;
+      	/*border-bottom: 1px solid red;*/
+      }
+      #head_desc {
+      	width: 100%;
+      	height: 4rem;
+      	/*border-bottom: 1px red solid;*/
+      }
+      #head_desc p:nth-child(2) {
+      	text-align: center;
+      	font-size: 0.8rem;
+      	opacity: 0.4;
+      }
+      #block {
+      	width: 100%;
+      	height: 1rem;
+      	background-color: #e8e8e8;
+      	opacity: 0.7;
+/*      	border-bottom: 1px solid blue;
+*/      }
+      #location {
+      	width: 100%;
+      	height: 5rem;
+/*      	border-bottom: 1px solid green;
+*/      }
+	#content  {
+		width: 100%;
+		height: 10.5rem;
+		/*border-bottom: 1px solid blue;*/
+	}
+	hr {
+		opacity: 0.4;
+	}
+	#footer {
+		position: fixed;
+		bottom: 0px;
+		width: 100%;
+		height: 3rem;
+		display: flex;
+		justify-content: space-between;
+	}
+	#footer .left {
+		width: 50%;
+		height: 100%;
+		background:#fff;
+		text-align: center;
+		color: #5cadff;
+		font-size: 0.8rem;
+
+	}
+	#footer .right {
+		width: 50%;
+		height: 100%;
+		background: #5cadff;
+		text-align: center;
+		color: white;
+		font-size: 0.8rem;
+	}
+    </style>
+</head>
+
+<body >
+	<div id="app">
+		<div id="headers"><span>预约状态</span></div>
+		<div id="headContent">
+			<div id="img"><img style="width: 30%;" src="../src/rmb.png"></div>
+			<div id="head_desc">
+				<p style="text-align: center;font-weight: bold;">等待支付</p>
+				<p style="position: relative;top: -0.5rem;">请在10分钟内完成支付</p>
+			</div>
+		</div>
+		<div id="block"></div>
+		<div id="location">
+			<p>
+				<span style="padding-left: 1rem;font-size: 0.9rem;">足本纪·杭州·下沙旗舰店</span>
+				<span>
+					<img style="float: right;margin-right: 1rem;width: 5%;" src="../src/tel.png">
+				</span>
+			</p>
+			<hr style="opacity: 0.4;margin-top: -0.2rem;">
+			<p>
+				<span><img src="../src/location.png" style="width: 5%;padding-left: 0.8rem;" /></span>
+				<span style="font-size: 0.8rem;opacity: 0.6;position: relative;top: -0.3rem;"> 浙江省杭州市江干区金沙大道小城天地</span>
+				<span style="padding-left: 1rem;font-size: 0.8rem;opacity: 0.6;position: relative;top: -0.3rem;">2.9km</span>
+				<span><img src="../src/go.png" style="width: 5%;float: right;margin-right: 1rem;" /></span>
+			</p>
+		</div>
+		<div id="block"></div>
+		<div id="content">
+			<p style="font-size: 0.8rem;padding-left: 1rem;">预约服务时间</p>
+			<hr >
+			<p style="font-size: 0.8rem;">
+				<span style="padding-left: 1rem; opacity: 0.7">9</span>
+				<span style="padding-left: 5rem; opacity: 0.7">单人洗浴</span>
+				<span style="float: right;padding-right: 1rem;opacity: 0.7">￥88/40分钟</span>
+			</p>
+			<hr>
+			<p style="font-size: 0.8rem;"><span style="padding-left: 1rem;">项目总计</span><span style="float: right;padding-right: 1rem;">￥88</span></p>
+			<hr>
+			<p style="position: relative;top: -0.4rem; font-size: 0.8rem;float: right;padding-right: 1rem;">实付<span style="color: red;">￥88</span>
+			</p>
+		</div>
+		<hr style="position: relative;top: -0.4rem;">
+		<div id="footer">
+			<div class="left"><span style="position: relative;top: 1rem;">返回首页 </span></div>
+			<div class="right"><span style="position: relative;top: 1rem;">查看我的预约</span></div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="../js/jweixin.js "></script>
+<!-- <script type="text/javascript" src="../js/example.js "></script> -->
+<script type="text/javascript" src="../js/weui-min.js "></script>
+<script type="text/javascript" src="../js/zepto.js "></script>
+<script type="text/javascript" src="../js/jquery.js "></script>
+<script type="text/javascript" src="../js/echarts-simple-min.js "></script>
+<script type="text/javascript" src="../js/sweetalert.js"></script>
+<script type="text/javascript" src="../js/windowOpen.js"></script>
+<script type="text/javascript" src="../js/vue.js "></script>
+<script type="text/javascript" src="../js/iview.js"></script>
+<script type="text/javascript ">
+
+</script>
+
+</html>

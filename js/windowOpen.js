@@ -4,7 +4,7 @@
 	var $oMasking;
 	var $oWindowContainer;
 	//打开弹窗方法
-	$.fn.openWindow = function(setTitle,setContents,setButton,setCallBack =()=>{}){
+	$.fn.openWindow = function(setTitle,setContents,setButton,setCallBack =()=>{},closeCallBack=()=>{}){
 		
 		//拼接弹窗内容，并且在调用打开弹窗方法时将内容塞进body
 		var _html ='<div class="window-masking"></div>'+
@@ -24,11 +24,13 @@
 		$oMasking = $('.window-masking');
 		$oWindowContainer = $('.window-container');
 		//点击取消按钮关闭弹窗
-		$('.cancel-button,.window-masking,.ack-button').on('click',function(){
+		$('.cancel-button,.window-masking,.ack-button').on('click',()=>{
+			console.log('左')
+			closeCallBack();
 			closeWindow();
 		});
 		$(".confirm-button").on("click",()=>{
-			console.log("点了")
+			console.log("右")
 			setCallBack();
 			closeWindow();
 		})

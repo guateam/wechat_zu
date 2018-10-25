@@ -2,6 +2,7 @@
 require "database.php";
 $openid=$_POST['openid'];
 $user=get('customer','openid',$openid);
+
 if($user)
 {
     $user=$user[0];
