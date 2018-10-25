@@ -41,9 +41,9 @@
                     </i-button>
                 </i-col>
                 <i-col span="12">
-                    <i-select @on-change="select_service" v-model="selector" placeholder="请选择服务项目">
+                    <i-select style="font-family:KaiTi" @on-change="select_service" v-model="selector" placeholder="请选择服务项目">
                         <i-option v-for="service in serviceList" :value="service.value" :key="service.value"
-                                  style="">
+                                  style="font-family:KaiTi">
                             {{service.label }}
                         </i-option>
                     </i-select>
@@ -90,7 +90,7 @@
                     <row>
                         <i-col span="24">
                             <p style="text-align: center; font-size: 12px; color: gray; transform: translateY(-40%);font-family:'KaiTi'">
-                                {{ item.job_number }}号
+                                {{ item.job_number }}
                             </p>
                         </i-col>
                     </row>
