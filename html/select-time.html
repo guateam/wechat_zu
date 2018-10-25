@@ -131,12 +131,12 @@
 <body>
     <div id='app' style="width:100%;height:100%">
         <row>
-            <tabs @on-click="reset" value="name1">
+            <tabs @on-click="reset" v-model="tabs[0]">
                 <!-- 3天内的选择 -->
-                <tab-pane v-for="d in [today,today+(3600*24),today+(3600*48)]" :label="date('m-d',d)">
-                    <tabs @on-click="divide('',0,0,d)">
+                <tab-pane v-for="(d,index) in [today,today+(3600*24),today+(3600*48)]" :name="index" :label="date('m-d',d)">
+                    <tabs @on-click="divide('',0,0,d)" v-model="tabs[1]">
                         <!-- 上半天的选择 -->
-                        <tab-pane :label="open +'~17:30'" name="name1">
+                        <tab-pane :label="open +'~17:30'" name="day">
                             <row v-for="(row,idx) in time_block">
                                 <!-- 基础时间块 -->
                                 <row>
@@ -156,7 +156,7 @@
                             </row>
                         </tab-pane>
                         <!-- 下半天的选择 -->
-                        <tab-pane :label="'18:00~'+close" name="name2">
+                        <tab-pane :label="'18:00~'+close" name="night">
                             <row v-for="(row,idx) in time_block">
                                 <!-- 基础时间块 -->
                                 <row>
@@ -207,6 +207,7 @@
     let app = new Vue({
         el: "#app",
         data: {
+            tabs:[0,'day'],//默认选中的tabs标签页,分别为最外层tabs和内层tabs
             open: "",
             close: "",
             today: "",
@@ -333,7 +334,8 @@
             confirm() {
                 if (this.choosen_small_block.length == 0) alert('请选择时间');
                 else{
-                    $.cookie('select_time', this.choosen_day+this.choosen_time,{path: 'jishixuanze.html' });
+                    $.cookie('select_time', this.choosen_day+this.choosen_time,{path: '/' });
+
                     window.location.href="jishixuanze.html"
                 }
             }
@@ -349,6 +351,7 @@
                     that.today = res.data[0]['today']
                     that.allow = res.data[0]['pre']
                     that.time_block = res.data[0]['time_block']
+                    if(date("H:i",Date.parse(new Date())/1000)>'17:30')that.tabs[1] = 'night';
                     that.overlay = false;
                 }
             })
