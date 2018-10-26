@@ -140,16 +140,16 @@
                             <row v-for="(row,idx) in time_block">
                                 <!-- 基础时间块 -->
                                 <row>
-                                    <i-col span="6" v-for="(block,idx2) in row" v-if="block.time <= '17:30'">
+                                    <i-col span="6" v-for="(block,idx2) in row" v-if="block.time <= (today+3600*17+60*30)">
                                         <span @click="divide(block,idx,idx2,d)" :id="(allow && block.allow) ? (block.choosen?'choosen-block':'unchoosen-block'):'disable-block' ">
-                                            <span style="position: relative;top: 0.3rem;">{{block.time}}</span>
+                                            <span style="position: relative;top: 0.3rem;" v-text="date('H:i',block.time)"></span>
                                         </span>
                                     </i-col>
                                 </row>
                                 <!-- 隐藏层的时间块 -->
                                 <row class="hidden-row" :gutter="16" v-show="divide_line[idx]==1">
                                     <i-col span="4" v-for="(block,idx) in divide_block">
-                                        <p @click="choose_small(idx)" v-text="block.time" :id="(allow && block.allow) ? (block.choosen?'choosen-block':'unchoosen-block'):'disable-block' "
+                                        <p @click="choose_small(idx)" v-text="date('H:i',block.time)" :id="(allow && block.allow) ? (block.choosen?'choosen-block':'unchoosen-block'):'disable-block' "
                                             style="padding-top: 0.2rem;width: 100%; "></p>
                                     </i-col>
                                 </row>
@@ -160,16 +160,16 @@
                             <row v-for="(row,idx) in time_block">
                                 <!-- 基础时间块 -->
                                 <row>
-                                    <i-col span="6" v-for="(block,idx2) in row" v-if="block.time>'17:30'">
+                                    <i-col span="6" v-for="(block,idx2) in row" v-if="block.time>(today+3600*17+60*30)">
                                         <span @click="divide(block,idx,idx2,d)" :id="(allow && block.allow) ? (block.choosen?'choosen-block':'unchoosen-block'):'disable-block' ">
-                                            <span style="position: relative;top: 0.3rem;">{{block.time}}</span>
+                                            <span style="position: relative;top: 0.3rem;" v-text="date('H:i',block.time)"></span>
                                         </span>
                                     </i-col>
                                 </row>
                                 <!-- 隐藏层的时间块 -->
                                 <row class="hidden-row" :gutter="16" v-show="divide_line[idx]==1">
                                     <i-col span="4" v-for="(block,idx) in divide_block">
-                                        <p @click="choose_small(idx)" v-text="block.time" :id="(allow && block.allow) ? (block.choosen?'choosen-block':'unchoosen-block'):'disable-block' "
+                                        <p @click="choose_small(idx)" v-text="date('H:i',block.time)" :id="(allow && block.allow) ? (block.choosen?'choosen-block':'unchoosen-block'):'disable-block' "
                                             style="padding-top: 0.2rem;width: 100%; "></p>
                                     </i-col>
                                 </row>
@@ -190,19 +190,15 @@
         </div>
     </div>
 </body>
-<script type="text/javascript" src="../js/jweixin.js"></script>
-<!-- <script type="text/javascript" src="../js/example.js"></script> -->
-<script type="text/javascript" src="../js/weui-min.js"></script>
-<script type="text/javascript" src="../js/zepto.js"></script>
+<!-- <script type="text/javascript" src="../js/zepto.js"></script> -->
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/jquery.cookie.js"></script>
-<script type="text/javascript" src="../js/sweetalert2.all.js"></script>
-<script type="text/javascript" src="../js/echarts-simple-min.js"></script>
 <script src="../js/vue.js"></script>
 <script type="text/javascript" src="../js/windowOpen.js"></script>
 <!-- 将时间戳转化为时间字符串格式 -->
 <script type="text/javascript" src="../js/date-format.js"></script>
 <script type="text/javascript" src="../vendor/iview/dist/iview.min.js"></script>
+<script src = "../js/url.js"></script>
 <script>
     let app = new Vue({
         el: "#app",
@@ -218,8 +214,11 @@
             overlay: true,
             choosen_block: [], //选中的基础时间块下标
             choosen_small_block: [], //选中的细分时间块下标
-            choosen_day: "", //最终选定的预约日期，字符串，后台接受为时间戳
+            choosen_day: "", //最终选定的预约日期，时间戳
             choosen_time: "", //最终选定的预约时间
+            url_time:"",//url记录的选择时间
+            url_sv:"",//url记录的选择服务
+            url_tc:"",//url记录的选择技师
         },
         methods: {
             //取消选择所有块
@@ -295,7 +294,7 @@
             },
             //显示细分的小时间块
             divide(block, idx, idx2, day) {
-                this.choosen_day = date("Y-m-d ", day);
+                this.choosen_day = day;
                 if (block === undefined || block == '') {
                     this.unchoose_all()
                     this.divide_block = [];
@@ -336,14 +335,29 @@
                     $(this).openWindow("","请选择时间",['好的']);
                 }
                 else{
-                    $.cookie('select_time', this.choosen_day+this.choosen_time,{path: '/' });
+                    // $.cookie('select_time', this.choosen_day+this.choosen_time,{path: '/' });
+                    var str_cho= date("Y-m-d H:i:s",this.choosen_time);
 
-                    window.location.href="jishixuanze.html"
+                    window.location.href="jishixuanze.html?select_time="+this.choosen_time+"&sv="+this.url_sv+"&tc="+this.url_tc;
                 }
             }
         },
         created() {
             var that = this
+
+            url_time = getQueryString('select_time');
+            url_sv = getQueryString('sv');
+            url_tc = getQueryString('tc');
+
+            if(!(url_time === "" || url_time === undefined || url_time == null)){
+                this.url_time = url_time;
+            }
+            if(!(url_sv === ""||  url_sv === undefined || url_sv == null)){
+                this.url_sv = url_sv;
+            }
+			if(!(url_tc === ""||  url_tc === undefined || url_tc == null)){
+                this.url_tc = url_tc;
+            }
 
             $.post("../php/time_select_page.php").done((res) => {
                 res = JSON.parse(res);
@@ -351,7 +365,7 @@
                     that.open = res.data[0]['open']
                     that.close = res.data[0]['close']
                     that.today = res.data[0]['today']
-                    that.allow = res.data[0]['pre']
+                    that.allow = parseInt(res.data[0]['pre'])
                     that.time_block = res.data[0]['time_block']
                     if(date("H:i",Date.parse(new Date())/1000)>'17:30')that.tabs[1] = 'night';
                     that.overlay = false;

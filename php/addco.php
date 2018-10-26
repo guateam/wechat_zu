@@ -20,6 +20,7 @@ for($i=0;$i<3;$i++)
 }
 if($user)
 {
+    $time = date("Ymd").$rnd;
     //检查账户内余额是否足够
     if($pay_way==4){
         //获取充值总额
@@ -30,20 +31,32 @@ if($user)
         $use = sql_str($str);
         //计算目前账户内余额
         $charge=$charge[0]['charge']-$use[0]['use'];
+        //余额不足的情况
         if($pay > $charge){
-            echo json_encode(['state'=>0]);
+            //添加预约订单
+            add("consumed_order",[["order_id",$time],["pay_amount",$pay],['user_id',$user[0]['ID']],['state',1],['contact_phone',$phone]]);
+            //添加服务
+            foreach($item_id as $id)
+            {
+                add("service_order",[['order_id',$time],['service_type',1],["item_id",$id],["job_number",$job_number]]);
+            }
+            //添加预约状态
+            add("appointment",[["order_id",$time],['user_num',$people_num]]);
+            echo json_encode(['state'=>-1]);
             die();
         }
     }
-    $time = date("Y md").$rnd;
+    //添加订单
     add("consumed_order",[["order_id",$time],["pay_amount",$pay],['user_id',$user[0]['ID']],['state',$state],['contact_phone',$phone]]);
+    //添加服务
     foreach($item_id as $id)
 	{
         add("service_order",[['order_id',$time],['service_type',1],["item_id",$id],["job_number",$job_number]]);
     }
+    //若是未支付的情况，添加预约状态
     if($pay_way == 0)add("appointment",[["order_id",$time],['user_num',$people_num]]);
     echo json_encode(['state'=>1]);
     die();
 }
-
+//用户不存在的情况
 echo json_encode(['state'=>0]);

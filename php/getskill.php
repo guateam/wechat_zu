@@ -1,25 +1,22 @@
 <?php
 require("database.php");
-$job_number = $_POST['job_number'];
-$skill =  get("skill","job_number",$job_number);
+//获取预约信息: 工号和对应的服务
+$sv = $_COOKIE['fn'];
 $phone = (get("shop"))[0]['phone'];
-$data = [];
-if($skill)
-{
-    foreach($skill as $sk)
-	{
-        $sv = get("service_type","ID",$sk['service_id']);
-        array_push($data,[
-            'name'=>$sv[0]['name'],
-            'ID'=>$sv[0]['ID'],
-            'duration'=>$sv[0]['duration'],
-            'price'=>($sv[0]['price'] + $sk['extra_income'])/100,
-            'job_number'=>$sk['job_number'],
-        ]);
-    }
-    echo json_encode(['status'=>1,'data'=>$data,'phone'=>$phone]);
+$sv = explode(',',$sv);
+$info = [];
+$total_time = 0;
+$total_price = 0;
+for($i=0;$i<count($sv);$i++){
+    $temp = explode('-',$sv[$i]);  
+    $job_number = explode(':',$temp[0]);
+    $job_number = $job_number[1];
+    $id = explode(':',$temp[1]);
+    $id = $id[1];
+    $service = sql_str("select * from service_type where `ID`='$id'");
+    $total_time+=intval($service[0]['duration'])*60;
+    $total_price+=intval($service[0]['price']);
+    $tech = sql_str("select job_number,photo from technician where `job_number`='$job_number'");
+    array_push($info,['tech'=>$tech[0],'service'=>$service[0]]);
 }
-else
-{
-    echo json_encode(['status'=>0,'data'=>[]]);
-}
+echo json_encode(['status'=>1,'data'=>$info,'phone'=>$phone,'exist'=>$total_time,'total_price'=>$total_price]);

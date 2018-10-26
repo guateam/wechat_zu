@@ -4,8 +4,8 @@ $time_block = $_POST['block'];
 for ($i = 0; $i < count($time_block); $i++) {
     for ($j = 0; $j < count($time_block[$i]); $j++) {
         if ($mode == 0) {
-            $str_tm = date("Y-m-d ", time()).$time_block[$i][$j]['time'];
-            $tm_tm = strtotime($str_tm);
+            $tm_tm = $time_block[$i][$j]['time'];
+            $str_tm = date('Y-m-d H:i',$tm_tm);
             $al = (time() > $tm_tm+(60*25)) ? 0 : 1;//目前时间比时间块时间大25分钟，则时间块无法选择(时间块里面最多细分到超前25分钟)
         } else {
             $al = 1;

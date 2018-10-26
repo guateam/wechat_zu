@@ -21,11 +21,11 @@ if($shop){
     for($i=$open,$j=0;$i<=$close;$i+=$leap,$j++){
         if (($j + 1) % 4 == 0) {
 
-            array_push($row,['time'=>date("H:i",$i),'choosen'=>0,'allow'=>(time()>$i+(60*25)?0:1)]);//目前时间比时间块时间大25分钟，则时间块无法选择(时间块里面最多细分到超前25分钟)
+            array_push($row,['time'=>$i,'choosen'=>0,'allow'=>(time()>$i+(60*25)?0:1)]);//目前时间比时间块时间大25分钟，则时间块无法选择(时间块里面最多细分到超前25分钟)
             array_push($time_block,$row);
             $row = [];
         } else {
-            array_push($row,['time'=>date("H:i",$i),'choosen'=>0,'allow'=>(time()>$i+(60*25)?0:1)]);
+            array_push($row,['time'=>$i,'choosen'=>0,'allow'=>(time()>$i+(60*25)?0:1)]);
         }
     }
     //将多余的最后一行push进去
