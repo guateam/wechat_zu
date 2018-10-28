@@ -2,10 +2,9 @@
 require("database.php");
 $id = $_POST['id'];
 $phone = $_POST['phone'];
-$job_number = $_POST['job_number'];
 $people_num  = $_POST['people_num'];
-$item_id = $_POST['item_id'];
 $pay =  $_POST['pay'];
+$obj = $_POST['obj'];
 //支付方式，0--未支付
 $pay_way=0;
 if(isset($_POST['pay_way']))$pay_way = $_POST['pay_way'];
@@ -34,11 +33,13 @@ if($user)
         //余额不足的情况
         if($pay > $charge){
             //添加预约订单
-            add("consumed_order",[["order_id",$time],["pay_amount",$pay],['user_id',$user[0]['ID']],['state',1],['contact_phone',$phone]]);
+            add("consumed_order",[['generated_time',time()],["order_id",$time],["pay_amount",$pay],['user_id',$user[0]['ID']],['state',1],['contact_phone',$phone]]);
             //添加服务
-            foreach($item_id as $id)
+            foreach($obj as $tech)
             {
-                add("service_order",[['order_id',$time],['service_type',1],["item_id",$id],["job_number",$job_number]]);
+                $jbnb = $tech['tech']['job_number'];
+                $service_id = $tech['service']['ID'];
+                add("service_order",[['order_id',$time],['service_type',1],["item_id",$service_id],["job_number",$jbnb]]);
             }
             //添加预约状态
             add("appointment",[["order_id",$time],['user_num',$people_num]]);
@@ -47,11 +48,13 @@ if($user)
         }
     }
     //添加订单
-    add("consumed_order",[["order_id",$time],["pay_amount",$pay],['user_id',$user[0]['ID']],['state',$state],['contact_phone',$phone]]);
+    add("consumed_order",[['generated_time',time()],["order_id",$time],["pay_amount",$pay],['user_id',$user[0]['ID']],['state',$state],['contact_phone',$phone]]);
     //添加服务
-    foreach($item_id as $id)
-	{
-        add("service_order",[['order_id',$time],['service_type',1],["item_id",$id],["job_number",$job_number]]);
+    foreach($obj as $tech)
+    {
+        $jbnb = $tech['tech']['job_number'];
+        $service_id = $tech['service']['ID'];
+        add("service_order",[['order_id',$time],['service_type',1],["item_id",$service_id],["job_number",$jbnb]]);
     }
     //若是未支付的情况，添加预约状态
     if($pay_way == 0)add("appointment",[["order_id",$time],['user_num',$people_num]]);

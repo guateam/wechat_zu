@@ -99,13 +99,13 @@
 						<i-col span="6"><img style="width: 100%;height: 100%;padding-top: 5%;padding-left: 5%;" :src="item.image" /></i-col>
 						<i-col span="14" offset="1">
 							<div style="height: 80%;">
-								<p style="font-size: 0.5rem;" v-text="item.name"></p>
-								<p style="color: red;" v-text="item.price+'元 /'+item.duration+'分钟'"></p>
+								<p style="font-size: 1.2rem;" v-text="item.name"></p>
+								<p style="color: red; font-size:0.9rem" v-text="item.price+'元 /'+item.duration+'分钟'"></p>
 							</div>
 						</i-col>
 						<i-col span="3">
 							<p id="circle" @click="choose_sv(item.job_number,idx)">
-								<img style="width: 100%;" :src="item.choosen?'../src/yes3.png':'../src/yes2.png'">
+								<img style="width: 100%;" :src="item.choosen?'../src/choose.png':'../src/unchoose.png'">
 							</p>
 						</i-col>
 					</row>

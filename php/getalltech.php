@@ -3,10 +3,11 @@ require("database.php");
 date_default_timezone_set('PRC'); 
 $numbers = [];
 $tech_info = sql_str("select A.job_number,A.photo from technician A");
-// $friend_circle = sql_str("select ")
 foreach($tech_info as $idx => $tc){
     $job_number = $tc['job_number'];
+    //获取图片
     $friend_circle = sql_str("select A.img from technician_photo A where A.job_number = '$job_number' order by A.ID desc limit 3");
+    //获取评分
     $rate = sql_str("select Avg(score) as score from rate where job_number = '$job_number'");
     //保留一位小数
     $rate = round($rate[0]['score'],1);

@@ -53,7 +53,7 @@ if ((
             if($tc)
 			{
                 move_uploaded_file($_FILES["file"]["tmp_name"],$tm );
-                add("technician_photo",[['job_number',$job_number],['img',$sv]]);
+                add("technician_photo",[['time',time()],['job_number',$job_number],['img',$sv]]);
 
                 if($bg){
                     if(file_exists($_SERVER['DOCUMENT_ROOT'].$tc['friend_circle_background']) && $tc['friend_circle_background']!="" && !is_null($tc['friend_circle_background'])){

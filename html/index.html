@@ -34,17 +34,8 @@
     <div class="weui-tab__panel" id='shop'>
         <row style="height: 30%;width: 100%;">
             <carousel autoplay v-model="value2" loop radius-dot arrow="always" style="height: 100%;width: 100%;">
-                <carousel-item>
-                    <div class="demo-carousel"><img src="../src/wash-foot01.jpg" alt="" style="height: 100%;width: 100%;"></div>
-                </carousel-item>
-                <carousel-item>
-                    <div class="demo-carousel"><img src="../src/wash-foot02.jpg" alt="" style="height: 100%;width: 100%;"></div>
-                </carousel-item>
-                <carousel-item>
-                    <div class="demo-carousel"><img src="../src/wash-foot03.jpg" alt="" style="height: 100%;width: 100%;"></div>
-                </carousel-item>
-                <carousel-item>
-                    <div class="demo-carousel"><img src="../src/wash-foot04.jpg" alt="" style="height: 100%;width: 100%;"></div>
+                <carousel-item v-for="item in top_pic">
+                    <div class="demo-carousel"><img :src="item.url" @click="navi(item.dir)" alt="" style="height: 100%;width: 100%;"></div>
                 </carousel-item>
             </carousel>
         </row>
@@ -262,6 +253,7 @@
     let app = new Vue({
         el: '#app',
         data: {
+            top_pic:[],
             items1: {},
             items2: {},
             items3: {},
@@ -294,6 +286,7 @@
                 url: '../php/getmainpage.php',
             }).done((data) => {
                 if (data.status == 1) {
+                    this.top_pic = data.top_pic;
                     back = data.data
                     console.log(back)
                     document.getElementsByTagName("title")[0].innerText = back.shop.data.name
