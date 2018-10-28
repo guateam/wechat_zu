@@ -186,7 +186,7 @@
 <script src="../js/jquery.cookie.js"></script>
 <script src="../js/vue.js"></script>
 <script type="text/javascript" src="../vendor/iview/dist/iview.min.js"></script>
-<script type="text/javascript" src="../js/sweetalert2.all.js"></script>
+
 <script type="text/javascript" src="../js/index.js"></script>
 <script type="text/javascript" src="../js/windowOpen.js"></script>
 <script src="../js/url.js"></script>
@@ -379,12 +379,12 @@
 
             console.log(this)
             var that = this;
-            //读取选择的时间
-            this.time = $.cookie("select_time");
-            //读取选择的服务
-            this.sv = $.cookie("sv");
-            //读取选择的技师
-            this.tc = $.cookie('tc');
+            // //读取选择的时间
+            // this.time = $.cookie("select_time");
+            // //读取选择的服务
+            // this.sv = $.cookie("sv");
+            // //读取选择的技师
+            // this.tc = $.cookie('tc');
 
 
             //获取url参数，在技师选择的相关页面中，存储选择情况有限考虑url参数，当离开技师选择相关页面后
@@ -399,25 +399,28 @@
             }
             if (!(url_sv === "" || url_sv == null || url_sv === undefined)) {
                 this.sv = url_sv;
+                this.have_sv = true;
+            }else{
+                this.sv = "";
             }
             if (!(url_tc === "" || url_tc == null || url_tc === undefined)) {
-                this.tc = url_tc;
+                this.tc = url_tc.split(',');
             }
 
             //若没有选择时间，清空
             if (this.time === undefined) this.time = "";
-            //若没有选择服务，清空，否则更新服务选择状态
-            if (this.sv === undefined) {
-                this.sv = "";
-            } else {
-                this.have_sv = true;
-            }
+            // //若没有选择服务，清空，否则更新服务选择状态
+            // if (this.sv === undefined) {
+
+            // } else {
+            //     this.have_sv = true;
+            // }
             //若没有选择技师，清空，否则处理工号字符串
-            if (this.tc === undefined || this.tc == '') {
-                this.tc = [];
-            } else {
-                this.tc = this.tc.split(',');
-            }
+            // if (this.tc === undefined || this.tc == '') {
+            //     this.tc = [];
+            // } else {
+            //     this.tc = this.tc.split(',');
+            // }
             //获取店内联系电话
             $.post("../php/getshoptime.php").done((result) => {
                 result = JSON.parse(result);

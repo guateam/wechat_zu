@@ -241,14 +241,14 @@
 			var that = this;
 
 			//获取cookie中保存的技师选择
-			this.url_tc = $.cookie('tc')
-			this.url_time = $.cookie('select_time');
-			if (this.url_tc === undefined) {
-				this.url_tc = '';
-			}
-			if(this.url_time === undefined){
-				this.url_time = '';
-			}
+			// this.url_tc = $.cookie('tc')
+			// this.url_time = $.cookie('select_time');
+			// if (this.url_tc === undefined) {
+			// 	this.url_tc = '';
+			// }
+			// if(this.url_time === undefined){
+			// 	this.url_time = '';
+			// }
 			//获取url中保存的各种选择
 			url_time = getQueryString('select_time');
 			url_sv = getQueryString('sv');
@@ -260,7 +260,7 @@
 			if (!(url_sv === "" || url_sv === undefined || url_sv == null)) {
 				this.url_sv = url_sv;
 			}
-			if (!(url_tc === "" || url_tc === undefined || url_tc == null)) {
+			if (!( url_tc === undefined || url_tc == null)) {
 				this.url_tc = url_tc;
 			}
 			
