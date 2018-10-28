@@ -48,14 +48,14 @@
             <div v-for="(item,idx) in list" class="weui-cell weui-cell_swiped">
                 <div class="weui-cell__bd" style="width:100%">
                     <div class="weui-cell" style="width:100%">
-                        <div class="weui-cell__bd" style="width:100%">
+                        <div class="weui-cell__bd" style="width:100%;display: flex;align-items: center;">
                             <div style="display:inline-block;position:relative; height: 80px;width: 70px;">
                                 <div @click="remove(item,idx)" style="height: 15px;width: 15px;border-radius: 50%;background-color: red;color: white;font-size: 0.6em;display: flex;align-items: center;justify-content: center;position: absolute;top: 0;right: 15px">X</div>
                                 <img :src="item.tech.photo" alt="" style="width: 50px;height: 50px;border-radius: 50%;object-fit: cover">
                                 <span v-text="item.tech.job_number"></span>
                             </div>
-                            <div style="display:inline-block; height: 80px;width: 70px;" v-text="item.service.name"></div>
-                            <div v-text="'￥'+item.service.price/100 +' '+item.service.duration+'分钟'" style="display:inline-block; height: 80px;width: 70px;font-family: 华文雅黑;"></div>
+                            <div style="display:inline-block;width: 80px;text-align: center;" v-text="item.service.name"></div>
+                            <div style="display:inline-block;width: 160px;"><span v-text="'￥'+item.service.price/100"></span>/<span v-text="item.service.duration+'分钟'"></span></div>
                         </div>
                     </div>
                 </div>
