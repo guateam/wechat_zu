@@ -7,7 +7,11 @@
     <title>个人详情</title>
     <link rel="stylesheet" type="text/css" href="../vendor/iview/dist/styles/iview.css">
     <link rel="stylesheet" type="text/css" href="../css/tinyImgUpload.css">
+    <link rel="stylesheet" href="../css/global.css"/>
     <style>
+        *{
+            line-height: 1.6;
+        }
         .demo-upload-list {
             display: inline-block;
             width: 50px;
@@ -91,72 +95,388 @@
 </head>
 
 <body>
-<div id="space" style="font-size: 16px;line-height: 1.6">
-    <row type="flex" justify="center" style="margin-top: 20px">
-        <div style="background:white;padding: 20px;border-bottom: 1px gray solid;">
-            <Card :bordered="false">
-                <h1 slot="title">HK123</h1>
-            </Card>
-        </div>
-        <div style="background:white;padding: 20px;border-bottom: 1px gray solid;">
-            <Card :bordered="false">
-                <h4 slot="title">专业等级：<span style="color: #fe736c">魅力天使</span></h4>
-            </Card>
-        </div>
-        <div style="background:white;padding: 20px;border-bottom: 1px gray solid;">
-            <Card :bordered="false">
-                <h4 slot="title">年领：<span>38</span></h4>
-            </Card>
-        </div>
-        <div style="background:white;padding: 20px;border-bottom: 1px gray solid;">
-            <Card :bordered="false">
-                <h4 slot="title">个人介绍：</h4>
-                <p></p>
-            </Card>
-        </div>
-        <!--<div style="background:white;padding: 20px">-->
-            <!--<Card :bordered="false">-->
-                <!--<h2 slot="title" style="font-weight: 200">资格认证</h2>-->
-                <!--<h4 style="font-weight: 200">1.中国专业SPA传人</h4>-->
-                <!--<h4 style="font-weight: 200">1.中国专业足浴传人</h4>-->
-            <!--</Card>-->
-        <!--</div>-->
+<div id="space">
+    <!--图片,现在的技师页面不需要这个了-->
+    <!--<row type="flex" justify="center" style="margin-top: 20px">-->
+    <!--<i-col span="22">-->
+    <!--<card :bordered="false" dis-hover>-->
+    <!--<template>-->
+    <!--<carousel v-if="personalInfo.pictureList.length > 0" arrow="always" dots="none">-->
+    <!--<carousel-item v-for="item in personalInfo.pictureList">-->
+    <!--<img @click="showBig(item.url)" style="width: 100%; height: 150px;" :src="item.url">-->
+    <!--</carousel-item>-->
+    <!--</carousel>-->
+    <!--</template>-->
+    <!--<div class="demo-upload-list" v-for="(item,index) in personalInfo.pictureList" v-if="index<5" @click="navi('pyquan.html')">-->
+    <!--<img :src="item.url">-->
+    <!--</div>-->
+    <!--<br>-->
+    <!--<div class="demo-upload-list" @click="navi('addpyquan.html')">-->
+    <!--<img src="../src/addpy.png">-->
+    <!--</div>-->
+    <!--<upload type="drag" action="../php/upload_photo.php" style="display: inline-block;width:50px;" @click="navi('addpyquan.html')">-->
+    <!--<div style="width: 50px; height:50px; line-height: 50px">-->
+    <!--&lt;!&ndash; <icon type="ios-camera" size="20"></icon> &ndash;&gt;-->
+    <!--<p style="font-size: 20px">+</p>-->
+    <!--</div>-->
+    <!--</upload>-->
+    <!--</card>-->
+    <!--</i-col>-->
+    <!--</row>-->
+    <!--姓名工号头像-->
+    <row type="flex" justify="center" style="margin-top: 18px">
+        <i-col span="22">
+            <card :bordered="false" dis-hover style="height: 120px">
+                <row type="flex" justify="space-between" align="bottom">
+                    <i-col>
+                        <row type="flex" justity="start" align="bottom">
+                            <i-col>
+                                <span style="font-size: 30px">李香</span> <span>(工号:AKB48)</span>
+                            </i-col>
+                        </row>
+                    </i-col>
+                    <i-col>
+                        <!--技师头像禁止修改-->
+                        <!--<upload ref="upload" :data="tech" :show-upload-list="false" :on-success="onHead"-->
+                        <!--:format="['jpg','jpeg','png']" :max-size="2048" multiple-->
+                        <!--:on-format-error="handleFormatError" :on-exceeded-size="handleMaxSize" type="drag"-->
+                        <!--action="../php/upload_head.php"-->
+                        <!--style="display: inline-block;width:58px;">-->
+                        <div style="width: 58px;height:58px;line-height: 58px;">
+                            <img border=0 style=" width: 100%; height: 100%;"
+                                 src="../../photo/7Kn0izM181015093828u=424813076,3607810249&fm=27&gp=0.jpg">
+                            <icon v-else type="ios-camera" size="20"></icon>
+                        </div>
+                        <!--</upload>-->
+                        <!--不用展示视频了-->
+                        <!--<upload ref="upload" :data="{'id':tech}" :show-upload-list="false" :on-success="after_vcr"-->
+                        <!--:format="['mp4']"-->
+                        <!--:max-size="51200" :on-format-error="handleFormatError" :on-exceeded-size="vcr_toobig"-->
+                        <!--type="drag" action="../php/upload_vcr.php" style="display: inline-block;width:58px;">-->
+                        <!--<div style="width: 58px;height:58px;line-height: 58px;">-->
+                        <!--<video v-if="personalInfo.vcr !='' " :src="personalInfo.vcr">-->
+
+                        <!--</video>-->
+                        <!--<p v-else style="font-size: 17px">vcr</p>-->
+                        <!--</div>-->
+                        <!--</upload>-->
+                    </i-col>
+                </row>
+                <!-- <divider orientation="right" style="transform: translateY(-120%)">工号:{{ personalInfo.id }}</divider> -->
+            </card>
+        </i-col>
     </row>
-    <div style="display: flex;position: fixed;z-index: 50;bottom: 30px;height: 60px;width: 60px;border-radius: 50%;border: 1px #fe736c solid;align-items: center;justify-content: center;margin-left: -30px;left: 50%;font-size: 25px;font-weight: 400" onclick="javascript:history.go(-1)">
-        X
-    </div>
+    <!--信息-->
+    <row type="flex" justify="center" style="margin-top: -20px">
+        <i-col span="22">
+            <card :bordered="false" dis-hover>
+                <row type="flex" justify="space-between" :gutter="30">
+                    <i-col span="24">
+                        <row type="flex" justify="space-between" style="margin-top: 8px">
+                            <i-col>性别:</i-col>
+                            <i-col class="info">男</i-col>
+                        </row>
+                        <row type="flex" justify="space-between" style="margin-top: 8px">
+                            <i-col>生日:</i-col>
+                            <i-col class="info">2018/12/21</i-col>
+                        </row>
+
+                        <row type="flex" justify="space-between" style="margin-top: 8px">
+                            <i-col>在职状态:</i-col>
+                            <i-col class="info" >在职</i-col>
+                        </row>
+                    </i-col>
+
+                    <i-col span="24">
+                        <row type="flex" justify="space-between" style="margin-top: 8px">
+                            <i-col>手机:</i-col>
+                            <i-col class="info" >123456789</i-col>
+                        </row>
+                        <row type="flex" justify="space-between" style="margin-top: 8px">
+                            <i-col>介绍人:</i-col>
+                            <i-col class="info">AKK43</i-col>
+                        </row>
+                        <row type="flex" justify="space-between" style="margin-top: 8px">
+                            <i-col>入职日期:</i-col>
+                            <i-col class="info" >2011/12/21</i-col>
+                        </row>
+                    </i-col>
+                </row>
+                <row type="flex" justify="space-between" style="margin-top: 8px">
+                    <i-col>客户评价:</i-col>
+                    <i-col>
+                        <rate disabled v-model="valueDisabled" />
+                    </i-col>
+                </row>
+
+                <row type="flex" justify="space-between" style="margin-top: 8px">
+                    <i-col>简介:</i-col>
+                    <i-col >简介简介简介</i-col>
+                </row>
+            </card>
+        </i-col>
+    </row>
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--加载效果被我注释掉了-->
+
+
 
     <!--<div id="modal-overlay" v-show="overlay">-->
         <!--<div class="modal-data">-->
-            <!--<img src="../src/loading.gif"/>-->
+            <!--<img src="../src/loading.gif" />-->
         <!--</div>-->
     <!--</div>-->
+
+
+
+
+
+
+
+
+
+
+    <div id="big-img" v-show="big_img" @click="closeBig">
+        <img id="big_img_self" style="width:100%;height:60%;margin-top:35%" :src="click_img" />
+    </div>
 </div>
 
 </body>
-
-<script type="text/javascript" src="../js/jquery.min.js"></script>
-<script type="text/javascript" src="../js/vue.min.js"></script>
+<script src="../js/jquery.js"></script>
+<script src="../js/vue.js"></script>
 <script type="text/javascript" src="../vendor/iview/dist/iview.min.js"></script>
 <script type="text/javascript" src="../js/sweetalert2.all.js"></script>
-<script type="text/javascript" src="../js/tinyImgUpload.js"></script>
-
-<script>new Vue({
-    el: '#app',
-    data() {
-        return {}
-    },
-    methods: {},
-    mounted() {
+<script src="../js/tinyImgUpload.js"></script>
+<script type="text/javascript" src="../js/windowOpen.js"></script>
+<script>
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
     }
-})
+
+    var id = getQueryString('id');
+    let Main = {
+        data() {
+            return {
+                valueDisabled: 2,
+                personalInfo: {
+                    id: '',
+                    name: '',
+                    pictureList: [],
+                    phone_number: '',
+                    sex: '',
+                    birth: '',
+                    join_date: '',
+                    is_on_the_job: true,
+                    inviter: '',
+                    rate: 0,
+                    intro: '',
+                    picture: '',
+                    vcr: '',
+                },
+                tech: id,
+                vcr_url: '',
+                value1: 0,
+                modal_id: "modal-overlay",
+                overlay: true,
+                big_img: false,
+                click_img: '',
+                uploadList: [],
+            }
+        },
+        methods: {
+            navi(url) {
+                window.location.href = url + "?id=" + id;
+            },
+            handleView(name) {
+                this.personalInfo.picture = name;
+            },
+            showBig(url) {
+                this.big_img = true;
+                this.click_img = url;
+            },
+            closeBig() {
+                this.big_img = false;
+            },
+            beforeUpload(file) {
+                var that = this;
+                var max_count = 5;
+                var check = this.personalInfo.pictureList.length;
+                this.uploadList.push([]);
+
+                for (var i = 0; i < 2000; i++) {};
+                var lth = this.uploadList.length;
+                console.log(lth);
+                var input = (check + this.uploadList.length) > max_count;
+
+                if (input) {
+                    this.$Notice.warning({
+                        title: '最多只能上传5张图片'
+                    });
+                    this.uploadList.pop();
+                }
+                return check + lth <= 5;
+            },
+            handleRemove(name) {
+                $(this).openWindow("", "确认删除该图片吗？", ["不", "好的"], () => {
+                    for (var i = 0; i < this.personalInfo.pictureList.length; i++) {
+                        if (this.personalInfo.pictureList[i].url == name) {
+                            this.personalInfo.pictureList.splice(i, 1);
+                        }
+                    }
+                    $.post("../php/del_photo.php", {
+                        job_number: id,
+                        url: name
+                    }).done(() => {})
+                })
+                // swal({
+                //     text: "确认删除该图片吗？",
+                //     allowOutsideClick: false,
+                //     showConfirmButton: true,
+                //     showCancelButton: true,
+                //     confirmButtonText: "删除",
+                //     cancelButtonText: "取消",
+                //     width: 280,
+                // }).then((res) => {
+                //     if (res.value) {
+                //         for (var i = 0; i < this.personalInfo.pictureList.length; i++) {
+                //             if (this.personalInfo.pictureList[i].url == name) {
+                //                 this.personalInfo.pictureList.splice(i, 1);
+                //             }
+                //         }
+                //         $.post("../php/del_photo.php", {
+                //             job_number: id,
+                //             url: name
+                //         }).done(() => {})
+                //     }
+                // })
+            },
+            handleSuccess(res, file) {
+                var that = this;
+                var reg = /\{(.+?)\}/g;
+                res = res.match(reg);
+                res = JSON.parse(res);
+                if (res.state == 1) {
+                    console.log(res.url);
+                    that.personalInfo.pictureList.push({
+                        url: res.url
+                    });
+                }
+            },
+            onHead(res, file) {
+                this.personalInfo.picture = file.name;
+                var that = this;
+                var reg = /\{(.+?)\}/g;
+                res = res.match(reg);
+                res = JSON.parse(res);
+                console.log(res);
+                if (res.state == 1) {
+                    that.personalInfo.picture = res.url;
+                }
+            },
+            after_vcr(res, file) {
+                var that = this;
+                console.log(res);
+                if (res.state == 1) {
+                    that.vcr_url = res.url;
+                }
+            },
+            handleFormatError(file) {
+                this.$Notice.warning({
+                    title: '文件格式不正确',
+                    desc: '不支持 ' + file.name + ' 文件的格式'
+                });
+            },
+            handleBeforeUpload() {
+                const check = this.uploadList.length < 5;
+                if (!check) {
+                    this.$Notice.warning({
+                        title: 'Up to five pictures can be uploaded.'
+                    });
+                }
+                return check;
+            },
+            handleMaxSize(file) {
+                this.$Notice.warning({
+                    title: '文件大小超出限制',
+                    desc: '图片  ' + file.name + ' 太大了, 不能超过 2MB.'
+                });
+            },
+            vcr_toobig() {
+                this.$Notice.warning({
+                    title: "视频大小超出限制",
+                    desc: "最大只能为50MB"
+                })
+            }
+        },
+        mounted() {
+
+        },
+        created() {
+            // overlay();
+            var that = this;
+            $.post("../php/gettechdetail.php", {
+                job_number: id
+            }).done((result) => {
+                result = JSON.parse(result);
+                if (result.status == 1) {
+                    info = result.data[0];
+                    that.personalInfo.id = info['job_number'];
+                    that.personalInfo.name = info['name'];
+                    that.personalInfo.phone_number = info['phone_number'];
+
+                    if (info['gender'] == 1) that.personalInfo.sex = "男";
+                    else that.personalInfo.sex = "女";
+
+                    that.personalInfo.birth = info['birthday'];
+                    that.personalInfo.join_date = info['entry_date'];
+                    that.personalInfo.is_on_the_job = info['in_job'];
+                    that.personalInfo.inviter = info['inviter'];
+                    that.personalInfo.rate = info['rate'];
+                    that.personalInfo.intro = info['description'];
+                    that.personalInfo.picture = info['photo'] === '' ? null : info['photo'];
+                    that.personalInfo.vcr = info['vcr'] === null ? '' : info['vcr'];
+                }
+            })
+            $.post("../php/get_all_photo.php", {
+                job_number: id
+            }).done((result) => {
+                if (result) {
+                    result = JSON.parse(result);
+                    for (var i = 0; i < result.length; i++) {
+                        that.personalInfo.pictureList.push({
+                            url: result[i]['url'],
+                        });
+                    }
+                }
+                // overlay(false);
+                that.overlay = false;
+                that.modal_id = "modal-overlay-opa";
+            })
+        }
+    };
+    let Component = Vue.extend(Main);
+    let app = new Component().$mount('#space');
 
 
-// function overlay(state = true) {
-//     var e1 = document.getElementById('modal-overlay');
-//     if(state)e1.style.visibility="visible"
-//     else e1.style.visibility="hidden"
-// }
+    // function overlay(state = true) {
+    //     var e1 = document.getElementById('modal-overlay');
+    //     if(state)e1.style.visibility="visible"
+    //     else e1.style.visibility="hidden"
+    // }
 </script>
 
 </html>
