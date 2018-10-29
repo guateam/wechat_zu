@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('PRC');
 $mode = $_POST['mode'];
 $time_block = $_POST['block'];
 for ($i = 0; $i < count($time_block); $i++) {

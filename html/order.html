@@ -44,7 +44,7 @@
                                 <div class="weui-form-preview__hd">
                                     <div class="weui-form-preview__item">
                                         <label class="weui-form-preview__label">时间</label>
-                                        <em class="weui-form-preview__value" v-text="od.time"></em>
+                                        <em class="weui-form-preview__value" v-text="date('Y-m-d H:i',od.time)"></em>
                                     </div>
                                 </div>
                                 <div class="weui-form-preview__bd">
@@ -116,14 +116,12 @@
 </div>
 </body>
 <script type="text/javascript" src="../js/jweixin.js"></script>
-<!-- <script type="text/javascript" src="../js/example.js"></script> -->
 <script type="text/javascript" src="../js/weui-min.js"></script>
-
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script src="../js/vue.js"></script>
-
 <script type="text/javascript" src="../vendor/iview/dist/iview.min.js"></script>
 <script type="text/javascript" src="../js/windowOpen.js"></script>
+<script type="text/javascript" src="../js/date-format.js"></script>
 <script type="text/javascript">
     function getQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
