@@ -113,20 +113,6 @@
             </div>
         </div>
 
-        <div>
-            <row style="margin-top: 10px">
-                <card :bordered="false" dis-hover>
-                    <row><span>请选择服务</span></row>
-                    <row  :gutter="16" style="margin-top: 1rem;">
-                        <i-col  span="6" v-for='item in skill_list'>
-                            <i-button :type="item.check==true? 'primary':'default'" @click="choose_service(item.name)"
-                                long>{{item.name}}
-                            </i-button>
-                        </i-col>
-                    </row>
-                </card>
-            </row>
-        </div>
         <div class="weui-flex list" style="justify-content: center;align-items: center;height: 14%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;margin-top: 8px;margin-bottom: 8px">
             <div class="box weui-flex guest" style="width: 100%; height: 100%;align-items: center;">
                 <div style=" position: relative; left: -1rem;top: 0rem;" onClick="navi('pyquan.html')">
@@ -144,7 +130,8 @@
                     <!-- </li> -->
                     <!-- </ul> -->
                 </div>
-                <div   onClick="navi('pyquan.html')" style="position: absolute;left: 95%; top: 60%; "><img style="width:90%;height: 30%"  src="../src/go2.png" /> </div>
+                <div class="item weui-flex__item thumb" style="text-align: center;height: 100%;display: flex;flex:0 0 5%;background-image: url(../src/go2.png);background-repeat: no-repeat;background-position: center">
+                </div>
             </div>
         </div>
         <!--这个页面的视频播放不需要了，朋友圈能看就好-->
