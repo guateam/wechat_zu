@@ -313,6 +313,7 @@
                     res = JSON.parse(res);
                     that.divide_block = res.block;
                     this.choose(idx, idx2);
+                    this.choose_small(res.first);
                     that.divide_line = res.tp;
                 })
             },
