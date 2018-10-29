@@ -55,7 +55,7 @@
             <card :bordered="false" dis-hover>
                 <row :gutter="2">
                     <i-col span="6">
-                        <i-button :type="button_type[2]" long v-on:click="ClickJibie()">级别</i-button>
+                        <i-button :type="button_type[2]" long  :disabled="!have_level"  v-on:click="ClickJibie()">级别</i-button>
                     </i-col>
                     <i-col span="6">
                         <i-button :type="button_type[0]" @click="sort_by(0,'rate')" long>评价</i-button>
@@ -224,7 +224,7 @@
                     "default",
                     "default",
                 ],
-
+                have_level:true,
                 tel: "", //店内电话
                 list: [], //技师列表
                 time: "", //选中的时间
@@ -435,6 +435,9 @@
                 }).done((result) => {
                     result = JSON.parse(result);
                     if (result.status == 1) {
+                        //获取是否为有等级的服务
+                        that.have_level = result.have_level==0?false:true;
+
                         for (var i = 0; i < result.data.length; i++) {
                             var tech = result.data[i];
                             //默认未选技师
