@@ -24,7 +24,7 @@
                 <div class="weui-cell__bd">
                     <p>预约时间</p>
                 </div>
-                <div class="weui-cell__ft" v-text="date('H:i',start_time)+'~'+date('H:i',end_time)">&nbsp;&nbsp;~&nbsp;&nbsp;</div>
+                <div class="weui-cell__ft" v-text="date('H:i',start_time)"></div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
@@ -157,7 +157,6 @@
                 promotion: [],
                 total_price: 0,
                 start_time: "",
-                end_time: "",
                 people_num: 1,
                 input_phone: "",
                 shop_phone: "",
@@ -255,7 +254,6 @@
                 remove(obj, idx) {
 
                     $(this).openWindow("", '确认移除该服务吗', ['不', '好的'], () => {
-                        this.end_time -= (parseInt(obj.service.duration) * 60);
                         this.total_price -= obj.service.price;
                         this.list.splice(idx, 1);
                         if (this.list.length == 0) {
@@ -287,7 +285,6 @@
                     if (res.status == 1) {
                         that.list = res.data;
                         that.shop_phone = res.phone;
-                        that.end_time = that.start_time + res.exist;
                         that.total_price = res.total_price;
                         that.overlay = false;
                     }
