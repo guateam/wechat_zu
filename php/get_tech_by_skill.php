@@ -22,4 +22,4 @@ foreach($tech_info as $idx => $tc){
         $tech_info[$idx]['level'] = "";
 }
 $svnm = $service_name[0]['name'];
-echo json_encode(['status'=>1,'data'=>$tech_info,'service_name'=>$svnm]);
+echo json_encode(['status'=>1,'data'=>$tech_info,'service_name'=>$svnm,'have_level'=>$service_name[0]['have_level'] ]);
