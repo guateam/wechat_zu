@@ -48,7 +48,7 @@ if($user)
         }
     }
     //添加订单
-    add("consumed_order",[['generated_time',time()],["order_id",$time],["pay_amount",$pay],['user_id',$user[0]['ID']],['state',$state],['contact_phone',$phone]]);
+    add("consumed_order",[['payment_method',1],['generated_time',time()],["order_id",$time],["pay_amount",$pay],['user_id',$user[0]['ID']],['state',$state],['contact_phone',$phone]]);
     //添加服务
     foreach($obj as $tech)
     {

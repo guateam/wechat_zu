@@ -102,7 +102,7 @@
                 <card dis-hover title="订单信息" style="font-size: 12px; color: #657180;">
                     <row>订单号: {{ orderData.order_id }}</row>
                     <row>支付方式: {{ orderData.payment_method }}</row>
-                    <row>下单时间: {{ orderData.generated_time }}</row>
+                    <row v-text="'下单时间:'+date('Y-m-d H:i:s',orderData.generated_time)"></row>
                     <row>下单用户: {{ orderData.user_id }}</row>
                 </card>
             </i-col>
@@ -117,6 +117,8 @@
 <script src="../js/vue.js"></script>
 <script src="../js/iview.js"></script>
 <script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../js/date-format.js"></script>
+
 <script>
     function getQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
