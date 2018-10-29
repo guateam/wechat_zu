@@ -5,26 +5,10 @@ function gettechnician($id,$tm)
 
     if($technician)
 	{
-        //判断繁忙情况
-        $order = get("service_order","job_number",$id);
-        //2表示空闲，1表示繁忙
-        $busy = 2;
-        foreach($order as $so)
-		{
-            $consumed_order = get('consumed_order','order_id',$so['order_id']);
-            foreach($consumed_order as $co)
-			{
-                //如果有订单时间距离选中时间差小于1小时，则认为该订单还未完成，繁忙
-                $leap = abs(   strtotime($co['generated_time'])-strtotime($tm)   );
-                if($leap<3600)
-				{
-                    $busy = 1;
-                    break;
-                }
-            }
-        }
+        $rate = sql_str("select Avg(score) as score from rate where job_number = '$id'");
+       
         $technician=$technician[0];
-        $url='/wechat_zu_technician/';
+
         $skill='';
         $skilllist=[];
         $skills=get('skill','job_number',$id);
@@ -45,14 +29,14 @@ function gettechnician($id,$tm)
 		{
             for($i=0;$i<4;$i++)
 			{
-                array_push($photodata,str_replace('..',$url,$photo[$i]['img']));
+                array_push($photodata,$photo[$i]['img']);
             }
         }
 		else
 		{
             foreach($photo as $value)
 			{
-                array_push($photodata,str_replace('..',$url,$value['img']));
+                array_push($photodata,$value['img']);
             }
         }
         
@@ -87,8 +71,8 @@ function gettechnician($id,$tm)
             'name'=>$technician['name'],
             'description'=>$technician['description'],
             'jobnumber'=>$id,
-            'head'=>str_replace('..',$url,$technician['photo']),
-            'rate'=>$technician['rate'],
+            'head'=>$technician['photo'],
+            'rate'=>$rate[0],
             'skill'=>$skill,
             'service'=>count($service),
             'photo'=>$photodata,
@@ -98,7 +82,7 @@ function gettechnician($id,$tm)
             'gender'=>$gender,
             'vcr'=>$technician['vcr'],
             'level'=>$technician['level'],
-            'busy'=>$busy
+//            'busy'=>$busy
         ];
         return $data;
     }

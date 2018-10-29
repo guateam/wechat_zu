@@ -14,7 +14,7 @@ $tech_info = array_merge($tech_info,$no_level);
 foreach($tech_info as $idx => $tc){
     $job_number = $tc['job_number'];
     $friend_circle = sql_str("select A.img from technician_photo A where A.job_number = '$job_number' order by A.ID desc limit 3");
-    $rate = sql_str("select Avg(score) as score from rate where job_number = '$job_number'");
+    $rate = sql_str("select Avg(score) as score from rate where job_number = '$job_number' and `bad` = 1");
     //保留一位小数
     $rate = round($rate[0]['score'],1);
     $tech_info[$idx] = array_merge($tech_info[$idx],['img_list'=>$friend_circle,'rate'=>$rate]);
