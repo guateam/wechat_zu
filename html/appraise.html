@@ -47,13 +47,13 @@
                                 <span style="color: #f5a623">{{ rate[idx] }}</span>
                             </Rate>
                         </Row>
-                        <textarea name="" v-model="text[idx]" id="comment" cols="30" rows="7" style="width: 100%;margin: 5px 0;border: 1px black solid;font-size: 1.5em;padding: 5px"
+                        <textarea name="" v-model="text[idx]" id="comment" cols="30" rows="7" style="margin: 5px 2%;width:96%;font-size: 1.5em;padding: 5px;outline: none;"
                             placeholder="请输入评价内容"></textarea>
                     </div>
                 </div>
 
             </div>
-            <button style="width: 94%;margin-left: 3%;margin-top: 25px;height: 50px;border-radius: 20px;background-color: #00e4e6;border: none;color: white"
+            <button id="tijiao" style="outline: none;width: 94%;margin-left: 3%;height: 50px;border-radius: 20px;background-color: #00e4e6;border: none;color: white;position: fixed;bottom: 30px;font-size: 1.5em"
                 @click="send()">提交评价
             </button>
             <div id="modal-overlay" v-show="overlay">
@@ -95,6 +95,7 @@
         },
         methods: {
             send() {
+                $("#tijiao").attr('disabled',true);
                 var that = this;
                 if (this.rate.length != this.datas.length) {
                     $(that).openWindow("", "请至少为所有服务打分", ["好的"], () => {})
