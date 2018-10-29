@@ -3,8 +3,7 @@ require("database.php");
 $tcs = '';
 if(isset($_POST['tc']))$tcs = $_POST['tc'];
 //选择了技师的情况
-if($tcs != ''){
-    $tcs = explode(',',$tcs);
+if($tcs != '' && $tcs[0] != ''){
     $skills = sql_str("SELECT
     `skill`.`level` AS `level`,
     `skill`.`job_number` AS `job_number`,

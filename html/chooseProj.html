@@ -21,7 +21,8 @@
 			background-color: #5cadff;
 			text-align: center;
 		}
-		.ivu-row{
+
+		.ivu-row {
 			background-color: white;
 		}
 
@@ -201,7 +202,7 @@
 						if (!(choosen_index === "")) {
 							//获取选中的服务id
 							var svid = this.data[k]['skill'][choosen_index]['id'];
-							final_choose.push('job_number:'+k+'-id:'+svid)
+							final_choose.push('job_number:' + k + '-id:' + svid)
 							is_choosen = true;
 						}
 					}
@@ -260,18 +261,22 @@
 			if (!(url_time === "" || url_time === undefined || url_time == null)) {
 				this.url_time = url_time;
 			}
+			if (!(url_tc === undefined || url_tc == null)) {
+				this.url_tc = url_tc.split(',');
+				this.type = 1;
+			}
 			if (!(url_sv === "" || url_sv === undefined || url_sv == null)) {
 				this.url_sv = url_sv;
 			}
-			if (!( url_tc === undefined || url_tc == null)) {
-				this.url_tc = url_tc;
-			}
-			
+
+
 			$.post("../php/chooseProj.php", {
 				tc: this.url_tc
 			}).done((res) => {
 				res = JSON.parse(res);
 				//判断进入该页面的方式
+				//0--还未选择技师
+				//1--选择过技师
 				if (this.url_tc === undefined || this.url_tc == '') that.type = 0;
 				else that.type = 1;
 
@@ -287,6 +292,16 @@
 							that.choosen_sv = "";
 						}
 
+					}
+					if (!(url_sv === "" || url_sv === undefined || url_sv == null)) {
+						for (i = 0; i < this.url_tc.length; i++) {
+							jbnb = this.url_tc[i]
+							for(j=0;j<this.data[jbnb]['skill'].length;j++){
+								if(this.url_sv == this.data[jbnb]['skill'][j]['id']){
+									this.choose_sv(jbnb, j);
+								}
+							}
+						}
 					}
 					that.overlay = false;
 				}

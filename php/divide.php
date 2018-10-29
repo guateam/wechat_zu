@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('PRC');
 $block = $_POST['block'];
 $idx = $_POST['idx'];
 $idx2 = $_POST['idx2'];
