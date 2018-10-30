@@ -1,6 +1,7 @@
 <?php
 require("database.php");
 $order_id = $_POST['id'];
+
 $co = get("consumed_order","order_id",$order_id);
 $so = get("service_order","order_id",$order_id);
 $shop = get("shop");
@@ -53,4 +54,15 @@ foreach($so as $svod)
         ]);
     }
 }
-echo json_encode(['data'=>$info,'co'=>$co]);
+$tag = sql_str("select * from rate_tag");
+if($tag){
+    for($i=0;$i<count($tag);$i++){
+        $tag[$i] = array_merge($tag[$i],['check'=>false]);
+    }
+}
+
+$tags = [];
+for($i=0;$i<count($info);$i++){
+    array_push($tags,$tag);
+}
+echo json_encode(['data'=>$info,'co'=>$co,'tags'=>$tags]);

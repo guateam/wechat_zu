@@ -60,6 +60,15 @@
             bottom: auto;
             color: #fff;
         }
+        #tag{
+            border-radius:15px;
+            border:1px #f99 solid;
+            background-color: white;
+            margin:5px 5px 5px 5px;
+
+            padding:6px 6px 6px 6px;
+            color:#f99
+        }
     </style>
 </head>
 
@@ -147,6 +156,9 @@
                 </rate>
                 （共{{count}}条）
             </span>
+        </div>
+        <div style="height: 5%;width: 100%;background-color: white;display: flex;align-items: center">
+            <span id="tag" v-for="tag in tags" v-text="tag.tag_name+'('+tag.count+')'"></span>
         </div>
         <div class="weui-panel weui-panel_access" style="background-color: white;border-radius: 5px;margin-bottom: 20%">
             <div class="display-block" style="border-bottom: 1px solid #f2f2f2;" v-for='item in data.feedback'>
@@ -302,6 +314,7 @@
             time: "",
             sv:"",
             tc:[],
+            tags:[],
             overlay: true,
             skill_list: [],
             is_busy: false,
@@ -389,6 +402,7 @@
                 url: '../php/gettechnicianpage.php',
             }).done((data) => {
                 if (data.status == 1) {
+                    that.tags = data.tag
                     back = data.data
                     that.data = back
                     imgsdata.list1 = that.data.technician.photo;
