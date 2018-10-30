@@ -199,7 +199,7 @@
                                     }); // 删除 cookie
                                     window.location.href = "index.html"
                                 })
-                            } else if (res.state == 0) {
+                            } else if (res.state == -1) {
                                 $(that).openWindow("", "您的账户余额不足，请充值后继续支付", ['好的'], () => {
                                     $.cookie('fn', '', {
                                         expires: -1
@@ -212,7 +212,7 @@
                                     }); // 删除 cookie
                                     window.location.href = "yuyueStatus.html";
                                 })
-                            } else if (res.state == -1) {
+                            } else if (res.state == 0) {
                                 $(that).openWindow("", "用户不存在", ['好的'], () => {
                                     window.location.href = "index";
                                 })

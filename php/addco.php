@@ -17,10 +17,10 @@ for($i=0;$i<3;$i++)
     for($j=0;$j<4;$j++)
         $rnd.=$dict[rand(0,count($dict)-1)];
 }
+$time = date("Ymd").$rnd;
 if($user)
 {
-    $time = date("Ymd").$rnd;
-    //检查账户内余额是否足够
+    //会员卡支付
     if($pay_way==4){
         //获取充值总额
         $str = "select sum(`recharge_record`.`charge`) AS `charge` from  `recharge_record` where ( '$id' = `recharge_record`.`user_id`)";
@@ -43,7 +43,7 @@ if($user)
             }
             //添加预约状态
             add("appointment",[["order_id",$time],['user_num',$people_num]]);
-            echo json_encode(['state'=>-1]);
+            echo json_encode(['state'=>-1,'order_id'=>$time]);
             die();
         }
     }
@@ -57,8 +57,11 @@ if($user)
         add("service_order",[['order_id',$time],['service_type',1],["item_id",$service_id],["job_number",$jbnb]]);
     }
     //若是未支付的情况，添加预约状态
-    if($pay_way == 0)add("appointment",[["order_id",$time],['user_num',$people_num]]);
-    echo json_encode(['state'=>1]);
+    if($pay_way == 0){
+        add("appointment",[["order_id",$time],['user_num',$people_num]]);
+    }
+
+    echo json_encode(['state'=>1,'order_id'=>$time]);
     die();
 }
 //用户不存在的情况

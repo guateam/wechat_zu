@@ -29,7 +29,7 @@
                 </div>
                 <div class="weui-form-preview__item">
                     <label class="weui-form-preview__label">日期</label>
-                    <span class="weui-form-preview__value" v-text="record.generated_time"></span>
+                    <span class="weui-form-preview__value" v-text="date('Y-m-d H:i',record.generated_time)"></span>
                 </div>
                 <div class="weui-form-preview__item">
                     <label class="weui-form-preview__label">评论内容</label>
@@ -51,10 +51,9 @@
 <script type="text/javascript" src="../js/jweixin.js"></script>
 <!-- <script type="text/javascript" src="../js/example.js"></script> -->
 <script type="text/javascript" src="../js/weui-min.js"></script>
-
 <script type="text/javascript" src="../js/jquery.js"></script>
-
 <script type="text/javascript" src="../js/vue.min.js"></script>
+<script type="text/javascript" src="../js/date-format.js"></script>
 
 <script type="text/javascript">
     function getQueryString(name) {
