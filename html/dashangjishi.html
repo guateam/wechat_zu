@@ -102,9 +102,7 @@
                         </i-col>
                     </row>
                     <row :gutter="2">
-                        <i-col span="8"><img :src="item.photo_list[0]" style="height: 65px; width: 65px;" /></i-col>
-                        <i-col span="8"><img :src="item.photo_list[1]" style="height: 65px; width: 65px;" /></i-col>
-                        <i-col span="8"><img :src="item.photo_list[2]" style="height: 65px; width: 65px;" /></i-col>
+                            <i-col span="8" v-for="dir in item.photo_list"><img :src="dir['img']" style="height: 65px; width: 65px;" /></i-col>
                     </row>
                 </i-col>
 
@@ -519,27 +517,47 @@
             });
 			
             $.post("../php/getalltech.php").done((result) => {
-                result = JSON.parse(result);
-				this.jishiList = result.data;
-                for (var i = 0; i < result.data.length; i++) {
-                    var tech = result.data[i];
-                    that.list.push({
-                        avatar_url: tech.avatar_url,//.replace('..', '/wechat_zu_technician/'),
-                        job_number: tech.job_number,
-                        //description: '网红技师',
-                        photo_list: tech.photo_list,
-                        rate: tech.rate,
-                        state: tech.busy,
-                        skills: tech.skill,
-                        level: tech.level,
-                        hot: tech.hot,
-                        check: 0,
-                        show: true
-                    })
-                }
-                that.sort_by(0, 'rate');
-                that.overlay = false;
-            })
+                    result = JSON.parse(result);
+                    for (var i = 0; i < result.data.length; i++) {
+                        var tech = result.data[i];
+                        that.list.push({
+                            avatar_url: tech.photo, //头像
+                            job_number: tech.job_number,
+                            photo_list: tech.img_list,
+                            rate: tech.rate,
+                            state: tech.busy,
+                            skills: that.sv,
+                            level: tech.level,
+                            hot: 1,
+                            check: false,
+                            show: true
+                        })
+                    }
+                    that.sort_by(0, 'rate');
+                    that.overlay = false;
+                })
+            // $.post("../php/getalltech.php").done((result) => {
+            //     result = JSON.parse(result);
+			// 	this.jishiList = result.data;
+            //     for (var i = 0; i < result.data.length; i++) {
+            //         var tech = result.data[i];
+            //         that.list.push({
+            //             avatar_url: tech.avatar_url,//.replace('..', '/wechat_zu_technician/'),
+            //             job_number: tech.job_number,
+            //             //description: '网红技师',
+            //             photo_list: tech.photo_list,
+            //             rate: tech.rate,
+            //             state: tech.busy,
+            //             skills: tech.skill,
+            //             level: tech.level,
+            //             hot: tech.hot,
+            //             check: 0,
+            //             show: true
+            //         })
+            //     }
+            //     that.sort_by(0, 'rate');
+            //     that.overlay = false;
+            // })
         }
     };
     let Component = Vue.extend(Main);
