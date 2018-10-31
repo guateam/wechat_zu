@@ -6,8 +6,7 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>个人详情</title>
     <link rel="stylesheet" type="text/css" href="../vendor/iview/dist/styles/iview.css">
-    <link rel="stylesheet" type="text/css" href="../css/tinyImgUpload.css">
-    <link rel="stylesheet" href="../css/global.css"/>
+    <link rel="stylesheet" href="../css/global.css" />
     <style>
         *{
             line-height: 1.6;
@@ -95,83 +94,81 @@
 </head>
 
 <body>
-<div id="space">
-    
-    <row type="flex" justify="center" style="margin-top: 18px">
-        <i-col span="22">
-            <card :bordered="false" dis-hover style="height: 120px">
-                <row type="flex" justify="space-between" align="bottom">
-                    <i-col>
-                        <row type="flex" justity="start" align="bottom">
-                            <i-col>
-                                <span style="font-size: 30px">李香</span> <span>(工号:AKB48)</span>
-                            </i-col>
-                        </row>
-                    </i-col>
-                    <i-col>
-                       
-                        <div style="width: 58px;height:58px;line-height: 58px;">
-                            <img border=0 style=" width: 100%; height: 100%;"
-                                 src="../../photo/7Kn0izM181015093828u=424813076,3607810249&fm=27&gp=0.jpg">
-                            <icon v-else type="ios-camera" size="20"></icon>
-                        </div>
-                    </i-col>
-                </row>
-                <!-- <divider orientation="right" style="transform: translateY(-120%)">工号:{{ personalInfo.id }}</divider> -->
-            </card>
-        </i-col>
-    </row>
-    <!--信息-->
-    <row type="flex" justify="center" style="margin-top: -20px">
-        <i-col span="22">
-            <card :bordered="false" dis-hover>
-                <row type="flex" justify="space-between" :gutter="30">
-                    <i-col span="24">
-                        <row type="flex" justify="space-between" style="margin-top: 8px">
-                            <i-col>性别:</i-col>
-                            <i-col class="info">男</i-col>
-                        </row>
-                        <row type="flex" justify="space-between" style="margin-top: 8px">
-                            <i-col>生日:</i-col>
-                            <i-col class="info">2018/12/21</i-col>
-                        </row>
+    <div id="space">
 
-                        <row type="flex" justify="space-between" style="margin-top: 8px">
-                            <i-col>在职状态:</i-col>
-                            <i-col class="info" >在职</i-col>
-                        </row>
-                    </i-col>
+        <row type="flex" justify="center" style="margin-top: 18px">
+            <i-col span="22">
+                <card :bordered="false" dis-hover style="height: 120px">
+                    <row type="flex" justify="space-between" align="bottom">
+                        <i-col>
+                            <row type="flex" justity="start" align="bottom">
+                                <i-col>
+                                    <span style="font-size: 30px">李香</span> <span>(工号:AKB48)</span>
+                                </i-col>
+                            </row>
+                        </i-col>
+                        <i-col>
 
-                    <i-col span="24">
-                        <row type="flex" justify="space-between" style="margin-top: 8px">
-                            <i-col>手机:</i-col>
-                            <i-col class="info" >123456789</i-col>
-                        </row>
-                        <row type="flex" justify="space-between" style="margin-top: 8px">
-                            <i-col>介绍人:</i-col>
-                            <i-col class="info">AKK43</i-col>
-                        </row>
-                        <row type="flex" justify="space-between" style="margin-top: 8px">
-                            <i-col>入职日期:</i-col>
-                            <i-col class="info" >2011/12/21</i-col>
-                        </row>
-                    </i-col>
-                </row>
-                <row type="flex" justify="space-between" style="margin-top: 8px">
-                    <i-col>客户评价:</i-col>
-                    <i-col>
-                        <rate disabled v-model="valueDisabled" />
-                    </i-col>
-                </row>
+                            <div style="width: 58px;height:58px;line-height: 58px;">
+                                <img border=0 style=" width: 100%; height: 100%;" src="../../photo/7Kn0izM181015093828u=424813076,3607810249&fm=27&gp=0.jpg">
+                                <icon v-else type="ios-camera" size="20"></icon>
+                            </div>
+                        </i-col>
+                    </row>
+                    <!-- <divider orientation="right" style="transform: translateY(-120%)">工号:{{ personalInfo.id }}</divider> -->
+                </card>
+            </i-col>
+        </row>
+        <!--信息-->
+        <row type="flex" justify="center" style="margin-top: -20px">
+            <i-col span="22">
+                <card :bordered="false" dis-hover>
+                    <row type="flex" justify="space-between" :gutter="30">
+                        <i-col span="24">
+                            <row type="flex" justify="space-between" style="margin-top: 8px">
+                                <i-col>性别:</i-col>
+                                <i-col class="info">男</i-col>
+                            </row>
+                            <row type="flex" justify="space-between" style="margin-top: 8px">
+                                <i-col>生日:</i-col>
+                                <i-col class="info">2018/12/21</i-col>
+                            </row>
 
-                <row type="flex" justify="space-between" style="margin-top: 8px">
-                    <i-col>简介:</i-col>
-                    <i-col >简介简介简介</i-col>
-                </row>
-            </card>
-        </i-col>
-    </row>
+                            <row type="flex" justify="space-between" style="margin-top: 8px">
+                                <i-col>在职状态:</i-col>
+                                <i-col class="info">在职</i-col>
+                            </row>
+                        </i-col>
 
+                        <i-col span="24">
+                            <row type="flex" justify="space-between" style="margin-top: 8px">
+                                <i-col>手机:</i-col>
+                                <i-col class="info">123456789</i-col>
+                            </row>
+                            <row type="flex" justify="space-between" style="margin-top: 8px">
+                                <i-col>介绍人:</i-col>
+                                <i-col class="info">AKK43</i-col>
+                            </row>
+                            <row type="flex" justify="space-between" style="margin-top: 8px">
+                                <i-col>入职日期:</i-col>
+                                <i-col class="info">2011/12/21</i-col>
+                            </row>
+                        </i-col>
+                    </row>
+                    <row type="flex" justify="space-between" style="margin-top: 8px">
+                        <i-col>客户评价:</i-col>
+                        <i-col>
+                            <!-- <rate disabled v-model="valueDisabled" /> -->
+                        </i-col>
+                    </row>
+
+                    <row type="flex" justify="space-between" style="margin-top: 8px">
+                        <i-col>简介:</i-col>
+                        <i-col>简介简介简介</i-col>
+                    </row>
+                </card>
+            </i-col>
+        </row>
 
 
 
@@ -183,29 +180,21 @@
 
 
 
-    <!--加载效果被我注释掉了-->
+
+        <!--加载效果被我注释掉了-->
 
 
 
-    <!--<div id="modal-overlay" v-show="overlay">-->
-        <!--<div class="modal-data">-->
-            <!--<img src="../src/loading.gif" />-->
-        <!--</div>-->
-    <!--</div>-->
+        <div id="modal-overlay" v-show="overlay">
+            <div class="modal-data">
+                <img src="../src/loading.gif" />
+            </div>
+        </div>
 
-
-
-
-
-
-
-
-
-
-    <div id="big-img" v-show="big_img" @click="closeBig">
-        <img id="big_img_self" style="width:100%;height:60%;margin-top:35%" :src="click_img" />
+        <!-- <div id="big-img" v-show="big_img" @click="closeBig">
+            <img id="big_img_self" style="width:100%;height:60%;margin-top:35%" :src="click_img" />
+        </div> -->
     </div>
-</div>
 
 </body>
 <script src="../js/jquery.js"></script>
@@ -221,17 +210,15 @@
     }
 
     var id = getQueryString('id');
-    let Main = {
-        data() {
-            return {}
-        },
-        methods: {
-        },
-        created() {
-        }
-    };
-    let Component = Vue.extend(Main);
-    let app = new Component().$mount('#space');
+    let app = new Vue({
+       el:"#space",
+       data:{
+           overlay:true,
+       },
+       created(){
+           this.overlay = false;
+       }
+    })
 </script>
 
 </html>

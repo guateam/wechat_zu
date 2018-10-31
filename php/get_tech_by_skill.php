@@ -2,6 +2,12 @@
 require('database.php');
 $id =$_POST['service_id'];
 $numbers = [];
+
+//获取选择的时间，若未选择时间，则默认为当前时间
+$select_time = time();
+if(isset($_POST['select_time'])){
+    $select_time = $_POST['select_time'];
+}
 //获取服务
 $service_name = sql_str("select name,have_level from service_type where `ID` = '$id'");
 $tech_info = sql_str("select A.job_number,A.photo,B.level,C.name from technician A,skill B,skill_level C where A.job_number = B.job_number and B.service_id = '$id' and C.ID = B.level");

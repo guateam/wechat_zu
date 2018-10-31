@@ -266,18 +266,6 @@
             },
             created() {
                 var that = this;
-                // //获取服务信息
-                // var sv = ($.cookie('fn')).split(',');
-                // for(var i in sv){
-                //     sv[i] = sv[i].split('-');
-                //     temp = [];
-                //     for(var j in sv[i]){
-                //         tp = sv[i][j].split(':')
-                //         temp[tp[0]] = tp[1];
-                //     }
-                //     sv[i].splice(0,2);
-                //     sv[i].push(temp)
-                // }
 
                 that.start_time = parseInt($.cookie('select_time'));
                 $.post('../php/getskill.php', {}).done((res) => {

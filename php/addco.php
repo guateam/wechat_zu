@@ -5,9 +5,12 @@ $phone = $_POST['phone'];
 $people_num  = $_POST['people_num'];
 $pay =  $_POST['pay'];
 $obj = $_POST['obj'];
+$appoint_time = $_COOKIE['tm'];
 //支付方式，0--未支付
 $pay_way=0;
 if(isset($_POST['pay_way']))$pay_way = $_POST['pay_way'];
+
+//外部传入的订单状态
 $state=$_POST['state'];
 $user = get("customer","openid",$id);
 $dict=['1','2','3','4','5','6','7','8','9','0'];
@@ -32,37 +35,33 @@ if($user)
         $charge=$charge[0]['charge']-$use[0]['use'];
         //余额不足的情况
         if($pay > $charge){
-            //添加预约订单
-            add("consumed_order",[['generated_time',time()],["order_id",$time],["pay_amount",$pay],['user_id',$user[0]['ID']],['state',1],['contact_phone',$phone]]);
+            //添加未支付订单
+            add("consumed_order",[['appoint_time',$tm],['user_num',$people_num],['generated_time',time()],["order_id",$time],["pay_amount",$pay],['user_id',$user[0]['ID']],['state',0],['contact_phone',$phone]]);
             //添加服务
             foreach($obj as $tech)
             {
                 $jbnb = $tech['tech']['job_number'];
                 $service_id = $tech['service']['ID'];
-                add("service_order",[['order_id',$time],['service_type',1],["item_id",$service_id],["job_number",$jbnb]]);
+                add("service_order",[['appoint_time',$tm],['order_id',$time],['service_type',1],["item_id",$service_id],["job_number",$jbnb]]);
             }
-            //添加预约状态
-            add("appointment",[["order_id",$time],['user_num',$people_num]]);
             echo json_encode(['state'=>-1,'order_id'=>$time]);
             die();
         }
-    }
-    //添加订单
-    add("consumed_order",[['payment_method',1],['generated_time',time()],["order_id",$time],["pay_amount",$pay],['user_id',$user[0]['ID']],['state',$state],['contact_phone',$phone]]);
-    //添加服务
-    foreach($obj as $tech)
-    {
-        $jbnb = $tech['tech']['job_number'];
-        $service_id = $tech['service']['ID'];
-        add("service_order",[['order_id',$time],['service_type',1],["item_id",$service_id],["job_number",$jbnb]]);
-    }
-    //若是未支付的情况，添加预约状态
-    if($pay_way == 0){
-        add("appointment",[["order_id",$time],['user_num',$people_num]]);
+    }else{
+        //其他支付方式，扣款由其他api执行成功后才执行到这里，不需要判断是否扣钱了，直接添加订单
+        //默认添加为微信支付，payment_method为1
+        add("consumed_order",[['appoint_time',$tm],['user_num',$people_num],['payment_method',1],['generated_time',time()],["order_id",$time],["pay_amount",$pay],['user_id',$user[0]['ID']],['state',$state],['contact_phone',$phone]]);
+        //添加服务
+        foreach($obj as $tech)
+        {
+            $jbnb = $tech['tech']['job_number'];
+            $service_id = $tech['service']['ID'];
+            add("service_order",[['appoint_time',$tm],['order_id',$time],['service_type',1],["item_id",$service_id],["job_number",$jbnb]]);
+        }
+        echo json_encode(['state'=>1,'order_id'=>$time]);
+        die();
     }
 
-    echo json_encode(['state'=>1,'order_id'=>$time]);
-    die();
 }
 //用户不存在的情况
 echo json_encode(['state'=>0]);

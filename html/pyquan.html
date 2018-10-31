@@ -112,16 +112,16 @@
 <body>
     <div id="app" style="width:100%;height:100%">
         <header>
-        <!--更换背景，点击查看大图这个你直接从以前那儿copy一下代码吧我就不再写一遍了，滑稽-->
-        <upload style="width:100%;height: 250px"  action="../php/upload_photo.php" :on-success="handleSuccess" :data="{job_number:job_number,bg:true}"
+            <!--更换背景，点击查看大图这个你直接从以前那儿copy一下代码吧我就不再写一遍了，滑稽-->
+            <upload style="width:100%;height: 250px" action="../php/upload_photo.php" :on-success="handleSuccess" :data="{job_number:job_number,bg:true}"
                 :max-size="4096" :before-upload="handleBeforeUpload" :show-upload-list="false" :on-error="handleFail"
                 :on-exceeded-size="handleMax" multiple style="display: inline-block;width:50px;">
-            <img id="bg" :src="background" style="width:100%;height:100%" v-if="background !=''">
-            <img style="width:100%;height:100%" src="../src/background.png" v-else>
-        </upload>
-        <p id="user-name" class="data-name" v-text="job_number"></p>
-        <img id="avt" class="data-avt" :src="head">
-    </header>
+                <img id="bg" :src="background" style="width:100%;height:100%" v-if="background !=''">
+                <img style="width:100%;height:100%" src="../src/background.png" v-else>
+            </upload>
+            <p id="user-name" class="data-name" v-text="job_number"></p>
+            <img id="avt" class="data-avt" :src="head">
+        </header>
         <div id="main">
             <div id="share_show">
                 <img src="images/share.png" style="width:90%;" />
@@ -144,16 +144,14 @@
                                 <!-- 以下部分为修改后的代码 by laipz8200 -->
                                 <!-- START -->
                                 <ul id="comment-list">
-                                  <li class="list">
-                                    <div class="guest">
-                                      <div class="thumb" :tumblist="list+'idx'">
-                                        <img v-for="(img, imgidx) in item.img"
-                                             :src="img" 
-                                             v-if="img != ''"
-                                             style="width:100px;height:100px;margin-right:5px">
-                                      </div>
-                                    </div>
-                                  </li>
+                                    <li class="list">
+                                        <div class="guest">
+                                            <div class="thumb" :tumblist="'list' + idx">
+                                                <img v-for="(img, imgidx) in item.img" :src="img" v-if="img != ''"
+                                                    style="width:100px;height:100px;margin-right:5px">
+                                            </div>
+                                        </div>
+                                    </li>
                                 </ul>
                                 <!-- END -->
 
@@ -197,6 +195,7 @@
     <script type="text/javascript" src="../vendor/iview/dist/iview.min.js"></script>
 
     <script type="text/javascript" src="../js/swiper.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/js/swiper.min.js"></script> -->
     <script type="text/javascript" src="../js/windowOpen.js"></script>
 
     <script>
@@ -220,7 +219,29 @@
                 big_img: false,
                 click_img: '',
                 opa: false,
-                imgsdata={"list1":["1.png","2.png","3.png"],}
+                imgsdata: {
+                    "list1": ["1.png", "2.png", "3.png"],
+                },
+                swiper: new Swiper('.swiper-container', {
+                    zoom: true,
+                    width: window.innerWidth,
+                    virtual: true,
+                    spaceBetween: 20,
+                    pagination: {
+                        el: '.swiper-pagination',
+                        type: 'fraction',
+                    },
+                    on: {
+                        click: function () {
+                            $('#origin-img').fadeOut('fast');
+                            this.virtual.slides.length = 0;
+                            this.virtual.cache = [];
+                            swiperStatus = false;
+
+                        },
+                    },
+
+                }),
             },
             methods: {
                 closeBig() {
@@ -234,7 +255,7 @@
                 handleBeforeUpload() {
                     swal({
                         text: "正在更改封面背景，请稍候",
-                        width:250,
+                        width: 250,
                         onOpen: () => {
                             swal.showLoading();
                         }
@@ -279,7 +300,7 @@
                     res = JSON.parse(res);
                     for (var i in res.data) {
                         that.list.push(res.data[i])
-                        that.imgsdata["list"+i] = res.data[i].img
+                        that.imgsdata["list" + (res.data.length - i - 1)] = res.data[i].img
                     }
                     for (var i = 0; i < that.list.length - 1; i++) {
                         nearest = i;
@@ -333,72 +354,90 @@
         })
     </script>
 
-    
 
-    <!-- 以下部分为修改后的代码 by laipz8200 -->
-<!-- START -->
-<script>
 
-var swiper = new Swiper('.swiper-container',{
-zoom:true,
-width: window.innerWidth,
-virtual: true,
-spaceBetween:20,
-pagination: {
-el: '.swiper-pagination',
-type: 'fraction',
-},
-on:{
-click: function(){
-$('#origin-img').fadeOut('fast');
-this.virtual.slides.length=0;
-this.virtual.cache=[]; 
-swiperStatus=false;
 
-},
-},
-
-});
-
-$('.thumb img').click(function(){
-clickIndex=$(this).index();
-
-imglist=$(this).parent().attr('thumblist');
-imgs = app.imgsdata[imglist];
-for(i=0;i<imgs.length;i++){
-swiper.virtual.appendSlide('<div class="swiper-zoom-container"><img src="'+imgs[i]+'" /></div>');
-}
-swiper.slideTo(clickIndex);
-$('#origin-img').fadeIn('fast');
-swiperStatus=true;
-
-})
-
-//切换图状态禁止页面缩放   
-document.addEventListener('touchstart',function (event) {  
-if(event.touches.length>1 && swiperStatus){  
-event.preventDefault();  
-}  
-})  
-var lastTouchEnd=0;  
-document.addEventListener('touchend',function (event) {  
-var now=(new Date()).getTime();  
-if(now-lastTouchEnd<=300){  
-event.preventDefault();  
-}  
-lastTouchEnd=now;  
-},false)
-
-document.addEventListener('touchmove',function(e){
-if(swiperStatus){
-e.preventDefault();
-}
-})  
-
-</script>
-<!-- END -->
 
 
 </body>
+
+<!-- 以下部分为修改后的代码 by laipz8200 -->
+<!-- START -->
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        zoom: true,
+        width: window.innerWidth,
+        virtual: true,
+        spaceBetween: 20,
+        pagination: {
+            el: '.swiper-pagination',
+            type: 'fraction',
+        },
+        on: {
+            click: function () {
+                $('#origin-img').fadeOut('fast');
+                this.virtual.slides.length = 0;
+                this.virtual.cache = [];
+                swiperStatus = false;
+
+            },
+        },
+
+    });
+    $(document).on('click', '.thumb img', function () {
+        clickIndex = $(this).index();
+        // imglist = $(this).parent().attr('thumblist');
+        imglist = $(this).parent()[0].attributes[0].nodeValue
+        // console.log($(this).parent()[0].attributes[0].nodeValue)
+        imgs = app.imgsdata[imglist];
+        // console.log(imgs)
+        for (i = 0; i < imgs.length; i++) {
+            // console.log(swiper.virtual)
+            swiper.virtual.appendSlide('<div class="swiper-zoom-container"><img src="' + imgs[i] +
+                '" /></div>');
+        }
+        swiper.slideTo(clickIndex);
+        $('#origin-img').fadeIn('fast');
+        swiperStatus = true;
+
+    })
+
+    // $('.thumb img').click(function () {
+    //     clickIndex = $(this).index();
+
+    //     imglist = $(this).parent().attr('thumblist');
+    //     imgs = app.imgsdata[imglist];
+    //     for (i = 0; i < imgs.length; i++) {
+    //         swiper.virtual.appendSlide('<div class="swiper-zoom-container"><img src="' + imgs[i] +
+    //             '" /></div>');
+    //     }
+    //     swiper.slideTo(clickIndex);
+    //     $('#origin-img').fadeIn('fast');
+    //     swiperStatus = true;
+
+    // })
+
+    //切换图状态禁止页面缩放   
+    document.addEventListener('touchstart', function (event) {
+        if (event.touches.length > 1 && swiperStatus) {
+            event.preventDefault();
+        }
+    })
+    var lastTouchEnd = 0;
+    document.addEventListener('touchend', function (event) {
+        var now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) {
+            event.preventDefault();
+        }
+        lastTouchEnd = now;
+    }, false)
+
+    document.addEventListener('touchmove', function (e) {
+        if (swiperStatus) {
+            e.preventDefault();
+        }
+    })
+</script>
+<!-- END -->
 
 </html>
