@@ -44,7 +44,7 @@ foreach($tech_info as $idx => $tc){
     $rate = sql_str("select Avg(score) as score from rate where job_number = '$job_number' and `bad` = 1");
     //保留一位小数
     $rate = round($rate[0]['score'],1);
-    $tech_info[$idx] = array_merge($tech_info[$idx],['img_list'=>$friend_circle,'rate'=>$rate,'busy'=>$clock,'appoint'=>$already_appoint]);
+    $tech_info[$idx] = array_merge($tech_info[$idx],['img_list'=>$friend_circle,'rate'=>$rate,'busy'=>$up_clock,'appoint'=>$already_appoint]);
     if($service_name[0]['have_level'] == 0)
         $tech_info[$idx]['level'] = "";
 }
