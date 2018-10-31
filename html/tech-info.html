@@ -6,13 +6,13 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>个人详情</title>
     <link rel="stylesheet" type="text/css" href="../vendor/iview/dist/styles/iview.css">
-    <link rel="stylesheet" href="../css/weui-min.css" />
+    <link rel="stylesheet" href="../css/weui-min.css"/>
 
-    <link rel="stylesheet" href="../css/example.css" />
+    <link rel="stylesheet" href="../css/example.css"/>
 
-    <link rel="stylesheet" href="../css/example.css" />
+    <link rel="stylesheet" href="../css/example.css"/>
     <link rel="stylesheet" type="text/css" href="../css/overlay.css">
-    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" href="../css/global.css"/>
     <style type="text/css">
         * {
             margin: 0;
@@ -76,153 +76,165 @@
 </head>
 
 <body>
-    <div id="app" style="width:100%;height: 100%;">
-        <div style="width: 100%;height: 21%;display: flex;align-items: center;margin-right:8px;background-color: #eee;border-bottom: 1px #ddd solid;line-height: 1.6;">
-            <div style="margin-left: 20px;display: flex;flex:0 0 20%;">
-                <img :src="data.technician.head" alt="" style="width: 80px;height: 80px;border-radius: 50%;">
+<div id="app" style="width:100%;height: 100%;">
+    <div style="width: 100%;height: 21%;display: flex;align-items: center;margin-right:8px;background-color: #eee;border-bottom: 1px #ddd solid;line-height: 1.6;">
+        <div style="margin-left: 20px;display: flex;flex:0 0 20%;">
+            <img :src="data.technician.head" alt="" style="width: 80px;height: 80px;border-radius: 50%;">
+        </div>
+        <div style="margin-left: 10px;">
+            <div style="display: flex;justify-content: space-between;width: 100%">
+                <div>
+                    <h2>{{job_number}} </h2>
+                    <h3 style="font-weight: 200;color: #fe736c;">服务：<span v-text="data.order_num"></span>次</h3>
+                </div>
+                <div>
+                    <Rate disabled allow-half v-model="total_rate" style="font-size: 15px">
+                        <span style="color: #f5a623; margin-left: -20px">{{total_rate}}分</span>
+                    </Rate>
+                </div>
             </div>
-            <div style="margin-left: 10px;">
-                <div style="display: flex;justify-content: space-between;width: 100%">
-                    <div>
-                        <h2>{{job_number}} </h2>
-                        <h3 style="font-weight: 200;color: #fe736c;">服务：<span v-text="data.order_num"></span>次</h3>
-                    </div>
-                    <div>
-                        <Rate disabled allow-half v-model="total_rate" style="font-size: 15px">
-                            <span style="color: #f5a623; margin-left: -20px">{{total_rate}}分</span>
-                        </Rate>
-                    </div>
-                </div>
-                <div onclick="navi('jishijianjie.html')">
-                    <p style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">
-                        {{data.technician.description}}
-                    </p>
-                </div>
+            <div onclick="navi('jishijianjie.html')">
+                <p style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">
+                    {{data.technician.description}}
+                </p>
             </div>
         </div>
-        <div class="weui-flex" style="justify-content: center;align-items: center;height: 13%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;">
-            <div class="box weui-flex" style="width: 100%; height: 100%;justify-content: center;align-items: center;">
-                <div class="item weui-flex__item" style="text-align: center;border-right: 1px solid #f2f2f2">
-                    <h1 style="color: #33cccc;font-size: 24px">{{data.technician.service}}</h1>
-                    <div style="display: flex;justify-content: center;align-items: center;margin-top: 10px"><img src="../src/总接单数.png"
-                            alt=""> 总接单数
-                    </div>
+    </div>
+    <div class="weui-flex"
+         style="justify-content: center;align-items: center;height: 13%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;">
+        <div class="box weui-flex" style="width: 100%; height: 100%;justify-content: center;align-items: center;">
+            <div class="item weui-flex__item" style="text-align: center;border-right: 1px solid #f2f2f2">
+                <h1 style="color: #33cccc;font-size: 24px">{{data.technician.service}}</h1>
+                <div style="display: flex;justify-content: center;align-items: center;margin-top: 10px"><img
+                        src="../src/总接单数.png"
+                        alt=""> 总接单数
                 </div>
-                <div class="item weui-flex__item" style="text-align: center;border-right: 1px solid #f2f2f2">
-                    <h1 style="color: #ff9933;font-size: 24px"><span style="font-size: 14px"></span>{{job_number}}</h1>
-                    <div style="display: flex;justify-content: center;align-items: center;margin-top: 10px"><img src="../src/网红技师.png"
-                            alt=""> {{data.technician.level}}
-                    </div>
+            </div>
+            <div class="item weui-flex__item" style="text-align: center;border-right: 1px solid #f2f2f2">
+                <h1 style="color: #ff9933;font-size: 24px"><span style="font-size: 14px"></span>{{job_number}}</h1>
+                <div style="display: flex;justify-content: center;align-items: center;margin-top: 10px"><img
+                        src="../src/网红技师.png"
+                        alt=""> {{data.technician.level}}
                 </div>
-                <div class="item weui-flex__item" style="text-align: center;" onclick="navi('jishijianjie.html')">
-                    <img style="margin-left:40%;margin-right:40%;width: 30px;height:30px;" src="../src/user.png">
-                    <div style="display: flex;justify-content: center;align-items: center;margin-top:7px">
-                        <img src="../src/收藏数量.png" alt=""><span style="color: red;">技师简介</span>
-                    </div>
+            </div>
+            <div class="item weui-flex__item" style="text-align: center;" onclick="navi('jishijianjie.html')">
+                <img style="margin-left:40%;margin-right:40%;width: 30px;height:30px;" src="../src/user.png">
+                <div style="display: flex;justify-content: center;align-items: center;margin-top:7px">
+                    <img src="../src/收藏数量.png" alt=""><span style="color: red;">技师简介</span>
+                </div>
 
-                </div>
             </div>
         </div>
+    </div>
 
-        <div class="weui-flex list" style="justify-content: center;align-items: center;height: 14%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;margin-top: 8px;margin-bottom: 8px">
-            <div class="box weui-flex guest" style="width: 100%; height: 100%;align-items: center;">
-                <div style=" position: relative; left: -1rem;top: 0rem;" onClick="navi('pyquan.html')">
-                    <span style="text-align: center;padding-left: 1.5rem;">个人相册</span>
-                </div>
-                <div class="item weui-flex__item thumb" thumblist="list1" style="text-align: center;height: 100%;display: flex;flex: 0 0 18%"
-                    v-for='(item, index) in data.technician.photo' v-if="index<4">
-                    <!-- <ul id="comment-list"> -->
-                    <!-- <li class="list"> -->
-                    <!-- <div class="guest"> -->
-                    <!-- <div class="thumb" thumblist="list1"> -->
-                    <!--<img @click="show_pic(index)" v-bind:src="item" style="height: 100%;width: 100%;">-->
-                    <img onClick="navi('pyquan.html')" style="position: relative;top: 12.5%; height: 75%;width: 75%;display: block;object-fit: cover;"
-                        :src="item['img']">
-                    <!-- </div> -->
-                    <!-- </div> -->
-                    <!-- </li> -->
-                    <!-- </ul> -->
-                </div>
-                <div class="item weui-flex__item thumb" style="text-align: center;height: 100%;display: flex;flex:0 0 5%;background-image: url(../src/go2.png);background-repeat: no-repeat;background-position: center">
-                </div>
+    <div class="weui-flex list"
+         style="justify-content: center;align-items: center;height: 14%;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;margin-top: 8px;margin-bottom: 8px">
+        <div class="box weui-flex guest" style="width: 100%; height: 100%;align-items: center;">
+            <div style=" position: relative; left: -1rem;top: 0rem;" onClick="navi('pyquan.html')">
+                <span style="text-align: center;padding-left: 1.5rem;">个人相册</span>
+            </div>
+            <div class="item weui-flex__item thumb" thumblist="list1"
+                 style="text-align: center;height: 100%;display: flex;flex: 0 0 18%"
+                 v-for='(item, index) in data.technician.photo' v-if="index<4">
+                <!-- <ul id="comment-list"> -->
+                <!-- <li class="list"> -->
+                <!-- <div class="guest"> -->
+                <!-- <div class="thumb" thumblist="list1"> -->
+                <!--<img @click="show_pic(index)" v-bind:src="item" style="height: 100%;width: 100%;">-->
+                <img onClick="navi('pyquan.html')"
+                     style="position: relative;top: 12.5%; height: 75%;width: 75%;display: block;object-fit: cover;"
+                     :src="item['img']">
+                <!-- </div> -->
+                <!-- </div> -->
+                <!-- </li> -->
+                <!-- </ul> -->
+            </div>
+            <div class="item weui-flex__item thumb"
+                 style="text-align: center;height: 100%;display: flex;flex:0 0 5%;background-image: url(../src/go2.png);background-repeat: no-repeat;background-position: center">
             </div>
         </div>
-        <!--这个页面的视频播放不需要了，朋友圈能看就好-->
-        <!--<div v-if="data.technician.vcr != ''" class="weui-flex" style="justify-content: center;align-items: center;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;margin-top: 10px">-->
-        <!--<video alt="" style="height: 200px;width: 100%;" controls>-->
-        <!--<source v-bind:src="data.technician.vcr" type="video/mp4">-->
-        <!--</video>-->
-        <!--</div>-->
-        <div style="height: 5%;width: 100%;background-color: white;display: flex;align-items: center">
-            <span style="margin-left: 10px">评价</span>
-            <span style="margin-left: 20px;color: #ff0033;">
+    </div>
+    <!--这个页面的视频播放不需要了，朋友圈能看就好-->
+    <!--<div v-if="data.technician.vcr != ''" class="weui-flex" style="justify-content: center;align-items: center;width: 100%;background-color: white;border-bottom: 1px #f2f2f2 solid;margin-top: 10px">-->
+    <!--<video alt="" style="height: 200px;width: 100%;" controls>-->
+    <!--<source v-bind:src="data.technician.vcr" type="video/mp4">-->
+    <!--</video>-->
+    <!--</div>-->
+    <div style="height: 5%;width: 100%;background-color: white;display: flex;align-items: center">
+        <span style="margin-left: 10px">评价</span>
+        <span style="margin-left: 20px;color: #ff0033;">
                 <rate show-text allow-half v-model="total_rate" disabled style="font-size: 15px">
                     <span style="color: #f5a623; margin-left: -20px">{{total_rate}}分</span>
                 </rate>
                 （共{{count}}条）
             </span>
-        </div>
-        <div style="height: 5%;width: 100%;background-color: white;display: flex;align-items: center">
-            <span id="tag" v-for="tag in tags" v-text="tag.tag_name+'('+tag.count+')'"></span>
-        </div>
-        <div class="weui-panel weui-panel_access" style="background-color: white;border-radius: 5px;margin-bottom: 20%">
-            <div class="display-block" style="border-bottom: 1px solid #f2f2f2;" v-for='item in data.feedback'>
-                <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg ">
-                    <div class="weui-media-box__hd" :style="'background-image: url('+item.head+');border-radius: 50%;background-color: #ffcc99;background-size:cover;margin-bottom: 20px;width: 30px;height: 30px;'">
-                    </div>
-                    <div class="weui-media-box__bd">
-                        <h4 class="weui-media-box__title" style="font-size: 16px;margin-bottom:5px;color: #000000">{{item.name}}</h4>
-                        <h4 class="weui-media-box__title" style="font-size: 14px">
-                            <div style="margin-bottom:5px">
-                                <span style="color:#a1a1a1;margin-right:2px;font-size:10px;margin-top:5px;margin-bottom: 5px">评分</span>
-                                <rate allow-half v-model="item.rate" disabled style="font-size: 15px">
-                                    <!-- <span style="color: #f5a623; margin-left: -20px">{{item.rate}}分</span> -->
-                                </rate>
-                            </div>
-                        </h4>
-                        <p class="weui-media-box__desc">{{item.text}}</p>
-                    </div>
-                    <div class="weui-media-box__bd" style="float: right;text-align: right;margin-bottom:30px">
-                        <span class="weui-media-box__title" style="font-size:12px;color: #a1a1a1">{{item.time}}</span>
-                    </div>
-                </a>
-            </div>
-        </div>
-
-        <div style="height:1px"></div>
-
-        <div style="height: 10%;width: 100%;position: fixed;bottom: 0;background-color: white;display: flex;">
-            <div style="height: 100%;flex: 0 0 25%;display: flex;align-items: center;justify-content: center;border-right: 1px solid #f2f2f2"
-                @click="navi('index.html')">
-                <div style="width: 40px">
-                    <img src="../src/主页激活.png" alt="" style="height: 25px;width:25px">
-                    <h1 style="font-size: 14px;font-weight: 200;">主页</h1>
+    </div>
+    <div style="height: 5%;width: 100%;background-color: white;display: flex;align-items: center">
+        <span id="tag" v-for="tag in tags" v-text="tag.tag_name+'('+tag.count+')'"></span>
+    </div>
+    <div class="weui-panel weui-panel_access" style="background-color: white;border-radius: 5px;margin-bottom: 20%">
+        <div class="display-block" style="border-bottom: 1px solid #f2f2f2;" v-for='item in data.feedback'>
+            <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg ">
+                <div class="weui-media-box__hd"
+                     :style="'background-image: url('+item.head+');border-radius: 50%;background-color: #ffcc99;background-size:cover;margin-bottom: 20px;width: 30px;height: 30px;'">
                 </div>
-            </div>
-            <div style="height: 100%;flex: 0 75%;display: flex;align-items: center;justify-content: center">
-                <button @click="down_order" style="width: 85%;height: 70%;background-color: #ff3399;color: white;border-radius: 5px;font-size: 18px">
-                    选{{data.technician.gender}}
-                </button>
-            </div>
-        </div>
-        <div style="height: 60px;width:60px;position: fixed;background-color: white;bottom: 70px;right: 30px; display: flex;align-items: center;justify-content: center;border-radius: 50%;border: 1px #fe736c solid;"
-            onclick="call()">
-            <div style="width: 100%;height: 100%;text-align: center;display: flex;justify-content: space-between;flex-direction: column;align-items: center;">
-                <img src="../src/分享.png" alt="" style="height: 25px;width:25px;margin-top: 5px">
-                <h1 style="font-size: 14px;font-weight: 200;margin-bottom: 10px;color: #fe736c">分享</h1>
-            </div>
-        </div>
-        <div id="modal-overlay" v-show="overlay">
-            <div class="modal-data">
-                <img src="../src/loading.gif" />
-            </div>
+                <div class="weui-media-box__bd">
+                    <h4 class="weui-media-box__title" style="font-size: 16px;margin-bottom:5px;color: #000000">
+                        {{item.name}}</h4>
+                    <h4 class="weui-media-box__title" style="font-size: 14px">
+                        <div style="margin-bottom:5px">
+                            <span style="color:#a1a1a1;margin-right:2px;font-size:10px;margin-top:5px;margin-bottom: 5px">评分</span>
+                            <rate allow-half v-model="item.rate" disabled style="font-size: 15px">
+                                <!-- <span style="color: #f5a623; margin-left: -20px">{{item.rate}}分</span> -->
+                            </rate>
+                        </div>
+                    </h4>
+                    <p class="weui-media-box__desc">{{item.text}}</p>
+                </div>
+                <div class="weui-media-box__bd" style="height: 3rem;display:  flex;flex-direction: column;justify-content:  space-between;align-items:  flex-end;">
+                    <span class="weui-media-box__title" style="font-size:12px;color: #a1a1a1">{{item.time}}</span>
+                    <div class="" style="font-size: 12px;padding: 5px;border: rgb(26,173,25) 1px solid;border-radius: 10px;color: rgb(26, 173, 25);">评论
+                    </div>
+                </div>
+            </a>
         </div>
     </div>
-    <!-- Swiper -->
-    <div class="swiper-container" id="origin-img">
-        <div class="swiper-wrapper"></div>
-        <div class="swiper-pagination"></div>
+
+    <div style="height:1px"></div>
+
+    <div style="height: 10%;width: 100%;position: fixed;bottom: 0;background-color: white;display: flex;">
+        <div style="height: 100%;flex: 0 0 25%;display: flex;align-items: center;justify-content: center;border-right: 1px solid #f2f2f2"
+             @click="navi('index.html')">
+            <div style="width: 40px">
+                <img src="../src/主页激活.png" alt="" style="height: 25px;width:25px">
+                <h1 style="font-size: 14px;font-weight: 200;">主页</h1>
+            </div>
+        </div>
+        <div style="height: 100%;flex: 0 75%;display: flex;align-items: center;justify-content: center">
+            <button @click="down_order"
+                    style="width: 85%;height: 70%;background-color: #ff3399;color: white;border-radius: 5px;font-size: 18px">
+                选{{data.technician.gender}}
+            </button>
+        </div>
     </div>
+    <div style="height: 60px;width:60px;position: fixed;background-color: white;bottom: 70px;right: 30px; display: flex;align-items: center;justify-content: center;border-radius: 50%;border: 1px #fe736c solid;"
+         onclick="call()">
+        <div style="width: 100%;height: 100%;text-align: center;display: flex;justify-content: space-between;flex-direction: column;align-items: center;">
+            <img src="../src/分享.png" alt="" style="height: 25px;width:25px;margin-top: 5px">
+            <h1 style="font-size: 14px;font-weight: 200;margin-bottom: 10px;color: #fe736c">分享</h1>
+        </div>
+    </div>
+    <div id="modal-overlay" v-show="overlay">
+        <div class="modal-data">
+            <img src="../src/loading.gif"/>
+        </div>
+    </div>
+</div>
+<!-- Swiper -->
+<div class="swiper-container" id="origin-img">
+    <div class="swiper-wrapper"></div>
+    <div class="swiper-pagination"></div>
+</div>
 </body>
 <script type="text/javascript" src="../js/jweixin.js"></script>
 <!-- <script type="text/javascript" src="../js/example.js"></script> -->
@@ -333,7 +345,7 @@
                     this.tc.push(this.job_number);
                 }
                 if (getQueryString('mode') == "dashang") {
-                    window.location.href = "dashangjishi.html?job_number="+this.job_number
+                    window.location.href = "dashangjishi.html?job_number=" + this.job_number
                 } else {
                     window.location.href = "jishixuanze.html?" + "select_time=" + this.time + "&sv=" +
                         this.sv + "&tc=" + this.tc;
