@@ -93,7 +93,7 @@
                 </Panel>
             </Collapse>
         </row>
-        <div onClick="navi('jishixuanze.html')" style="position: fixed;bottom: 0;width: 100%;height:10%;background-color: #409eff;display: flex;align-items: center;justify-content: center;font-size: 2em;font-weight: 400;color: white">我要预约</div>
+        <div @Click="navi('jishixuanze.html?sv='+id)" style="position: fixed;bottom: 0;width: 100%;height:10%;background-color: #409eff;display: flex;align-items: center;justify-content: center;font-size: 2em;font-weight: 400;color: white">我要预约</div>
 
         <div id="modal-overlay" v-show="overlay">
             <div class="modal-data">
@@ -116,6 +116,11 @@
                 id: getQueryString('id'),
                 info: [],
                 overlay:true,
+            }
+        },
+        methods:{
+            navi(url){
+                window.location.href = url;
             }
         },
         created() {
@@ -149,12 +154,6 @@
             })
         }
     })
-
-    function navi(url) {
-        window.location.href = url;
-    }
-
-
     function getQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
         var r = window.location.search.substr(1).match(reg);

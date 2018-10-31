@@ -1,7 +1,8 @@
 <?php
 require("database.php");
 $job_number = $_POST['job_number'];
-$datas = get("friend_circle",'job_number',$job_number);
+$datas = sql_str("select * from friend_circle where `job_number`='$job_number' order by date desc");
+//$datas = get("friend_circle",'job_number',$job_number);
 $i = 0;
 foreach($datas as $data)
 {

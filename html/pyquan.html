@@ -228,26 +228,7 @@
                 imgsdata: {
                     "list1": ["1.png", "2.png", "3.png"],
                 },
-                swiper: new Swiper('.swiper-container', {
-                    zoom: true,
-                    width: window.innerWidth,
-                    virtual: true,
-                    spaceBetween: 20,
-                    pagination: {
-                        el: '.swiper-pagination',
-                        type: 'fraction',
-                    },
-                    on: {
-                        click: function () {
-                            $('#origin-img').fadeOut('fast');
-                            this.virtual.slides.length = 0;
-                            this.virtual.cache = [];
-                            swiperStatus = false;
-
-                        },
-                    },
-
-                }),
+                
             },
             methods: {
                 closeBig() {
@@ -306,20 +287,7 @@
                     res = JSON.parse(res);
                     for (var i in res.data) {
                         that.list.push(res.data[i])
-                        that.imgsdata["list" + (res.data.length - i - 1)] = res.data[i].img
-                    }
-                    for (var i = 0; i < that.list.length - 1; i++) {
-                        nearest = i;
-                        for (var j = i + 1; j < that.list.length; j++) {
-                            if (that.list[nearest]['date'] > that.list[j]['date']) {
-                                nearest = j;
-                            }
-                        }
-                        if (nearest != i) {
-                            tp = that.list[i];
-                            that.list[i] = that.list[nearest];
-                            that.list[nearest] = tp;
-                        }
+                        that.imgsdata["list" + i] = res.data[i].img
                     }
                     for (var i in that.list) {
                         console.log(that.list[i]['date'])

@@ -16,7 +16,9 @@ if(isset($_POST['select_time'])){
 $tech_info = sql_str("select A.job_number,A.photo from technician A");
 foreach($tech_info as $idx => $tc){
     $job_number = $tc['job_number'];
+    //获取刷钟情况
     $clock = sql_str("select state from clock where job_number = '$job_number' order by `time` limit 1");
+    //获取预约情况
     $appoint_tech = sql_str("select * from service_order where job_number = '$job_number' and appoint_time > ($select_time - (select Sum(duration)*60 from service_order A,service_type B where A.item_id = B.ID and A.order_id =(select order_id from service_order where job_number = '$job_number' and appoint_time < $select_time order by appoint_time desc limit 1)  ))");
     //是否在上钟
     $up_clock = false;

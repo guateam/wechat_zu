@@ -55,7 +55,7 @@
             <card :bordered="false" dis-hover>
                 <row :gutter="2">
                     <i-col span="6">
-                        <i-button :type="button_type[2]" long  :disabled="!have_level"  v-on:click="ClickJibie()">级别</i-button>
+                        <i-button :type="button_type[2]" long :disabled="!have_level" v-on:click="ClickJibie()">级别</i-button>
                     </i-col>
                     <i-col span="6">
                         <i-button :type="button_type[0]" @click="sort_by(0,'rate')" long>评价</i-button>
@@ -121,7 +121,7 @@
                     <i-col span="4">
                         <div @click="choose_tech(item)" class="circle" :style="[{'font-size': (item.state === 1 ? '10' : '12') + 'px'}, {'color':(item.check === 0 ? '#875522':'#91df6f')}, {'border-color': (item.state === 1 ? '#875522' : '#D5B32B')}]">
                             <span v-if="item.check === 1" style="font-size: 16px">√</span>
-                            <span v-else>{{ item.busy === true ? '已上钟' : item.appoint === true?'已被约':'可选' }}</span>
+                            <span v-else>{{ item.busy === true ? '已上钟' : item.appoint === true?'被约':'可选' }}</span>
                         </div>
                     </i-col>
                 </row>
@@ -224,12 +224,12 @@
                     "default",
                     "default",
                 ],
-                have_level:true,
+                have_level: true,
                 tel: "", //店内电话
                 list: [], //技师列表
                 time: "", //选中的时间
                 sv: "", //选择的服务id,
-                svnm:"",//选择的服务名字
+                svnm: "", //选择的服务名字
                 tc: [], //选择的技师工号列表
                 have_sv: false, //是否选择了服务
             }
@@ -266,8 +266,8 @@
                 })
             },
             choose_tech(item) {
-                if (item.busy  || item.appoint) return;
-                
+                if (item.busy || item.appoint) return;
+
                 var that = this;
                 for (var i = 0; i < that.list.length; i++) {
                     if (item.job_number == that.list[i].job_number) {
@@ -298,7 +298,8 @@
             tech_info(job_number, state) {
                 // let timepick = new Date((new Date().toDateString() + ' ' + app.timePick));
                 // if (new Date() > timepick) this.timePick = new Date().toTimeString().slice(0, 5);
-                window.location.href = "tech-info.html?job_number=" + job_number + "&select_time=" + this.time+ "&sv=" +
+                window.location.href = "tech-info.html?job_number=" + job_number + "&select_time=" + this.time +
+                    "&sv=" +
                     this.sv + "&tc=" + this.tc;
             },
             down_order() {
@@ -308,19 +309,19 @@
                     $(this).openWindow("", '请至少选择一位技师', ['好的']);
                     return;
                 }
-                if(this.sv=='' || this.sv == null){
+                if (this.sv == '' || this.sv == null) {
                     this.chooseProj();
                     return;
                 }
                 var final_choose = [];
                 //获取选中的服务id
-                for(var i in this.tc){
-                    final_choose.push('job_number:'+this.tc[i]+'-id:'+this.sv)
+                for (var i in this.tc) {
+                    final_choose.push('job_number:' + this.tc[i] + '-id:' + this.sv)
                 }
                 //点击确认下单后，将所选信息保存至cookie
                 $.cookie('fn', final_choose, {
-						path: '/'
-					});
+                    path: '/'
+                });
                 $.cookie('tc', this.tc, {
                     path: '/'
                 });
@@ -401,7 +402,7 @@
             if (!(url_sv === "" || url_sv == null || url_sv === undefined)) {
                 this.sv = url_sv;
                 this.have_sv = true;
-            }else{
+            } else {
                 this.sv = "";
             }
             if (!(url_tc === "" || url_tc == null || url_tc === undefined)) {
@@ -437,7 +438,7 @@
                     result = JSON.parse(result);
                     if (result.status == 1) {
                         //获取是否为有等级的服务
-                        that.have_level = result.have_level==0?false:true;
+                        that.have_level = result.have_level == 0 ? false : true;
 
                         for (var i = 0; i < result.data.length; i++) {
                             var tech = result.data[i];
@@ -452,8 +453,10 @@
                                 rate: tech.rate,
                                 state: tech.busy,
                                 skills: that.sv,
+                                busy: tech.busy,
+                                appoint: tech.appoint,
                                 level: tech.level,
-                                name:tech.name,
+                                name: tech.name,
                                 hot: 1,
                                 check: check,
                                 show: true
@@ -478,7 +481,8 @@
                             job_number: tech.job_number,
                             photo_list: tech.img_list,
                             rate: tech.rate,
-                            state: tech.busy,
+                            busy: tech.busy,
+                            appoint: tech.appoint,
                             skills: that.sv,
                             level: tech.level,
                             hot: 1,
