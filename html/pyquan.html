@@ -160,6 +160,9 @@
                                     </li>
                                 </ul>
                                 <!-- END -->
+                                <video v-for="vdo in item['video']" style="width:100%;height:200px" controls >
+                                    <source :src="vdo" type="video/mp4">
+                                </video>
 
                                 <p class="time" v-text="item['date']"></p>
                             </div>
