@@ -103,14 +103,14 @@
                         <i-col>
                             <row type="flex" justity="start" align="bottom">
                                 <i-col>
-                                    <span style="font-size: 30px">李香</span> <span>(工号:AKB48)</span>
+                                    <span style="font-size: 30px" v-text="list.name"></span> <span v-text="'(工号：'+list.jobnumber+')'"></span>
                                 </i-col>
                             </row>
                         </i-col>
                         <i-col>
 
                             <div style="width: 58px;height:58px;line-height: 58px;">
-                                <img border=0 style=" width: 100%; height: 100%;" src="../../photo/7Kn0izM181015093828u=424813076,3607810249&fm=27&gp=0.jpg">
+                                <img border=0 style=" width: 100%; height: 100%;" :src="list.head">
                                 <icon v-else type="ios-camera" size="20"></icon>
                             </div>
                         </i-col>
@@ -127,31 +127,18 @@
                         <i-col span="24">
                             <row type="flex" justify="space-between" style="margin-top: 8px">
                                 <i-col>性别:</i-col>
-                                <i-col class="info">男</i-col>
+                                <i-col class="info" v-text="list.gender=='她'?'女':'男'"></i-col>
                             </row>
-                            <row type="flex" justify="space-between" style="margin-top: 8px">
-                                <i-col>生日:</i-col>
-                                <i-col class="info">2018/12/21</i-col>
-                            </row>
-
                             <row type="flex" justify="space-between" style="margin-top: 8px">
                                 <i-col>在职状态:</i-col>
-                                <i-col class="info">在职</i-col>
+                                <i-col class="info" v-text="list.in_job==1?'在职':'离职'"></i-col>
                             </row>
                         </i-col>
 
                         <i-col span="24">
                             <row type="flex" justify="space-between" style="margin-top: 8px">
-                                <i-col>手机:</i-col>
-                                <i-col class="info">123456789</i-col>
-                            </row>
-                            <row type="flex" justify="space-between" style="margin-top: 8px">
-                                <i-col>介绍人:</i-col>
-                                <i-col class="info">AKK43</i-col>
-                            </row>
-                            <row type="flex" justify="space-between" style="margin-top: 8px">
                                 <i-col>入职日期:</i-col>
-                                <i-col class="info">2011/12/21</i-col>
+                                <i-col class="info" v-text="list.entrydate"></i-col>
                             </row>
                         </i-col>
                     </row>
@@ -164,19 +151,11 @@
 
                     <row type="flex" justify="space-between" style="margin-top: 8px">
                         <i-col>简介:</i-col>
-                        <i-col>简介简介简介</i-col>
+                        <i-col v-text="list.description"></i-col>
                     </row>
                 </card>
             </i-col>
         </row>
-
-
-
-
-
-
-
-
 
 
 
@@ -213,10 +192,21 @@
     let app = new Vue({
        el:"#space",
        data:{
+           job_number:getQueryString('id'),
+           list:[],
            overlay:true,
        },
        created(){
-           this.overlay = false;
+           var that = this;
+           $.post("../php/gettechnician.php",{
+               id:getQueryString('id'),
+               ajax_call:true,
+           }).done((res)=>{
+                res = JSON.parse(res)
+                this.list = res.data
+                this.overlay = false;
+           })
+
        }
     })
 </script>

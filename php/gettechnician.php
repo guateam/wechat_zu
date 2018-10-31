@@ -1,5 +1,12 @@
 <?php
-function gettechnician($id,$tm)
+if(isset($_POST['ajax_call'])){
+    require('database.php');
+    $id = $_POST['id'];
+    $data = gettechnician($id);
+    echo json_encode(['status'=>1,'data'=>$data]);
+}
+
+function gettechnician($id,$tm="")
 {
     $technician=get('technician','job_number',$id);
 
@@ -23,25 +30,25 @@ function gettechnician($id,$tm)
             }
         }
         $service=get('service_order','job_number',$id);
-        $photo=get('technician_photo','job_number',$id);
-        $photodata=[];
-        if(count($photo)>=4)
-		{
-            for($i=0;$i<4;$i++)
-			{
-                array_push($photodata,$photo[$i]['img']);
-            }
-        }
-		else
-		{
-            foreach($photo as $value)
-			{
-                array_push($photodata,$value['img']);
-            }
-        }
+        $photo=sql_str("select A.img from technician_photo A where A.job_number = '$id' order by A.ID desc limit 4");
+        // $photodata=[];
+        // if(count($photo)>=4)
+		// {
+        //     for($i=0;$i<4;$i++)
+		// 	{
+        //         array_push($photodata,$photo[$i]['img']);
+        //     }
+        // }
+		// else
+		// {
+        //     foreach($photo as $value)
+		// 	{
+        //         array_push($photodata,$value['img']);
+        //     }
+        // }
         
         $entrytime='';
-        $date=(time()-strtotime($technician['entry_date']));
+        $date=(time()-$technician['entry_date']);
         if($date>365*24*60*60)
 		{
             $entrytime=round($date/(365*24*60*60),1).'年';
@@ -75,9 +82,11 @@ function gettechnician($id,$tm)
             'rate'=>$rate[0],
             'skill'=>$skill,
             'service'=>count($service),
-            'photo'=>$photodata,
+            'photo'=>$photo,
             'favoate'=>0,
             'entrytime'=>$entrytime,
+            'entrydate'=>date("Y-m-d",$technician['entry_date']),
+            'in_job'=>$technician['in_job'],
             'skills'=>$skilllist,
             'gender'=>$gender,
             'vcr'=>$technician['vcr'],
