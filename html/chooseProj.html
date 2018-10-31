@@ -36,7 +36,7 @@
 		}
 
 		#left {
-			width: 100%;
+			width: 40px;
 			height: 3rem;
 			/*border:1px solid green;*/
 			display: inline-block;
@@ -44,7 +44,7 @@
 
 		#left div#choosen {
 			display: block;
-			width: 5%;
+			width: 0.4rem;
 			height: 100%;
 			background-color: #5cadff;
 			text-align: center;
@@ -54,11 +54,17 @@
 		#left div#unchoosen {
 			display: block;
 			text-align: center;
-			width: 5%;
+			width: 0.4rem;
 			height: 100%;
 			background-color: #ffffff;
 			font-family: Consolas;
 		}
+        #left #choosen2 {
+            background-color: #f2f2f2
+        }
+
+        #left #unchoosen2 {
+        }
 
 		#right_con {}
 
@@ -95,7 +101,7 @@
 				<i-col span="5">
 					<div id="left">
 						<div v-for="tech in data" @click="choose_tech(tech.job_number)" :id="tech.choosen?'choosen':'unchoosen'">
-							<span style="position: relative;top:30%;font-size:1.2em;left: 1rem; color:#5cadff" v-text="tech.job_number"></span>
+							<span style="position: relative;font-size:1.2em;left:0.4rem;color:#5cadff;display: block;width: 5rem;height: 100%;display: flex;align-items: center;justify-content: center;" v-text="tech.job_number" :id="tech.choosen?'choosen2':'unchoosen2'" @click="choose_tech(tech.job_number)"></span>
 						</div>
 					</div>
 				</i-col>
@@ -155,6 +161,8 @@
 			choose_tech(job_number) {
 				Vue.set(this.data[this.choosen_job_number], 'choosen', false);
 				Vue.set(this.data[job_number], 'choosen', true);
+                Vue.set(this.data[this.choosen_job_number], 'choosen2', false);
+                Vue.set(this.data[job_number], 'choosen2', true);
 				this.choosen_job_number = job_number;
 			},
 			choose_sv(jbnb, index) {
@@ -163,27 +171,35 @@
 					if (!(old_idx === '')) {
 						Vue.set(this.data[jbnb]['skill'][index], 'choosen', true);
 						Vue.set(this.data[jbnb]['skill'][old_idx], 'choosen', false);
+                        Vue.set(this.data[jbnb]['skill'][index], 'choosen2', true);
+                        Vue.set(this.data[jbnb]['skill'][old_idx], 'choosen2', false);
 						this.choosen_sv[jbnb] = index;
 					}
 					if (old_idx === index) {
 						Vue.set(this.data[jbnb]['skill'][index], 'choosen', false);
+                        Vue.set(this.data[jbnb]['skill'][index], 'choosen2', false);
 						this.choosen_sv[jbnb] = "";
 					} else {
 						Vue.set(this.data[jbnb]['skill'][index], 'choosen', true);
-						this.choosen_sv[jbnb] = index;
+                        Vue.set(this.data[jbnb]['skill'][index], 'choosen2', true);
+                        this.choosen_sv[jbnb] = index;
 					}
 				} else if (this.type == 0) {
 					var old_idx = this.choosen_sv;
 					if (!(old_idx === '')) {
 						Vue.set(this.data['all']['skill'][index], 'choosen', true);
 						Vue.set(this.data['all']['skill'][old_idx], 'choosen', false);
+                        Vue.set(this.data['all']['skill'][index], 'choosen2', true);
+                        Vue.set(this.data['all']['skill'][old_idx], 'choosen2', false);
 						this.choosen_sv = index;
 					}
 					if (old_idx === index) {
 						Vue.set(this.data['all']['skill'][index], 'choosen', false);
+                        Vue.set(this.data['all']['skill'][index], 'choosen2', false);
 						this.choosen_sv = "";
 					} else {
 						Vue.set(this.data['all']['skill'][index], 'choosen', true);
+                        Vue.set(this.data['all']['skill'][index], 'choosen2', true);
 						this.choosen_sv = index;
 					}
 				}
@@ -303,6 +319,7 @@
 							}
 						}
 					}
+
 					that.overlay = false;
 				}
 			})
