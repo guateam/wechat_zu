@@ -19,6 +19,9 @@
         .po-cmt{
             padding-left: 80px;
         }
+        #list li{
+            border-bottom: none;
+        }
         #modal-overlay {
              position: absolute;   /* 使用绝对定位或固定定位  */
              left: 0px;    
@@ -160,7 +163,7 @@
                                     </li>
                                 </ul>
                                 <!-- END -->
-                                <video v-for="vdo in item['video']" style="width:100%;height:200px" controls >
+                                <video v-for="vdo in item['video']" style="width:90%;height:180px" controls >
                                     <source :src="vdo" type="video/mp4">
                                 </video>
 
