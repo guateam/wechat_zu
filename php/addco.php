@@ -5,7 +5,7 @@ $phone = $_POST['phone'];
 $people_num  = $_POST['people_num'];
 $pay =  $_POST['pay'];
 $obj = $_POST['obj'];
-$appoint_time = $_COOKIE['tm'];
+$appoint_time = $_COOKIE['select_time'];
 //支付方式，0--未支付
 $pay_way=0;
 if(isset($_POST['pay_way']))$pay_way = $_POST['pay_way'];
