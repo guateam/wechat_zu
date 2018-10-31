@@ -30,22 +30,22 @@ function gettechnician($id,$tm="")
             }
         }
         $service=get('service_order','job_number',$id);
-        $photo=get('technician_photo','job_number',$id);
-        $photodata=[];
-        if(count($photo)>=4)
-		{
-            for($i=0;$i<4;$i++)
-			{
-                array_push($photodata,$photo[$i]['img']);
-            }
-        }
-		else
-		{
-            foreach($photo as $value)
-			{
-                array_push($photodata,$value['img']);
-            }
-        }
+        $photo=sql_str("select A.img from technician_photo A where A.job_number = '$id' order by A.ID desc limit 4");
+        // $photodata=[];
+        // if(count($photo)>=4)
+		// {
+        //     for($i=0;$i<4;$i++)
+		// 	{
+        //         array_push($photodata,$photo[$i]['img']);
+        //     }
+        // }
+		// else
+		// {
+        //     foreach($photo as $value)
+		// 	{
+        //         array_push($photodata,$value['img']);
+        //     }
+        // }
         
         $entrytime='';
         $date=(time()-$technician['entry_date']);
@@ -82,7 +82,7 @@ function gettechnician($id,$tm="")
             'rate'=>$rate[0],
             'skill'=>$skill,
             'service'=>count($service),
-            'photo'=>$photodata,
+            'photo'=>$photo,
             'favoate'=>0,
             'entrytime'=>$entrytime,
             'entrydate'=>date("Y-m-d",$technician['entry_date']),
