@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="../css/weui-min.css"/>
     <link rel="stylesheet" href="../css/example.css"/>
     <!-- <link href="https://cdn.bootcss.com/toastr.js/2.1.4/toastr.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="../css/global.css" />
-    <link rel="stylesheet" href="../css/iview.css" />
+    <link rel="stylesheet" href="../css/global.css"/>
+    <link rel="stylesheet" href="../css/iview.css"/>
     <link rel="stylesheet" type="text/css" href="../css/overlay.css">
     <link rel="stylesheet" type="text/css" href="../css/iview.css">
     <style>
@@ -22,7 +22,24 @@
             width: 60%;
             margin-left: 2.7em;
         }
-        .ivu-carousel-list{
+
+        /*make it move*/
+        @keyframes marquee {
+            0% {
+                text-indent: 15.5em;
+            }
+            100% {
+                text-indent: -15em;
+            }
+        }
+
+        /*make it pretty*/
+        .microsoft {
+            position: relative;
+            font: 16px 'Segoe UI', Tahoma, Helvetica, SansSerif;
+        }
+
+        .ivu-carousel-list {
             width: 100%;
             height: 100%;
         }
@@ -35,7 +52,8 @@
         <row style="height: 30%;width: 100%;">
             <carousel autoplay v-model="value2" loop radius-dot arrow="always" style="height: 100%;width: 100%;">
                 <carousel-item v-for="item in top_pic">
-                    <div class="demo-carousel"><img :src="item.url" @click="navi(item.dir)" alt="" style="height: 100%;width: 100%;"></div>
+                    <div class="demo-carousel"><img :src="item.url" @click="navi(item.dir)" alt=""
+                                                    style="height: 100%;width: 100%;"></div>
                 </carousel-item>
             </carousel>
         </row>
@@ -265,7 +283,7 @@
     let app = new Vue({
         el: '#app',
         data: {
-            top_pic:[],
+            top_pic: [],
             items1: {},
             items2: {},
             items3: {},
