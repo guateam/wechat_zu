@@ -291,33 +291,42 @@
                 var that = this;
                 $.post("../php/getpyq.php", {
                     job_number: that.job_number
-                }).done((res) => {
+                }).done((res) => 
+				{
                     res = JSON.parse(res);
-                    for (var i in res.data) {
+                    for (var i in res.data) 
+					{
                         that.list.push(res.data[i])
                         that.imgsdata["list" + i] = res.data[i].img
                     }
-                    for (var i in that.list) {
+                    
+					for (var i in that.list) 
+					{
                         console.log(that.list[i]['date'])
                         if (that.list[i]['date'] < 60) that.list[i]['date'] = that.list[i]['date'] +
                             "秒前";
-                        else {
+                        else 
+						{
                             that.list[i]['date'] /= 60;
                             if (that.list[i]['date'] < 60) that.list[i]['date'] = parseInt(that.list[i]
                                 ['date'], 0) + "分钟前";
-                            else {
+                            else 
+							{
                                 that.list[i]['date'] /= 60;
                                 if (that.list[i]['date'] < 24) that.list[i]['date'] = parseInt(that.list[
                                     i]['date'], 0) + "小时前";
-                                else {
+                                else 
+								{
                                     that.list[i]['date'] /= 24;
                                     if (that.list[i]['date'] <= 30) that.list[i]['date'] = parseInt(
                                         that.list[i]['date'], 0) + "天前";
-                                    else {
+                                    else 
+									{
                                         that.list[i]['date'] /= 30;
                                         if (that.list[i]['date'] <= 12) that.list[i]['date'] = parseInt(
                                             that.list[i]['date'], 0) + "月前";
-                                        else {
+                                        else 
+										{
                                             that.list[i]['date'] /= 12;
                                             if (that.list[i]['date'] >= 1) that.list[i]['date'] =
                                                 parseInt(that.list[i]['date'], 0) + "年前";
