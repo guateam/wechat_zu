@@ -24,7 +24,8 @@ $time = date("Ymd").$rnd;
 if($user)
 {
     //会员卡支付
-    if($pay_way==4){
+    if($pay_way==4)
+	{
         //获取充值总额
         $str = "select sum(`recharge_record`.`charge`) AS `charge` from  `recharge_record` where ( '$id' = `recharge_record`.`user_id`)";
         $charge = sql_str($str);
@@ -34,7 +35,8 @@ if($user)
         //计算目前账户内余额
         $charge=$charge[0]['charge']-$use[0]['use'];
         //余额不足的情况
-        if($pay > $charge){
+        if($pay > $charge)
+		{
             //添加未支付订单
             add("consumed_order",[['appoint_time',$appoint_time],['user_num',$people_num],['generated_time',time()],["order_id",$time],["pay_amount",$pay],['user_id',$user[0]['ID']],['state',0],['contact_phone',$phone]]);
             //添加服务
@@ -47,7 +49,9 @@ if($user)
             echo json_encode(['state'=>-1,'order_id'=>$time]);
             die();
         }
-    }else{
+    }
+	else
+	{
         //其他支付方式，扣款由其他api执行成功后才执行到这里，不需要判断是否扣钱了，直接添加订单
         //默认添加为微信支付，payment_method为1
         add("consumed_order",[['appoint_time',$appoint_time],['user_num',$people_num],['payment_method',1],['generated_time',time()],["order_id",$time],["pay_amount",$pay],['user_id',$user[0]['ID']],['state',$state],['contact_phone',$phone]]);
