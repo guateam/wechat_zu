@@ -138,8 +138,12 @@
 		</div>
 		
 		<div id="footer">
-			<div class="left"><span style="position: relative;top: 1rem;">返回首页 </span></div>
-			<div class="right"><span style="position: relative;top: 1rem;">查看我的预约</span></div>
+			<div @click="window.location.href='index.html'" class="left">
+				<span style="position: relative;top: 1rem;">返回首页 </span>
+			</div>
+			<div class="right" @click="window.location.href='nopay_order.html'" >
+				<span style="position: relative;top: 1rem;">查看我的预约</span>
+			</div>
 		</div>
 
 		<div id="modal-overlay" v-show="overlay">
