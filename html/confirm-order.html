@@ -175,6 +175,7 @@
                     
                     $(that).openWindow("", "确认下单吗？", ["不", "是的"], () => 
 					{
+						/*
                         //支付完成订单,还需添加支付方式才能使用
                         $.post("../php/addco.php", 
 						{
@@ -227,6 +228,13 @@
                                 })
                             }
                         })
+						*/
+						
+						var url = window.location.href;
+						//alert(url);
+						
+						window.location.href = "http://1.jthysm.com/dashang/example/jsapiyy.php?pay="+that.total_price+"&backurl="+url;
+						
                     }, () => 
 					{
                         //未支付订单,还需添加支付方式才能使用
