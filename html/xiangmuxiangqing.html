@@ -80,18 +80,18 @@
             </div>
         </row>
         <row>
-            <Collapse >
+            <Collapse accordion>
                 <Panel name="1">
                     服务流程
-                    <p slot="content" v-text="info['procedure']"></p>
+                    <p slot="content" v-html="info['procedure']"></p>
                 </Panel>
                 <Panel name="2">
                     注意事项
-                    <p slot="content" v-text="info['attention']"></p>
+                    <p slot="content" v-html="info['attention']"></p>
                 </Panel>
                 <Panel name="3">
                     项目特色
-                    <p slot="content" v-text="info['benefit']">
+                    <p slot="content" v-html="info['benefit']">
                     </p>
                 </Panel>
             </Collapse>
