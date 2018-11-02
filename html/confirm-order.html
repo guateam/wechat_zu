@@ -55,7 +55,8 @@
                                 <span v-text="item.tech.job_number"></span>
                             </div>
                             <div style="display:inline-block;width: 80px;text-align: center;" v-text="item.service.name"></div>
-                            <div style="display:inline-block;width: 160px;"><span v-text="'￥'+item.service.price/100"></span>/<span v-text="item.service.duration+'分钟'"></span></div>
+                            <div style="display:inline-block;width: 160px;"><span v-text="'￥'+item.service.price/100"></span>/<span
+                                    v-text="item.service.duration+'分钟'"></span></div>
                         </div>
                     </div>
                 </div>
@@ -134,7 +135,7 @@
     <script type="text/javascript" src="../js/jweixin.js"></script>
     <!-- <script type="text/javascript" src="../js/example.js"></script> -->
     <script type="text/javascript" src="../js/weui-min.js"></script>
-
+    <script type="text/javascript" src="../js/url.js"></script>
     <script type="text/javascript" src="../js/jquery.js"></script>
     <script type="text/javascript" src="../js/jquery.cookie.js"></script>
     <script src="../js/vue.js"></script>
@@ -161,123 +162,57 @@
                 input_phone: "",
                 shop_phone: "",
                 overlay: true,
+                pay_way: 3 //3--微信支付  1--余额支付
             },
             methods: {
-                change_people(val) 
-				{
+                change_people(val) {
                     this.people_num += val;
                     if (this.people_num > 6) this.people_num = 6;
                     else if (this.people_num < 1) this.people_num = 1;
                 },
-                confirm_od() 
-				{
+                confirm_od() {
                     var that = this;
                     var item_id = [];
-                    
-                    $(that).openWindow("", "确认下单吗？", ["不", "是的"], () => 
-					{
-						/*
-                        //支付完成订单,还需添加支付方式才能使用
-                        $.post("../php/addco.php", 
-						{
-                            id: that.id,
-                            phone: that.input_phone,
-                            pay_way: 3, //支付方式
-                            people_num: that.people_num,
-                            pay: that.total_price,
-                            state: 4, //产生的订单状态 4--支付完成  1--预约
-                            obj: that.list,
-                        }).done((res) => 
-						{
-                            res = JSON.parse(res);
-                            if (res.state == 1) 
-							{
-                                $(that).openWindow("", "您已成功预约", ["好的"], () => 
-								{
-                                    $.cookie('fn', '', {
-                                        expires: -1
-                                    }); // 删除 cookie
-                                    $.cookie('tc', '', {
-                                        expires: -1
-                                    }); // 删除 cookie
-                                    $.cookie('select_time', '', {
-                                        expires: -1
-                                    }); // 删除 cookie
-                                    window.location.href = "index.html"
+                    //如果是余额支付
+                    if (this.pay_way == 1) {
+                        //余额不足的情况
+                        if (this.charge < this.total_price) {
+                            $(that).openWindow("", "您的余额不足，请前往充值页面或选择其他支付方式", ["好的"], () => {
+                                this.overlay = true;
+                                $.post("../php/addco.php", {
+                                    id: that.id,
+                                    phone: that.input_phone,
+                                    pay_way: 3, //支付方式  1--微信   3--会员卡
+                                    people_num: that.people_num,
+                                    pay: that.total_price,
+                                    state: 1, //产生的订单状态 4--支付完成  1--预约,暂未支付
+                                    obj: that.list,
+                                    select_time: getQueryString('select_time'),
+                                    cant_pay: true,
+                                }).done((res)=>{
+                                    res = JSON.parse(res);
+                                    if(res.status == 1)
+                                        window.location.href = "yuyueStatus.html?order_id="+res.order_id;
                                 })
-                            } 
-							else if (res.state == -1) 
-							{
-                                $(that).openWindow("", "您的账户余额不足，请充值后继续支付", ['好的'], () => 
-								{
-                                    $.cookie('fn', '', {
-                                        expires: -1
-                                    }); // 删除 cookie
-                                    $.cookie('tc', '', {
-                                        expires: -1
-                                    }); // 删除 cookie
-                                    $.cookie('select_time', '', {
-                                        expires: -1
-                                    }); // 删除 cookie
-                                    window.location.href = "yuyueStatus.html";
-                                })
-                            } 
-							else if (res.state == 0) 
-							{
-                                $(that).openWindow("", "用户不存在", ['好的'], () => {
-                                    window.location.href = "index";
-                                })
-                            }
-                        })
-						*/
-						
-						var url = window.location.href;
-						//alert(url);
-						
-						window.location.href = "http://1.jthysm.com/dashang/example/jsapiyy.php?pay="+that.total_price+"&backurl="+url;
-						
-                    }, () => 
-					{
-                        //未支付订单,还需添加支付方式才能使用
+                            })
+                        } else {
+                            $(that).openWindow("", "确认下单吗？", ["不", "是的"], () => {
 
-                        $.post("../php/addco.php", 
-						{
-                            id: that.id,
-                            phone: that.input_phone,
-                            item_id: item_id,
-                            people_num: that.people_num,
-                            job_number: that.job_number,
-                            pay: that.total_price,
-                            state: 1,
-                            obj: that.list,
-                        }).done((res) => 
-						{
-                            res = JSON.parse(res);
-                            if (res.state == 1) 
-							{
-                                $.cookie('fn', '', {
-                                    expires: -1
-                                }); // 删除 cookie
-                                $.cookie('tc', '', {
-                                    expires: -1
-                                }); // 删除 cookie
-                                $.cookie('select_time', '', {
-                                    expires: -1
-                                }); // 删除 cookie
-                                window.location.href = "yuyueStatus.html";
-                            } 
-							else if (res.state == -1) 
-							{
-                                $(that).openWindow("", "用户不存在", ['好的'], () => 
-								{
-                                    window.location.href = "index";
-                                })
-                            }
+                            })
+                        }
+                    }
+                    //如果是微信支付
+                    else if (this.pay_way == 3) {
+                        $(that).openWindow("", "确认下单吗？", ["不", "是的"], () => {
+                            var url = window.location.href;
+                            window.location.href =
+                                "http://1.jthysm.com/dashang/example/jsapiyy.php?pay=" + that.total_price +
+                                "&backurl=" + url;
                         })
-                    })
+                    }
                 },
-                remove(obj, idx) 
-				{
+
+                remove(obj, idx) {
                     $(this).openWindow("", '确认移除该服务吗', ['不', '好的'], () => {
                         this.total_price -= obj.service.price;
                         this.list.splice(idx, 1);
@@ -287,52 +222,68 @@
                     });
                 }
             },
-            created() 
-			{
-				//------------------------------------------------------------
-				var payret = getQueryString('payret');				
-				if (payret === "" || payret === undefined || payret == null)
-				{
-					//do nothing
-				}
-				else if (payret === "1")//这里表示支付成功，返回该页面
-				{
-					$(that).openWindow("", "您已成功预约", ["好的"], () => 
-					{
-						$.cookie('fn', '', {
-							expires: -1
-						}); // 删除 cookie
-						$.cookie('tc', '', {
-							expires: -1
-						}); // 删除 cookie
-						$.cookie('select_time', '', {
-							expires: -1
-						}); // 删除 cookie
-						window.location.href = "index.html"
-					})
-				}
-				else if (payret === "2")//这里表示支付失败，返回该页面	
-				{
-					$(that).openWindow("", "支付失败", ["确定"], () => 
-					{
-						
-					})
-				}
-			
-				//------------------------------------------------------------	
-				
+            created() {
                 var that = this;
-                that.start_time = parseInt($.cookie('select_time'));
-                $.post('../php/getskill.php', {}).done((res) => {
+                //------------------------------------------------------------
+                //微信支付的情况
+                var payret = getQueryString('payret');
+                if (payret === "" || payret === undefined || payret == null) {
+                    //do nothing
+                } else if (payret === "1") //这里表示支付成功，返回该页面
+                {
+                    $(that).openWindow("", "您已成功预约", ["好的"], () => {
+                        that.overlay = true;
+                        $.post("../php/addco.php", {
+                            id: that.id,
+                            phone: that.input_phone,
+                            pay_way: 1, //支付方式  1--微信   3--会员卡
+                            people_num: that.people_num,
+                            pay: that.total_price,
+                            state: 4, //产生的订单状态 4--支付完成  1--预约
+                            obj: that.list,
+                            select_time: getQueryString('select_time'),
+                        }).done((res)=>{
+                            window.location.href = "index.html"
+                        })
+                    })
+                } else if (payret === "2") //这里表示支付失败，返回该页面	
+                {
+                    $(that).openWindow("", "支付失败", ["确定"], () => {
+                        that.overlay = true;
+                        $.post("../php/addco.php", {
+                            id: that.id,
+                            phone: that.input_phone,
+                            pay_way: 1, //支付方式  1--微信   3--会员卡
+                            people_num: that.people_num,
+                            pay: that.total_price,
+                            state: 1, //产生的订单状态 4--支付完成  1--预约,暂未支付
+                            obj: that.list,
+                            select_time: getQueryString('select_time'),
+                            cant_pay: true,
+                        }).done((res)=>{
+                            res = JSON.parse(res);
+                            if(res.status == 1)
+                                window.location.href = "yuyueStatus.html?order_id="+res.order_id;
+                        })
+                    })
+                }
+
+                //------------------------------------------------------------	
+                that.start_time = parseInt(getQueryString('select_time'));
+                $.post('../php/getskill.php', {
+                    fn: getQueryString('fn'),
+                    id: that.id,
+                }).done((res) => {
                     res = JSON.parse(res);
                     if (res.status == 1) {
                         that.list = res.data;
                         that.shop_phone = res.phone;
                         that.total_price = res.total_price;
+                        that.charge = res.charge;
                         that.overlay = false;
                     }
                 })
-				
+
                 $.post('../php/getpromotion.php', {
                     ajax_get: true
                 }).done((res) => {

@@ -37,7 +37,7 @@ if($us)
     //
     add("recharge_record",[
         ["record_id",$rnd],
-        ["user_id",$user],
+        ["user_id",$us[0]['openid']],
         ['charge',$val],
         ['payment_method',$pay],
         ['job_number',$job_number],

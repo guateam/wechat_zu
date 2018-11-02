@@ -3,7 +3,8 @@
 
 <head id="">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	<link rel="stylesheet" type="text/css" href="../css/overlay.css">
     <title></title>
     <style>
     	body {
@@ -102,32 +103,36 @@
 		<div id="block"></div>
 		<div id="location">
 			<p>
-				<span style="padding-left: 1rem;font-size: 0.9rem;">足本纪·杭州·下沙旗舰店</span>
+				<span style="padding-left: 1rem;font-size: 0.9rem;" v-text="shop.name"></span>
 				<span>
-					<img style="float: right;margin-right: 1rem;width: 5%;" src="../src/tel.png">
+					<img style="float: right;margin-right: 1rem;width: 5%;" :href="'tel:'+shop.phone" src="../src/tel.png">
 				</span>
 			</p>
 			<hr style="opacity: 0.4;margin-top: -0.2rem;">
 			<p>
 				<span><img src="../src/location.png" style="width: 5%;padding-left: 0.8rem;" /></span>
-				<span style="font-size: 0.8rem;opacity: 0.6;position: relative;top: -0.3rem;"> 浙江省杭州市江干区金沙大道小城天地</span>
-				<span style="padding-left: 1rem;font-size: 0.8rem;opacity: 0.6;position: relative;top: -0.3rem;">2.9km</span>
+				<span style="font-size: 0.8rem;opacity: 0.6;position: relative;top: -0.3rem;" v-text="shop.position"> </span>
 				<span><img src="../src/go.png" style="width: 5%;float: right;margin-right: 1rem;" /></span>
 			</p>
 		</div>
 		<div id="block"></div>
 		<div id="content">
-			<p style="font-size: 0.8rem;padding-left: 1rem;">预约服务时间</p>
+			<p style="font-size: 0.8rem;padding-left: 1rem;" v-text="'预约服务时间'+date('Y-m-d H:i',list[0]['appoint_time'])"></p>
 			<hr >
-			<p style="font-size: 0.8rem;">
-				<span style="padding-left: 1rem; opacity: 0.7">9</span>
-				<span style="padding-left: 5rem; opacity: 0.7">单人洗浴</span>
-				<span style="float: right;padding-right: 1rem;opacity: 0.7">￥88/40分钟</span>
+			<p v-for="item in list" style="font-size: 0.8rem;">
+				<span style="padding-left: 1rem; opacity: 0.7" v-text="item.job_number"></span>
+				<span style="padding-left: 5rem; opacity: 0.7" v-text="item.name"></span>
+				<span style="float: right;padding-right: 1rem;opacity: 0.7" v-text="'￥'+item.price/100 +'/' + item.duration+'分钟'"></span>
 			</p>
 			<hr>
-			<p style="font-size: 0.8rem;"><span style="padding-left: 1rem;">项目总计</span><span style="float: right;padding-right: 1rem;">￥88</span></p>
+			<p style="font-size: 0.8rem;">
+				<span style="padding-left: 1rem;">项目总计</span>
+				<span style="float: right;padding-right: 1rem;" v-text="'￥'+total/100"></span>
+			</p>
 			<hr>
-			<p style="position: relative;top: -0.4rem; font-size: 0.8rem;float: right;padding-right: 1rem;">实付<span style="color: red;">￥88</span>
+			<p style="position: relative;top: -0.4rem; font-size: 0.8rem;float: right;padding-right: 1rem;">
+				实付
+				<span style="color: red;" v-text="'￥'+total/100"></span>
 			</p>
 			<hr style="position: relative;top: -0.4rem;width: 100%;">
 		</div>
@@ -136,20 +141,47 @@
 			<div class="left"><span style="position: relative;top: 1rem;">返回首页 </span></div>
 			<div class="right"><span style="position: relative;top: 1rem;">查看我的预约</span></div>
 		</div>
+
+		<div id="modal-overlay" v-show="overlay">
+            <div class="modal-data">
+                <img src="../src/loading.gif" />
+            </div>
+        </div>
 	</div>
 </body>
 <script type="text/javascript" src="../js/jweixin.js "></script>
 <!-- <script type="text/javascript" src="../js/example.js "></script> -->
 <script type="text/javascript" src="../js/weui-min.js "></script>
-<script type="text/javascript" src="../js/zepto.js "></script>
 <script type="text/javascript" src="../js/jquery.js "></script>
-<script type="text/javascript" src="../js/echarts-simple-min.js "></script>
-<script type="text/javascript" src="../js/sweetalert.js"></script>
 <script type="text/javascript" src="../js/windowOpen.js"></script>
 <script type="text/javascript" src="../js/vue.js "></script>
-<script type="text/javascript" src="../js/iview.js"></script>
+<!-- <script type="text/javascript" src="../js/iview.js"></script> -->
+<script type="text/javascript" src="../js/url.js"></script>
+<script type="text/javascript" src="../js/date-format.js"></script>
 <script type="text/javascript ">
-
+let app = new Vue({
+	el:"#app",
+	data:{
+		list:[{appoint_time:""}],
+		total:0,
+		shop:[],
+		overlay:true,
+	},
+	created(){
+		var that = this;
+		$.post("../php/get_unpaid.php",{
+			id:getQueryString('order_id')
+		}).done((res)=>{
+			res = JSON.parse(res);
+			if(res.status == 1){
+				that.list = res.data;
+				that.total = res.total;
+				that.shop = res.shop;
+			}
+			that.overlay = false;
+		})
+	}
+})
 </script>
 
 </html>
