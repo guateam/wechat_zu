@@ -32,4 +32,4 @@ for($i=0;$i<count($sv);$i++){
     $tech = sql_str("select job_number,photo from technician where `job_number`='$job_number'");
     array_push($info,['tech'=>$tech[0],'service'=>$service[0]]);
 }
-echo json_encode(['status'=>1,'data'=>$info,'phone'=>$phone,'exist'=>$total_time,'total_price'=>$total_price,'charge'=>$charge/100]);
+echo json_encode(['status'=>1,'data'=>$info,'phone'=>$phone,'exist'=>$total_time,'total_price'=>$total_price,'charge'=>$charge]);
