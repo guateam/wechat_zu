@@ -105,9 +105,7 @@
                     $.post("../php/delete_order.php",{
                         order_id:id
                     }).done((res)=>{
-                        if(res.status == 1){
                             location.reload();
-                        }
                     })
                 })
             }

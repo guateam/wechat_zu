@@ -210,7 +210,7 @@
 				//是否进行了选择，如果没有选择过，不能点击按钮
 				var is_choosen = false;
 				//最终选择的服务
-				var final_choose = [];
+				var final_choose = "";
 				//已经选好了技师，直接进入付钱页面
 				if (this.type == 1) {
 					for (var k in this.choosen_sv) {
@@ -218,7 +218,12 @@
 						if (!(choosen_index === "")) {
 							//获取选中的服务id
 							var svid = this.data[k]['skill'][choosen_index]['id'];
-							final_choose.push('jobnumber_' + k + '-id_' + svid)
+							if(final_choose == '')
+								final_choose+='jobnumber_' + k + '-id_' + svid;
+							else
+								final_choose+='|jobnumber_' + k + '-id_' + svid;
+								
+							//final_choose.push('jobnumber_' + k + '-id_' + svid)
 							is_choosen = true;
 						}
 					}

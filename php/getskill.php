@@ -3,7 +3,7 @@ require("database.php");
 //获取预约信息: 工号和对应的服务
 $sv = $_POST['fn'];
 $phone = (get("shop"))[0]['phone'];
-$sv = explode(',',$sv);
+$sv = explode('|',$sv);
 $info = [];
 $total_time = 0;
 $total_price = 0;
