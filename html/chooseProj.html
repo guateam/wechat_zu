@@ -227,17 +227,17 @@
 						return;
 					}
 					//点击确认下单后，将所选信息保存至cookie
-
-					$.cookie('fn', final_choose, {
-						path: '/'
-					});
-					$.cookie('tc', this.url_tc, {
-						path: '/'
-					});
-					$.cookie('select_time', this.url_time, {
-						path: '/'
-					});
-					window.location.href = "confirm-order.html"
+					//换成url参数
+					// $.cookie('fn', final_choose, {
+					// 	path: '/'
+					// });
+					// $.cookie('tc', this.url_tc, {
+					// 	path: '/'
+					// });
+					// $.cookie('select_time', this.url_time, {
+					// 	path: '/'
+					// });
+					window.location.href = "confirm-order.html?fn="+final_choose+"&tc="+this.url_tc+"&select_time="+this.url_time
 				}
 				//还未选择技师，回到技师选择界面
 				else if (this.type == 0) {

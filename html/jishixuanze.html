@@ -333,7 +333,7 @@
                 $.cookie('select_time', this.time, {
                     path: '/'
                 });
-                window.location.href = "confirm-order.html";
+                window.location.href = "confirm-order.html?fn="+final_choose+"&tc="+this.tc+"&select_time="+this.time
 
             },
             button_click(idx = -1) {
