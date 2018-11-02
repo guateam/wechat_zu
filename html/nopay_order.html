@@ -26,7 +26,7 @@
     <div class="weui-tab__panel" id="panel">
         <div class="page__bd">
             <div class="weui-form-preview" v-for="od in list" id="list-item">
-                <div>
+                <div >
                     <div class="weui-form-preview__hd">
                         <div class="weui-form-preview__item">
                             <label class="weui-form-preview__label">预约时间</label>
@@ -54,9 +54,10 @@
                     <div class="weui-form-preview__ft">
                         <a class="weui-form-preview__btn weui-form-preview__btn_primary" @click="">立即支付</a>
                         <a class="weui-form-preview__btn weui-form-preview__btn_primary" @click="window.location.href = 'yuyueStatus.html?order_id='+od.order_id">查看详情</a>
-                        <a class="weui-form-preview__btn weui-form-preview__btn_primary" @click="del(od.ID)">删除订单</a>
+                        <a class="weui-form-preview__btn weui-form-preview__btn_primary" @click="del(od.order_id)">删除订单</a>
                     </div>
                 </div>
+                <div></div>
             </div>
             <div style="margin-bottom: 50px"></div>
         </div>
@@ -101,7 +102,13 @@
             },
             del(id) {
                 $(this).openWindow("", "确认删除吗？该操作无法复原.", ["不","好的"],()=>{
-
+                    $.post("../php/delete_order.php",{
+                        order_id:id
+                    }).done((res)=>{
+                        if(res.status == 1){
+                            location.reload();
+                        }
+                    })
                 })
             }
         },

@@ -223,9 +223,7 @@
                     else if (this.pay_way == 3) {
                         $(that).openWindow("", "确认下单吗？", ["不", "是的"], () => {
                             var url = window.location.href;
-                            window.location.href =
-                                "http://1.jthysm.com/dashang/example/jsapiyy.php?pay=" + that.total_price/10000 +
-                                "&backurl=" + url;
+                            window.location.href ="http://1.jthysm.com/dashang/example/jsapiyy.php?pay=" + that.total_price +"&backurl=" + url;
                         })
                     }
                 },

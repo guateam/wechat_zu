@@ -22,9 +22,9 @@ $charge=$charge[0]['charge']-$use[0]['use'];
 
 for($i=0;$i<count($sv);$i++){
     $temp = explode('-',$sv[$i]);  
-    $job_number = explode(':',$temp[0]);
+    $job_number = explode('_',$temp[0]);
     $job_number = $job_number[1];
-    $id = explode(':',$temp[1]);
+    $id = explode('_',$temp[1]);
     $id = $id[1];
     $service = sql_str("select * from service_type where `ID`='$id'");
     $total_time+=intval($service[0]['duration'])*60;

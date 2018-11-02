@@ -321,7 +321,7 @@
                 var final_choose = [];
                 //获取选中的服务id
                 for (var i in this.tc) {
-                    final_choose.push('job_number:' + this.tc[i] + '-id:' + this.sv)
+                    final_choose.push('jobnumber_' + this.tc[i] + '-id_' + this.sv)
                 }
                 //点击确认下单后，将所选信息保存至cookie
                 $.cookie('fn', final_choose, {
