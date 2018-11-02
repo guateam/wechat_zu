@@ -163,7 +163,8 @@
                 overlay: true,
             },
             methods: {
-                change_people(val) {
+                change_people(val) 
+				{
                     this.people_num += val;
                     if (this.people_num > 6) this.people_num = 6;
                     else if (this.people_num < 1) this.people_num = 1;
@@ -275,8 +276,8 @@
                         })
                     })
                 },
-                remove(obj, idx) {
-
+                remove(obj, idx) 
+				{
                     $(this).openWindow("", '确认移除该服务吗', ['不', '好的'], () => {
                         this.total_price -= obj.service.price;
                         this.list.splice(idx, 1);
@@ -285,12 +286,42 @@
                         }
                     });
                 }
-
-
             },
-            created() {
+            created() 
+			{
+				//------------------------------------------------------------
+				var payret = getQueryString('payret');				
+				if (payret === "" || payret === undefined || payret == null)
+				{
+					//do nothing
+				}
+				else if (payret === "1")//这里表示支付成功，返回该页面
+				{
+					$(that).openWindow("", "您已成功预约", ["好的"], () => 
+					{
+						$.cookie('fn', '', {
+							expires: -1
+						}); // 删除 cookie
+						$.cookie('tc', '', {
+							expires: -1
+						}); // 删除 cookie
+						$.cookie('select_time', '', {
+							expires: -1
+						}); // 删除 cookie
+						window.location.href = "index.html"
+					})
+				}
+				else if (payret === "2")//这里表示支付失败，返回该页面	
+				{
+					$(that).openWindow("", "支付失败", ["确定"], () => 
+					{
+						
+					})
+				}
+			
+				//------------------------------------------------------------	
+				
                 var that = this;
-
                 that.start_time = parseInt($.cookie('select_time'));
                 $.post('../php/getskill.php', {}).done((res) => {
                     res = JSON.parse(res);
@@ -301,6 +332,7 @@
                         that.overlay = false;
                     }
                 })
+				
                 $.post('../php/getpromotion.php', {
                     ajax_get: true
                 }).done((res) => {
