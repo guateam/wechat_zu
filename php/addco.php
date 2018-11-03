@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('PRC');
 require("database.php");
 $id = $_POST['id'];
 $phone = $_POST['phone'];

@@ -123,6 +123,7 @@
             <!--</div>-->
         <!--</div>-->
     <!--</div>-->
+	
     <div class="weui-cells__title">优惠活动</div>
     <div class="weui-cells">
         <div class="weui-cell weui-cell_swiped">
@@ -142,7 +143,7 @@
         </div>
     </div>
     <div style="position: fixed;bottom: 20px;width: 100%;height: 40px;">
-        <button @click="recharge()"
+        <button @click="dashang()"
                 style="width: 94%;margin-left: 3%;height: 40px;border-radius: 15px;background-color: #00e4e6;border: none;color: white">
             确认打赏
         </button>
@@ -168,6 +169,30 @@
 <script type="text/javascript" src="../js/iview.min.js"></script>
 
 <script>
+	function navi(url)
+	{
+		window.location.href = url;
+	}
+	
+	function getQueryString(name) 
+	{
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+	
+	function sleep(delay) 
+	{
+	  var start = (new Date()).getTime();
+	  while ((new Date()).getTime() - start < delay) 
+	  {
+		continue;
+	  }
+	}
+</script>
+
+<script>
     /**
 
      注意，大约在160行左右的post数据进行充值，user_id将在日后通过微信接口获得，目前只是静态数据，记得修改
@@ -175,36 +200,8 @@
     let app = new Vue({
         el: "#app",
         data: {
-            xuanzejine: false,
-            jishi: [
-                {
-                    value: 'AKB48',
-                    label: 'AKB48'
-                },
-                {
-                    value: 'NNK43',
-                    label: 'NNK43'
-                },
-                {
-                    value: 'KJKF39',
-                    label: 'KJKF39'
-                },
-                {
-                    value: 'FEFE343',
-                    label: 'FEFE343'
-                },
-                {
-                    value: 'EDEF67',
-                    label: 'EDEF67'
-                },
-                {
-                    value: 'FER67',
-                    label: 'FER67'
-                }
-            ],
+            xuanzejine: false,           
             model1: '',
-            name: "",
-            cash: 0,
             job_number: "",
             pay: 0,
             overlay: true,
@@ -221,70 +218,140 @@
             fee: 0,
             moneyList:[],
         },
-        methods: {
-            getMoney(index){
-                if(this.moneyList.length == 0){
+        methods: 
+		{
+            getMoney(index)
+			{
+                if(this.moneyList.length == 0)
+				{
                     this.moneyList.push($("#box"+index+">span:nth-child(2)").text());
-                }else {
+                }
+				else 
+				{
                     this.moneyList.splice(0,this.moneyList.length);
                     this.moneyList.push($("#box"+index+">span:nth-child(2)").text());
                 }
                 return index;
             },  
-            userxuanzejine() {
+            userxuanzejine() 
+			{
                 this.xuanzejine = !this.xuanzejine;
             },
-            choose(idx) {
+            choose(idx) 
+			{
                 var that = this;
-                for (var i = 0; i < that.box_list.length; i++) {
-                    if (i == idx) {
+                for (var i = 0; i < that.box_list.length; i++) 
+				{
+                    if (i == idx) 
+					{
                         //不能直接赋值，vue无法通过数组索引的方式检测到数据变化，必须用Vue.set来改变数据
                         Vue.set(that.box_list, i, 1)//that.box_list[i] = 1;
                         that.fee = that.fee_list[i];
-                    } else {
+                    } 
+					else 
+					{
                         Vue.set(that.box_list, i, 0)//that.box_list[i] = 0;
                     }
                 }
             },
-            recharge() {
+			
+            dashang() 
+			{
                 var that = this;
-                if(this.moneyList.length == 0){
-                     $(that).openWindow("注意", "请选择充值金额", ['好的']);
+                if(this.moneyList.length == 0)
+				{
+                     $(that).openWindow("注意", "请选择打赏金额", ['好的']);
                 }
-                 else {
-                    $(that).openWindow("注意", "充值的金额:"+this.moneyList[0]+" "+"充值的技师工号:"+localStorage.getItem("job_number"), ['好的'],()=>{
-                        $.post('../php/recharge.php', {
-                            charge: that.fee,
+                else 
+				{
+					var jobnumber = getQueryString('job_number');					
+                    $(that).openWindow("确认", "打赏的金额:"+this.moneyList[0]+"元， "+"打赏的技师工号:"+jobnumber, ['好的'],()=>{
+					
+						var url = encodeURIComponent(window.location.href+"&money="+this.moneyList[0] * 100);
+						
+						var payurl = "http://1.jthysm.com/dashang/example/jsapiyy.php?pay=" + this.moneyList[0] * 100 + "&backurl=" + url; 						
+						//var payurl = "http://1.jthysm.com/dashang/example/jsapiyy.php?pay=" + this.moneyList[0] * 100;						
+						//alert(payurl);
+						
+                        //window.location.href = "http://1.jthysm.com/dashang/example/jsapiyy.php?pay=" + this.moneyList[0] + "&backurl=" + url; 
+						window.location.href = payurl;
+                        
+						/*
+						$.post('../php/dashang.php', 
+						{
+                            pay: this.moneyList[0] * 100,
                             user_id: "test",
-                            job_number: that.job_number,
-                            pay: that.pay
-                        }).done((res) => {
+                            job_number: jobnumber,
+                        }).done((res) => 
+						{
                             res = JSON.parse(res);
                             if (res.status == 0) {
-                                $(that).openWindow("", "充值成功", ['好的'], () => {
-                                    localStorage.removeItem("job_number");
+                                $(that).openWindow("", "打赏成功", ['好的'], () => {                                   
                                     window.location.href = "index.html";
                                 })
                             }
-                    })
+						})
+						*/
                     });
-                    // alert("充值的金额:"+this.moneyList[0]+" "+"充值的技师工号:"+localStorage.getItem("job_number"));
                 }
-            }
+            },
+			
+			
         },
-        created() {
-            var that = this
-            $.post("../php/getcustomer.php", {
-                phone: "13777579230"
-            }).done((res) => {
-                res = JSON.parse(res);
-                if (res.status == 1) {
-                    that.name = res.name;
-                    that.cash = res.cash;
-                    that.overlay = false;
-                }
-            })
-        },
+        created() {			
+			var that = this;
+			
+			//------------------------------------------------------------
+			//微信支付的情况
+			var payret = getQueryString('payret');
+			//------------------------------------------------------------	
+			
+			//微信的支付
+			if (payret === "" || payret === undefined || payret == null) 
+			{
+				
+			} 
+			else if (payret === "1") //这里表示支付成功，返回该页面
+			{
+				$(that).openWindow("", "您已成功打赏", ["好的"], () => {
+					that.overlay = true;
+					
+					var money = getQueryString('money');
+					
+					var jobnumber = getQueryString('job_number');
+					
+					$.post('../php/dashang.php', 
+					{
+						pay: money,
+						user_id: "test",
+						job_number: jobnumber,
+					}).done((res) => 
+					{
+						res = JSON.parse(res);
+						if (res.status == 1) {
+							window.location.href = "index.html";
+						}
+					})
+				})
+			} 
+			else if (payret === "2") //这里表示支付失败，返回该页面	
+			{
+				$(that).openWindow("", "支付失败", ["确定"], () => {					
+				})
+			}
+			//------------------------------------------------------------	
+			
+			$.post("../php/getcustomer.php", {
+					phone: "13777579230"
+			}).done((res) => {
+				res = JSON.parse(res);
+				if (res.status == 1) {
+					that.name = res.name;
+					that.cash = res.cash;
+					that.overlay = false;
+				}
+			})	
+        },		
     })
 
 
