@@ -3,7 +3,7 @@ require("database.php");
 //获取预约信息: 工号和对应的服务
 $sv = $_POST['fn'];
 $phone = (get("shop"))[0]['phone'];
-$sv = explode('|',$sv);
+$sv = explode('-',$sv);
 $info = [];
 $total_time = 0;
 $total_price = 0;
@@ -20,12 +20,10 @@ $use = sql_str($str);
 $charge=$charge[0]['charge']-$use[0]['use'];
 
 
-for($i=0;$i<count($sv);$i++){
-    $temp = explode('-',$sv[$i]);  
-    $job_number = explode('_',$temp[0]);
-    $job_number = $job_number[1];
-    $id = explode('_',$temp[1]);
-    $id = $id[1];
+for($i=0;$i<count($sv)/2;$i++){
+    $j = $i*2;
+    $job_number = $sv[$j];
+    $id = $sv[$j+1];
     $service = sql_str("select * from service_type where `ID`='$id'");
     $total_time+=intval($service[0]['duration'])*60;
     $total_price+=intval($service[0]['price']);

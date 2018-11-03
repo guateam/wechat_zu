@@ -219,9 +219,9 @@
 							//获取选中的服务id
 							var svid = this.data[k]['skill'][choosen_index]['id'];
 							if(final_choose == '')
-								final_choose+='jobnumber_' + k + '-id_' + svid;
+								final_choose+= k + '-' + svid;
 							else
-								final_choose+='|jobnumber_' + k + '-id_' + svid;
+								final_choose+= '-'+k + '-' + svid;
 								
 							//final_choose.push('jobnumber_' + k + '-id_' + svid)
 							is_choosen = true;
@@ -242,7 +242,7 @@
 					// $.cookie('select_time', this.url_time, {
 					// 	path: '/'
 					// });
-					window.location.href = "confirm-order.html?fn="+final_choose+"&tc="+this.url_tc+"&select_time="+this.url_time
+					window.location.href = "confirm-order.html?fn="+final_choose+"&selecttime="+this.url_time
 				}
 				//还未选择技师，回到技师选择界面
 				else if (this.type == 0) {

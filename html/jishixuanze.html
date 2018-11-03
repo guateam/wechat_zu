@@ -318,10 +318,14 @@
                     this.chooseProj();
                     return;
                 }
-                var final_choose = [];
+                var final_choose = "";
                 //获取选中的服务id
                 for (var i in this.tc) {
-                    final_choose.push('jobnumber_' + this.tc[i] + '-id_' + this.sv)
+                    if (final_choose == '')
+                        final_choose +=  k + '-' + svid;
+                    else
+                        final_choose += '-'+ k + '-' + svid;
+                    //final_choose.push('jobnumber_' + this.tc[i] + '-id_' + this.sv)
                 }
                 //点击确认下单后，将所选信息保存至cookie
                 $.cookie('fn', final_choose, {
@@ -333,7 +337,7 @@
                 $.cookie('select_time', this.time, {
                     path: '/'
                 });
-                window.location.href = "confirm-order.html?fn="+final_choose+"&tc="+this.tc+"&select_time="+this.time
+                window.location.href = "confirm-order.html?fn=" + final_choose + "&selecttime=" + this.time
 
             },
             button_click(idx = -1) {
