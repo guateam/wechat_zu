@@ -322,21 +322,11 @@
                 //获取选中的服务id
                 for (var i in this.tc) {
                     if (final_choose == '')
-                        final_choose +=  k + '-' + svid;
+                        final_choose +=  this.tc[i] + '-' + this.sv;
                     else
-                        final_choose += '-'+ k + '-' + svid;
+                        final_choose += '-'+ this.tc[i] + '-' + this.sv;
                     //final_choose.push('jobnumber_' + this.tc[i] + '-id_' + this.sv)
                 }
-                //点击确认下单后，将所选信息保存至cookie
-                $.cookie('fn', final_choose, {
-                    path: '/'
-                });
-                $.cookie('tc', this.tc, {
-                    path: '/'
-                });
-                $.cookie('select_time', this.time, {
-                    path: '/'
-                });
                 window.location.href = "confirm-order.html?fn=" + final_choose + "&selecttime=" + this.time
 
             },
