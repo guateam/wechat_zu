@@ -129,7 +129,11 @@
                 })
             } else if (payret === "1") //这里表示支付成功，返回该页面,去除url参数
             {
-               window.location.href = "nopay_order.html"
+                $.post("../php/pay_unpaid.php",{
+                    order_id:getQueryString('order_id')
+                }).done((res)=>{
+                    window.location.href = "nopay_order.html"
+                })
             } else if (payret === "2") {
                 window.location.href = "nopay_order.html"
             }

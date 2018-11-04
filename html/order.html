@@ -66,7 +66,7 @@
                                 <div class="weui-form-preview__bd">
                                     <div class="weui-form-preview__item">
                                         <label class="weui-form-preview__label">消费金额</label>
-                                        <span class="weui-form-preview__value" v-text="'￥'+od.pay_amount"></span>
+                                        <span class="weui-form-preview__value" v-text="'￥'+od.pay_amount/100"></span>
                                     </div>
                                     <div class="weui-form-preview__item">
                                         <label class="weui-form-preview__label">订单号</label>
@@ -78,7 +78,7 @@
                                     </div>
                                 </div>
                                 <div class="weui-form-preview__ft">
-                                    <a class="weui-form-preview__btn weui-form-preview__btn_primary" @click="pay_order(od.order_id)">支付</a>
+                                    <a class="weui-form-preview__btn weui-form-preview__btn_primary" @click="pay_order(od.order_id,od.pay_amount)">支付</a>
                                     <a class="weui-form-preview__btn weui-form-preview__btn_primary" @click="del_appo(od.order_id)">删除订单</a>
                                 </div>
                             </div>
@@ -98,7 +98,7 @@
                                     <div class="weui-form-preview__bd">
                                         <div class="weui-form-preview__item">
                                             <label class="weui-form-preview__label">消费金额</label>
-                                            <span class="weui-form-preview__value" v-text="'￥'+od.pay_amount"></span>
+                                            <span class="weui-form-preview__value" v-text="'￥'+od.pay_amount/100"></span>
                                         </div>
                                         <div class="weui-form-preview__item">
                                             <label class="weui-form-preview__label">订单号</label>
@@ -130,7 +130,7 @@
                                 <div class="weui-form-preview__bd">
                                     <div class="weui-form-preview__item">
                                         <label class="weui-form-preview__label">消费金额</label>
-                                        <span class="weui-form-preview__value" v-text="'￥'+od.pay_amount"></span>
+                                        <span class="weui-form-preview__value" v-text="'￥'+od.pay_amount/100"></span>
                                     </div>
                                     <div class="weui-form-preview__item">
                                         <label class="weui-form-preview__label">订单号</label>
@@ -202,8 +202,8 @@
         data: {
             activeName: 'first',
             nopay: [],
-            pay:[],
-            com:[],
+            pay: [],
+            com: [],
             overlay: true,
             selector: null,
         },
@@ -234,6 +234,18 @@
             comment(id) {
                 window.location.href = 'my-rate.html?id=' + id
             },
+            //支付预约订单
+            pay_order(id, pay) {
+                var url = encodeURIComponent(window.location.href + "?order_id=" + id);
+                //金额单位以 分 表示
+                window.location.href = "http://1.jthysm.com/dashang/example/jsapiyy.php?pay=" + pay +
+                    "&backurl=" + url
+            },
+            //数据库里删除预约订单
+            del_appo(id) {
+
+            },
+            //让某个订单不显示
             del(id) {
                 $(this).openWindow("", "确认删除吗？该操作无法复原", ["不", "好的"], () => {
                     $.post("../php/delete_sv_order.php", {
@@ -254,36 +266,28 @@
         },
         created() {
             var that = this;
-            $.post("../php/getbrieforder.php",{
-                openid:1//open_id为微信用户的open_id
-            }).done((res) => {
-                res = JSON.parse(res);
-                console.log(res);
-                that.nopay = res.nopay;
-                that.pay = res.pay;
-                that.com = res.com;
-                that.overlay = false;
-                // for (var i = 0; i < res.length; i++) {
-                //     that.order.push({
-                //         ID: res[i]['ID'],
-                //         job_number: res[i]['job_number'],
-                //         price: res[i]['price'],
-                //         order_id: res[i]['order_id'],
-                //         state: res[i]['state'],
-                //         time: res[i]['time'],
-                //         show: true
-                //     });
-                //     if (that.order[i].state == 0) that.order[i].state = "订单取消"
-                //     else if (that.order[i].state == 1) that.order[i].state = "预约"
-                //     else if (that.order[i].state == 2) that.order[i].state = "服务中"
-                //     else if (that.order[i].state == 3) that.order[i].state = "等待支付"
-                //     else if (that.order[i].state == 4) that.order[i].state = "支付完成"
-                //     else that.order[i].state = "评价完成"
+            var payret = getQueryString('payret');
+            if (payret === "" || payret === undefined || payret == null) {
+                $.post("../php/getbrieforder.php", {
+                    openid: 1 //open_id为微信用户的open_id
+                }).done((res) => {
+                    res = JSON.parse(res);
+                    console.log(res);
+                    that.nopay = res.nopay;
+                    that.pay = res.pay;
+                    that.com = res.com;
+                    that.overlay = false;
+                })
+            } else if (payret === "1") {
+                $.post("../php/pay_unpaid.php",{
+                    order_id:getQueryString('order_id')
+                }).done((res)=>{
+                    window.location.href = "order.html"
+                })
+            } else if (payret === "2") {
+                window.location.href = "order.html";
+            }
 
-                //     that.order[i]['show'] = true;
-                //     that.overlay = false;
-                // }
-            })
         }
     })
     $(function () {
