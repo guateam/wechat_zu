@@ -51,10 +51,10 @@ if($user)
             ['payment_method',0] //未支付的时候，支付方式为0，表示未支付
         ]);
         //添加服务
-        foreach($obj as $tech)
+        foreach($obj as $tech_service)
         {
-            $jbnb = $tech['tech']['job_number'];
-            $service_id = $tech['service']['openid'];
+            $jbnb = $tech_service['tech']['job_number'];
+            $service_id = $tech_service['service']['ID'];
             add("service_order",[['appoint_time',$appoint_time],['order_id',$time],['service_type',1],["item_id",$service_id],["job_number",$jbnb]]);
         }
         echo json_encode(['state'=>1,'order_id'=>$time]);
@@ -74,10 +74,10 @@ if($user)
         ['payment_method',$pay_way] 
     ]);
     //添加服务
-    foreach($obj as $tech)
+    foreach($obj as $tech_service)
     {
-        $jbnb = $tech['tech']['job_number'];
-        $service_id = $tech['service']['openid'];
+        $jbnb = $tech_service['tech']['job_number'];
+        $service_id = $tech_service['service']['ID'];
         add("service_order",[['appoint_time',$appoint_time],['order_id',$time],['service_type',1],["item_id",$service_id],["job_number",$jbnb]]);
     }
     echo json_encode(['state'=>1,'order_id'=>$time]);
