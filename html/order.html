@@ -6,7 +6,7 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <link href="../css/iview.css" rel="stylesheet">
     <title>历史订单</title>
-    <link rel="stylesheet" href="../css/weui-min.css" />
+    <!--<link rel="stylesheet" href="../css/weui-min.css" />-->
     <link rel="stylesheet" href="../css/example.css" />
     <link rel="stylesheet" href="../css/global.css" />
     <link rel="stylesheet" type="text/css" href="../css/overlay.css">
@@ -29,19 +29,46 @@
             font-family: PingFang SC, Verdana, Helvetica Neue, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
             line-height: normal;
         }
+        .weui-tabbar{
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;
+            position: fixed;
+            z-index: 500;
+            bottom: 0;
+            width: 100%;
+            line-height: 1.6;
+            background-color: #F7F7FA;
+        }
+        .weui-tabbar__item{
+            display: block;
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+            padding: 5px 0 0;
+            font-size: 0;
+            color: #808080;
+            text-align: center;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+        .weui-tabbar__icon {
+            display: inline-block;
+            width: 27px;
+            height: 27px;
+        }
+        .weui-tabbar__label {
+            text-align: center;
+            color: #808080;
+            font-size: 10px;
+            line-height: 1.8;
+        }
     </style>
 </head>
 
 <body>
-    <div class="weui-tab" id="app">
-        <div class="weui-tab__panel" id="panel">
-            <!-- <div class="page__hd" style="display: flex;align-items: center;justify-content: space-between"> -->
-            <!-- <h4 class="page__title">我的评价</h4> -->
-            <!-- <i-select v-model="model1" style="width:200px">
-                <i-option v-for="item in iot" :value="item.value" :key="item.value">{{ item.label }}</i-option>
-            </i-select> -->
-            <!-- <a @click="picker()" href="javascript:;" class="weui-btn weui-btn_default" style="width: 200px;">快速查找</a> -->
-            <!-- </div> -->
+    <div style="position: relative;height: 100%;" id="app">
+        <div id="panel">
+
 
 
             <!--<el-tabs v-model="activeName" @tab-click="handleClick">-->
@@ -56,31 +83,31 @@
             <row>
                 <tabs value="name4">
                     <tab-pane label="待付款" name="name2">
-                        <div class="weui-form-preview" v-for="od in nopay" id="list-item">
+                        <div style="position: relative;background: #ffffff;" v-for="od in nopay" id="list-item">
                             <div v-if="od.show">
-                                <div class="weui-form-preview__hd">
-                                    <div class="weui-form-preview__item">
-                                        <label class="weui-form-preview__label">预约时间</label>
-                                        <em class="weui-form-preview__value" v-text="date('Y-m-d H:i',od.appoint_time)"></em>
+                                <div style="position: relative;padding: 10px 15px;text-align: right;line-height: 2.5em;">
+                                    <div style="overflow: hidden;">
+                                        <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">预约时间</label>
+                                        <em style="font-style: normal;font-size: 1.6em;display: block;overflow: hidden;word-break: normal;word-wrap: break-word;" v-text="date('Y-m-d H:i',od.appoint_time)"></em>
                                     </div>
                                 </div>
-                                <div class="weui-form-preview__bd">
-                                    <div class="weui-form-preview__item">
-                                        <label class="weui-form-preview__label">消费金额</label>
-                                        <span class="weui-form-preview__value" v-text="'￥'+od.pay_amount/100"></span>
+                                <div style="padding: 10px 15px;font-size: 1em;text-align: right;color: #808080;line-height: 2;">
+                                    <div style="overflow: hidden;">
+                                        <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">消费金额</label>
+                                        <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;" v-text="'￥'+od.pay_amount/100"></span>
                                     </div>
-                                    <div class="weui-form-preview__item">
-                                        <label class="weui-form-preview__label">订单号</label>
-                                        <span class="weui-form-preview__value" v-text="od.order_id"></span>
+                                    <div style="overflow: hidden;">
+                                        <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">订单号</label>
+                                        <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;" v-text="od.order_id"></span>
                                     </div>
-                                    <div class="weui-form-preview__item">
-                                        <label class="weui-form-preview__label">状态</label>
-                                        <span class="weui-form-preview__value" style="color: red" v-text="'待付款'"></span>
+                                    <div style="overflow: hidden;">
+                                        <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">状态</label>
+                                        <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;color: red" v-text="'待付款'"></span>
                                     </div>
                                 </div>
-                                <div class="weui-form-preview__ft">
-                                    <a class="weui-form-preview__btn weui-form-preview__btn_primary" @click="pay_order(od.order_id,od.pay_amount)">支付</a>
-                                    <a class="weui-form-preview__btn weui-form-preview__btn_primary" @click="del_appo(od.order_id)">删除订单</a>
+                                <div style="position: relative;line-height: 50px;display: flex;">
+                                    <a style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);" @click="pay_order(od.order_id,od.pay_amount)">支付</a>
+                                    <a style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);" @click="del_appo(od.order_id)">删除订单</a>
                                 </div>
                             </div>
                         </div>
@@ -88,31 +115,31 @@
                     </tab-pane>
                     <tab-pane label="待评价" name="name4">
                         <div class="page__bd">
-                            <div class="weui-form-preview" v-for="od in pay" id="list-item">
+                            <div style="position: relative;background: #ffffff;" v-for="od in pay" id="list-item">
                                 <div v-if="od.show">
-                                    <div class="weui-form-preview__hd">
-                                        <div class="weui-form-preview__item">
-                                            <label class="weui-form-preview__label">时间</label>
-                                            <em class="weui-form-preview__value" v-text="date('Y-m-d H:i',od.generated_time)"></em>
+                                    <div style="position: relative;padding: 10px 15px;text-align: right;line-height: 2.5em;">
+                                        <div style="overflow: hidden;">
+                                            <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">时间</label>
+                                            <em style="font-style: normal;font-size: 1.6em;display: block;overflow: hidden;word-break: normal;word-wrap: break-word;" v-text="date('Y-m-d H:i',od.generated_time)"></em>
                                         </div>
                                     </div>
-                                    <div class="weui-form-preview__bd">
-                                        <div class="weui-form-preview__item">
-                                            <label class="weui-form-preview__label">消费金额</label>
-                                            <span class="weui-form-preview__value" v-text="'￥'+od.pay_amount/100"></span>
+                                    <div style="padding: 10px 15px;font-size: 1em;text-align: right;color: #808080;line-height: 2;">
+                                        <div style="overflow: hidden;">
+                                            <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">消费金额</label>
+                                            <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;" v-text="'￥'+od.pay_amount/100"></span>
                                         </div>
-                                        <div class="weui-form-preview__item">
-                                            <label class="weui-form-preview__label">订单号</label>
-                                            <span class="weui-form-preview__value" v-text="od.order_id"></span>
+                                        <div style="overflow: hidden;">
+                                            <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">订单号</label>
+                                            <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;" v-text="od.order_id"></span>
                                         </div>
-                                        <div class="weui-form-preview__item">
-                                            <label class="weui-form-preview__label">状态</label>
-                                            <span class="weui-form-preview__value" style="color: red" v-text="'待评价'"></span>
+                                        <div style="overflow: hidden;">
+                                            <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">状态</label>
+                                            <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;color: red" v-text="'待评价'"></span>
                                         </div>
                                     </div>
-                                    <div class="weui-form-preview__ft">
-                                        <a class="weui-form-preview__btn weui-form-preview__btn_primary" @click="detail(od.order_id)">查看详情</a>
-                                        <a class="weui-form-preview__btn weui-form-preview__btn_primary" @click="del(od.order_id)">删除记录</a>
+                                    <div style="position: relative;line-height: 50px;display: flex;">
+                                        <a style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);" @click="detail(od.order_id)">查看详情</a>
+                                        <a style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);" @click="del(od.order_id)">删除记录</a>
                                     </div>
                                 </div>
                             </div>
@@ -120,32 +147,32 @@
                         </div>
                     </tab-pane>
                     <tab-pane label="评价完成" name="name5">
-                        <div class="weui-form-preview" v-for="od in com" id="list-item">
+                        <div style="position: relative;background: #ffffff;" v-for="od in com" id="list-item">
                             <div v-if="od.show">
-                                <div class="weui-form-preview__hd">
-                                    <div class="weui-form-preview__item">
-                                        <label class="weui-form-preview__label">时间</label>
-                                        <em class="weui-form-preview__value" v-text="date('Y-m-d H:i',od.generated_time)"></em>
+                                <div style="position: relative;padding: 10px 15px;text-align: right;line-height: 2.5em;">
+                                    <div style="overflow: hidden;">
+                                        <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">时间</label>
+                                        <em style="font-style: normal;font-size: 1.6em;display: block;overflow: hidden;word-break: normal;word-wrap: break-word;" v-text="date('Y-m-d H:i',od.generated_time)"></em>
                                     </div>
                                 </div>
-                                <div class="weui-form-preview__bd">
-                                    <div class="weui-form-preview__item">
-                                        <label class="weui-form-preview__label">消费金额</label>
-                                        <span class="weui-form-preview__value" v-text="'￥'+od.pay_amount/100"></span>
+                                <div style="padding: 10px 15px;font-size: 1em;text-align: right;color: #808080;line-height: 2;">
+                                    <div style="overflow:hidden;">
+                                        <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">消费金额</label>
+                                        <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;" v-text="'￥'+od.pay_amount/100"></span>
                                     </div>
-                                    <div class="weui-form-preview__item">
-                                        <label class="weui-form-preview__label">订单号</label>
-                                        <span class="weui-form-preview__value" v-text="od.order_id"></span>
+                                    <div style="overflow:hidden;">
+                                        <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">订单号</label>
+                                        <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;" v-text="od.order_id"></span>
                                     </div>
-                                    <div class="weui-form-preview__item">
-                                        <label class="weui-form-preview__label">状态</label>
-                                        <span class="weui-form-preview__value" style="color: red" v-text="'完成'"></span>
+                                    <div style="overflow:hidden;">
+                                        <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">状态</label>
+                                        <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;color: red" v-text="'完成'"></span>
                                     </div>
                                 </div>
-                                <div class="weui-form-preview__ft">
-                                    <a class="weui-form-preview__btn weui-form-preview__btn_primary" @click="detail(od.order_id)">查看详情</a>
-                                    <a class="weui-form-preview__btn weui-form-preview__btn_primary" @click="comment(od.order_id)">查看评价</a>
-                                    <a class="weui-form-preview__btn weui-form-preview__btn_primary" @click="del(od.order_id)">删除记录</a>
+                                <div style="position: relative;line-height: 50px;display: flex;">
+                                    <a style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);" @click="detail(od.order_id)">查看详情</a>
+                                    <a style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);" @click="comment(od.order_id)">查看评价</a>
+                                    <a style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);" @click="del(od.order_id)">删除记录</a>
                                 </div>
                             </div>
                         </div>
@@ -161,7 +188,7 @@
             </a>
             <a href="../html/order.html" class="weui-tabbar__item weui-bar__item_on">
                 <img src="../src/订单激活.png" data-original="../src/订单激活.png" alt="" class="weui-tabbar__icon">
-                <p class="weui-tabbar__label">订单</p>
+                <p class="weui-tabbar__label" style="color: rgb(9, 187,7);">订单</p>
             </a>
             <a href="../html/customer.html" class="weui-tabbar__item">
                 <img src="../src/我的.png" data-original="../src/我的激活.png" alt="" class="weui-tabbar__icon">
