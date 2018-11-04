@@ -127,30 +127,11 @@
                     }
                     that.overlay = false;
                 })
-            } else if (payret === "1") //这里表示支付成功，返回该页面
+            } else if (payret === "1") //这里表示支付成功，返回该页面,去除url参数
             {
-                $.post("../php/pay_unpaid.php", {
-                    order_id: getQueryString('order_id')
-                }).done((res) => {
-                    res = JSON.parse(res);
-                    if (res.status == 1) {
-                        $.post("../php/get_unpaid.php").done((res) => {
-                            res = JSON.parse(res);
-                            if (res.status == 1) {
-                                that.list = res.data;
-                            }
-                            that.overlay = false;
-                        })
-                    }
-                })
+               window.location.href = "nopay_order.html"
             } else if (payret === "2") {
-                $.post("../php/get_unpaid.php").done((res) => {
-                    res = JSON.parse(res);
-                    if (res.status == 1) {
-                        that.list = res.data;
-                    }
-                    that.overlay = false;
-                })
+                window.location.href = "nopay_order.html"
             }
         }
     })

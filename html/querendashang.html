@@ -336,7 +336,8 @@
 			} 
 			else if (payret === "2") //这里表示支付失败，返回该页面	
 			{
-				$(that).openWindow("", "支付失败", ["确定"], () => {					
+				$(that).openWindow("", "支付失败", ["确定"], () => {	
+                    window.location.href = "dashangjishi.html"				
 				})
 			}
 			//------------------------------------------------------------	
