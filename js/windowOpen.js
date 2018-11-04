@@ -24,7 +24,7 @@
 		$oMasking = $('.window-masking');
 		$oWindowContainer = $('.window-container');
 		//点击取消按钮关闭弹窗
-		$('.cancel-button,.window-masking,.ack-button').on('click',()=>{
+		$('.cancel-button,.ack-button').on('click',()=>{
 			console.log('左')
 			closeCallBack();
 			closeWindow();
