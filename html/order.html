@@ -81,37 +81,94 @@
 
 
             <row>
-                <tabs value="name4">
+                <tabs value="name1">
+                    <tab-pane label="全部" name="name1">
+                        <div class="page__bd">
+                            <div style="position: relative;background: #ffffff;" v-for="od in allorder" id="list-item">
+                                <div v-if="od.show">
+                                    <div style="position: relative;padding: 10px 15px;text-align: right;line-height: 2.5em;">
+                                        <div style="overflow: hidden;">
+                                            <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">时间</label>
+                                            <em style="font-style: normal;font-size: 1.6em;display: block;overflow: hidden;word-break: normal;word-wrap: break-word;"
+                                                v-text="date('Y-m-d H:i',od.generated_time)"></em>
+                                        </div>
+                                    </div>
+                                    <div style="padding: 10px 15px;font-size: 1em;text-align: right;color: #808080;line-height: 2;">
+                                        <div style="overflow: hidden;">
+                                            <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">消费金额</label>
+                                            <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;"
+                                                v-text="'￥'+od.pay_amount/100"></span>
+                                        </div>
+                                        <div style="overflow: hidden;">
+                                            <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">订单号</label>
+                                            <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;"
+                                                v-text="od.order_id"></span>
+                                        </div>
+                                        <div style="overflow: hidden;">
+                                            <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">状态</label>
+                                            <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;color: red"
+                                                v-text="'待评价'"></span>
+                                        </div>
+                                    </div>
+                                    <div style="position: relative;line-height: 50px;display: flex;">
+                                        <!-- 付完的订单，查看详情进入订单详情 -->
+                                        <a v-if="od.state==4 || od.state==5" style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);"
+                                            @click="detail(od.order_id)">查看详情</a>
+                                        <!-- 没付完的订单，进入yuyueStatus.html -->
+                                        <a v-if="od.state==1" style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);"
+                                            @click="detail_appo(od.order_id)">查看详情</a>
+
+                                        <!-- 付完的订单，删除就是不显示 -->
+                                        <a v-if="od.state==4 || od.state==5" style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);"
+                                            @click="del(od.order_id)">删除记录</a>
+                                        <!-- 没支付的订单，删除是数据库删除记录 -->
+                                        <a v-if="od.state==1" style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);"
+                                            @click="del_appo(od.order_id)">删除记录</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 50px"></div>
+                        </div>
+                    </tab-pane>
                     <tab-pane label="待付款" name="name2">
                         <div style="position: relative;background: #ffffff;" v-for="od in nopay" id="list-item">
                             <div v-if="od.show">
                                 <div style="position: relative;padding: 10px 15px;text-align: right;line-height: 2.5em;">
                                     <div style="overflow: hidden;">
                                         <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">预约时间</label>
-                                        <em style="font-style: normal;font-size: 1.6em;display: block;overflow: hidden;word-break: normal;word-wrap: break-word;" v-text="date('Y-m-d H:i',od.appoint_time)"></em>
+                                        <em style="font-style: normal;font-size: 1.6em;display: block;overflow: hidden;word-break: normal;word-wrap: break-word;"
+                                            v-text="date('Y-m-d H:i',od.appoint_time)"></em>
                                     </div>
                                 </div>
                                 <div style="padding: 10px 15px;font-size: 1em;text-align: right;color: #808080;line-height: 2;">
                                     <div style="overflow: hidden;">
                                         <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">消费金额</label>
-                                        <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;" v-text="'￥'+od.pay_amount/100"></span>
+                                        <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;"
+                                            v-text="'￥'+od.pay_amount/100"></span>
                                     </div>
                                     <div style="overflow: hidden;">
                                         <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">订单号</label>
-                                        <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;" v-text="od.order_id"></span>
+                                        <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;"
+                                            v-text="od.order_id"></span>
                                     </div>
                                     <div style="overflow: hidden;">
                                         <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">状态</label>
-                                        <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;color: red" v-text="'待付款'"></span>
+                                        <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;color: red"
+                                            v-text="'待付款'"></span>
                                     </div>
                                 </div>
                                 <div style="position: relative;line-height: 50px;display: flex;">
-                                    <a style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);" @click="pay_order(od.order_id,od.pay_amount)">支付</a>
-                                    <a style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);" @click="del_appo(od.order_id)">删除订单</a>
+                                    <a style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);"
+                                        @click="pay_order(od.order_id,od.pay_amount)">支付</a>
+                                    <a style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);"
+                                        @click="del_appo(od.order_id)">删除订单</a>
                                 </div>
                             </div>
                         </div>
                         <div style="margin-bottom: 50px"></div>
+                    </tab-pane>
+                    <tab-pane label="待消费" name="name6">
+
                     </tab-pane>
                     <tab-pane label="待评价" name="name4">
                         <div class="page__bd">
@@ -120,26 +177,32 @@
                                     <div style="position: relative;padding: 10px 15px;text-align: right;line-height: 2.5em;">
                                         <div style="overflow: hidden;">
                                             <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">时间</label>
-                                            <em style="font-style: normal;font-size: 1.6em;display: block;overflow: hidden;word-break: normal;word-wrap: break-word;" v-text="date('Y-m-d H:i',od.generated_time)"></em>
+                                            <em style="font-style: normal;font-size: 1.6em;display: block;overflow: hidden;word-break: normal;word-wrap: break-word;"
+                                                v-text="date('Y-m-d H:i',od.generated_time)"></em>
                                         </div>
                                     </div>
                                     <div style="padding: 10px 15px;font-size: 1em;text-align: right;color: #808080;line-height: 2;">
                                         <div style="overflow: hidden;">
                                             <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">消费金额</label>
-                                            <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;" v-text="'￥'+od.pay_amount/100"></span>
+                                            <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;"
+                                                v-text="'￥'+od.pay_amount/100"></span>
                                         </div>
                                         <div style="overflow: hidden;">
                                             <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">订单号</label>
-                                            <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;" v-text="od.order_id"></span>
+                                            <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;"
+                                                v-text="od.order_id"></span>
                                         </div>
                                         <div style="overflow: hidden;">
                                             <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">状态</label>
-                                            <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;color: red" v-text="'待评价'"></span>
+                                            <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;color: red"
+                                                v-text="'待评价'"></span>
                                         </div>
                                     </div>
                                     <div style="position: relative;line-height: 50px;display: flex;">
-                                        <a style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);" @click="detail(od.order_id)">查看详情</a>
-                                        <a style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);" @click="del(od.order_id)">删除记录</a>
+                                        <a style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);"
+                                            @click="detail(od.order_id)">查看详情</a>
+                                        <a style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);"
+                                            @click="del(od.order_id)">删除记录</a>
                                     </div>
                                 </div>
                             </div>
@@ -152,27 +215,34 @@
                                 <div style="position: relative;padding: 10px 15px;text-align: right;line-height: 2.5em;">
                                     <div style="overflow: hidden;">
                                         <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">时间</label>
-                                        <em style="font-style: normal;font-size: 1.6em;display: block;overflow: hidden;word-break: normal;word-wrap: break-word;" v-text="date('Y-m-d H:i',od.generated_time)"></em>
+                                        <em style="font-style: normal;font-size: 1.6em;display: block;overflow: hidden;word-break: normal;word-wrap: break-word;"
+                                            v-text="date('Y-m-d H:i',od.generated_time)"></em>
                                     </div>
                                 </div>
                                 <div style="padding: 10px 15px;font-size: 1em;text-align: right;color: #808080;line-height: 2;">
                                     <div style="overflow:hidden;">
                                         <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">消费金额</label>
-                                        <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;" v-text="'￥'+od.pay_amount/100"></span>
+                                        <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;"
+                                            v-text="'￥'+od.pay_amount/100"></span>
                                     </div>
                                     <div style="overflow:hidden;">
                                         <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">订单号</label>
-                                        <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;" v-text="od.order_id"></span>
+                                        <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;"
+                                            v-text="od.order_id"></span>
                                     </div>
                                     <div style="overflow:hidden;">
                                         <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">状态</label>
-                                        <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;color: red" v-text="'完成'"></span>
+                                        <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;color: red"
+                                            v-text="'完成'"></span>
                                     </div>
                                 </div>
                                 <div style="position: relative;line-height: 50px;display: flex;">
-                                    <a style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);" @click="detail(od.order_id)">查看详情</a>
-                                    <a style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);" @click="comment(od.order_id)">查看评价</a>
-                                    <a style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);" @click="del(od.order_id)">删除记录</a>
+                                    <a style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);"
+                                        @click="detail(od.order_id)">查看详情</a>
+                                    <a style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);"
+                                        @click="comment(od.order_id)">查看评价</a>
+                                    <a style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);"
+                                        @click="del(od.order_id)">删除记录</a>
                                 </div>
                             </div>
                         </div>
@@ -232,6 +302,7 @@
             nopay: [],
             pay: [],
             com: [],
+            allorder:[],
             overlay: true,
             selector: null,
         },
@@ -279,6 +350,9 @@
                     })
                 })
             },
+            detail_appo(id){
+                window.location.href = 'dingdanxiangqing.html?id=' + id
+            },
             //让某个订单不显示
             del(id) {
                 $(this).openWindow("", "确认删除吗？该操作无法复原", ["不", "好的"], () => {
@@ -310,12 +384,13 @@
                     that.nopay = res.nopay;
                     that.pay = res.pay;
                     that.com = res.com;
+                    that.allorder = res.allorder;
                     that.overlay = false;
                 })
             } else if (payret === "1") {
-                $.post("../php/pay_unpaid.php",{
-                    order_id:getQueryString('order_id')
-                }).done((res)=>{
+                $.post("../php/pay_unpaid.php", {
+                    order_id: getQueryString('order_id')
+                }).done((res) => {
                     window.location.href = "order.html"
                 })
             } else if (payret === "2") {

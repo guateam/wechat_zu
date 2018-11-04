@@ -61,8 +61,8 @@
         <row v-if="appointmentData">
             <i-col span="24">
                 <card dis-hover title="预约信息" style="font-size: 12px; color: #657180;">
-                    <row>预约时间: {{ appointmentData[0].appointment_time }}</row>
-                    <row>预约人数: {{ appointmentData[0].user_num }}人</row>
+                    <row v-text="'预约时间:'+ date('Y-m-d H:i:s',appointmentData.appoint_time)"></row>
+                    <row>预约人数: {{ appointmentData.people_num }}人</row>
                 </card>
             </i-col>
         </row>

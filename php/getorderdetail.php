@@ -15,11 +15,7 @@ foreach($so as $svod)
 {
     $tech = get("technician","job_number",$svod['job_number']);
     $svs = get("service_type","ID",$svod['item_id']);
-    $appo = null;
-    if($co[0]['state']==1)
-	{
-        $appo = get("appointment",'order_id',$order_id);
-    }
+    $appo = ['appoint_time'=>$co[0]['appoint_time'],'people_num'=>$co[0]['user_num']];
     if($tech && $svs)
 	{
         array_push($info,[
