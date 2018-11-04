@@ -54,7 +54,7 @@ if($user)
         foreach($obj as $tech)
         {
             $jbnb = $tech['tech']['job_number'];
-            $service_id = $tech['service']['ID'];
+            $service_id = $tech['service']['openid'];
             add("service_order",[['appoint_time',$appoint_time],['order_id',$time],['service_type',1],["item_id",$service_id],["job_number",$jbnb]]);
         }
         echo json_encode(['state'=>1,'order_id'=>$time]);
@@ -68,7 +68,7 @@ if($user)
         ['generated_time',time()],
         ["order_id",$time],
         ["pay_amount",$pay],
-        ['user_id',$user[0]['ID']],
+        ['user_id',$user[0]['openid']],
         ['state',4],
         ['contact_phone',$phone],
         ['payment_method',$pay_way] 
@@ -77,7 +77,7 @@ if($user)
     foreach($obj as $tech)
     {
         $jbnb = $tech['tech']['job_number'];
-        $service_id = $tech['service']['ID'];
+        $service_id = $tech['service']['openid'];
         add("service_order",[['appoint_time',$appoint_time],['order_id',$time],['service_type',1],["item_id",$service_id],["job_number",$jbnb]]);
     }
     echo json_encode(['state'=>1,'order_id'=>$time]);
