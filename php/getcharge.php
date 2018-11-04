@@ -5,7 +5,7 @@ $phone = $_POST['phone'];
 $user_id = get("customer","phone_number",$phone);
 if($user_id)
 {
-    $user_id = $user_id[0]['ID'];
+    $user_id = $user_id[0]['openid'];
     //获取该顾客的充值记录,按照时间倒序
     $order = sql_str("select * from `recharge_record` WHERE (`user_id` = '$user_id') ORDER BY `generated_time` DESC");
     if($order)
