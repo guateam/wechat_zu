@@ -21,7 +21,7 @@ if($user)
         $cmt = $comment[$idx];
         $arr_cmt = ['comment',$cmt];
 
-        $cus_id = $user[0]['ID'];
+        $cus_id = $user[0]['openid'];
         $arr_cusid = ['customer_id',$cus_id];
 
         $arr_id = ['order_id',$id];

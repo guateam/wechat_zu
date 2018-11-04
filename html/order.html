@@ -271,7 +271,13 @@
             },
             //数据库里删除预约订单
             del_appo(id) {
-
+                $(this).openWindow("", "确认删除吗？该操作无法复原.", ["不", "好的"], () => {
+                    $.post("../php/delete_order.php", {
+                        order_id: id
+                    }).done((res) => {
+                        location.reload();
+                    })
+                })
             },
             //让某个订单不显示
             del(id) {
