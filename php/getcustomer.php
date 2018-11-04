@@ -2,7 +2,7 @@
 require("database.php");
 $phone = $_POST['phone'];
 $cus = get("customer","phone_number",$phone);
-$id = $cus[0]['ID'];
+$id = $cus[0]['openid'];
 //获取充值总额
 $str = "select sum(`recharge_record`.`charge`) AS `charge` from  `recharge_record` where ( '$id' = `recharge_record`.`user_id`)";
 $charge = sql_str($str);

@@ -2,7 +2,7 @@
 require("database.php");
 require("getpromotion.php");
 $user = $_POST['user_id'];
-$us = get("customer","ID",$user);
+$us = get("customer","openid",$user);
 
 if($us)
 {
@@ -29,12 +29,10 @@ if($us)
     //活动返的钱
     $bonus = 0;
     foreach($promotion as $pro){
-        if($val >= $pro['need']){
-            $val+=$pro['back'];
+        if($val >= $pro['need']*100){
+            $val+=$pro['back']*100;
         }
     }
-    //这里添加扣钱的代码
-    //
     add("recharge_record",[
         ["record_id",$rnd],
         ["user_id",$us[0]['openid']],

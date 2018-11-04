@@ -267,8 +267,8 @@
 					var jobnumber = getQueryString('job_number');					
                     $(that).openWindow("确认", "打赏的金额:"+this.moneyList[0]+"元， "+"打赏的技师工号:"+jobnumber, ['好的'],()=>{
 					
-						var url = encodeURIComponent(window.location.href+"&money="+this.moneyList[0] * 100);
-						
+						var url = encodeURIComponent(window.location.href+"&money="+this.moneyList[0] * 100+"&jobnumber="+jobnumber);
+						//支付单位以分表示
 						var payurl = "http://1.jthysm.com/dashang/example/jsapiyy.php?pay=" + this.moneyList[0] * 100 + "&backurl=" + url; 						
 						//var payurl = "http://1.jthysm.com/dashang/example/jsapiyy.php?pay=" + this.moneyList[0] * 100;						
 						//alert(payurl);
@@ -318,7 +318,7 @@
 					
 					var money = getQueryString('money');
 					
-					var jobnumber = getQueryString('job_number');
+					var jobnumber = getQueryString('jobnumber');
 					
 					$.post('../php/dashang.php', 
 					{

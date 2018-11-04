@@ -344,11 +344,10 @@
                 }
                 if (this.job_number != "" && this.job_number != null && this.fee != 0 && this.fee != '') {
 
-                    var url = window.location.href
-                    $.cookie("fee",that.fee,{path:'/'});
-                    $.cookie("jbnb",that.job_number,{path:'/'});
-
-                    window.location.href = "http://1.jthysm.com/dashang/example/jsapiyy.php?pay=" + that.pay +
+                    var url = encodeURIComponent(window.location.href + "?fee=" + that.fee + "&jbnb=" + that.job_number);
+                    //金额单位以 分 表示
+                    window.location.href = "http://1.jthysm.com/dashang/example/jsapiyy.php?pay=" + that.fee *
+                        100 +
                         "&backurl=" + url
                     // $.post('../php/recharge.php', {
                     //     charge: that.fee,
@@ -370,51 +369,82 @@
             var that = this
             var payret = getQueryString('payret');
             if (payret === "" || payret === undefined || payret == null) {
-                //do nothing
+                //正常显示页面
+                $.post("../php/getcustomer.php", {
+                    phone: "13777579230"
+                }).done((res) => {
+                    res = JSON.parse(res);
+                    if (res.status == 1) {
+                        that.name = res.name;
+                        that.cash = res.cash;
+                        that.overlay = false;
+                    }
+                })
+                $.post("../php/getpromotion.php", {
+                    ajax_get: true
+                }).done((res) => {
+                    res = JSON.parse(res);
+                    if (res.status == 1) {
+                        that.promotion = res.data
+                        for (var i in that.fee_list) {
+                            that.back_list[i] = that.judge_promotion(that.fee_list[i]);
+                        }
+                    }
+                })
+                $.post("../php/getalltech.php").done((res) => {
+                    res = JSON.parse(res);
+                    that.jishi = res.data
+                })
+
+
             } else if (payret === "1") //这里表示支付成功，返回该页面
             {
                 that.overlay = true;
                 $.post('../php/recharge.php', {
-                    charge: $.cookie('fee'),
-                    user_id: "apple",
-                    job_number:$.cookie('jbnb'),
+                    charge: getQueryString('fee'),
+                    user_id: 1, //user_id为open_id
+                    job_number: getQueryString('jbnb'),
                     pay: that.pay
                 }).done((res) => {
                     res = JSON.parse(res);
                     if (res.status == 1) {
-                        $(that).openWindow("", "充值成功", ['好的'], () => {
+                        that.overlay = false;
+                        $(that).openWindow("", "充值成功", ['好的'],()=>{
+                            window.location.href = "index.html";
+                        }, () => {
                             window.location.href = "index.html";
                         })
                     }
                 })
             } else if (payret === "2") {
+                $(that).openWindow("", "充值失败", ['好的']);
+                $.post("../php/getcustomer.php", {
+                    phone: "13777579230"
+                }).done((res) => {
+                    res = JSON.parse(res);
+                    if (res.status == 1) {
+                        that.name = res.name;
+                        that.cash = res.cash;
+                        that.overlay = false;
+                    }
+                })
+                $.post("../php/getpromotion.php", {
+                    ajax_get: true
+                }).done((res) => {
+                    res = JSON.parse(res);
+                    if (res.status == 1) {
+                        that.promotion = res.data
+                        for (var i in that.fee_list) {
+                            that.back_list[i] = that.judge_promotion(that.fee_list[i]);
+                        }
+                    }
+                })
+                $.post("../php/getalltech.php").done((res) => {
+                    res = JSON.parse(res);
+                    that.jishi = res.data
+                })
 
             }
-            $.post("../php/getcustomer.php", {
-                phone: "13777579230"
-            }).done((res) => {
-                res = JSON.parse(res);
-                if (res.status == 1) {
-                    that.name = res.name;
-                    that.cash = res.cash;
-                    that.overlay = false;
-                }
-            })
-            $.post("../php/getpromotion.php", {
-                ajax_get: true
-            }).done((res) => {
-                res = JSON.parse(res);
-                if (res.status == 1) {
-                    that.promotion = res.data
-                    for (var i in that.fee_list) {
-                        that.back_list[i] = that.judge_promotion(that.fee_list[i]);
-                    }
-                }
-            })
-            $.post("../php/getalltech.php").done((res) => {
-                res = JSON.parse(res);
-                that.jishi = res.data
-            })
         },
     })
 

@@ -224,10 +224,13 @@
                     else if (this.pay_way == 3) {
                         $(that).openWindow("", "确认下单吗？", ["不", "是的"], () => {
                             if(that.input_phone == "")that.input_phone = "none";
-                            var url = window.location.href + "&inputphone=" + that.input_phone +
-                                "&peoplenum=" + that.people_num;
-                            
-                            window.location.href = "http://1.jthysm.com/dashang/example/jsapiyy.php?pay=" + that.total_price + "&backurl=" + url 
+
+                            var url =encodeURIComponent(window.location.href + "&inputphone=" + that.input_phone +
+                                "&peoplenum=" + that.people_num);
+                            //var weixin_url = "http://1.jthysm.com/dashang/example/jsapiyy.php?pay=" + 39000
+                            //total_price以分为单位表示
+                            var weixin_url = "http://1.jthysm.com/dashang/example/jsapiyy.php?pay=" + that.total_price + "&backurl=" + url 
+                            window.location.href = weixin_url;
                         })
                     }
                 },
@@ -307,9 +310,8 @@
                                 cant_pay: true,
                             }).done((res) => {
                                 res = JSON.parse(res);
-                                if (res.status == 1)
-                                    window.location.href = "yuyueStatus.html?order_id=" +
-                                    res.order_id;
+                                if (res.state == 1)
+                                    window.location.href = "yuyueStatus.html?order_id=" +res.order_id;
                             })
                         })
                     }

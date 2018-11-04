@@ -104,9 +104,9 @@
 		<div id="location">
 			<p>
 				<span style="padding-left: 1rem;font-size: 0.9rem;" v-text="shop.name"></span>
-				<span>
-					<img style="float: right;margin-right: 1rem;width: 5%;" :href="'tel:'+shop.phone" src="../src/tel.png">
-				</span>
+				<a  :href="'tel:'+shop.phone">
+					<img style="float: right;margin-right: 1rem;width: 5%;" src="../src/tel.png">
+				</a>
 			</p>
 			<hr style="opacity: 0.4;margin-top: -0.2rem;">
 			<p>
