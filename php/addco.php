@@ -45,7 +45,7 @@ if($user)
             ['generated_time',time()],
             ["order_id",$time],
             ["pay_amount",$pay],
-            ['user_id',$user[0]['ID']],
+            ['user_id',$user[0]['openid']],
             ['state',1],//状态为1，表示待支付
             ['contact_phone',$phone],
             ['payment_method',0] //未支付的时候，支付方式为0，表示未支付

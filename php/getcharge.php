@@ -13,7 +13,7 @@ if($user_id)
         for($i=0;$i<count($order);$i++)
 		{
             //时间转换
-            $order[$i]['generated_time'] = date("Y-m-d",$order[$i]['generated_time']);
+            $order[$i]['generated_time'] = date("Y-m-d H:i:s",$order[$i]['generated_time']);
             //分转换为元表示
             $order[$i]['charge']/=100;
         }
