@@ -156,7 +156,7 @@
                                     <li class="list">
                                         <div class="guest">
                                             <div class="thumb" :tumblist="'list' + idx">
-                                                <img v-for="(img, imgidx) in item.img" :src="img" v-if="img != ''"
+                                                <img @click="click_content = item.content" v-for="(img, imgidx) in item.img" :src="img" v-if="img != ''"
                                                     style="width:100px;height:100px;margin:5px;float: left">
                                             </div>
                                         </div>
