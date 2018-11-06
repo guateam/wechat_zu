@@ -8,7 +8,7 @@
     <link href="../css/iview.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../css/index.css">
     <link rel="stylesheet" type="text/css" href="../css/overlay.css">
-    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" href="../css/global.css"/>
     <style>
         #app {
             font-family: Cursive;
@@ -28,16 +28,19 @@
 </head>
 
 <body>
-    <div id="app" style="background:#eee; padding-top: 10px; padding-bottom: 10px;">
+<div id="app" style="background:#eee;padding-top: 10px; padding-bottom: 10px;">
+    <div style="position: fixed;width: 100%;height: auto;z-index: 10;background-color: #eeeeee;margin-top: -10px">
         <row>
-            <card :bordered="false" dis-hover>
+            <card :bordered="false" dis-hover style="display: flex;width: 100%;align-items: center;justify-content: center;height: 100%;">
                 <!-- <row>请选择预约时间:</row> -->
                 <row :gutter="16" type="flex" justify="space-between">
                     <i-col span="12">
                         <i-button @click="navi('select-time.html')" type="default" long style="width: 148px;">
                             <icon type="ios-alarm-outline" size="17"></icon>
-                            <span v-if="time == ''" style="font-family:KaiTi;font-size:12px;color:#c3c3c3">请选择服务时间</span>
-                            <span v-else style="font-size:12px;color:#c3c3c3;font-family:KaiTi" v-text="date('Y-m-d H:i',time)"></span>
+                            <span v-if="time == ''"
+                                  style="font-family:KaiTi;font-size:12px;color:#c3c3c3">请选择服务时间</span>
+                            <span v-else style="font-size:12px;color:#c3c3c3;font-family:KaiTi"
+                                  v-text="date('Y-m-d H:i',time)"></span>
                         </i-button>
                     </i-col>
                     <i-col span="12">
@@ -51,11 +54,12 @@
             </card>
         </row>
 
-        <row style="margin-top: 10px">
+        <row style="margin-top: 10px;border-bottom: 1px #eeeeee solid;">
             <card :bordered="false" dis-hover>
                 <row :gutter="2">
                     <i-col span="6">
-                        <i-button :type="button_type[2]" long :disabled="!have_level" v-on:click="ClickJibie()">级别</i-button>
+                        <i-button :type="button_type[2]" long :disabled="!have_level" v-on:click="ClickJibie()">级别
+                        </i-button>
                     </i-col>
                     <i-col span="6">
                         <i-button :type="button_type[0]" @click="sort_by(0,'rate')" long>评价</i-button>
@@ -81,106 +85,111 @@
                 </row>
             </card>
         </row>
+    </div>
 
-        <row style="margin-bottom: 15%; margin-top: 6px;">
-            <card :bordered="false" dis-hover v-for="item in list" v-show="item.show" style="margin-bottom: 6px">
-                <row type="flex" justify="space-between" align="middle" :gutter="16">
-                    <i-col span="5" @click.native="tech_info(item.job_number,item.state)">
-                        <row>
-                            <i-col span="24">
-                                <p style="text-align: center; font-size: 12px; color: gray; transform: translateY(-40%);font-family:'KaiTi'">
-                                    {{ item.job_number }}
-                                </p>
-                            </i-col>
-                        </row>
-                        <row type="flex">
-                            <i-col span="24">
-                                <div style="text-align: center">
-                                    <img :src="item.avatar_url" style="height: 60px; width: 60px; border-radius: 50px;" />
-                                </div>
-                            </i-col>
-                        </row>
-                    </i-col>
+    <row style="margin-bottom: 15%; margin-top: 6px;">
+        <card :bordered="false" dis-hover v-for="item in list" v-show="item.show" style="margin-bottom: 6px">
+            <row type="flex" justify="space-between" align="middle" :gutter="16">
+                <i-col span="5" @click.native="tech_info(item.job_number,item.state)">
+                    <row>
+                        <i-col span="24">
+                            <p style="text-align: center; font-size: 12px; color: gray; transform: translateY(-40%);font-family:'KaiTi'">
+                                {{ item.job_number }}
+                            </p>
+                        </i-col>
+                    </row>
+                    <row type="flex">
+                        <i-col span="24">
+                            <div style="text-align: center">
+                                <img :src="item.avatar_url" style="height: 60px; width: 60px; border-radius: 50px;"/>
+                            </div>
+                        </i-col>
+                    </row>
+                </i-col>
 
-                    <i-col span="15" @click.native="tech_info(item.job_number,item.state)">
-                        <row type="flex" justify="start" style="margin-bottom: 3px" :gutter="16" @click.native="tech_info(item.job_number,item.state)">
-                            <i-col span="15">
-                                <p>
-                                    当前状态: <span :style="{color: item.state === 1 ? '#ed4014' : '#19be6b' }">{{
+                <i-col span="15" @click.native="tech_info(item.job_number,item.state)">
+                    <row type="flex" justify="start" style="margin-bottom: 3px" :gutter="16"
+                         @click.native="tech_info(item.job_number,item.state)">
+                        <i-col span="15">
+                            <p>
+                                当前状态: <span :style="{color: item.state === 1 ? '#ed4014' : '#19be6b' }">{{
                                         item.state === 1? '繁忙' : '空闲' }}</span>
-                                </p>
-                            </i-col>
-                        </row>
-                        <row :gutter="2">
-                            <i-col span="8" v-for="dir in item.photo_list"><img :src="dir['img']" style="height: 65px; width: 65px;" /></i-col>
-                            <!-- <i-col span="8"><img :src="item.photo_list[1]" style="height: 65px; width: 65px;" /></i-col>
-                            <i-col span="8"><img :src="item.photo_list[2]" style="height: 65px; width: 65px;" /></i-col> -->
-                        </row>
-                    </i-col>
+                            </p>
+                        </i-col>
+                    </row>
+                    <row :gutter="2">
+                        <i-col span="8" v-for="dir in item.photo_list"><img :src="dir['img']"
+                                                                            style="height: 65px; width: 65px;"/></i-col>
+                        <!-- <i-col span="8"><img :src="item.photo_list[1]" style="height: 65px; width: 65px;" /></i-col>
+                        <i-col span="8"><img :src="item.photo_list[2]" style="height: 65px; width: 65px;" /></i-col> -->
+                    </row>
+                </i-col>
 
-                    <i-col span="4">
-                        <div @click="choose_tech(item)" class="circle" :style="[{'font-size': (item.state === 1 ? '10' : '12') + 'px'}, {'color':(item.check === 0 ? '#875522':'#91df6f')}, {'border-color': (item.state === 1 ? '#875522' : '#D5B32B')}]">
-                            <span v-if="item.check === 1" style="font-size: 16px">√</span>
-                            <span v-else>{{ item.busy === true ? '已上钟' : item.appoint === true?'被约':'可选' }}</span>
-                        </div>
-                    </i-col>
-                </row>
+                <i-col span="4">
+                    <div @click="choose_tech(item)" class="circle"
+                         :style="[{'font-size': (item.state === 1 ? '10' : '12') + 'px'}, {'color':(item.check === 0 ? '#875522':'#91df6f')}, {'border-color': (item.state === 1 ? '#875522' : '#D5B32B')}]">
+                        <span v-if="item.check === 1" style="font-size: 16px">√</span>
+                        <span v-else>{{ item.busy === true ? '已上钟' : item.appoint === true?'被约':'可选' }}</span>
+                    </div>
+                </i-col>
+            </row>
 
-                <row style="margin-top: 5px" type="flex" align="bottom">
-                    <i-col span="5">
-                        <p style="text-align: center">
-                            {{ item.name }}
-                        </p>
-                    </i-col>
-                    <i-col span="18">
-                        <rate show-text allow-half v-model="item.rate" disabled style="font-size: 15px;font-family:'KaiTi'">
-                            <span style="color: #f5a623; margin-left: -20px">{{ item.rate }}分</span>
-                        </rate>
-                    </i-col>
-                    <i-col span="6">
-                        <p style="font-size: 10px; color: #19be6b;">
-                            <!--{{ item.price }}元/钟-->
-                        </p>
-                    </i-col>
-                </row>
-            </card>
-        </row>
-        <!--<back-top></back-top>-->
-        <row>
-            <div style="height: 10%;width: 100%;position: fixed;bottom: 0;background-color: white;display: flex;">
-                <div style="height: 100%;flex: 0 0 25%;display: flex;align-items: center;justify-content: center"
-                    @click="window.location.href = 'index.html'">
-                    <div style="width: 40px">
-                        <img src="../src/主页激活.png" alt="" style="height: 25px;width:25px">
-                        <a style="font-size: 14px;font-weight: 200;">主页</a>
-                    </div>
-                </div>
-                <div style="height: 100%;flex: 0 0 25%;display: flex;align-items: center;justify-content: center">
-                    <div style="width: 40px">
-                        <img src="../src/电话.png" alt="" style="height: 25px;width:25px">
-                        <a :href="'tel:'+tel" style="font-size: 14px;font-weight: 200;">客服</a>
-                    </div>
-                </div>
-                <div style="height: 100%;flex: 0 50%;display: flex;align-items: center;justify-content: center">
-                    <button @click="down_order" style="width: 85%;height: 70%;background-color: #2b85e4;color: white;border-radius: 5px;font-size: 18px">
-                        立即下单
-                    </button>
+            <row style="margin-top: 5px" type="flex" align="bottom">
+                <i-col span="5">
+                    <p style="text-align: center">
+                        {{ item.name }}
+                    </p>
+                </i-col>
+                <i-col span="18">
+                    <rate show-text allow-half v-model="item.rate" disabled style="font-size: 15px;font-family:'KaiTi'">
+                        <span style="color: #f5a623; margin-left: -20px">{{ item.rate }}分</span>
+                    </rate>
+                </i-col>
+                <i-col span="6">
+                    <p style="font-size: 10px; color: #19be6b;">
+                        <!--{{ item.price }}元/钟-->
+                    </p>
+                </i-col>
+            </row>
+        </card>
+    </row>
+    <!--<back-top></back-top>-->
+    <row>
+        <div style="height: 10%;width: 100%;position: fixed;bottom: 0;background-color: white;display: flex;">
+            <div style="height: 100%;flex: 0 0 25%;display: flex;align-items: center;justify-content: center"
+                 @click="window.location.href = 'index.html'">
+                <div style="width: 40px">
+                    <img src="../src/主页激活.png" alt="" style="height: 25px;width:25px">
+                    <a style="font-size: 14px;font-weight: 200;">主页</a>
                 </div>
             </div>
-        </row>
-        <div style="height: 60px;width:60px;position: fixed;background-color: white;bottom: 70px;right: 30px; display: flex;align-items: center;justify-content: center;border-radius: 50%;border: 1px #fe736c solid;"
-            onclick="call()">
-            <div style="width: 100%;height: 100%;text-align: center;padding-top: 8px">
-                <img src="../src/分享.png" alt="" style="height: 25px;width:25px">
-                <h1 style="font-size: 14px;font-weight: 200;color: #fe736c">分享</h1>
+            <div style="height: 100%;flex: 0 0 25%;display: flex;align-items: center;justify-content: center">
+                <div style="width: 40px">
+                    <img src="../src/电话.png" alt="" style="height: 25px;width:25px">
+                    <a :href="'tel:'+tel" style="font-size: 14px;font-weight: 200;">客服</a>
+                </div>
+            </div>
+            <div style="height: 100%;flex: 0 50%;display: flex;align-items: center;justify-content: center">
+                <button @click="down_order"
+                        style="width: 85%;height: 70%;background-color: #2b85e4;color: white;border-radius: 5px;font-size: 18px">
+                    立即下单
+                </button>
             </div>
         </div>
-        <div id="modal-overlay" v-show="overlay">
-            <div class="modal-data">
-                <img src="../src/loading.gif" />
-            </div>
+    </row>
+    <div style="height: 60px;width:60px;position: fixed;background-color: white;bottom: 70px;right: 30px; display: flex;align-items: center;justify-content: center;border-radius: 50%;border: 1px #fe736c solid;"
+         onclick="call()">
+        <div style="width: 100%;height: 100%;text-align: center;padding-top: 8px">
+            <img src="../src/分享.png" alt="" style="height: 25px;width:25px">
+            <h1 style="font-size: 14px;font-weight: 200;color: #fe736c">分享</h1>
         </div>
     </div>
+    <div id="modal-overlay" v-show="overlay">
+        <div class="modal-data">
+            <img src="../src/loading.gif"/>
+        </div>
+    </div>
+</div>
 </body>
 <script src="../js/jquery.js"></script>
 <script src="../js/jquery.cookie.js"></script>
@@ -322,9 +331,9 @@
                 //获取选中的服务id
                 for (var i in this.tc) {
                     if (final_choose == '')
-                        final_choose +=  this.tc[i] + '-' + this.sv;
+                        final_choose += this.tc[i] + '-' + this.sv;
                     else
-                        final_choose += '-'+ this.tc[i] + '-' + this.sv;
+                        final_choose += '-' + this.tc[i] + '-' + this.sv;
                     //final_choose.push('jobnumber_' + this.tc[i] + '-id_' + this.sv)
                 }
                 window.location.href = "confirm-order.html?fn=" + final_choose + "&selecttime=" + this.time
