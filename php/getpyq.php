@@ -33,7 +33,7 @@ foreach($datas as $data)
             $result = get("technician_video",'ID',$videoid);
             if($result)
             {
-                $datas[$i]['video'][$j] = ['src'=>$result[0]['dir'],'play'=>false];
+                $datas[$i]['video'][$j] = ['src'=>$result[0]['dir'],'play'=>false,'poster'=>$result[0]['poster']];
             }
             $j++;
         }

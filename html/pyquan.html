@@ -168,7 +168,7 @@
                                 <!-- END -->
                                 <div v-for="vdo in item['video']" style="position: relative;display: flex;align-items: center;justify-content: center;">
                                     <img @click="play($event,vdo)" src="../src/播放.png" alt="" :style="{'border-radius':'8px','position': 'absolute','z-index':10,'opacity':100}">
-                                    <video  style="width:90%;height:180px">
+                                    <video  style="width:90%;height:180px" :poster="vdo.poster">
                                         <source :src="vdo.src" type="video/mp4">
                                     </video>
                                 </div>
