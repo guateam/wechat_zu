@@ -85,7 +85,7 @@
                     <tab-pane label="全部" name="name1">
                         <div class="page__bd">
                             <div style="position: relative;background: #ffffff;" v-for="od in allorder" id="list-item">
-                                <div v-if="od.show">
+                                <div v-if="od.show==1">
                                     <div style="position: relative;padding: 10px 15px;text-align: right;line-height: 2.5em;">
                                         <div style="overflow: hidden;">
                                             <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">时间</label>
@@ -132,7 +132,7 @@
                     </tab-pane>
                     <tab-pane label="待付款" name="name2">
                         <div style="position: relative;background: #ffffff;" v-for="od in nopay" id="list-item">
-                            <div v-if="od.show">
+                            <div v-if="od.show==1">
                                 <div style="position: relative;padding: 10px 15px;text-align: right;line-height: 2.5em;">
                                     <div style="overflow: hidden;">
                                         <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">预约时间</label>
@@ -173,7 +173,7 @@
                     <tab-pane label="待评价" name="name4">
                         <div class="page__bd">
                             <div style="position: relative;background: #ffffff;" v-for="od in pay" id="list-item">
-                                <div v-if="od.show">
+                                <div v-if="od.show==1">
                                     <div style="position: relative;padding: 10px 15px;text-align: right;line-height: 2.5em;">
                                         <div style="overflow: hidden;">
                                             <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">时间</label>
@@ -211,7 +211,7 @@
                     </tab-pane>
                     <tab-pane label="评价完成" name="name5">
                         <div style="position: relative;background: #ffffff;" v-for="od in com" id="list-item">
-                            <div v-if="od.show">
+                            <div v-if="od.show==1">
                                 <div style="position: relative;padding: 10px 15px;text-align: right;line-height: 2.5em;">
                                     <div style="overflow: hidden;">
                                         <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">时间</label>
@@ -357,18 +357,13 @@
             del(id) {
                 $(this).openWindow("", "确认删除吗？该操作无法复原", ["不", "好的"], () => {
                     $.post("../php/delete_sv_order.php", {
-                        order_id: id
+                        id: id
                     }).done((res) => {
                         res = JSON.parse(res);
-                        if (res.tatus == 1) {
-
+                        if (res.status == 1) {
+                            location.reload();
                         }
                     })
-                    for (var i = 0; i < this.order.length; i++) {
-                        if (this.order[i]['ID'] == id) {
-                            this.order.splice(i, 1)
-                        }
-                    }
                 })
             }
         },
