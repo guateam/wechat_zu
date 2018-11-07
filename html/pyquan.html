@@ -159,18 +159,18 @@
                                     <li class="list" style="border-bottom: none">
                                         <div class="guest">
                                             <div class="thumb" :tumblist="'list' + idx">
-                                                <img @click="click_content = item.content" v-for="(img, imgidx) in item.img" :src="img" v-if="img != ''"
-                                                    style="width:100px;height:100px;margin:5px;float: left">
+                                                <img @click="click_content = item.content" v-for="(img, imgidx) in item.img"
+                                                    :src="img" v-if="img != ''" style="width:100px;height:100px;margin:5px;float: left">
                                             </div>
                                         </div>
                                     </li>
                                 </ul>
                                 <!-- END -->
                                 <div v-for="vdo in item['video']" style="position: relative;display: flex;align-items: center;justify-content: center;">
-                                    <img src="../src/播放.png"  v-show="!vdo.play" alt="" style="position: absolute;">
-                                <video @click="play($event,vdo)" style="width:90%;height:180px" >
-                                    <source :src="vdo.src" type="video/mp4">
-                                </video>
+                                    <img @click="play($event,vdo)" src="../src/播放.png" alt="" :style="{'border-radius':'8px','position': 'absolute','z-index':10,'opacity':100}">
+                                    <video  style="width:90%;height:180px">
+                                        <source :src="vdo.src" type="video/mp4">
+                                    </video>
                                 </div>
 
                                 <p class="time" v-text="item['date']"></p>
@@ -240,7 +240,7 @@
                 imgsdata: {
                     "list1": ["1.png", "2.png", "3.png"],
                 },
-                
+
             },
             methods: {
                 closeBig() {
@@ -251,15 +251,13 @@
                     this.click_img = imgs[index];
                     this.big_img = true;
                 },
-                play(video,vdo){
+                play(video, vdo) {
                     vdo.play = !vdo.play
-                    video = video.target
+                    video = video.target.parentElement.lastChild;
                     //alert(video.poster)
-                    if(video.paused){
+                    if (video.paused) {
                         video.play();
-                    }
-                    else
-                    {
+                    } else {
                         video.pause();
                     }
                 },
@@ -307,15 +305,13 @@
                 var that = this;
                 $.post("../php/getpyq.php", {
                     job_number: that.job_number
-                }).done((res) => 
-				{
+                }).done((res) => {
                     res = JSON.parse(res);
-                    for (var i in res.data) 
-					{
+                    for (var i in res.data) {
                         that.list.push(res.data[i])
                         that.imgsdata["list" + i] = res.data[i].img
                     }
-                    
+
                     that.head = res.head;
                     that.background = res.background;
                     that.show = false;
