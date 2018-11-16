@@ -28,7 +28,7 @@
 </head>
 
 <body>
-<div id="app" style="background:#eee;padding-top: 10px; padding-bottom: 10px;">
+<div id="app" style="background:#eee;padding-top: 10px; padding-bottom: 10px;width: 100%;">
     <div style="position: fixed;width: 100%;height: auto;z-index: 10;background-color: #eeeeee;margin-top: -10px">
         <row>
             <card :bordered="false" dis-hover style="display: flex;width: 100%;align-items: center;justify-content: center;height: 100%;">
@@ -87,7 +87,7 @@
         </row>
     </div>
 
-    <row style="margin-bottom: 15%; margin-top: 6px;">
+    <row style="margin-bottom: 15%; margin-top: 6px;width: 100%">
         <card :bordered="false" dis-hover v-for="item in list" v-show="item.show" style="margin-bottom: 6px">
             <row type="flex" justify="space-between" align="middle" :gutter="16">
                 <i-col span="5" @click.native="tech_info(item.job_number,item.state)">
