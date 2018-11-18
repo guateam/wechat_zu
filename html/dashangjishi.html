@@ -36,7 +36,7 @@
     <div id="app" style="background:#eee; padding-top: 10px; padding-bottom: 10px;">
         <row>
             <i-col :offset="1" span="22">
-                <i-input id="searchinput" v-model="model1" placeholder="Enter something..." v-on:input="getSearchList" />
+                <i-input id="searchinput" v-model="model1" placeholder="请输入工号查询" v-on:input="getSearchList" />
             </i-col>
         </row>
         <row id="content" style="margin-bottom: 15%; margin-top: 6px;">
@@ -80,7 +80,7 @@
                     <i-col span="4">
                         <div @click="down_order(item.job_number)" class="circle" :style="[{'font-size': (item.state === 1 ? '10' : '12') + 'px'}, {'color':(item.check === 0 ? '#875522':'#91df6f')}, {'border-color': (item.state === 1 ? '#875522' : '#D5B32B')}]">
                             <span v-if="item.check === 1" style="font-size: 16px">√</span>
-                            <span v-else>选择</span>
+                            <span v-else>打赏</span>
                         </div>
                     </i-col>
                 </row>
