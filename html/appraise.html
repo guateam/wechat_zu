@@ -154,12 +154,12 @@
                 }
             },
             send() {
-                $("#tijiao").attr('disabled', true);
                 var that = this;
                 if (this.rate.length != this.datas.length) {
                     $(that).openWindow("", "请至少为所有服务打分", ["好的"], () => {
                     })
                 } else {
+                    $("#tijiao").attr('disabled', true);
                     $.post('../php/setcomment.php', {
                         openid: openid,
                         order_id: getQueryString('id'),
@@ -200,11 +200,6 @@
             })
         }
     })
-    var that = app;
-
-    function send() {
-
-    }
 </script>
 
 </html>

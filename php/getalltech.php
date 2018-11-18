@@ -8,12 +8,17 @@ $numbers = [];
 $to_5min = 300-time()%300;
 ////获取选择的时间，若未选择时间，则默认为当前时间的下一个5分钟整
 $select_time = time()+$to_5min;
+//查找的技师类别，1--普通技师   2--接待人员  3--茶艺师,默认为普通技师
+$type = 1;
+
 if(isset($_POST['select_time'])){
     $select_time = intval($_POST['select_time']);
 }
+if(isset($_POST['type'])){
+    $type = $_POST['type'];
+}
 
-
-$tech_info = sql_str("select A.job_number,A.photo from technician A");
+$tech_info = sql_str("select A.job_number,A.photo from technician A where `type`='$type' ");
 foreach($tech_info as $idx => $tc){
     $job_number = $tc['job_number'];
     //获取刷钟情况
