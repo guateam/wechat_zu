@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <title>技师选择</title>
+    <title>茶艺选择</title>
     <link href="../css/iview.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../css/index.css">
     <link rel="stylesheet" type="text/css" href="../css/overlay.css">
@@ -35,7 +35,7 @@
                     <!-- <row>请选择预约时间:</row> -->
                     <row :gutter="16" type="flex" justify="space-between">
                         <i-col span="12">
-                            <i-button @click="navi('select-time.html')" type="default" long style="width: 148px;">
+                            <i-button @click="navi('tea-select-time.html')" type="default" long style="width: 148px;">
                                 <icon type="ios-alarm-outline" size="17"></icon>
                                 <span v-if="time == ''" style="font-family:KaiTi;font-size:12px;color:#c3c3c3">请选择服务时间</span>
                                 <span v-else style="font-size:12px;color:#c3c3c3;font-family:KaiTi" v-text="date('Y-m-d H:i',time)"></span>
@@ -55,21 +55,17 @@
             <row style="margin-top: 10px;border-bottom: 1px #eeeeee solid;">
                 <card :bordered="false" dis-hover>
                     <row :gutter="2">
-                        <i-col span="6">
-                            <i-button :type="button_type[2]" long :disabled="!have_level" v-on:click="ClickJibie()">级别
-                            </i-button>
-                        </i-col>
-                        <i-col span="6">
+                        <i-col span="8">
                             <i-button :type="button_type[0]" @click="sort_by(0,'rate')" long>评价</i-button>
                         </i-col>
-                        <i-col span="6">
+                        <i-col span="8">
                             <i-button :type="button_type[1]" @click="sort_by(1,'hot')" long>人气</i-button>
                         </i-col>
-                        <i-col span="6">
+                        <i-col span="8">
                             <i-button :type="button_type[3]" @click="sort_by(3,'state')" long>状态</i-button>
                         </i-col>
                     </row>
-                    <row :gutter="2" v-if="clickjibie">
+                    <!-- <row :gutter="2" v-if="clickjibie">
                         <i-col span="8">
                             <i-button :type="button_type[4]" @click="select_level(4,'金牌足浴')" long>金牌足浴</i-button>
                         </i-col>
@@ -80,7 +76,7 @@
                             <i-button :type="button_type[6]" @click="select_level(6,'至尊国色')" long>至尊国色</i-button>
                         </i-col>
 
-                    </row>
+                    </row> -->
                 </card>
             </row>
         </div>
@@ -116,8 +112,6 @@
                         </row>
                         <row :gutter="2">
                             <i-col span="8" v-for="dir in item.photo_list"><img :src="dir['img']" style="height: 65px; width: 65px;" /></i-col>
-                            <!-- <i-col span="8"><img :src="item.photo_list[1]" style="height: 65px; width: 65px;" /></i-col>
-                        <i-col span="8"><img :src="item.photo_list[2]" style="height: 65px; width: 65px;" /></i-col> -->
                         </row>
                     </i-col>
 
@@ -142,7 +136,7 @@
                     </i-col>
                     <i-col span="6">
                         <p style="font-size: 10px; color: #19be6b;">
-                            <!--{{ item.price }}元/钟-->
+                            
                         </p>
                     </i-col>
                 </row>
@@ -293,12 +287,11 @@
             //跳转到选择服务页面
             chooseProj() {
                 if (this.time == "") {
-
-                    window.location.href = "select-time.html" + "?select_time=" + this.time + "&sv=" +
+                    window.location.href = "tea-select-time.html" + "?select_time=" + this.time + "&sv=" +
                         this.sv + "&tc=" + this.tc;
                     return;
                 }
-                window.location.href = "chooseProj.html?select_time=" + this.time + "&sv=" + this.sv +
+                window.location.href = "choose-tea.html?select_time=" + this.time + "&sv=" + this.sv +
                     "&tc=" + this.tc;
             },
             navi(url, job_number) {
@@ -332,8 +325,8 @@
                         final_choose += '-' + this.tc[i] + '-' + this.sv;
                     //final_choose.push('jobnumber_' + this.tc[i] + '-id_' + this.sv)
                 }
-                window.location.href = "confirm-order.html?fn=" + final_choose + "&selecttime=" + this.time+
-                "&appotype=1"
+                window.location.href = "confirm-order.html?fn=" + final_choose + 
+                                    "&selecttime=" + this.time + "&appotype=3"
 
             },
             button_click(idx = -1) {
@@ -438,7 +431,8 @@
             //获取技师列表
             if (this.have_sv) {
                 $.post("../php/get_tech_by_skill.php", {
-                    service_id: this.sv
+                    service_id: this.sv,
+                    type:3
                 }).done((result) => {
                     result = JSON.parse(result);
                     if (result.status == 1) {
@@ -473,7 +467,9 @@
                     }
                 })
             } else {
-                $.post("../php/getalltech.php").done((result) => {
+                $.post("../php/getalltech.php",{
+                    type:3
+                }).done((result) => {
                     result = JSON.parse(result);
                     for (var i = 0; i < result.data.length; i++) {
                         var tech = result.data[i];

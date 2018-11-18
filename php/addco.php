@@ -7,7 +7,7 @@ $people_num  = $_POST['people_num'];
 $pay =  $_POST['pay'];
 $obj = $_POST['obj'];
 $appoint_time = $_POST['select_time'];
-
+$appotype = $_POST['service_type']; // 预约类型  1--服务   3--茶艺
 //是否有完成支付
 $cant_pay = false;
 if(isset($_POST['cant_pay']))$cant_pay = $_POST['cant_pay'];
@@ -55,7 +55,7 @@ if($user)
         {
             $jbnb = $tech_service['tech']['job_number'];
             $service_id = $tech_service['service']['ID'];
-            add("service_order",[['appoint_time',$appoint_time],['order_id',$time],['service_type',1],["item_id",$service_id],["job_number",$jbnb]]);
+            add("service_order",[['appoint_time',$appoint_time],['order_id',$time],['service_type',$appotype],["item_id",$service_id],["job_number",$jbnb]]);
         }
         echo json_encode(['state'=>1,'order_id'=>$time]);
         die();
@@ -78,7 +78,7 @@ if($user)
     {
         $jbnb = $tech_service['tech']['job_number'];
         $service_id = $tech_service['service']['ID'];
-        add("service_order",[['appoint_time',$appoint_time],['order_id',$time],['service_type',1],["item_id",$service_id],["job_number",$jbnb]]);
+        add("service_order",[['appoint_time',$appoint_time],['order_id',$time],['service_type',$appotype],["item_id",$service_id],["job_number",$jbnb]]);
     }
     echo json_encode(['state'=>1,'order_id'=>$time]);
     die();

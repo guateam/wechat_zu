@@ -55,8 +55,10 @@
                                 <span v-text="item.tech.job_number"></span>
                             </div>
                             <div style="display:inline-block;width: 80px;text-align: center;" v-text="item.service.name"></div>
-                            <div style="display:inline-block;width: 160px;"><span v-text="'￥'+item.service.price/100"></span>/<span
-                                    v-text="item.service.duration+'分钟'"></span></div>
+                            <div style="display:inline-block;width: 160px;">
+                                <span v-text="'￥'+item.service.price/100"></span>
+                                <span v-if="appotype==1" v-text="'/' + item.service.duration+'分钟'"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -180,6 +182,7 @@
                 input_phone: "",
                 shop_phone: "",
                 overlay: true,
+                appotype:1,//预约的类别 1--普通技师  3--茶艺师
                 pay_way: 3 //3--微信支付  1--余额支付
             },
             methods: {
@@ -207,6 +210,7 @@
                                     obj: that.list,
                                     select_time: getQueryString('selecttime'),
                                     cant_pay: true,
+                                    service_type:that.appotype,//产生的service_order的类型为服务还是茶水
                                 }).done((res) => {
                                     res = JSON.parse(res);
                                     if (res.status == 1)
@@ -257,6 +261,9 @@
             },
             created() {
                 var that = this;
+                //预约技师还是茶艺师，1--技师  3--茶艺师
+                var appotype = getQueryString('appotype');
+                that.appotype = appotype;
                 //------------------------------------------------------------
                 //微信支付的情况
                 var payret = getQueryString('payret');
@@ -265,6 +272,7 @@
                 $.post('../php/getskill.php', {
                     fn: getQueryString('fn'),
                     id: that.id,
+                    type:appotype
                 }).done((res) => {
                     res = JSON.parse(res);
                     if (res.status == 1) {
@@ -290,6 +298,7 @@
                                 state: 4, //产生的订单状态 4--支付完成  1--预约
                                 obj: that.list,
                                 select_time: getQueryString('selecttime'),
+                                service_type:that.appotype,//产生的service_order的类型为服务还是茶水
                             }).done((res) => {
                                 window.location.href = "index.html"
                             })
@@ -308,6 +317,7 @@
                                 obj: that.list,
                                 select_time: getQueryString('selecttime'),
                                 cant_pay: true,
+                                service_type:that.appotype,//产生的service_order的类型为服务还是茶水
                             }).done((res) => {
                                 res = JSON.parse(res);
                                 if (res.state == 1)

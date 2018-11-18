@@ -14,7 +14,14 @@ $info = [];
 foreach($so as $svod)
 {
     $tech = get("technician","job_number",$svod['job_number']);
-    $svs = get("service_type","ID",$svod['item_id']);
+    //如果是服务，则查找service_type表
+    if($svod['service_type'] == 1){
+        $svs = get("service_type","ID",$svod['item_id']);
+    }
+    //如果是茶艺，则查找item_type表
+    else if($svod['service_type'] == 3){
+        $svs = get("item_type","ID",$svod['item_id']);
+    }
     $appo = ['appoint_time'=>$co[0]['appoint_time'],'people_num'=>$co[0]['user_num']];
     if($tech && $svs)
 	{
@@ -24,11 +31,11 @@ foreach($so as $svod)
             "job_number"=>$tech[0]['job_number'],
             "service_name"=>$svs[0]['name'],
             "service_id"=>$svs[0]['ID'],
-            "price"=>$svs[0]['price']*$svs[0]['discount']*0.01*0.01,
+            "price"=>$svs[0]['price']/100,
             "time"=>$co[0]['generated_time'],
             "pay_way"=>$co[0]['payment_method'],
             "user_id"=>$co[0]['user_id'],
-            "service_time"=>$svs[0]['duration'],
+            "service_time"=>$svod['service_type']==1?$svs[0]['duration']:0,
             "appo"=>$appo,
             "phone"=>$shop,
             "logo"=>$logo,
