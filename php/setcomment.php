@@ -7,7 +7,11 @@ $service_id = $_POST['service_id'];
 $rate=$_POST['rate'];
 $job_number = $_POST['job_number'];
 $comment=$_POST['comment'];
-$tags=$_POST['tags'];
+$tags = [];
+if(isset($_POST['tags'])){
+    $tags=$_POST['tags'];
+}
+
 $user=get('customer','openid',$openid);
 if($user)
 {

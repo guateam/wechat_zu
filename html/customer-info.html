@@ -94,7 +94,7 @@
         created(){
             var that = this;
             $.post("../php/getcustomer.php",{
-                phone:getQueryString('phone')
+                openid:getQueryString('openid')
             }).done((res)=>{
                 res = JSON.parse(res);
                 if(res.status == 1){

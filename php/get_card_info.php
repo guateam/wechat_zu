@@ -1,15 +1,17 @@
 <?php
 require("database.php");
-$user_id = $_POST['user_id'];
-$is_vip = get("customer",'ID',$user_id);
+$user_id = $_POST['openid'];
+$is_vip = get("customer",'openid',$user_id);
 $head = $is_vip[0]['head'];
 $is_vip = $is_vip[0]['level']==0?false:true;
 //获取该用户的充值总额
 $str = "select sum(`recharge_record`.`charge`) AS `charge` from  `recharge_record` where ( '$user_id' = `recharge_record`.`user_id`)";
 $result = sql_str($str);
-
-$data=[];
 $result = $result[0];
+if(is_null($result['charge'])){
+    $result['charge'] = 0;
+}
+$data=[];
 
 //获取升级所需的总充值额和目前等级
 $str = "SELECT group_concat(`necessary_charge_to_level_up` SEPARATOR ',')  AS str, group_concat(`name` SEPARATOR ',') AS nm FROM vip_information WHERE necessary_charge_to_level_up > ".$result['charge']." LIMIT 1 ;";

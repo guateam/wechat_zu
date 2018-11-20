@@ -194,7 +194,6 @@
 
 <script>
     /**
-
      注意，大约在160行左右的post数据进行充值，user_id将在日后通过微信接口获得，目前只是静态数据，记得修改
      */
     let app = new Vue({
@@ -269,10 +268,8 @@
 					
 						var url = encodeURIComponent(window.location.href+"&money="+this.moneyList[0] * 100+"&jobnumber="+jobnumber);
 						//支付单位以分表示
-						var payurl = "http://1.jthysm.com/dashang/example/jsapiyy.php?pay=" + this.moneyList[0] * 100 + "&backurl=" + url; 						
-						//var payurl = "http://1.jthysm.com/dashang/example/jsapiyy.php?pay=" + this.moneyList[0] * 100;						
-						//alert(payurl);
-						
+						var payurl = "http://1.jthysm.com/dashang/example/jsapiyy.php?pay=" + this.moneyList[0] * 100 + "&backurl=" + url; 												
+						alert(payurl);
                         //window.location.href = "http://1.jthysm.com/dashang/example/jsapiyy.php?pay=" + this.moneyList[0] + "&backurl=" + url; 
 						window.location.href = payurl;
                         
@@ -343,7 +340,7 @@
 			//------------------------------------------------------------	
 			
 			$.post("../php/getcustomer.php", {
-					phone: "13777579230"
+					openid: getQueryString('openid')
 			}).done((res) => {
 				res = JSON.parse(res);
 				if (res.status == 1) {

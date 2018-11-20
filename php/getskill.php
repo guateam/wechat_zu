@@ -2,6 +2,12 @@
 require("database.php");
 //获取预约信息: 工号和对应的服务
 $sv = $_POST['fn'];
+//1--普通技师  2--接待  3--茶艺师
+$type = 1;
+if(isset($_POST['type'])){
+    $type = $_POST['type'];
+}
+
 $phone = (get("shop"))[0]['phone'];
 $sv = explode('-',$sv);
 $info = [];
@@ -24,8 +30,17 @@ for($i=0;$i<count($sv)/2;$i++){
     $j = $i*2;
     $job_number = $sv[$j];
     $id = $sv[$j+1];
-    $service = sql_str("select * from service_type where `ID`='$id'");
-    $total_time+=intval($service[0]['duration'])*60;
+    $service = [];
+    $total_time = 0;
+    //普通技师预约，获取服务的信息
+    if($type==1){
+        $service = sql_str("select * from service_type where `ID`='$id'");
+        $total_time+=intval($service[0]['duration'])*60;
+    }
+    //茶艺师的预约，不需要时长信息
+    else if($type == 3){
+        $service = sql_str("select * from item_type where `ID`='$id'");
+    }
     $total_price+=intval($service[0]['price']);
     $tech = sql_str("select job_number,photo from technician where `job_number`='$job_number'");
     array_push($info,['tech'=>$tech[0],'service'=>$service[0]]);

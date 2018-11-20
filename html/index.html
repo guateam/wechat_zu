@@ -114,10 +114,10 @@
 
                     <div style="display: flex;flex: 0 0 20%;flex-wrap:  wrap;height: 100%;align-items:  center;justify-content:  center;">
                         <div style="height: 60px;width: 60px;border-radius: 50%;background-color: #ff9966;display: flex;justify-content: center;align-items: center;"
-                            onClick="navi('qiyewenhua.html')">
+                            onClick="navi('tea-tech-choose.html')">
                             <img src="../src/企业文化.png" alt="" style="width: 34px;height: 34px;">
                         </div>
-                        <div style="line-height: 1.6;font-size:  1.1em;font-weight: 400;margin-top: -8px;">企业文化</div>
+                        <div style="line-height: 1.6;font-size:  1.1em;font-weight: 400;margin-top: -8px;">茶艺预约</div>
                     </div>
 
 
@@ -159,35 +159,35 @@
                 <div class="weui-tab__panel" style="padding-top: 0;">
                     <div class="weui-tab__panel-item-one" style="display: none;font-weight: 500" id='app1'>
                         <div class="weui-flex" style="height: 40px;border-bottom: 1px #f2f2f2 solid;">
-                            <div class="weui-flex weui-flex__item" style="flex: 0 0 32%;">
+                            <div class="weui-flex weui-flex__item" style="flex: 0 0 52%;">
                                 <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;margin-left: 30px">
                                     项目名称
                                 </div>
                             </div>
-                            <div class="weui-flex weui-flex__item" style="flex: 0 0 30%;">
+                            <div class="weui-flex weui-flex__item" style="flex: 0 0 40%;">
                                 <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">
                                     原价/元
                                 </div>
                             </div>
-                            <div class="weui-flex weui-flex__item" style="flex: 0 0 30%;">
+                            <!-- <div class="weui-flex weui-flex__item" style="flex: 0 0 30%;">
                                 <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center">
                                     现价/元
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="weui-flex" style="height: 40px;border-bottom: 1px #f2f2f2 solid;" v-for="item in items1">
-                            <div class="weui-flex weui-flex__item" style="flex: 0 0 32%;">
+                            <div class="weui-flex weui-flex__item" style="flex: 0 0 52%;">
                                 <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;margin-left: 30px"
                                     v-text='item.name'></div>
                             </div>
-                            <div class="weui-flex weui-flex__item" style="flex: 0 0 30%;">
+                            <div class="weui-flex weui-flex__item" style="flex: 0 0 40%;">
                                 <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center"
                                     v-text="'￥'+item.price"></div>
                             </div>
-                            <div class="weui-flex weui-flex__item" style="flex: 0 0 30%;">
+                            <!-- <div class="weui-flex weui-flex__item" style="flex: 0 0 30%;">
                                 <div style="background-color: white;width: 100%;line-height: 1.6;display: flex;align-items: center;justify-content: center;color: #ff6666;"
                                     v-text="'￥'+item.discount"></div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="weui-tab__panel-item-two" id='app2' style="font-weight: 500">
@@ -228,7 +228,6 @@
             <div class="weui-panel weui-panel_access" style="background-color: white;border-radius: 5px;line-height: 1.6;margin-top: 0">
                 <div class="weui-panel__hd">精品服务推荐</div>
                 <div class="display-block" style="border-bottom: 1px solid #f2f2f2;">
-
                     <a v-for="item in items2" href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg "
                         @Click="navi('xiangmuxiangqing.html?id='+item['id'])">
                         <div class="weui-media-box__hd" style="background-color: #ffcc99;height: 50px;width: 50px; justify-content: center;align-items: center; display: flex;">
@@ -243,7 +242,6 @@
                             <p class="weui-media-box__desc" v-text="item.time+'分钟'"></p>
                         </div>
                     </a>
-
                 </div>
             </div>
         </div>
@@ -255,7 +253,7 @@
             </div>
         </div>
     </div>
-    <div class="weui-tabbar ">
+    <!-- <div class="weui-tabbar ">
         <a href="../html/index.html " class="weui-tabbar__item weui-bar__item_on ">
             <img src="../src/主页激活.png " data-original="../src/主页激活.png " alt=" " class="weui-tabbar__icon ">
             <p class="weui-tabbar__label ">首页</p>
@@ -268,7 +266,7 @@
             <img src="../src/我的.png " data-original="../src/我的激活.png " alt=" " class="weui-tabbar__icon ">
             <p class="weui-tabbar__label ">我的</p>
         </a>
-    </div>
+    </div> -->
 </body>
 <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
 <!-- <script type="text/javascript" src="../js/example.js "></script> -->
@@ -374,19 +372,20 @@
                     document.getElementsByTagName("title")[0].innerText = back.shop
                         .data.name
                 }
+                if (back.app1.status == 1) {
+                    this.items1 = back.app1.data
+                }
+                if (back.app2.status == 1) {
+                    this.items2 = back.app2.data
+                }
+                if (back.notice.status == 1) {
+                    this.items3 = back.notice.data
+                }
+                if (back.shop.status == 1) {
+                    this.data = back.shop.data
+                }
             })
-            if (back.app1.status == 1) {
-                this.items1 = back.app1.data
-            }
-            if (back.app2.status == 1) {
-                this.items2 = back.app2.data
-            }
-            if (back.notice.status == 1) {
-                this.items3 = back.notice.data
-            }
-            if (back.shop.status == 1) {
-                this.data = back.shop.data
-            }
+
         }
     })
 

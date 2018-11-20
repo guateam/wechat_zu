@@ -26,42 +26,42 @@
             </div>
             <div class="weui-cells">
 
-                <a class="weui-cell weui-cell_access" :href="'customer-info.html?phone='+phone">
+                <a class="weui-cell weui-cell_access" :href="'customer-info.html?openid='+openid">
                     <div class="weui-cell__hd"><img src="../src/个人信息.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
                     <div class="weui-cell__bd">
                         <p>个人信息</p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="card.html">
+                <a class="weui-cell weui-cell_access" :href="'card.html?openid='+openid">
                     <div class="weui-cell__hd"><img src="../src/会员卡.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
                     <div class="weui-cell__bd">
                         <p>我的会员卡</p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" :href="'recharge-record.html?phone='+phone">
+                <a class="weui-cell weui-cell_access" :href="'recharge-record.html?openid='+openid">
                     <div class="weui-cell__hd"><img src="../src/充值记录.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
                     <div class="weui-cell__bd">
                         <p>充值记录</p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" :href="'history_tip.html'">
+                <a class="weui-cell weui-cell_access" :href="'history_tip.html?openid='+openid">
                     <div class="weui-cell__hd"><img src="../src/消费记录.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
                     <div class="weui-cell__bd">
                         <p>打赏记录</p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="nopay_order.html">
+                <a class="weui-cell weui-cell_access" :href="'nopay_order.html?openid='+openid">
                     <div class="weui-cell__hd"><img src="../src/待支付.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
                     <div class="weui-cell__bd">
                         <p>我的预约</p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="order.html">
+                <a class="weui-cell weui-cell_access" :href="'order.html?openid='+openid">
                     <div class="weui-cell__hd"><img src="../src/历史订单.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
                     <div class="weui-cell__bd">
                         <p>历史订单</p>
@@ -132,11 +132,12 @@
             phone: "13777579230",
             head: '',
             overlay: true,
+            openid:getQueryString('openid'),
         },
         created() {
             var that = this;
             $.post('../php/getmypage.php', {
-                openid: openid
+                openid: that.openid
             }).done((data) => {
                 data = JSON.parse(data)
                 if (data.status == 1) {

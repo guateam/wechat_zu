@@ -58,7 +58,7 @@
                         <h4 class="weui-media-box__title">{{data.job_number}}</h4>
                         <h6 class="weui-media-box__desc">服务项目：<span style="color: #cc5522;">{{data.service_name}}</span>
                         </h6>
-                        <h6 class="weui-media-box__desc">时长：<span
+                        <h6 v-if="data.service_time > 0" class="weui-media-box__desc">时长：<span
                                 style="color: #cc5522;">{{data.service_time}}min</span></h6>
                         <h6 class="weui-media-box__desc">价格：<span style="color: #cc5522;">￥{{data.price}}</span></h6>
                     </div>
@@ -130,6 +130,7 @@
             tags: [],
             checked_tag: [],
             overlay: true,
+            openid:getQueryString('openid')
         },
         methods: {
             //idx  第几个技师
@@ -154,14 +155,14 @@
                 }
             },
             send() {
-                $("#tijiao").attr('disabled', true);
                 var that = this;
                 if (this.rate.length != this.datas.length) {
                     $(that).openWindow("", "请至少为所有服务打分", ["好的"], () => {
                     })
                 } else {
+                    $("#tijiao").attr('disabled', true);
                     $.post('../php/setcomment.php', {
-                        openid: openid,
+                        openid: that.openid,
                         order_id: getQueryString('id'),
                         service_id: that.service_id,
                         comment: that.text,
@@ -200,11 +201,6 @@
             })
         }
     })
-    var that = app;
-
-    function send() {
-
-    }
 </script>
 
 </html>

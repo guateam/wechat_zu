@@ -78,8 +78,6 @@
             <!--<el-tab-pane label="待评价" name="fourth">待评价</el-tab-pane>-->
             <!--<el-tab-pane label="售后" name="fifth">售后</el-tab-pane>-->
             <!--</el-tabs>-->
-
-
             <row>
                 <tabs value="name1">
                     <tab-pane label="全部" name="name1">
@@ -107,7 +105,7 @@
                                         <div style="overflow: hidden;">
                                             <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">状态</label>
                                             <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;color: red"
-                                                v-text="'待评价'"></span>
+                                                v-text="od.state==4?'待评价':od.state==5?'评价完成':od.state==1?'待付款':'未知' "></span>
                                         </div>
                                     </div>
                                     <div style="position: relative;line-height: 50px;display: flex;">
@@ -233,7 +231,7 @@
                                     <div style="overflow:hidden;">
                                         <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">状态</label>
                                         <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;color: red"
-                                            v-text="'完成'"></span>
+                                            v-text="'评价完成'"></span>
                                     </div>
                                 </div>
                                 <div style="position: relative;line-height: 50px;display: flex;">
@@ -291,6 +289,7 @@
             allorder:[],
             overlay: true,
             selector: null,
+            openid:getQueryString('openid'),
         },
         methods: {
             handleClick(tab, event) {
@@ -314,7 +313,7 @@
                 }
             },
             detail(id) {
-                window.location.href = 'dingdanxiangqing.html?id=' + id
+                window.location.href = 'dingdanxiangqing.html?id=' + id+"&openid="+this.openid
             },
             comment(id) {
                 window.location.href = 'my-rate.html?id=' + id
@@ -358,7 +357,7 @@
             var payret = getQueryString('payret');
             if (payret === "" || payret === undefined || payret == null) {
                 $.post("../php/getbrieforder.php", {
-                    openid: 1 //open_id为微信用户的open_id
+                    openid: getQueryString('openid') //open_id为微信用户的open_id
                 }).done((res) => {
                     res = JSON.parse(res);
                     console.log(res);

@@ -320,7 +320,7 @@
             if (payret === "" || payret === undefined || payret == null) {
                 //正常显示页面
                 $.post("../php/getcustomer.php", {
-                    phone: "13777579230"
+                    openid: getQueryString('openid')
                 }).done((res) => {
                     res = JSON.parse(res);
                     if (res.status == 1) {

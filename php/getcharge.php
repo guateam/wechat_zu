@@ -1,8 +1,8 @@
 <?php
 require("database.php");
-$phone = $_POST['phone'];
-//获取该手机号的用户id
-$user_id = get("customer","phone_number",$phone);
+$openid = $_POST['openid'];
+//获取该用户
+$user_id = get("customer","openid",$openid);
 if($user_id)
 {
     $user_id = $user_id[0]['openid'];

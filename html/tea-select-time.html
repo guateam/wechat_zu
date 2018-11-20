@@ -225,7 +225,7 @@
             url_time:"",//url记录的选择时间
             url_sv:"",//url记录的选择服务
             url_tc:"",//url记录的选择技师
-            openid:getQueryString('openid'),
+            openid:getQueryString('openid')
         },
         methods: {
             //取消选择所有块
@@ -346,7 +346,7 @@
                     // $.cookie('select_time', this.choosen_day+this.choosen_time,{path: '/' });
                     var str_cho= date("Y-m-d H:i:s",this.choosen_time);
 
-                    window.location.href="jishixuanze.html?select_time="+this.choosen_time+"&sv="+this.url_sv+"&tc="+this.url_tc + "&openid=" + this.openid;
+                    window.location.href="tea-tech-choose.html?select_time="+this.choosen_time+"&sv="+this.url_sv+"&tc="+this.url_tc + "&openid=" + this.openid;
                 }
             }
         },

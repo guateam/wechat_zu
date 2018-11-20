@@ -1,7 +1,11 @@
 <?php
 require("database.php");
-$phone = $_POST['phone'];
-$cus = get("customer","phone_number",$phone);
+$openid = $_POST['openid'];
+$cus = get("customer","openid",$openid);
+if(!$cus){
+    echo json_encode(['status'=>0]);
+    exit();
+}
 $id = $cus[0]['openid'];
 //获取充值总额
 $str = "select sum(`recharge_record`.`charge`) AS `charge` from  `recharge_record` where ( '$id' = `recharge_record`.`user_id`)";
