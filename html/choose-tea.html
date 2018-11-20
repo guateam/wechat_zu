@@ -157,6 +157,7 @@
 			url_sv: "",
 			url_tc: "",
 			url_time: "",
+			openid:"",
 		},
 		methods: {
 			choose_tech(job_number) {
@@ -232,7 +233,7 @@
 						return;
 					}
 					window.location.href = "confirm-order.html?fn=" + final_choose + 
-					"&selecttime=" + this.url_time + "&appotype=3"
+					"&selecttime=" + this.url_time + "&appotype=3" + "&openid=" + this.openid;
 				}
 				//还未选择技师，回到技师选择界面
 				else if (this.type == 0) {
@@ -244,7 +245,7 @@
 						return;
 					}
 					window.location.href = "tea-tech-choose.html?select_time=" + this.url_time +
-						"&sv=" + this.data['all']['tea'][this.choosen_sv]['ID'] + "&tc=" + this.url_tc;
+						"&sv=" + this.data['all']['tea'][this.choosen_sv]['ID'] + "&tc=" + this.url_tc + "&openid=" + this.openid;
 				}
 			}
 		},

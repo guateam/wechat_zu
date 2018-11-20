@@ -172,7 +172,7 @@
         let app = new Vue({
             el: '#app',
             data: {
-                id: "1", //之后登陆功能添加了就换成获取的open_id，目前写死.顾客的id
+                id: getQueryString('openid'), //之后登陆功能添加了就换成获取的open_id
                 list: [],
                 charge: 0, //账户余额
                 promotion: [],

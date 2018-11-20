@@ -156,6 +156,7 @@
 			url_sv: "",
 			url_tc: "",
 			url_time: "",
+			openid:getQueryString('openid'),
 		},
 		methods: {
 			choose_tech(job_number) {
@@ -231,19 +232,8 @@
 						$(this).openWindow("", "请至少选择一项服务", ['好的']);
 						return;
 					}
-					//点击确认下单后，将所选信息保存至cookie
-					//换成url参数
-					// $.cookie('fn', final_choose, {
-					// 	path: '/'
-					// });
-					// $.cookie('tc', this.url_tc, {
-					// 	path: '/'
-					// });
-					// $.cookie('select_time', this.url_time, {
-					// 	path: '/'
-					// });
 					window.location.href = "confirm-order.html?fn="+final_choose+"&selecttime="+this.url_time+
-					"&appotype=1"
+					"&appotype=1" + "&openid=" + this.openid;
 				}
 				//还未选择技师，回到技师选择界面
 				else if (this.type == 0) {
@@ -258,7 +248,7 @@
 					// 	path: '/'
 					// });
 					window.location.href = "jishixuanze.html?select_time=" + this.url_time + 
-					"&sv=" + this.data['all']['skill'][this.choosen_sv]['id'] + "&tc=" + this.url_tc;
+					"&sv=" + this.data['all']['skill'][this.choosen_sv]['id'] + "&tc=" + this.url_tc + "&openid=" + this.openid;
 				}
 			}
 		},

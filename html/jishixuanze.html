@@ -240,6 +240,7 @@
                 svnm: "", //选择的服务名字
                 tc: [], //选择的技师工号列表
                 have_sv: false, //是否选择了服务
+                openid:getQueryString('openid'),
             }
         },
         methods: {
@@ -295,22 +296,21 @@
                 if (this.time == "") {
 
                     window.location.href = "select-time.html" + "?select_time=" + this.time + "&sv=" +
-                        this.sv + "&tc=" + this.tc;
+                        this.sv + "&tc=" + this.tc + "&openid=" + this.openid;
                     return;
                 }
                 window.location.href = "chooseProj.html?select_time=" + this.time + "&sv=" + this.sv +
-                    "&tc=" + this.tc;
+                    "&tc=" + this.tc  + "&openid=" + this.openid;
             },
             navi(url, job_number) {
                 window.location.href = url + "?job_number=" + job_number + "&select_time=" + this.time + "&sv=" +
-                    this.sv + "&tc=" + this.tc;
+                    this.sv + "&tc=" + this.tc  + "&openid=" + this.openid;
             },
             tech_info(job_number, state) {
                 // let timepick = new Date((new Date().toDateString() + ' ' + app.timePick));
                 // if (new Date() > timepick) this.timePick = new Date().toTimeString().slice(0, 5);
                 window.location.href = "tech-info.html?job_number=" + job_number + "&select_time=" + this.time +
-                    "&sv=" +
-                    this.sv + "&tc=" + this.tc;
+                    "&sv=" + this.sv + "&tc=" + this.tc  + "&openid=" + this.openid ;
             },
             down_order() {
                 var that = this;
@@ -333,7 +333,7 @@
                     //final_choose.push('jobnumber_' + this.tc[i] + '-id_' + this.sv)
                 }
                 window.location.href = "confirm-order.html?fn=" + final_choose + "&selecttime=" + this.time+
-                "&appotype=1"
+                "&appotype=1"  + "&openid=" + this.openid;
 
             },
             button_click(idx = -1) {
