@@ -130,6 +130,7 @@
             tags: [],
             checked_tag: [],
             overlay: true,
+            openid:getQueryString('openid')
         },
         methods: {
             //idx  第几个技师
@@ -161,7 +162,7 @@
                 } else {
                     $("#tijiao").attr('disabled', true);
                     $.post('../php/setcomment.php', {
-                        openid: openid,
+                        openid: that.openid,
                         order_id: getQueryString('id'),
                         service_id: that.service_id,
                         comment: that.text,

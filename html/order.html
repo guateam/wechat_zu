@@ -249,7 +249,7 @@
                 </tabs>
             </row>
         </div>
-        <div class="weui-tabbar">
+        <!-- <div class="weui-tabbar">
             <a href="../html/index.html" class="weui-tabbar__item">
                 <img src="../src/主页.png" data-original="../src/主页.png" alt="" class="weui-tabbar__icon">
                 <p class="weui-tabbar__label">首页</p>
@@ -262,7 +262,7 @@
                 <img src="../src/我的.png" data-original="../src/我的激活.png" alt="" class="weui-tabbar__icon">
                 <p class="weui-tabbar__label">我的</p>
             </a>
-        </div>
+        </div> -->
         <div id="modal-overlay" v-show="overlay">
             <div class="modal-data">
                 <img src="../src/loading.gif" />
@@ -303,6 +303,7 @@
             allorder:[],
             overlay: true,
             selector: null,
+            openid:getQueryString('openid'),
         },
         methods: {
             handleClick(tab, event) {
@@ -326,7 +327,7 @@
                 }
             },
             detail(id) {
-                window.location.href = 'dingdanxiangqing.html?id=' + id
+                window.location.href = 'dingdanxiangqing.html?id=' + id+"&openid="+this.openid
             },
             comment(id) {
                 window.location.href = 'my-rate.html?id=' + id

@@ -268,10 +268,8 @@
 					
 						var url = encodeURIComponent(window.location.href+"&money="+this.moneyList[0] * 100+"&jobnumber="+jobnumber);
 						//支付单位以分表示
-						var payurl = "http://1.jthysm.com/dashang/example/jsapiyy.php?pay=" + this.moneyList[0] * 100 + "&backurl=" + url; 						
-						//var payurl = "http://1.jthysm.com/dashang/example/jsapiyy.php?pay=" + this.moneyList[0] * 100;						
-						//alert(payurl);
-						
+						var payurl = "http://1.jthysm.com/dashang/example/jsapiyy.php?pay=" + this.moneyList[0] * 100 + "&backurl=" + url; 												
+						alert(payurl);
                         //window.location.href = "http://1.jthysm.com/dashang/example/jsapiyy.php?pay=" + this.moneyList[0] + "&backurl=" + url; 
 						window.location.href = payurl;
                         
