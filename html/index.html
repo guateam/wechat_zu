@@ -228,7 +228,6 @@
             <div class="weui-panel weui-panel_access" style="background-color: white;border-radius: 5px;line-height: 1.6;margin-top: 0">
                 <div class="weui-panel__hd">精品服务推荐</div>
                 <div class="display-block" style="border-bottom: 1px solid #f2f2f2;">
-
                     <a v-for="item in items2" href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg "
                         @Click="navi('xiangmuxiangqing.html?id='+item['id'])">
                         <div class="weui-media-box__hd" style="background-color: #ffcc99;height: 50px;width: 50px; justify-content: center;align-items: center; display: flex;">
@@ -243,7 +242,6 @@
                             <p class="weui-media-box__desc" v-text="item.time+'分钟'"></p>
                         </div>
                     </a>
-
                 </div>
             </div>
         </div>
@@ -374,19 +372,20 @@
                     document.getElementsByTagName("title")[0].innerText = back.shop
                         .data.name
                 }
+                if (back.app1.status == 1) {
+                    this.items1 = back.app1.data
+                }
+                if (back.app2.status == 1) {
+                    this.items2 = back.app2.data
+                }
+                if (back.notice.status == 1) {
+                    this.items3 = back.notice.data
+                }
+                if (back.shop.status == 1) {
+                    this.data = back.shop.data
+                }
             })
-            if (back.app1.status == 1) {
-                this.items1 = back.app1.data
-            }
-            if (back.app2.status == 1) {
-                this.items2 = back.app2.data
-            }
-            if (back.notice.status == 1) {
-                this.items3 = back.notice.data
-            }
-            if (back.shop.status == 1) {
-                this.data = back.shop.data
-            }
+
         }
     })
 

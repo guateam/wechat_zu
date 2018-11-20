@@ -272,7 +272,7 @@
             },
 
             down_order(job_number) { //确认打赏
-                window.location.href = "querendashang.html?job_number=" + job_number;
+                window.location.href = "querendashang.html?job_number=" + job_number + "&openid="+getQueryString('openid');
             },
             sort_by(idx, keyName) {
                 var that = this;

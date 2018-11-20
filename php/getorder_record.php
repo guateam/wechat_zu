@@ -1,10 +1,10 @@
 <?php
 require("database.php");
-$phone = $_POST['phone'];
-$user_id = get("customer","phone_number",$phone);
+$openid = $_POST['openid'];
+$user_id = get("customer","openid",$openid);
 if($user_id)
 {
-    $user_id = $user_id[0]['ID'];
+    $user_id = $user_id[0]['openid'];
     $order = get("recharge_record","user_id",$user_id);
     if($order)
 	{

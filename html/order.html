@@ -370,7 +370,7 @@
             var payret = getQueryString('payret');
             if (payret === "" || payret === undefined || payret == null) {
                 $.post("../php/getbrieforder.php", {
-                    openid: 1 //open_id为微信用户的open_id
+                    openid: getQueryString('openid') //open_id为微信用户的open_id
                 }).done((res) => {
                     res = JSON.parse(res);
                     console.log(res);

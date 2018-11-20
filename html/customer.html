@@ -26,7 +26,7 @@
             </div>
             <div class="weui-cells">
 
-                <a class="weui-cell weui-cell_access" :href="'customer-info.html?phone='+phone">
+                <a class="weui-cell weui-cell_access" :href="'customer-info.html?openid='+openid">
                     <div class="weui-cell__hd"><img src="../src/个人信息.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
                     <div class="weui-cell__bd">
                         <p>个人信息</p>
@@ -40,7 +40,7 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" :href="'recharge-record.html?phone='+phone">
+                <a class="weui-cell weui-cell_access" :href="'recharge-record.html?openid='+openid">
                     <div class="weui-cell__hd"><img src="../src/充值记录.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
                     <div class="weui-cell__bd">
                         <p>充值记录</p>
@@ -146,11 +146,13 @@
             phone: "13777579230",
             head: '',
             overlay: true,
+            openid:'',
         },
         created() {
             var that = this;
+            that.openid = getQueryString('openid');
             $.post('../php/getmypage.php', {
-                openid: openid
+                openid: that.openid
             }).done((data) => {
                 data = JSON.parse(data)
                 if (data.status == 1) {
