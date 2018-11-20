@@ -117,7 +117,7 @@
 </body>
 <script type="text/javascript" src="../js/weui-min.js"></script>
 <script type="text/javascript" src="../js/jquery.js"></script>
-
+<script type="text/javascript" src="../js/url.js"></script>
 <script type="text/javascript" src="../js/vue.min.js"></script>
 
 <script>
@@ -131,11 +131,13 @@
             next_name: "",
             overlay: true,
             head: "",
+            openid:getQueryString('openid'),
+
         },
         created() {
             var that = this;
             $.post('../php/get_card_info.php', {
-                user_id: "apple"
+                openid: that.openid
             }).done((data) => {
                 data = JSON.parse(data)
                 console.log(data);

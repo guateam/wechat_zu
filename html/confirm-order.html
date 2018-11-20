@@ -215,7 +215,7 @@
                                     res = JSON.parse(res);
                                     if (res.status == 1)
                                         window.location.href = "yuyueStatus.html?order_id=" +
-                                        res.order_id;
+                                        res.order_id+"&openid="+that.id;
                                 })
                             })
                         } else {
@@ -233,7 +233,7 @@
                                 "&peoplenum=" + that.people_num);
                             //var weixin_url = "http://1.jthysm.com/dashang/example/jsapiyy.php?pay=" + 39000
                             //total_price以分为单位表示
-                            var weixin_url = "http://1.jthysm.com/dashang/example/jsapiyy.php?pay=" + that.total_price + "&backurl=" + url 
+                            var weixin_url = "http://1.jthysm.com/dashang/example/jsapiyy.php?pay=" + that.total_price + "&backurl=" + url; 
                             window.location.href = weixin_url;
                         })
                     }
@@ -321,7 +321,7 @@
                             }).done((res) => {
                                 res = JSON.parse(res);
                                 if (res.state == 1)
-                                    window.location.href = "yuyueStatus.html?order_id=" +res.order_id;
+                                    window.location.href = "yuyueStatus.html?order_id=" +res.order_id + "&openid=" + that.id;
                             })
                         })
                     }

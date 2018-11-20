@@ -81,8 +81,8 @@
                 date:"",
                 job_number:"",
                 salary:"",
-
             }],
+            openid:getQueryString('openid'),
         },
         methods: {
 
@@ -90,7 +90,7 @@
         created() {
             var that = this;
             $.post('../php/gettip.php', {
-                open_id: 1,//open_id是微信用户在小程序上面的唯一指定open_id
+                open_id: that.openid,//open_id是微信用户在小程序上面的唯一指定open_id
             }).done((res) => {
                 res = JSON.parse(res);
                 if (res.status == 1) 

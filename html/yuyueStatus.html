@@ -170,11 +170,13 @@ let app = new Vue({
 		total:0,
 		shop:[],
 		overlay:true,
+		openid:getQueryString('openid'),
 	},
 	created(){
 		var that = this;
 		$.post("../php/get_unpaid.php",{
-			id:getQueryString('order_id')
+			id:getQueryString('order_id'),
+			openid:that.openid
 		}).done((res)=>{
 			res = JSON.parse(res);
 			if(res.status == 1){

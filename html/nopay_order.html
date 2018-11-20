@@ -92,6 +92,7 @@
         data: {
             list: [],
             overlay: true,
+            openid:getQueryString('openid'),
         },
         methods: {
             detail(id) {
@@ -120,7 +121,9 @@
             var that = this;
             var payret = getQueryString('payret');
             if (payret === "" || payret === undefined || payret == null) {
-                $.post("../php/get_unpaid.php").done((res) => {
+                $.post("../php/get_unpaid.php",{
+                    openid:that.openid
+                }).done((res) => {
                     res = JSON.parse(res);
                     if (res.status == 1) {
                         that.list = res.data;
@@ -130,7 +133,8 @@
             } else if (payret === "1") //这里表示支付成功，返回该页面,去除url参数
             {
                 $.post("../php/pay_unpaid.php",{
-                    order_id:getQueryString('order_id')
+                    order_id:getQueryString('order_id'),
+                    openid:that.openid
                 }).done((res)=>{
                     window.location.href = "nopay_order.html"
                 })
