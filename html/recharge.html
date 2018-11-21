@@ -150,7 +150,7 @@
             <h1 style="font-size: 30px;color: #fe736c;background: transparent" v-text="'￥'+cash"></h1>
         </div>
 
-        <a href="javascript:;" v-text="job_number==''?'请选择本次充值对应的技师':job_number" class="weui-btn weui-btn_default" @click="picker()" id="showPicker" style="margin-top: 5px;margin-bottom: 5px;color: gray;font-size: 16px;"></a>
+        <a href="javascript:;" v-text="job_number==''?'请点击选择本次充值对应的技师':job_number" class="weui-btn weui-btn_default" @click="picker()" id="showPicker" style="margin-top: 5px;margin-bottom: 5px;color: #aaa;font-size: 16px;background-color: white"></a>
         <div>
             <div class="row">
                 <div v-for="(val, index) in [100,200,500]" @click="choose(index)" :id="box_list[index]==0?'box':'choosen-box'">
