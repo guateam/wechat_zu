@@ -7,7 +7,7 @@ if($user)
 {
     $user=$user[0];
     $data=[
-        'phone'=>$user['phone_number'],
+        'name'=>$user['name'],
         'head'=>$user['head']
     ];
     echo(json_encode(['status'=>1,'data'=>$data]));
