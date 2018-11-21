@@ -151,8 +151,7 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="../js/jweixin.js"></script>
-    <!-- <script type="text/javascript" src="../js/example.js"></script> -->
+
     <script type="text/javascript" src="../js/weui-min.js"></script>
     <script type="text/javascript" src="../js/url.js"></script>
     <script type="text/javascript" src="../js/jquery.js"></script>
@@ -160,6 +159,7 @@
     <script src="../js/vue.js"></script>
     <script src="../js/date-format.js"></script>
     <script type="text/javascript" src="../js/windowOpen.js"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.3.0.js"></script>
 
     <script type="text/javascript">
         function getQueryString(name) {
@@ -182,7 +182,7 @@
                 input_phone: "",
                 shop_phone: "",
                 overlay: true,
-                appotype:1,//预约的类别 1--普通技师  3--茶艺师
+                appotype: 1, //预约的类别 1--普通技师  3--茶艺师
                 pay_way: 3 //3--微信支付  1--余额支付
             },
             methods: {
@@ -193,6 +193,15 @@
                 },
                 confirm_od() {
                     var that = this;
+                    
+                    str_list = "";
+                    for (i = 0; i < that.list.length; i++) {
+                        str_list += that.list[i]['tech']['job_number'] + '-' + that.list[i]['service']['ID'] +
+                            '-';
+                    }
+                    str_list = str_list.substr(0, str_list.length - 1);
+
+
                     var item_id = [];
                     //如果是余额支付
                     if (this.pay_way == 1) {
@@ -207,15 +216,15 @@
                                     people_num: that.people_num,
                                     pay: that.total_price,
                                     state: 1, //产生的订单状态 4--支付完成  1--预约,暂未支付
-                                    obj: that.list,
+                                    obj: str_list,
                                     select_time: getQueryString('selecttime'),
                                     cant_pay: true,
-                                    service_type:that.appotype,//产生的service_order的类型为服务还是茶水
+                                    service_type: that.appotype, //产生的service_order的类型为服务还是茶水
                                 }).done((res) => {
                                     res = JSON.parse(res);
                                     if (res.status == 1)
                                         window.location.href = "yuyueStatus.html?order_id=" +
-                                        res.order_id+"&openid="+that.id;
+                                        res.order_id + "&openid=" + that.id;
                                 })
                             })
                         } else {
@@ -227,21 +236,20 @@
                     //如果是微信支付
                     else if (this.pay_way == 3) {
                         $(that).openWindow("", "确认下单吗？", ["不", "是的"], () => {
-                            if(that.input_phone == "")that.input_phone = "none";
-
-                            var url =encodeURIComponent(window.location.href + "&inputphone=" + that.input_phone +
-                                "&peoplenum=" + that.people_num);
-                            //var weixin_url = "http://1.jthysm.com/dashang/example/jsapiyy.php?pay=" + 39000
-                            //total_price以分为单位表示
-                            var weixin_url = "http://1.jthysm.com/dashang/example/jsapiyy.php?pay=" + that.total_price + "&backurl=" + url;
-                            //alert(weixin_url);
-                            window.location.href = weixin_url;
+                            if (that.input_phone == "") that.input_phone = "none";
+                            wx.miniProgram.navigateTo({
+                                url: '/pages/pay/pay?total_fee=' + Math.floor(this.total_price /
+                                        10000) +
+                                    '&type=' + that.appotype + '&phone=' + that.input_phone +
+                                    '&peoplenum=' + that.people_num + '&list=' + str_list +
+                                    '&select_time=' + that.start_time
+                            })
                         })
                     }
                 },
 
                 remove(obj, idx) {
-                    $(this).openWindow("", '确认移除该服务吗', ['不', '好的'], () => {
+                    $(this).openWindow("", '确认移除该技师吗', ['不', '好的'], () => {
                         this.total_price -= obj.service.price;
                         this.list.splice(idx, 1);
                         var url_str = "";
@@ -273,7 +281,7 @@
                 $.post('../php/getskill.php', {
                     fn: getQueryString('fn'),
                     id: that.id,
-                    type:appotype
+                    type: appotype
                 }).done((res) => {
                     res = JSON.parse(res);
                     if (res.status == 1) {
@@ -282,7 +290,7 @@
                         that.total_price = res.total_price;
                         that.charge = res.charge;
                         that.overlay = false;
-                    }   
+                    }
                     //微信的支付
                     if (payret === "" || payret === undefined || payret == null) {
                         //do nothing
@@ -299,7 +307,7 @@
                                 state: 4, //产生的订单状态 4--支付完成  1--预约
                                 obj: that.list,
                                 select_time: getQueryString('selecttime'),
-                                service_type:that.appotype,//产生的service_order的类型为服务还是茶水
+                                service_type: that.appotype, //产生的service_order的类型为服务还是茶水
                             }).done((res) => {
                                 window.location.href = "index.html"
                             })
@@ -318,11 +326,12 @@
                                 obj: that.list,
                                 select_time: getQueryString('selecttime'),
                                 cant_pay: true,
-                                service_type:that.appotype,//产生的service_order的类型为服务还是茶水
+                                service_type: that.appotype, //产生的service_order的类型为服务还是茶水
                             }).done((res) => {
                                 res = JSON.parse(res);
                                 if (res.state == 1)
-                                    window.location.href = "yuyueStatus.html?order_id=" +res.order_id + "&openid=" + that.id;
+                                    window.location.href = "yuyueStatus.html?order_id=" +
+                                    res.order_id + "&openid=" + that.id;
                             })
                         })
                     }
