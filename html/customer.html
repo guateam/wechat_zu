@@ -158,7 +158,7 @@
             }
         },
         created() {
-            var that = this;
+            var that = this; 
             $.post('../php/getmypage.php', {
                 openid: that.openid
             }).done((data) => {
