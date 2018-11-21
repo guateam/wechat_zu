@@ -191,7 +191,6 @@
 
 <!--<script type="text/javascript" src="../vendor/iview/dist/iview.min.js"></script>-->
 <script type="text/javascript" src="../js/iview.min.js"></script>
-
 <script type="text/javascript" src="../js/index.js"></script>
 <script type="text/javascript" src="../js/windowOpen.js"></script>
 <script src="../js/url.js"></script>
@@ -290,7 +289,11 @@
             },
             choose_tech(item) {
                 if (item.busy || item.appoint) return;
-
+                if (this.time === ''){
+                    window.location.href = "select-time.html" + "?select_time=" + this.time + "&sv=" +
+                        this.sv + "&tc=" + this.tc + "&openid=" + this.openid;
+                    return;
+                }
                 var that = this;
                 for (var i = 0; i < that.list.length; i++) {
                     if (item.job_number == that.list[i].job_number) {
@@ -308,7 +311,6 @@
             //跳转到选择服务页面
             chooseProj() {
                 if (this.time == "") {
-
                     window.location.href = "select-time.html" + "?select_time=" + this.time + "&sv=" +
                         this.sv + "&tc=" + this.tc + "&openid=" + this.openid;
                     return;
@@ -409,7 +411,7 @@
 
 
             //获取url参数，在技师选择的相关页面中，存储选择情况有限考虑url参数，当离开技师选择相关页面后
-            //再次进入技师选择界面不会附带url参数，上次选择的情况看cookie。当用户点击立即下单之后，根据
+            //再次进入技师选择界面不会附带url参数，。当用户点击立即下单之后，根据
             //url参数储存cookie
             url_time = getQueryString('select_time');
             url_sv = getQueryString('sv');
