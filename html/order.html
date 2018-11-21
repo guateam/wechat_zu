@@ -258,15 +258,11 @@
 </body>
 
 
-<!--<script src="https://unpkg.com/element-ui/lib/index.js"></script>-->
 
-
-<script type="text/javascript" src="../js/jweixin.js"></script>
 <script type="text/javascript" src="../js/weui-min.js"></script>
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script src="../js/vue.js"></script>
-
-<!--<script type="text/javascript" src="../vendor/iview/dist/iview.min.js"></script>-->
+<script src="https://res.wx.qq.com/open/js/jweixin-1.3.0.js"></script>
 <script type="text/javascript" src="../js/iview.min.js"></script>
 
 <script type="text/javascript" src="../js/windowOpen.js"></script>
@@ -286,10 +282,10 @@
             nopay: [],
             pay: [],
             com: [],
-            allorder:[],
+            allorder: [],
             overlay: true,
             selector: null,
-            openid:getQueryString('openid'),
+            openid: getQueryString('openid'),
         },
         methods: {
             handleClick(tab, event) {
@@ -313,17 +309,24 @@
                 }
             },
             detail(id) {
-                window.location.href = 'dingdanxiangqing.html?id=' + id+"&openid="+this.openid
+                window.location.href = 'dingdanxiangqing.html?id=' + id + "&openid=" + this.openid
             },
             comment(id) {
                 window.location.href = 'my-rate.html?id=' + id
             },
             //支付预约订单
             pay_order(id, pay) {
-                var url = encodeURIComponent(window.location.href + "?order_id=" + id);
-                //金额单位以 分 表示
-                window.location.href = "http://1.jthysm.com/dashang/example/jsapiyy.php?pay=" + pay +
-                    "&backurl=" + url
+                wx.miniProgram.navigateTo({
+                    url: '/pages/pay/pay?total_fee=' + pay +
+                        '&type=pay_unpaid' + '&orderid=' + id,
+                    success: function () {},
+                    fail: function () {
+                        alert('fail');
+                    },
+                    complete: function () {
+                        console.log('complete');
+                    }
+                });
             },
             //数据库里删除预约订单
             del_appo(id) {
@@ -335,8 +338,8 @@
                     })
                 })
             },
-            detail_appo(id){
-                window.location.href = 'dingdanxiangqing.html?id=' + id
+            detail_appo(id) {
+                window.location.href = 'yuyueStatus.html?order_id=' + id +'&openid='+this.openid
             },
             //让某个订单不显示
             del(id) {

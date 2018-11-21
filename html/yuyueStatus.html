@@ -2,12 +2,12 @@
 <html lang="en">
 
 <head id="">
-    <meta charset="UTF-8">
+	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
 	<link rel="stylesheet" type="text/css" href="../css/overlay.css">
-    <title></title>
-    <style>
-    	body {
+	<title></title>
+	<style>
+		body {
     		width: 100%;
     		height: 100%;
     		margin: 0px;
@@ -90,7 +90,7 @@
     </style>
 </head>
 
-<body >
+<body>
 	<div id="app">
 		<div id="headers"><span>预约状态</span></div>
 		<div id="headContent">
@@ -104,7 +104,7 @@
 		<div id="location">
 			<p>
 				<span style="padding-left: 1rem;font-size: 0.9rem;" v-text="shop.name"></span>
-				<a  :href="'tel:'+shop.phone">
+				<a :href="'tel:'+shop.phone">
 					<img style="float: right;margin-right: 1rem;width: 5%;" src="../src/tel.png">
 				</a>
 			</p>
@@ -118,7 +118,7 @@
 		<div id="block"></div>
 		<div id="content">
 			<p style="font-size: 0.8rem;padding-left: 1rem;" v-text="'预约服务时间'+date('Y-m-d H:i',list[0]['appoint_time'])"></p>
-			<hr >
+			<hr>
 			<p v-for="item in list" style="font-size: 0.8rem;">
 				<span style="padding-left: 1rem; opacity: 0.7" v-text="item.job_number"></span>
 				<span style="padding-left: 5rem; opacity: 0.7" v-text="item.name"></span>
@@ -136,58 +136,75 @@
 			</p>
 			<hr style="position: relative;top: -0.4rem;width: 100%;">
 		</div>
-		
+
 		<div id="footer">
-			<div @click="window.location.href='index.html'" class="left">
+			<div @click="back_wx" class="left">
 				<span style="position: relative;top: 1rem;">返回首页 </span>
 			</div>
-			<div class="right" @click="window.location.href='nopay_order.html'" >
+			<div class="right" @click="window.location.href='nopay_order.html'">
 				<span style="position: relative;top: 1rem;">查看我的预约</span>
 			</div>
 		</div>
 
 		<div id="modal-overlay" v-show="overlay">
-            <div class="modal-data">
-                <img src="../src/loading.gif" />
-            </div>
-        </div>
+			<div class="modal-data">
+				<img src="../src/loading.gif" />
+			</div>
+		</div>
 	</div>
 </body>
-<script type="text/javascript" src="../js/jweixin.js "></script>
-<!-- <script type="text/javascript" src="../js/example.js "></script> -->
+
 <script type="text/javascript" src="../js/weui-min.js "></script>
 <script type="text/javascript" src="../js/jquery.js "></script>
 <script type="text/javascript" src="../js/windowOpen.js"></script>
 <script type="text/javascript" src="../js/vue.js "></script>
-<!-- <script type="text/javascript" src="../js/iview.js"></script> -->
 <script type="text/javascript" src="../js/url.js"></script>
 <script type="text/javascript" src="../js/date-format.js"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.3.0.js"></script>
+
 <script type="text/javascript ">
-let app = new Vue({
-	el:"#app",
-	data:{
-		list:[{appoint_time:""}],
-		total:0,
-		shop:[],
-		overlay:true,
-		openid:getQueryString('openid'),
-	},
-	created(){
-		var that = this;
-		$.post("../php/get_unpaid.php",{
-			id:getQueryString('order_id'),
-			openid:that.openid
-		}).done((res)=>{
-			res = JSON.parse(res);
-			if(res.status == 1){
-				that.list = res.data;
-				that.total = res.total;
-				that.shop = res.shop;
+	let app = new Vue({
+		el: "#app",
+		data: {
+			list: [{
+				appoint_time: ""
+			}],
+			total: 0,
+			shop: [],
+			overlay: true,
+			openid: getQueryString('openid'),
+		},
+		methods: {
+			back_wx() {
+				wx.miniProgram.switchTab({
+					url: '/pages/index/index',
+					success: function () {},
+					fail: function () {
+						alert('fail');
+					},
+					complete: function () {
+						console.log('complete');
+					}
+
+				});
 			}
-			that.overlay = false;
-		})
-	}
-})
+		},
+		created() {
+			var that = this;
+			$.post("../php/get_unpaid.php", {
+				id: getQueryString('order_id'),
+				openid: that.openid
+			}).done((res) => {
+				res = JSON.parse(res);
+				if (res.status == 1) {
+					that.list = res.data;
+					that.total = res.total;
+					that.shop = res.shop;
+				}
+				that.overlay = false;
+			})
+		}
+	})
 </script>
 
 </html>
