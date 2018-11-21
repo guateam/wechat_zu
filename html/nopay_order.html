@@ -25,6 +25,7 @@
     <div class="weui-tab" id="app">
         <div class="weui-tab__panel" id="panel">
             <div class="page__bd">
+                <div v-if="list.length == 0">暂无预约订单</div>
                 <div class="weui-form-preview" v-for="od in list" id="list-item">
                     <div>
                         <div class="weui-form-preview__hd">
