@@ -26,52 +26,45 @@
             </div>
             <div class="weui-cells">
 
-                <a class="weui-cell weui-cell_access" :href="'customer-info.html?openid='+openid">
+                <a class="weui-cell weui-cell_access" @click="back_wx('/pages/customer-info/customer-info')">
                     <div class="weui-cell__hd"><img src="../src/个人信息.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
                     <div class="weui-cell__bd">
                         <p>个人信息</p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" :href="'card.html?openid='+openid">
+                <a class="weui-cell weui-cell_access" @click="back_wx('/pages/card/card')">
                     <div class="weui-cell__hd"><img src="../src/会员卡.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
                     <div class="weui-cell__bd">
                         <p>我的会员卡</p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" :href="'recharge-record.html?openid='+openid">
+                <a class="weui-cell weui-cell_access" @click="back_wx('/pages/recharge-record/recharge-record')">
                     <div class="weui-cell__hd"><img src="../src/充值记录.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
                     <div class="weui-cell__bd">
                         <p>充值记录</p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" :href="'history_tip.html?openid='+openid">
+                <a class="weui-cell weui-cell_access" @click="back_wx('/pages/history-tip/history-tip')">
                     <div class="weui-cell__hd"><img src="../src/消费记录.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
                     <div class="weui-cell__bd">
                         <p>打赏记录</p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" :href="'nopay_order.html?openid='+openid">
+                <a class="weui-cell weui-cell_access" @click="back_wx('/pages/nopay_order/nopay_order')">
                     <div class="weui-cell__hd"><img src="../src/待支付.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
                     <div class="weui-cell__bd">
                         <p>我的预约</p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" :href="'order.html?openid='+openid">
+                <a class="weui-cell weui-cell_access" @click="back_wx_tb('/pages/order/order')">
                     <div class="weui-cell__hd"><img src="../src/历史订单.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
                     <div class="weui-cell__bd">
                         <p>历史订单</p>
-                    </div>
-                    <div class="weui-cell__ft"></div>
-                </a>
-                <a class="weui-cell weui-cell_access" @click="back_wx">
-                    <div class="weui-cell__hd"><img src="../src/历史订单.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
-                    <div class="weui-cell__bd">
-                        <p>test</p>
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
@@ -142,9 +135,23 @@
             openid:getQueryString('openid'),
         },
         methods:{
-            back_wx(){
+            back_wx(url){
                 wx.miniProgram.navigateTo({
-                    url: '/pages/newpg/newpg',
+                    url: url,
+                    success: function () {
+                    },
+                    fail: function () {
+                        alert('fail');
+                    },
+                    complete: function () {
+                        console.log('complete');
+                    }
+
+                });
+            },
+            back_wx_tb(url){
+                wx.miniProgram.switchTab({
+                    url: url,
                     success: function () {
                     },
                     fail: function () {
