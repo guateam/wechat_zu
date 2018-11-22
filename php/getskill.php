@@ -14,7 +14,13 @@ $info = [];
 $total_time = 0;
 $total_price = 0;
 $id=$_POST['id'];//用户的openid
-
+$selfphone = sql_str("select phone_number from customer where openid='$id'");
+if(count($selfphone)<=0){
+    echo json_encode(['status'=>-1]);
+    exit();
+}else{
+    $selfphone = $selfphone[0]['phone_number'];
+}
 //获取充值总额
 //这里的查询语句，recharge_record的user_id应该为openid,测试期间都是id,应该改掉。具体代码在充值的相关代码中更改
 $str = "select sum(`recharge_record`.`charge`) AS `charge` from  `recharge_record` where ( '$id' = `recharge_record`.`user_id`)";
@@ -45,4 +51,4 @@ for($i=0;$i<count($sv)/2;$i++){
     $tech = sql_str("select job_number,photo from technician where `job_number`='$job_number'");
     array_push($info,['tech'=>$tech[0],'service'=>$service[0]]);
 }
-echo json_encode(['status'=>1,'data'=>$info,'phone'=>$phone,'exist'=>$total_time,'total_price'=>$total_price,'charge'=>$charge]);
+echo json_encode(['status'=>1,'data'=>$info,'selfphone'=>$selfphone,'phone'=>$phone,'exist'=>$total_time,'total_price'=>$total_price,'charge'=>$charge]);

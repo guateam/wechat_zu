@@ -236,7 +236,7 @@
                     //如果是微信支付
                     else if (this.pay_way == 3) {
                         $(that).openWindow("", "确认下单吗？", ["不", "是的"], () => {
-                            if (that.input_phone == "") that.input_phone = "none";
+                            if (that.input_phone == "") that.input_phone = "0";
                             wx.miniProgram.navigateTo({
                                 url: '/pages/pay/pay?total_fee=' + this.total_price/100  +
                                     '&type=' + that.appotype + '&phone=' + that.input_phone +
@@ -286,6 +286,7 @@
                     if (res.status == 1) {
                         that.list = res.data;
                         that.shop_phone = res.phone;
+                        that.input_phone = res.selfphone;
                         that.total_price = res.total_price;
                         that.charge = res.charge;
                         that.overlay = false;
