@@ -337,6 +337,7 @@
             skill_list: [],
             is_busy: false,
             total_rate: 0,
+            openid:getQueryString('openid'),
         },
         methods: {
             back_wx() {
@@ -359,10 +360,10 @@
                     this.tc.push(this.job_number);
                 }
                 if (getQueryString('mode') == "dashang") {
-                    window.location.href = "dashangjishi.html?job_number=" + this.job_number
+                    window.location.href = "dashangjishi.html?job_number=" + this.job_number + "&openid=" + this.openid
                 } else {
                     window.location.href = "jishixuanze.html?" + "select_time=" + this.time + "&sv=" +
-                        this.sv + "&tc=" + this.tc;
+                        this.sv + "&tc=" + this.tc + "&openid=" + this.openid;
                 }
             },
             show_pic(index) {
