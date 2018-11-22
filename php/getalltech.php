@@ -19,10 +19,14 @@ if(isset($_POST['type'])){
 }
 $tech_info = [];
 if(!is_null($type)){
-    $tech_info = sql_str("select A.job_number,A.photo from technician A where `type`='$type' ");
+    if($type == 1){
+        $tech_info = sql_str("select A.job_number,A.photo from technician A,skill B where `type`='$type' and B.job_number=A.job_number group by A.job_number");
+    }else{
+        $tech_info = sql_str("select A.job_number,A.photo from technician A where `type`='$type' ");
+    }
 }
 else{
-    $tech_info = sql_str("select A.job_number,A.photo from technician A ");
+    $tech_info = sql_str("select A.job_number,A.photo from technician A");
 }
 
 foreach($tech_info as $idx => $tc){

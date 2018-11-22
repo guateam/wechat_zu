@@ -260,33 +260,6 @@
             ClickJibie() {
                 this.clickjibie = !this.clickjibie;
             },
-            check_busy() {
-                var that = this;
-                that.overlay = true;
-                that.list = [];
-                $.post("../php/getalltech.php", {
-                    time: that.timePick
-                }).done((result) => {
-                    result = JSON.parse(result);
-                    for (var i = 0; i < result.data.length; i++) {
-                        var tech = result.data[i];
-                        that.list.push({
-                            avatar_url: tech.avatar_url.replace('..', '/wechat_zu_technician/'),
-                            job_number: tech.job_number,
-                            photo_list: tech.photo_list,
-                            rate: tech.rate,
-                            state: tech.busy,
-                            skills: tech.skill,
-                            level: tech.level,
-                            hot: tech.hot,
-                            check: 0,
-                            show: true
-                        })
-                    }
-                    that.sort_by(0, 'rate');
-                    that.overlay = false;
-                })
-            },
             choose_tech(item) {
                 if (item.busy || item.appoint) return;
                 if (this.time === ''){
@@ -489,7 +462,9 @@
                     }
                 })
             } else {
-                $.post("../php/getalltech.php").done((result) => {
+                $.post("../php/getalltech.php",{
+                    type:1
+                }).done((result) => {
                     result = JSON.parse(result);
                     for (var i = 0; i < result.data.length; i++) {
                         var tech = result.data[i];
