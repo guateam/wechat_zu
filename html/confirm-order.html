@@ -277,6 +277,7 @@
                 var payret = getQueryString('payret');
                 //------------------------------------------------------------	
                 that.start_time = parseInt(getQueryString('selecttime'));
+                that.id = getQueryString('openid');
                 $.post('../php/getskill.php', {
                     fn: getQueryString('fn'),
                     id: that.id,

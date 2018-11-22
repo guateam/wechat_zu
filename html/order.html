@@ -309,7 +309,7 @@
             },
             detail(id) {
                 wx.miniProgram.navigateTo({
-                    url: '/pages/dingdanxiangqing/dingdanxiangqing?id='+id,
+                    url: '/pages/dingdanxiangqing/dingdanxiangqing?id='+id+'&openid='+this.openid,
                     success: function () {
                     },
                     fail: function () {
@@ -351,7 +351,7 @@
             },
             detail_appo(id) {
                 wx.miniProgram.navigateTo({
-                    url: '/pages/yuyueStatus/yuyueStatus?id=' + id,
+                    url: '/pages/yuyueStatus/yuyueStatus?id=' + id+'&openid='+this.openid,
                     success: function () {},
                     fail: function () {
                         alert('fail');
@@ -378,6 +378,8 @@
         },
         created() {
             var that = this;
+            this.openid = getQueryString('openid');
+
             var payret = getQueryString('payret');
             if (payret === "" || payret === undefined || payret == null) {
                 $.post("../php/getbrieforder.php", {

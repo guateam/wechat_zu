@@ -16,8 +16,7 @@ $total_price = 0;
 $id=$_POST['id'];//用户的openid
 $selfphone = sql_str("select phone_number from customer where openid='$id'");
 if(count($selfphone)<=0){
-    echo json_encode(['status'=>-1]);
-    exit();
+
 }else{
     $selfphone = $selfphone[0]['phone_number'];
 }
