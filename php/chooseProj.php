@@ -18,10 +18,12 @@ if($tcs != '' && $tcs[0] != ''){
     ( `service_type`.`ID` = `skill`.`service_id` )
     ORDER BY
     `skill`.`job_number`");
-    $list = [];//输出的技师-服务列表
+    $list = new stdClass;//输出的技师-服务列表
     for($i=0;$i<count($tcs);$i++){
         //默认选择第一个技师
-        $list = array_merge($list,[$tcs[$i]=>['skill'=>[],'choosen'=>$i==0?true:false,'job_number'=>$tcs[$i]]]);
+        $jbnb = $tcs[$i];
+        $list->{$jbnb} =['skill'=>[],'choosen'=>$i==0?true:false,'job_number'=>$tcs[$i]];
+        //$list = array_merge($list,[$jbnb=>['skill'=>[],'choosen'=>$i==0?true:false,'job_number'=>$tcs[$i]]]);
     }
     foreach($skills as $skill){
         //单位换算  分->元
@@ -31,10 +33,11 @@ if($tcs != '' && $tcs[0] != ''){
         //若该技师在传入的技师列表中
         if(in_array($skill['job_number'],$tcs)){
             //在输出的技师-服务列表中添加该技师的服务信息
-            $list[$skill['job_number']]['skill'] = array_merge($list[$skill['job_number']]['skill'],[$skill]);
+            $jbnb = $skill['job_number'];
+            ($list->$jbnb)['skill'] = array_merge(($list->$jbnb)['skill'],[$skill]);
         }
     }
-    echo json_encode(['status'=>1,'data'=>$list]);
+    echo json_encode(['status'=>1,'data'=>(array)$list]);
 }
 //未选择技师的情况
 else
