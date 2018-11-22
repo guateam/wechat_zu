@@ -212,7 +212,7 @@
                                 $.post("../php/addco.php", {
                                     id: that.id,
                                     phone: that.input_phone,
-                                    pay_way: 3, //支付方式  1--微信   3--会员卡
+                                    pay_way: 0, //支付方式  1--微信   3--会员卡
                                     people_num: that.people_num,
                                     pay: that.total_price,
                                     state: 1, //产生的订单状态 4--支付完成  1--预约,暂未支付
@@ -229,7 +229,23 @@
                             })
                         } else {
                             $(that).openWindow("", "确认下单吗？", ["不", "是的"], () => {
-
+                                $.post("../php/addco.php", {
+                                    id: that.id,
+                                    phone: that.input_phone,
+                                    pay_way: 3, //支付方式  1--微信   3--会员卡
+                                    people_num: that.people_num,
+                                    pay: that.total_price,
+                                    state: 1, //产生的订单状态 4--支付完成  1--预约,暂未支付
+                                    obj: str_list,
+                                    select_time: getQueryString('selecttime'),
+                                    cant_pay: true,
+                                    service_type: that.appotype, //产生的service_order的类型为服务还是茶水
+                                }).done((res) => {
+                                    res = JSON.parse(res);
+                                    if (res.status == 1)
+                                        window.location.href = "yuyueStatus.html?order_id=" +
+                                        res.order_id + "&openid=" + that.id;
+                                })
                             })
                         }
                     }
