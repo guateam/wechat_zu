@@ -81,7 +81,7 @@
         <div class="weui-cells">
             <div class="weui-cell weui-cell_swiped">
                 <div class="weui-cell__bd" style="transform: translateX(-68px)">
-                    <div class="weui-cell" onclick="navi('recharge.html')">
+                    <div class="weui-cell" @click="window.location.href = 'recharge.html?openid='+id">
                         <div v-for="pro in promotion" class="weui-cell__bd">
                             <p style="margin-left: 20%">
                                 <span style="display:inline-block ;width:40px">会员</span>
