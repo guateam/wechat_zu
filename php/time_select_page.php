@@ -2,11 +2,11 @@
 require('database.php');
 date_default_timezone_set('PRC');
 //获取店铺信息
-$shop="御足堂影院式足道";
+//$shop="御足堂影院式足道";
 if(isset( $_COOKIE['zys'])){
     $shop_name = $_COOKIE['zys'];
 }
-$shop = get("shop","name",$shop);
+$shop = sql_str("select * from shop limit 1");// get("shop","name",$shop);
 if($shop){
     $result = [];
 
