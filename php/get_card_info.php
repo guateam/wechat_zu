@@ -15,8 +15,18 @@ $data=[];
 
 //获取升级所需的总充值额和目前等级
 $str = "SELECT group_concat(`necessary_charge_to_level_up` SEPARATOR ',')  AS str, group_concat(`name` SEPARATOR ',') AS nm FROM vip_information WHERE necessary_charge_to_level_up > ".$result['charge']." LIMIT 1 ;";
-$exp = (int)(explode(',',(sql_str($str))[0]['str']))[0];
-$lv_list = (explode(',',(sql_str($str))[0]['nm']));
+
+$temp1 = sql_str($str);
+$temp2 = $temp1[0]['str']; 
+$expArr = (int)(explode(',',$temp2));
+$exp = $expArr[0];
+
+$temp3 = $temp1[0]['nm'];
+$lv_list = explode(',',$temp3);
+
+//$exp = (int)(explode(',',(sql_str($str))[0]['str']))[0];
+//$lv_list = (explode(',',(sql_str($str))[0]['nm']));
+
 //计算还需要多少充值才能升级
 if($exp)$exp = $exp -  $result['charge'];
 else $exp = 0;
