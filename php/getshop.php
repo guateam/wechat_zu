@@ -15,7 +15,9 @@ function getshop($id){
             'close_time'=>$shop[0]['close_time'],
             'phone'=>$shop[0]['phone'],
             'ip_adress'=>$shop[0]['ip_address'],
-            'photo'=>$photos
+            'photo'=>$photos,
+            'longitude'=>$shop[0]['longitude'],
+            'latitude'=>$shop[0]['latitude'],
             ]
         ];
 }
