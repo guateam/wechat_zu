@@ -342,13 +342,13 @@
                     $(this).openWindow("", "请选择时间", ['好的']);
                 } else {
                     var str_cho = date("Y-m-d H:i:s", this.choosen_time);
-                    if(this.url_tc !== ""){
+                    //if(this.url_tc !== ""){
                         window.location.href = "chooseProj.html?select_time=" + this.choosen_time + "&sv=" + this.url_sv +
                         "&tc=" + this.url_tc + "&openid=" + this.openid;
-                    }else{
-                        window.location.href = "jishixuanze.html?select_time=" + this.choosen_time + "&sv=" + this.url_sv +
-                        "&tc=" + this.url_tc + "&openid=" + this.openid;
-                    }
+                    // }else{
+                    //     window.location.href = "jishixuanze.html?select_time=" + this.choosen_time + "&sv=" + this.url_sv +
+                    //     "&tc=" + this.url_tc + "&openid=" + this.openid;
+                    // }
                 }
             }
         },
