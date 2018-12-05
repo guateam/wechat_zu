@@ -110,8 +110,7 @@
                         <row type="flex" justify="start" style="margin-bottom: 3px" :gutter="16" @click.native="tech_info(item.job_number,item.state)">
                             <i-col span="15">
                                 <p>
-                                    当前状态: <span :style="{color: item.state === 1 ? '#ed4014' : '#19be6b' }">{{
-                                        item.state === 1? '繁忙' : '空闲' }}</span>
+                                    当前状态: <span :style="{color: item.appoint === true? '#ed4014' : '#19be6b' }">{{item.appoint === true?'繁忙':'空闲'  }}</span>
                                 </p>
                             </i-col>
                         </row>
