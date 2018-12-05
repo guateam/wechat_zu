@@ -297,12 +297,12 @@
                 var that = this;
 
                 if (this.job_number == "" || this.job_number == null) {
-                    alert("请选择技师!");
+                    that.job_number = "";
                 }
                 if (this.fee == 0 || this.fee == '自定义') {
                     alert("请选择金额!");
                 }
-                if (this.job_number != "" && this.job_number != null && this.fee != 0 && this.fee != '') {
+                if (this.fee != 0 && this.fee != '') {
 
                     // var url = encodeURIComponent(window.location.href + "?fee=" + that.fee + "&jbnb=" + that.job_number);
                     // //金额单位以 分 表示
