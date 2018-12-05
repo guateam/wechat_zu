@@ -265,7 +265,7 @@
                 if (item.busy || item.appoint) return;
                 if (this.time === ''){
                     window.location.href = "select-time.html" + "?select_time=" + this.time + "&sv=" +
-                        this.sv + "&tc=" + this.tc + "&openid=" + this.openid;
+                        this.sv + "&tc=" + item.job_number + "&openid=" + this.openid;
                     return;
                 }
                 var that = this;
