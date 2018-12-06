@@ -34,6 +34,7 @@ foreach($tech_info as $idx => $tc){
     //获取刷钟情况
     $clock = sql_str("select state from clock where job_number = '$job_number' order by `time` limit 1");
     //获取预约情况
+    //$appoint_time = sql_str("select A.appoint_time as `begin`, A.appoint_time+C.duration*60 as `end` from consumed_order A,service_order B,service_type C where A.appoint_time >= $now and B.order_id = A.order_id and B.job_number = '$job_number' and C.ID=B.item_id");
     $appoint_tech = sql_str("select * from service_order where job_number = '$job_number' and appoint_time > ($select_time - (select Sum(duration)*60 from service_order A,service_type B where A.item_id = B.ID and A.order_id =(select order_id from service_order where job_number = '$job_number' and appoint_time < $select_time order by appoint_time desc limit 1)  ))");
     //是否在上钟
     $up_clock = false;

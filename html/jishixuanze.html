@@ -363,7 +363,15 @@
                         else return 0
                     }
                 }
+                var appoint_ignore = function(){
+                    return function(objectN, objectM){
+                        if(objectN['appoint'] === true && objectM['appoint'] === false)return 1;
+                        else if(objectN['appoint'] === false && objectM['appoint'] === false) return 0;
+                        else if(objectN['appoint'] === false && objectM['appoint'] === true)return -1;
+                    }
+                }
                 this.list.sort(sort(keyName));
+                this.list.sort(appoint_ignore());
             },
             reshow() {
                 for (var i = 0; i < this.list.length; i++) {
