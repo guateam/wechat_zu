@@ -7,6 +7,7 @@ function getservicetype($id)
 	{
         $item=[
             'id'=>$value['ID'],
+            'show'=>$value['index_show'],
             'procedure'=>$value['procedure'],
             'attention'=>$value['attention'],
             'benefit'=>$value['benefit'],
