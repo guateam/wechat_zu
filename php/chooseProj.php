@@ -2,7 +2,9 @@
 require("database.php");
 
 $tcs = '';
+$time = time();
 if(isset($_POST['tc']))$tcs = $_POST['tc'];
+if(isset($_POST['time']))$time = $_POST['time'];
 //选择了技师的情况
 if($tcs != '' && $tcs[0] != '')
 {
@@ -27,6 +29,15 @@ if($tcs != '' && $tcs[0] != '')
 	{
         //默认选择第一个技师
         $jbnb = $tcs[$i];
+        //判断目前是否是忙碌状态
+        $appoint_time = sql_str("select A.appoint_time as `begin`, A.appoint_time+C.duration*60 as `end` from consumed_order A,service_order B,service_type C where A.appoint_time >= $now and B.order_id = A.order_id and B.job_number = '$job_number' and C.ID=B.item_id");
+        foreach($appoint_time as $app_time){
+            if($time>=$app_time['begin'] && $time <= $app_time['end']){
+                echo json_encode(['status'=>-1]);
+                exit();
+            }
+        }
+        
         $list->$jbnb =['skill'=>[],'choosen'=>$i==0?true:false,'job_number'=>$tcs[$i]];
     }
 	$out_list = new stdClass();
