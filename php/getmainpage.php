@@ -11,4 +11,22 @@ for($i=0;$i<count($npic);$i++){
     $npic[$i] = array_merge($npic[$i],['dir'=>'qiyewenhua.html']);
 }
 $pic = array_merge($pic,$npic);
-echo (json_encode(['status' => 1,'top_pic'=>$pic,'data'=>['app1' => getdiscount($id), 'app2' => getservicetype($id), 'shop' => getshop($id), 'notice' => getnotice($id)]]));
+$app2 = getservicetype($id);
+$reg1='/足浴/';
+$reg2='/spa|SPA/';
+$foot = [];
+$spa = [];
+foreach($app2 as $it){
+    $res = false;
+    preg_match($reg1,$it['name'],$res);
+    if($res){
+        array_push($foot,$it);
+    }else{
+        preg_match($reg2,$it['name'],$res);
+        if($res){
+            array_push($spa,$it);
+        }
+    }
+}
+
+echo (json_encode(['status' => 1,'top_pic'=>$pic,'data'=>['foot'=>$foot,'spa'=>$spa,'app1' => getdiscount($id), 'app2' => $app2, 'shop' => getshop($id), 'notice' => getnotice($id)]]));
