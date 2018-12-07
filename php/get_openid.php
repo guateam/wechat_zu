@@ -13,7 +13,13 @@ function httpGet($url){
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_TIMEOUT, 500);
     curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
-    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, true);
+
+    //根据不同版本使用curl_setopt的第三个参数
+    $value2 = true;
+    if(version_compare(PHP_VERSION,'7.28.1', '<'))$value2 = 2;
+    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, $value2);
+
+    
     curl_setopt($curl, CURLOPT_URL, $url);
     $res = curl_exec($curl);
     curl_close($curl);
