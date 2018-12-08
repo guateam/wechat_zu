@@ -22,17 +22,27 @@ $reg2='/spa|SPA/';
 $foot = [];
 $spa = [];
 
-foreach($app2['data'] as $it){
+//找出属于某类的项目，并且删除app2中同类的项目，只留下一个
+foreach($app2['data'] as $key => $it){
     $res = false;
     preg_match($reg1,$it['name'],$res);
     if($res){
         array_push($foot,$it);
+        unset($app2['data'][$key]);
     }else{
         preg_match($reg2,$it['name'],$res);
         if($res){
             array_push($spa,$it);
+            unset($app2['data'][$key]);
         }
     }
 }
-
+$app2['data'] = array_values($app2['data']);
+//把删完的同类项目补一个回来
+if(count($foot)> 0){
+    array_push($app2['data'],$foot[0]);
+}    
+if(count($spa)> 0){
+    array_push($app2['data'],$spa[0]);
+}
 echo (json_encode(['status' => 1,'top_pic'=>$pic,'data'=>['tab1'=>$tab1,'tab2'=>$tab2,'foot'=>$foot,'spa'=>$spa,'app1' => getdiscount($id), 'app2' => $app2, 'shop' => getshop($id), 'notice' => getnotice($id)]]));
