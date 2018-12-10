@@ -20,7 +20,7 @@ if(isset($_POST['type'])){
 $tech_info = [];
 if(!is_null($type)){
     if($type == 1){
-        $tech_info = sql_str("select A.job_number,A.photo from technician A,skill B where `type`='$type' and B.job_number=A.job_number group by A.job_number");
+        $tech_info = sql_str("select A.job_number,A.photo,B.level from technician A,skill B where `type`='$type' and B.job_number=A.job_number group by A.job_number");
     }else{
         $tech_info = sql_str("select A.job_number,A.photo from technician A where `type`='$type' ");
     }
@@ -58,7 +58,8 @@ foreach($tech_info as $idx => $tc){
     $rate = sql_str("select Avg(score) as score from rate where job_number = '$job_number' and `bad` = 1");
     //保留一位小数
     $rate = round($rate[0]['score'],1);
-    $tech_info[$idx] = array_merge($tech_info[$idx],['img_list'=>$friend_circle,'rate'=>$rate,'level'=>"",'busy'=>$up_clock,'appoint'=>$already_appoint]);
+    //$tech_info[$idx] = array_merge($tech_info[$idx],['img_list'=>$friend_circle,'rate'=>$rate,'level'=>"",'busy'=>$up_clock,'appoint'=>$already_appoint]);
+    $tech_info[$idx] = array_merge($tech_info[$idx],['img_list'=>$friend_circle,'rate'=>$rate,'busy'=>$up_clock,'appoint'=>$already_appoint]);
 }
 echo json_encode(['status'=>1,'data'=>$tech_info]);
 

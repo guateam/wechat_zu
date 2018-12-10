@@ -355,11 +355,34 @@
                 this.button_click(idx);
                 var that = this;
                 that.reshow();
-                for (var i = 0; i < that.list.length; i++) {
-                    if (that.list[i].name != str) {
-                        that.list[i].show = false;
-                        console.log(that.list[i].job_number + "不显示，" + that.list[i].level)
+				
+				var mylevel = "9";
+				if (str == "金牌足浴")
+				{
+					mylevel = "1";
+				}
+				else if (str == "魅力天使")
+				{
+					mylevel = "2";
+				}
+				else if (str == "至尊国色")
+				{
+					mylevel = "3";
+				}
+				
+                for (var i = 0; i < that.list.length; i++) 
+				{
+                    if (that.list[i].level == mylevel) 
+					{
+                        that.list[i].show = true;
+                        console.log(that.list[i].job_number + "显示，" + that.list[i].level);
                     }
+					else
+					{
+						that.list[i].show = false;
+                        console.log(that.list[i].job_number + "不显示，" + that.list[i].level);
+					}
+					
                 }
             },
             sort_by(idx, keyName) {
