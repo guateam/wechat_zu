@@ -42,8 +42,17 @@ foreach($app2['data'] as $key => $it){
         }
     }
 }
+//用于精品服务推荐
 $app2['data'] = array_values($app2['data']);
 
+//用于项目分类
+$app2_more = $app2;
+if(count($foot)> 0){
+    array_push($app2_more['data'],$foot[0]);
+}    
+if(count($spa)> 0){
+    array_push($app2_more['data'],$spa[0]);
+}
 echo (json_encode(['status' => 1,'top_pic'=>$pic,'data'=>[
                             'tab1'=>$tab1,
                             'tab2'=>$tab2,
@@ -51,6 +60,7 @@ echo (json_encode(['status' => 1,'top_pic'=>$pic,'data'=>[
                             'spa'=>$spa,
                             'app1' => getdiscount($id),
                             'app2' => $app2,
+                            'app2_more'=>$app2_more,
                             'shop' => getshop($id),
                             'notice' => getnotice($id),
                             'promo'=>$promo]
