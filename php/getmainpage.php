@@ -5,11 +5,16 @@ require "getservicetype.php";
 require "getnotice.php";
 require "getshop.php";
 $id = $_POST['id'];
+$now_time = time();
+
 $pic = sql_str("select A.dir AS url,B.dir AS dir from shop_photo A, service_type B where A.shop_id = 1 and (B.ID = A.theme)");
 $npic = sql_str("select A.dir AS url from shop_photo A where A.shop_id = 1 and 0= A.theme");
 for($i=0;$i<count($npic);$i++){
     $npic[$i] = array_merge($npic[$i],['dir'=>'qiyewenhua.html']);
 }
+//获取最近的5条优惠活动
+$promo = sql_str("select *, abs($now_time - start) as leap from promotion order by leap ASC limit 5");
+
 $pic = array_merge($pic,$npic);
 $app2 = getservicetype($id);
 //显示在小程序上面的两个标签内容
@@ -38,11 +43,15 @@ foreach($app2['data'] as $key => $it){
     }
 }
 $app2['data'] = array_values($app2['data']);
-//把删完的同类项目补一个回来
-if(count($foot)> 0){
-    array_push($app2['data'],$foot[0]);
-}    
-if(count($spa)> 0){
-    array_push($app2['data'],$spa[0]);
-}
-echo (json_encode(['status' => 1,'top_pic'=>$pic,'data'=>['tab1'=>$tab1,'tab2'=>$tab2,'foot'=>$foot,'spa'=>$spa,'app1' => getdiscount($id), 'app2' => $app2, 'shop' => getshop($id), 'notice' => getnotice($id)]]));
+
+echo (json_encode(['status' => 1,'top_pic'=>$pic,'data'=>[
+                            'tab1'=>$tab1,
+                            'tab2'=>$tab2,
+                            'foot'=>$foot,
+                            'spa'=>$spa,
+                            'app1' => getdiscount($id),
+                            'app2' => $app2,
+                            'shop' => getshop($id),
+                            'notice' => getnotice($id),
+                            'promo'=>$promo]
+                ]));
