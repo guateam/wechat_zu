@@ -5,10 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>项目详情</title>
-    
-	<!--<link rel="stylesheet" type="text/css" href="../vendor/iview/dist/styles/iview.css">-->
-	<link rel="stylesheet" type="text/css" href="../css/iview.css">	
-	
+
+    <!--<link rel="stylesheet" type="text/css" href="../vendor/iview/dist/styles/iview.css">-->
+    <link rel="stylesheet" type="text/css" href="../css/iview.css">
+
     <link rel="stylesheet" type="text/css" href="../css/global.css">
     <style>
         .ivu-collapse{
@@ -66,7 +66,7 @@
 <body>
     <div id="app">
         <img :src="info['img']" v-if="info['img']!=''" alt="" style="width: 100%;height: 31%;">
-        <img src="../src/项目详情头图.png" v-else  alt="" style="width: 100%;height: 31%;">
+        <img src="../src/项目详情头图.png" v-else alt="" style="width: 100%;height: 31%;">
         <row>
             <div style="margin-top: 5px;margin-bottom: 10px;display: flex;justify-content: space-between">
                 <div style="margin-left: 10px">
@@ -119,13 +119,13 @@
         data() {
             return {
                 id: getQueryString('id'),
-                openid:getQueryString('openid'),
+                openid: getQueryString('openid'),
                 info: [],
-                overlay:true,
+                overlay: true,
             }
         },
-        methods:{
-            navi(url){
+        methods: {
+            navi(url) {
                 window.location.href = url;
             }
         },
@@ -139,7 +139,7 @@
                     that.info = res.data;
                     that.overlay = false;
                 } else {
-                    $(this).openWindow("", "没有该服务", ["好的"],()=>{
+                    $(this).openWindow("", "没有该服务", ["好的"], () => {
                         window.history.go(-1);
                     })
                     // swal({
@@ -160,6 +160,7 @@
             })
         }
     })
+
     function getQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
         var r = window.location.search.substr(1).match(reg);

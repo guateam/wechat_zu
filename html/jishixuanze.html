@@ -473,7 +473,8 @@
             //获取技师列表
             if (this.have_sv) {
                 $.post("../php/get_tech_by_skill.php", {
-                    service_id: this.sv
+                    service_id: this.sv,
+                    select_time:that.time,
                 }).done((result) => {
                     result = JSON.parse(result);
                     if (result.status == 1) {
@@ -509,7 +510,8 @@
                 })
             } else {
                 $.post("../php/getalltech.php",{
-                    type:1
+                    type:1,
+                    select_time:that.time,
                 }).done((result) => {
                     result = JSON.parse(result);
                     for (var i = 0; i < result.data.length; i++) {

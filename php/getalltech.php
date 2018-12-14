@@ -13,6 +13,7 @@ $type = null;
 
 if(isset($_POST['select_time'])){
     $select_time = intval($_POST['select_time']);
+    if($select_time == "")$select_time = time();
 }
 if(isset($_POST['type'])){
     $type = $_POST['type'];
