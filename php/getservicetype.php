@@ -14,7 +14,8 @@ function getservicetype($id)
             'name'=>$value['name'],
             'time'=>$value['duration'],
             'price'=>$value['price']/100.0,
-            'img'=>$value['image']
+            'img'=>$value['image'],
+            'belong_to'=>$value['belong_to']
         ];
         array_push($data,$item);
     }

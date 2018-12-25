@@ -21,25 +21,23 @@ $app2 = getservicetype($id);
 $tab1 ="足浴三选一";
 $tab2 ="SPA三选一";
 //筛选用的正则表达式
-$reg1='/足浴/';
-$reg2='/spa|SPA/';
+// $reg1='/足浴/';
+// $reg2='/spa|SPA/';
 //属于某一类的服务
 $foot = [];
 $spa = [];
 
-//找出属于某类的项目，并且删除app2中同类的项目，只留下一个
+//找出属于某类的项目，并且删除app2中同类的项目，只留下一个 belong_to 为1表示属于足浴，2表示属于SPA,0表示不属于任何
 foreach($app2['data'] as $key => $it){
-    $res = false;
-    preg_match($reg1,$it['name'],$res);
-    if($res){
+    //$res = false;
+    //preg_match($reg1,$it['name'],$res);
+    if($it['belong_to'] == 1){
         array_push($foot,$it);
         unset($app2['data'][$key]);
-    }else{
-        preg_match($reg2,$it['name'],$res);
-        if($res){
-            array_push($spa,$it);
-            unset($app2['data'][$key]);
-        }
+    }else if($it['belong_to'] == 2){
+        //preg_match($reg2,$it['name'],$res);
+        array_push($spa,$it);
+        unset($app2['data'][$key]);
     }
 }
 //用于精品服务推荐
