@@ -16,7 +16,7 @@ function getservicetype($id)
             'price'=>$value['price']/100.0,
             'img'=>$value['image'],
             'belong_to'=>$value['belong_to'],
-            'cheat_price'=>$value['cheat_price']
+            'cheat_price'=>$value['cheat_price']/100.0
         ];
         array_push($data,$item);
     }
