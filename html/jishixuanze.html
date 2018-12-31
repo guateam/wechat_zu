@@ -281,7 +281,7 @@
                 //如果被约则弹窗提示
                 var that = this
                 if (item.busy || item.appoint){
-                    $(that).openWindow("", "该技师在所选时段内已经有约", ["好的","致电客服"], () => {
+                    $(that).openWindow("", "该技师在所选时段内已经有约", ["好的","电话预约"], () => {
                         window.location.href = "tel:"+that.tel;
                     })
                     return;
