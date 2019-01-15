@@ -1,8 +1,8 @@
 <?php
 require("database.php");
-require("getservicetype.php");
+require("getservicetype2.php");
 $id = $_POST['id'];
-$result = getservicetype($id);
+$result = getservicetype2($id);
 $res = [];
 if($result)
 {
