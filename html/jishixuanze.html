@@ -140,7 +140,7 @@
 
                     <i-col span="4">
                         <div @click="choose_tech(item)" :class="item.appoint === true?'circle_red':'circle'" :style="[{'font-size': (item.state === 1 ? '10' : '12') + 'px'}]">
-                            <span v-if="item.check === 1" style="font-size: 16px">√</span>
+                            <span v-if="item.check === 1" style="font-size: 16px;color:red;">√</span>
                             <span v-else>{{ item.busy === true ? '已上钟' : item.appoint === true?'被约':'可选' }}</span>
                         </div>
                     </i-col>
