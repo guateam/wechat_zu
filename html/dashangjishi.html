@@ -292,7 +292,7 @@
             tech_info(job_number, state) {
                 // let timepick = new Date((new Date().toDateString() + ' ' + app.timePick));
                 // if (new Date() > timepick) this.timePick = new Date().toTimeString().slice(0, 5);
-                window.location.href = "tech-info.html?job_number=" + job_number + "&mode=dashang"
+                window.location.href = "tech-info.html?job_number=" + job_number + "&mode=dashang" + "&openid=" + getQueryString('openid');
             },
 
             down_order(job_number) { //确认打赏
