@@ -72,7 +72,7 @@
                     </i-col>
 
                     <i-col span="4">
-                        <div @click="down_order(item.job_number)" class="circle" :style="[{'font-size': (item.state === 1 ? '10' : '12') + 'px'}, {'color':(item.check === 0 ? '#875522':'#91df6f')}, {'border-color': (item.state === 1 ? '#875522' : '#D5B32B')}]">
+                        <div @click="down_order(item.job_number)" class="circle" :style="[{'font-size': (item.state === 1 ? '10' : '12') + 'px'}, {'color':(item.check === 0 ? '#875522':'#ff0000')}, {'border-color': (item.state === 1 ? '#875522' : '#D5B32B')}]">
                             <span v-if="item.check === 1" style="font-size: 16px">√</span>
                             <span v-else>打赏</span>
                         </div>
