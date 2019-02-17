@@ -13,16 +13,21 @@ $type = null;
 
 if(isset($_POST['select_time'])){
     $select_time = intval($_POST['select_time']);
+    if($select_time == "")$select_time = time();
 }
 if(isset($_POST['type'])){
     $type = $_POST['type'];
 }
 $tech_info = [];
 if(!is_null($type)){
-    $tech_info = sql_str("select A.job_number,A.photo from technician A where `type`='$type' ");
+    if($type == 1){
+        $tech_info = sql_str("select A.job_number,A.photo,B.level from technician A,skill B where `type`='$type' and B.job_number=A.job_number group by A.job_number");
+    }else{
+        $tech_info = sql_str("select A.job_number,A.photo from technician A where `type`='$type' ");
+    }
 }
 else{
-    $tech_info = sql_str("select A.job_number,A.photo from technician A ");
+    $tech_info = sql_str("select A.job_number,A.photo from technician A");
 }
 
 foreach($tech_info as $idx => $tc){
@@ -30,6 +35,7 @@ foreach($tech_info as $idx => $tc){
     //获取刷钟情况
     $clock = sql_str("select state from clock where job_number = '$job_number' order by `time` limit 1");
     //获取预约情况
+    //$appoint_time = sql_str("select A.appoint_time as `begin`, A.appoint_time+C.duration*60 as `end` from consumed_order A,service_order B,service_type C where A.appoint_time >= $now and B.order_id = A.order_id and B.job_number = '$job_number' and C.ID=B.item_id");
     $appoint_tech = sql_str("select * from service_order where job_number = '$job_number' and appoint_time > ($select_time - (select Sum(duration)*60 from service_order A,service_type B where A.item_id = B.ID and A.order_id =(select order_id from service_order where job_number = '$job_number' and appoint_time < $select_time order by appoint_time desc limit 1)  ))");
     //是否在上钟
     $up_clock = false;
@@ -53,7 +59,8 @@ foreach($tech_info as $idx => $tc){
     $rate = sql_str("select Avg(score) as score from rate where job_number = '$job_number' and `bad` = 1");
     //保留一位小数
     $rate = round($rate[0]['score'],1);
-    $tech_info[$idx] = array_merge($tech_info[$idx],['img_list'=>$friend_circle,'rate'=>$rate,'level'=>"",'busy'=>$up_clock,'appoint'=>$already_appoint]);
+    //$tech_info[$idx] = array_merge($tech_info[$idx],['img_list'=>$friend_circle,'rate'=>$rate,'level'=>"",'busy'=>$up_clock,'appoint'=>$already_appoint]);
+    $tech_info[$idx] = array_merge($tech_info[$idx],['img_list'=>$friend_circle,'rate'=>$rate,'busy'=>$up_clock,'appoint'=>$already_appoint]);
 }
 echo json_encode(['status'=>1,'data'=>$tech_info]);
 

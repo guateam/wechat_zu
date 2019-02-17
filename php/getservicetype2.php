@@ -1,5 +1,5 @@
 <?php
-function getservicetype($id)
+function getservicetype2($id)
 {
     $servicetype=get('service_type');
     $data=[];
@@ -14,7 +14,7 @@ function getservicetype($id)
             'name'=>$value['name'],
             'time'=>$value['duration'],
             'price'=>$value['price']/100.0,
-            'img'=>$value['image'],
+            'img'=>$value['image2'],
             'belong_to'=>$value['belong_to'],
             'market_price'=>$value['market_price']/100.0
         ];

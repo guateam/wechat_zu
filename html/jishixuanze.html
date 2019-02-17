@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="../css/index.css">
     <link rel="stylesheet" type="text/css" href="../css/overlay.css">
     <link rel="stylesheet" href="../css/global.css" />
+    <script type="text/javascript" src="../js/windowOpen.js"></script>
     <style>
         #app {
             font-family: Cursive;
@@ -23,6 +24,23 @@
             text-align: center;
             line-height: 40px;
             color: #D5B32B;
+            border-color:#D5B32B;
+        }
+
+        .circle_red {
+            width: 40px;
+            height: 40px;
+            border-radius: 150px;
+            margin: auto;
+            border: 2px solid;
+            text-align: center;
+            line-height: 40px;
+            color: #FF0000;
+            border-color:#FF0000;
+        }
+
+        img {
+            object-fit: cover;
         }
     </style>
 </head>
@@ -105,12 +123,11 @@
                         </row>
                     </i-col>
 
-                    <i-col span="15" @click.native="tech_info(item.job_number,item.state)">
+                    <i-col span="15" @click.native="tech_info(item.job_number,item.appoint,item.busy)">
                         <row type="flex" justify="start" style="margin-bottom: 3px" :gutter="16" @click.native="tech_info(item.job_number,item.state)">
                             <i-col span="15">
                                 <p>
-                                    当前状态: <span :style="{color: item.state === 1 ? '#ed4014' : '#19be6b' }">{{
-                                        item.state === 1? '繁忙' : '空闲' }}</span>
+                                    当前状态: <span :style="{color: item.appoint === true? '#ed4014' : '#19be6b' }">{{item.appoint === true?'繁忙':'空闲'  }}</span>
                                 </p>
                             </i-col>
                         </row>
@@ -122,8 +139,8 @@
                     </i-col>
 
                     <i-col span="4">
-                        <div @click="choose_tech(item)" class="circle" :style="[{'font-size': (item.state === 1 ? '10' : '12') + 'px'}, {'color':(item.check === 0 ? '#875522':'#91df6f')}, {'border-color': (item.state === 1 ? '#875522' : '#D5B32B')}]">
-                            <span v-if="item.check === 1" style="font-size: 16px">√</span>
+                        <div @click="choose_tech(item)" :class="item.appoint === true?'circle_red':'circle'" :style="[{'font-size': (item.state === 1 ? '10' : '12') + 'px'}]">
+                            <span v-if="item.check === 1" style="font-size: 16px;color:red;">√</span>
                             <span v-else>{{ item.busy === true ? '已上钟' : item.appoint === true?'被约':'可选' }}</span>
                         </div>
                     </i-col>
@@ -171,13 +188,13 @@
                 </div>
             </div>
         </row>
-        <div style="height: 60px;width:60px;position: fixed;background-color: white;bottom: 70px;right: 30px; display: flex;align-items: center;justify-content: center;border-radius: 50%;border: 1px #fe736c solid;"
-            onclick="call()">
-            <div style="width: 100%;height: 100%;text-align: center;padding-top: 8px">
-                <img src="../src/分享.png" alt="" style="height: 25px;width:25px">
-                <h1 style="font-size: 14px;font-weight: 200;color: #fe736c">分享</h1>
-            </div>
-        </div>
+        <!--<div style="height: 60px;width:60px;position: fixed;background-color: white;bottom: 70px;right: 30px; display: flex;align-items: center;justify-content: center;border-radius: 50%;border: 1px #fe736c solid;"-->
+            <!--onclick="call()">-->
+            <!--<div style="width: 100%;height: 100%;text-align: center;padding-top: 8px">-->
+                <!--<img src="../src/分享.png" alt="" style="height: 25px;width:25px">-->
+                <!--<h1 style="font-size: 14px;font-weight: 200;color: #fe736c">分享</h1>-->
+            <!--</div>-->
+        <!--</div>-->
         <div id="modal-overlay" v-show="overlay">
             <div class="modal-data">
                 <img src="../src/loading.gif" />
@@ -191,7 +208,6 @@
 
 <!--<script type="text/javascript" src="../vendor/iview/dist/iview.min.js"></script>-->
 <script type="text/javascript" src="../js/iview.min.js"></script>
-
 <script type="text/javascript" src="../js/index.js"></script>
 <script type="text/javascript" src="../js/windowOpen.js"></script>
 <script src="../js/url.js"></script>
@@ -261,36 +277,21 @@
             ClickJibie() {
                 this.clickjibie = !this.clickjibie;
             },
-            check_busy() {
-                var that = this;
-                that.overlay = true;
-                that.list = [];
-                $.post("../php/getalltech.php", {
-                    time: that.timePick
-                }).done((result) => {
-                    result = JSON.parse(result);
-                    for (var i = 0; i < result.data.length; i++) {
-                        var tech = result.data[i];
-                        that.list.push({
-                            avatar_url: tech.avatar_url.replace('..', '/wechat_zu_technician/'),
-                            job_number: tech.job_number,
-                            photo_list: tech.photo_list,
-                            rate: tech.rate,
-                            state: tech.busy,
-                            skills: tech.skill,
-                            level: tech.level,
-                            hot: tech.hot,
-                            check: 0,
-                            show: true
-                        })
-                    }
-                    that.sort_by(0, 'rate');
-                    that.overlay = false;
-                })
-            },
             choose_tech(item) {
-                if (item.busy || item.appoint) return;
+                //如果被约则弹窗提示
+                var that = this
+                if (item.busy || item.appoint){
+                    $(that).openWindow("", "该技师在所选时段内已经有约", ["好的","电话预约"], () => {
+                        window.location.href = "tel:"+that.tel;
+                    })
+                    return;
+                } 
 
+                if (this.time === ''){
+                    window.location.href = "select-time.html" + "?select_time=" + this.time + "&sv=" +
+                        this.sv + "&tc=" + item.job_number + "&openid=" + this.openid;
+                    return;
+                }
                 var that = this;
                 for (var i = 0; i < that.list.length; i++) {
                     if (item.job_number == that.list[i].job_number) {
@@ -308,7 +309,6 @@
             //跳转到选择服务页面
             chooseProj() {
                 if (this.time == "") {
-
                     window.location.href = "select-time.html" + "?select_time=" + this.time + "&sv=" +
                         this.sv + "&tc=" + this.tc + "&openid=" + this.openid;
                     return;
@@ -320,11 +320,12 @@
                 window.location.href = url + "?job_number=" + job_number + "&select_time=" + this.time + "&sv=" +
                     this.sv + "&tc=" + this.tc + "&openid=" + this.openid;
             },
-            tech_info(job_number, state) {
+            tech_info(job_number, appoint,busy) {
                 // let timepick = new Date((new Date().toDateString() + ' ' + app.timePick));
                 // if (new Date() > timepick) this.timePick = new Date().toTimeString().slice(0, 5);
+
                 window.location.href = "tech-info.html?job_number=" + job_number + "&select_time=" + this.time +
-                    "&sv=" + this.sv + "&tc=" + this.tc + "&openid=" + this.openid;
+                    "&sv=" + this.sv + "&tc=" + this.tc+"&appoint="+(appoint||busy) + "&openid=" + this.openid;
             },
             down_order() {
                 var that = this;
@@ -367,11 +368,34 @@
                 this.button_click(idx);
                 var that = this;
                 that.reshow();
-                for (var i = 0; i < that.list.length; i++) {
-                    if (that.list[i].name != str) {
-                        that.list[i].show = false;
-                        console.log(that.list[i].job_number + "不显示，" + that.list[i].level)
+				
+				var mylevel = "9";
+				if (str == "金牌足浴")
+				{
+					mylevel = "1";
+				}
+				else if (str == "魅力天使")
+				{
+					mylevel = "2";
+				}
+				else if (str == "至尊国色")
+				{
+					mylevel = "3";
+				}
+				
+                for (var i = 0; i < that.list.length; i++) 
+				{
+                    if (that.list[i].level == mylevel) 
+					{
+                        that.list[i].show = true;
+                        console.log(that.list[i].job_number + "显示，" + that.list[i].level);
                     }
+					else
+					{
+						that.list[i].show = false;
+                        console.log(that.list[i].job_number + "不显示，" + that.list[i].level);
+					}
+					
                 }
             },
             sort_by(idx, keyName) {
@@ -388,7 +412,15 @@
                         else return 0
                     }
                 }
+                var appoint_ignore = function(){
+                    return function(objectN, objectM){
+                        if(objectN['appoint'] === true && objectM['appoint'] === false)return 1;
+                        else if(objectN['appoint'] === false && objectM['appoint'] === false) return 0;
+                        else if(objectN['appoint'] === false && objectM['appoint'] === true)return -1;
+                    }
+                }
                 this.list.sort(sort(keyName));
+                this.list.sort(appoint_ignore());
             },
             reshow() {
                 for (var i = 0; i < this.list.length; i++) {
@@ -406,10 +438,8 @@
             // this.sv = $.cookie("sv");
             // //读取选择的技师
             // this.tc = $.cookie('tc');
-
-
             //获取url参数，在技师选择的相关页面中，存储选择情况有限考虑url参数，当离开技师选择相关页面后
-            //再次进入技师选择界面不会附带url参数，上次选择的情况看cookie。当用户点击立即下单之后，根据
+            //再次进入技师选择界面不会附带url参数，。当用户点击立即下单之后，根据
             //url参数储存cookie
             url_time = getQueryString('select_time');
             url_sv = getQueryString('sv');
@@ -452,7 +482,8 @@
             //获取技师列表
             if (this.have_sv) {
                 $.post("../php/get_tech_by_skill.php", {
-                    service_id: this.sv
+                    service_id: this.sv,
+                    select_time:that.time,
                 }).done((result) => {
                     result = JSON.parse(result);
                     if (result.status == 1) {
@@ -487,7 +518,10 @@
                     }
                 })
             } else {
-                $.post("../php/getalltech.php").done((result) => {
+                $.post("../php/getalltech.php",{
+                    type:1,
+                    select_time:that.time,
+                }).done((result) => {
                     result = JSON.parse(result);
                     for (var i = 0; i < result.data.length; i++) {
                         var tech = result.data[i];

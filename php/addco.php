@@ -47,7 +47,7 @@ if($user)
             ['user_id',$user[0]['openid']],
             ['state',$state],//状态为1，表示待支付,4表示完成支付
             ['contact_phone',$phone],
-            ['payment_method',0] //未支付的时候，支付方式为0，表示未支付
+            ['payment_method',$pay_way] //未支付的时候，支付方式为0，表示未支付
         ]);
         //添加服务
         for($i=0;$i<count($obj)/2;$i++)
@@ -60,32 +60,6 @@ if($user)
         }
         echo json_encode(['state'=>1,'order_id'=>$time]);
         die();
-
-    //可以支付，则添加订单
-    // add("consumed_order",[
-    //     ['appoint_time',$appoint_time],
-    //     ['user_num',$people_num],
-    //     ['generated_time',time()],
-    //     ["order_id",$time],
-    //     ["pay_amount",$pay],
-    //     ['user_id',$user[0]['openid']],
-    //     ['state',4],
-    //     ['contact_phone',$phone],
-    //     ['payment_method',$pay_way] 
-    // ]);
-    // //添加服务
-    // for($i=0;$i<count($obj)/2;$i++)
-    // {
-    //     $j = $i*2;
-    //     $jbnb = $obj[$j];
-    //     $service_id = $obj[$j+1];
-    //     // $jbnb = $tech_service['tech']['job_number'];
-    //     // $service_id = $tech_service['service']['ID'];
-    //     add("service_order",[['appoint_time',$appoint_time],['order_id',$time],['service_type',$appotype],["item_id",$service_id],["job_number",$jbnb]]);
-    // }
-    // echo json_encode(['state'=>1,'order_id'=>$time]);
-    // die();
-
 }
 //用户不存在的情况
 echo json_encode(['state'=>0]);

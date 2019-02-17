@@ -72,8 +72,8 @@
                     </i-col>
 
                     <i-col span="4">
-                        <div @click="down_order(item.job_number)" class="circle" :style="[{'font-size': (item.state === 1 ? '10' : '12') + 'px'}, {'color':(item.check === 0 ? '#875522':'#91df6f')}, {'border-color': (item.state === 1 ? '#875522' : '#D5B32B')}]">
-                            <span v-if="item.check === 1" style="font-size: 16px">√</span>
+                        <div @click="down_order(item.job_number)" class="circle" :style="[{'font-size': (item.state === 1 ? '10' : '12') + 'px'}, {'color':(item.check === 0 ? '#ff0000':'#ff0000')}, {'border-color': (item.state === 1 ? '#875522' : '#D5B32B')}]">
+                            <span v-if="item.check === 1">已选</span>
                             <span v-else>打赏</span>
                         </div>
                     </i-col>
@@ -111,10 +111,12 @@
                     </div>
                 </div>
                 <div style="height: 100%;flex: 0 50%;display: flex;align-items: center;justify-content: center">
-                    <button style="width: 85%;height: 70%;background-color: #2b85e4;color: white;border-radius: 5px;font-size: 18px">确认打赏</button>
+                    <button @click="down_order2" style="width: 85%;height: 70%;background-color: #2b85e4;color: white;border-radius: 5px;font-size: 18px">确认打赏</button>
                 </div>
             </div>
         </row>
+		
+		<!--
         <div style="height: 60px;width:60px;position: fixed;background-color: white;bottom: 70px;right: 30px; display: flex;align-items: center;justify-content: center;border-radius: 50%;border: 1px #fe736c solid;"
             onclick="call()">
             <div style="width: 100%;height: 100%;text-align: center;padding-top: 8px">
@@ -122,6 +124,8 @@
                 <h1 style="font-size: 14px;font-weight: 200;color: #fe736c">分享</h1>
             </div>
         </div>
+		-->
+		
         <div id="modal-overlay" v-show="overlay">
             <div class="modal-data">
                 <img src="../src/loading.gif" />
@@ -255,19 +259,32 @@
                 if (item.state === 1) return;
                 var that = this;
                 this.choose_jbnb = item.job_number;
-                for (var i = 0; i < that.list.length; i++) {
-                    if (item.job_number == that.list[i].job_number) {
-                        if (that.list[i].check == 1) {
+                for (var i = 0; i < that.list.length; i++) 
+				{
+                    if (item.job_number == that.list[i].job_number) 
+					{
+                        if (that.list[i].check == 1) 
+						{
                             that.list[i].check = 0;
-                        } else {
+                        } 
+						else 
+						{
                             that.list[i].check = 1;
                         }
-                    } else {
+                    } 
+					else 
+					{
                         that.list[i].check = 0;
                     }
                 }
             },
 
+			down_order2()
+			{
+				var tp_url = "querendashang.html?job_number=" + getQueryString('job_number') + "&openid=" + getQueryString('openid');
+                window.location.href = tp_url;
+			},
+			
             navi(url, job_number) { //页面跳转
                 window.location.href = url + "?job_number=" + job_number
             },
@@ -275,7 +292,7 @@
             tech_info(job_number, state) {
                 // let timepick = new Date((new Date().toDateString() + ' ' + app.timePick));
                 // if (new Date() > timepick) this.timePick = new Date().toTimeString().slice(0, 5);
-                window.location.href = "tech-info.html?job_number=" + job_number + "&mode=dashang"
+                window.location.href = "tech-info.html?job_number=" + job_number + "&mode=dashang" + "&openid=" + getQueryString('openid');
             },
 
             down_order(job_number) { //确认打赏

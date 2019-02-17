@@ -150,7 +150,7 @@
             <h1 style="font-size: 30px;color: #fe736c;background: transparent" v-text="'￥'+cash"></h1>
         </div>
 
-        <a href="javascript:;" v-text="job_number==''?'请选择本次充值对应的技师':job_number" class="weui-btn weui-btn_default" @click="picker()" id="showPicker" style="margin-top: 5px;margin-bottom: 5px;color: #8c8ef9;"></a>
+        <a href="javascript:;" v-text="job_number==''?'->请点击选择充值对应的技师<-':job_number" class="weui-btn weui-btn_default" @click="picker()" id="showPicker" style="margin-top: 5px;margin-bottom: 5px;color: #aaa;font-size: 16px;background-color: white"></a>
         <div>
             <div class="row">
                 <div v-for="(val, index) in [100,200,500]" @click="choose(index)" :id="box_list[index]==0?'box':'choosen-box'">
@@ -202,8 +202,8 @@
                 </div>
             </div>
         </div>
-        <div style="position: fixed;bottom: 20px;width: 100%;height: 40px;">
-            <button @click="recharge()" style="width: 94%;margin-left: 3%;height: 40px;border-radius: 15px;background-color: #00e4e6;border: none;color: white">
+        <div style="position: fixed;bottom: 20px;width: 100%;height: 50px;">
+            <button @click="recharge()" style="width: 94%;margin-left: 3%;height: 50px;border-radius: 15px;background-color: #1aad19;border: none;font-size: 18px;color: white">
                 确认充值
             </button>
         </div>
@@ -297,12 +297,12 @@
                 var that = this;
 
                 if (this.job_number == "" || this.job_number == null) {
-                    alert("请选择技师!");
+                    that.job_number = "";
                 }
                 if (this.fee == 0 || this.fee == '自定义') {
                     alert("请选择金额!");
                 }
-                if (this.job_number != "" && this.job_number != null && this.fee != 0 && this.fee != '') {
+                if (this.fee != 0 && this.fee != '') {
 
                     // var url = encodeURIComponent(window.location.href + "?fee=" + that.fee + "&jbnb=" + that.job_number);
                     // //金额单位以 分 表示

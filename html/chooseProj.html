@@ -282,7 +282,8 @@
 
 
 			$.post("../php/chooseProj.php", {
-				tc: this.url_tc
+				tc: this.url_tc,
+				time:this.url_time
 			}).done((res) => {
 				res = JSON.parse(res);
 				//判断进入该页面的方式
@@ -316,6 +317,10 @@
 					}
 
 					that.overlay = false;
+				}else if(res.status == -1){
+					$(this).openWindow("", "技师在当前选中的时间内繁忙，请返回重新选择", ['好的'],()=>{
+						window.history.back();
+					});
 				}
 			})
 		}

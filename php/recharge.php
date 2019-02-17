@@ -1,16 +1,19 @@
 <?php
 require("database.php");
 require("getpromotion.php");
-$user = $_POST['user_id'];
+$user = $_GET['user_id'];
 $us = get("customer","openid",$user);
 
 if($us)
 {
-    $val = $_POST['charge']*100;
-    $job_number = null;
-    if(isset($_POST['job_number']))$job_number = $_POST['job_number'];
-    //支付方式
-    $pay = $_POST['pay'];
+    $val = $_GET['charge']*100;
+    
+	//$job_number = null;
+    //if(isset($_POST['job_number']))$job_number = $_GET['job_number'];
+	$job_number = $_GET['job_number'];
+    
+	//支付方式
+    $pay = $_GET['pay'];
 
     $dict=['1','2','3','4','5','6','7','8','9','0'];
     $rnd = "";
