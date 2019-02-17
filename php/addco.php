@@ -55,7 +55,7 @@ if($user)
             $j = $i*2;
             $jbnb = $obj[$j];
             $service_id = $obj[$j+1];
-            add("service_order",[['appoint_time',$appoint_time],['order_id',$time],['service_type',$appotype],["item_id",$service_id],["job_number",$jbnb]]);
+            add("service_order",[['appoint_time',$appoint_time],['clock_type',2]['order_id',$time],['service_type',$appotype],["item_id",$service_id],["job_number",$jbnb]]);
             
         }
         echo json_encode(['state'=>1,'order_id'=>$time]);
