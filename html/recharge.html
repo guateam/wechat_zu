@@ -172,7 +172,7 @@
             </div>
         </div>
 
-
+		<!--
         <div class="weui-cells__title" v-on:click="userxuanzejine()" id="inputmoney">更多金额</div>
         <div class="weui-cells " v-if="xuanzejine">
             <div class="weui-cell weui-cell_swiped">
@@ -184,6 +184,7 @@
                 </div>
             </div>
         </div>
+		-->
         
 		<!--
 		<div class="weui-cells__title">本次优惠</div>
@@ -328,16 +329,15 @@
                     //     100 +
                     //     "&backurl=" + url
                     wx.miniProgram.navigateTo({
-                    url: '/pages/pay/pay?total_fee=' + that.fee +
-                        '&type=recharge' + '&jobnumber=' + that.job_number,
-                    success: function () {},
-                    fail: function () {
-                        alert('fail');
-                    },
-                    complete: function () {
-                        console.log('complete');
-                    }
-                });
+						url: '/pages/pay/pay?total_fee=' + that.fee + '&type=recharge' + '&jobnumber=' + that.job_number,
+						success: function () {},
+						fail: function () {
+							alert('fail');
+						},
+						complete: function () {
+							console.log('complete');
+						}
+					});
                 }
             }
         },
