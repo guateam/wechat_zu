@@ -215,7 +215,7 @@
                                     pay_way: 0, //支付方式  1--微信   3--会员卡
                                     people_num: that.people_num,
                                     pay: that.total_price,
-                                    state: 1, //产生的订单状态 4--支付完成  1--预约,暂未支付
+                                    state: 3, //产生的订单状态 4--支付完成  1--待消费  3-待支付
                                     obj: str_list,
                                     select_time: getQueryString('selecttime'),
                                     cant_pay: true,
@@ -235,7 +235,7 @@
                                     pay_way: 3, //支付方式  1--微信   3--会员卡
                                     people_num: that.people_num,
                                     pay: that.total_price,
-                                    state: 1, //产生的订单状态 4--支付完成  1--预约,暂未支付
+                                    state: 1, //产生的订单状态 4--支付完成  1--待消费
                                     obj: str_list,
                                     select_time: getQueryString('selecttime'),
                                     cant_pay: true,

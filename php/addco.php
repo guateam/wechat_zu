@@ -45,7 +45,7 @@ if($user)
             ["order_id",$time],
             ["pay_amount",$pay],
             ['user_id',$user[0]['openid']],
-            ['state',$state],//状态为1，表示待支付,4表示完成支付
+            ['state',$state],//状态为1，表示待消费,3表示待支付，4表示待评价
             ['contact_phone',$phone],
             ['payment_method',$pay_way] //未支付的时候，支付方式为0，表示未支付
         ]);
