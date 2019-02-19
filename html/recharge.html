@@ -152,13 +152,12 @@
 
         <a href="javascript:;" v-text="job_number==''?'->请点击选择充值对应的技师<-':job_number" class="weui-btn weui-btn_default" @click="picker()" id="showPicker" style="margin-top: 5px;margin-bottom: 5px;color: #aaa;font-size: 16px;background-color: white"></a>
         <div>
-            <div class="row">
-                <div v-for="(val, index) in [100,200,500]" @click="choose(index)" :id="box_list[index]==0?'box':'choosen-box'">
+                <div v-for="(val, index) in fee_list" @click="choose(index)" :id="box_list[index]==0?'box':'choosen-box'">
                     <span style="margin-bottom: 10px;font-size:20px" v-text="'￥'+val"></span>
                     <span style="font-size: 10px;position: absolute;margin-top: 15px;" v-if="back_list[index]" v-text="'送: ￥'+back_list[index]"></span>
                 </div>
-            </div>
-            <div class="row">
+
+            <!-- <div class="row">
                 <div v-for="(val, index) in [1000,2000,5000]" @click="choose(index+3)" :id="box_list[index+3]==0?'box':'choosen-box'">
                     <span style="margin-bottom: 10px;font-size:20px" v-text="'￥'+val"></span>
                     <span style="font-size: 10px;position: absolute;margin-top: 15px;" v-if="back_list[index+3]" v-text="'送: ￥'+back_list[index+3]"></span>
@@ -169,9 +168,9 @@
                     <span style="margin-bottom: 10px;font-size:20px" v-text="'￥'+val"></span>
                     <span style="font-size: 10px;position: absolute;margin-top: 15px;" v-if="back_list[index+6]" v-text="'送: ￥'+back_list[index+6]"></span>
                 </div>
-            </div>
+            </div> -->
         </div>
-
+        <div style="height:60px"></div>
 		<!--
         <div class="weui-cells__title" v-on:click="userxuanzejine()" id="inputmoney">更多金额</div>
         <div class="weui-cells " v-if="xuanzejine">
@@ -207,7 +206,7 @@
         </div>
 		-->
 		
-        <div style="position: fixed;bottom: 20px;width: 100%;height: 50px;">
+        <div style="position: fixed;bottom:20px;width: 100%;height: 30px;">
             <button @click="recharge()" style="width: 94%;margin-left: 3%;height: 50px;border-radius: 15px;background-color: #1aad19;border: none;font-size: 18px;color: white">
                 确认充值
             </button>
@@ -245,19 +244,21 @@
             pay: 0,
             overlay: true,
             box_list: [
-                0, 0, 0,
-                0, 0, 0,
-                0, 0, 0,
             ],
+            //充值额度
             fee_list: [
-                100, 200, 500,
-                1000, 2000, 5000,
-                10000, 20000, 50000
             ],
+            //返现额度
             back_list: [],
+            //充值额度
             fee: 0,
+            //返现额度
+            back:0,
             money: [],
+            //活动信息
             promotion: [],
+            //显示在页面上总共有几行
+            rows:[],
         },
         
 		methods: {
@@ -285,7 +286,8 @@
                     if (i == idx) 
 					{
                         that.box_list[i] = 1;
-                        that.fee = that.fee_list[i];
+                        that.fee = that.fee_list[i] ;
+                        that.back = that.back_list[i];
                     } 
 					else 
 					{
@@ -329,7 +331,7 @@
                     //     100 +
                     //     "&backurl=" + url
                     wx.miniProgram.navigateTo({
-						url: '/pages/pay/pay?total_fee=' + that.fee + '&type=recharge' + '&jobnumber=' + that.job_number,
+						url: '/pages/pay/pay?total_fee=' + that.fee + '&type=recharge' +"&back_fee=" + that.back + '&jobnumber=' + that.job_number,
 						success: function () {},
 						fail: function () {
 							alert('fail');
@@ -367,10 +369,13 @@
                     if (res.status == 1) 
 					{
                         that.promotion = res.data
-                        for (var i in that.fee_list) 
+                        for (var i in that.promotion) 
 						{
-                            that.back_list[i] = that.judge_promotion(that.fee_list[i]);
+                            that.box_list.push(0);
+                            that.fee_list.push(that.promotion[i]['need'])
+                            that.back_list.push(that.promotion[i]['back'])
                         }
+
                     }
                 })
 				

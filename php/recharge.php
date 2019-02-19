@@ -28,14 +28,6 @@ if($us)
         $rnd.=$dict[rand(0,count($dict)-1)];
     }
 
-    $promotion = get_promotion();
-    //活动返的钱
-    $bonus = 0;
-    foreach($promotion as $pro){
-        if($val >= $pro['need']*100){
-            $val+=$pro['back']*100;
-        }
-    }
     add("recharge_record",[
         ["record_id",$rnd],
         ["user_id",$us[0]['openid']],

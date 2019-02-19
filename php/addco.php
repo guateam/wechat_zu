@@ -18,7 +18,7 @@ if(isset($_POST['cant_pay']))$cant_pay = $_POST['cant_pay'];
 $pay_way = 0;
 if(isset($_POST['pay_way']))$pay_way = $_POST['pay_way'];
 
-//外部传入的订单状态，1--预约待支付  4--完成支付
+//外部传入的订单状态，1--待消费  4--待评价
 $state=$_POST['state'];
 
 //根据openid获取用户的信息
