@@ -52,7 +52,7 @@
                     </row>
                     <row style="margin-top: 6px">
                         <i-button><a style="color:#000000" :href="'tel:'+phone">联系客服</a></i-button>
-                        <i-button v-if="orderData['state'] != 5" type="error" @click="location.href='appraise.html?id='+encodeURI(orderData.order_id)+'&openid='+openid">评价服务</i-button>
+                        <i-button v-if="orderData['state'] == 4" type="error" @click="location.href='appraise.html?id='+encodeURI(orderData.order_id)+'&openid='+openid">评价服务</i-button>
                         <i-button type="primary" @click="again()">再来一单</i-button>
                     </row>
                 </card>
