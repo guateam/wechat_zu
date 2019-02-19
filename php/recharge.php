@@ -6,8 +6,8 @@ $us = get("customer","openid",$user);
 
 if($us)
 {
-    $val = $_GET['charge']*100;
-    
+    $val = intval($_GET['charge'])*100;
+    $back = intval($_GET['back'])*100;
 	//$job_number = null;
     //if(isset($_POST['job_number']))$job_number = $_GET['job_number'];
 	$job_number = $_GET['job_number'];
@@ -36,7 +36,15 @@ if($us)
         ['job_number',$job_number],
         ['generated_time',time()]
         ]);
-		
+	add("recharge_record",[
+            ["record_id",$rnd.'b'],
+            ["user_id",$us[0]['openid']],
+            ['charge',$back],
+            ['payment_method',$pay],
+            ['job_number',$job_number],
+            ['generated_time',time()]
+    ]);
+
     $all_recharge = get('recharge_record','user_id',$user);
     $all_level = get('vip_information');
     $total_recharge = 0;
