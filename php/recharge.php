@@ -34,7 +34,8 @@ if($us)
         ['charge',$val],
         ['payment_method',$pay],
         ['job_number',$job_number],
-        ['generated_time',time()]
+        ['generated_time',time()],
+        ['note','充值']
         ]);
 	add("recharge_record",[
             ["record_id",$rnd.'b'],
@@ -42,7 +43,8 @@ if($us)
             ['charge',$back],
             ['payment_method',$pay],
             ['job_number',$job_number],
-            ['generated_time',time()]
+            ['generated_time',time()],
+            ['note','充值送现']
     ]);
 
     $all_recharge = get('recharge_record','user_id',$user);
