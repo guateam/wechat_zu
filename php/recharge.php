@@ -45,7 +45,7 @@ if($us)
             ['payment_method',$pay],
             ['job_number',$job_number],
             ['generated_time',time()],
-            ['note','充值送卡']
+            ['note','充值送钱']
     ]);
 
     $all_recharge = get('recharge_record','user_id',$user);
