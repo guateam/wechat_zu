@@ -254,7 +254,7 @@
                         $(that).openWindow("", "确认下单吗？", ["不", "是的"], () => {
                             if (that.input_phone == "") that.input_phone = "0";
                             wx.miniProgram.navigateTo({
-                                url: '/pages/pay/pay?total_fee=' + this.total_price/100  +
+                                url: '/pages/pay/pay?total_fee=' + this.total_price  +
                                     '&type=' + that.appotype + '&phone=' + that.input_phone +
                                     '&peoplenum=' + that.people_num + '&list=' + str_list +
                                     '&select_time=' + that.start_time

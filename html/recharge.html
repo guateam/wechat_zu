@@ -331,7 +331,7 @@
                     //     100 +
                     //     "&backurl=" + url
                     wx.miniProgram.navigateTo({
-						url: '/pages/pay/pay?total_fee=' + that.fee + '&type=recharge' +"&back_fee=" + that.back + '&jobnumber=' + that.job_number,
+						url: '/pages/pay/pay?total_fee=' + that.fee*100 + '&type=recharge' +"&back_fee=" + that.back + '&jobnumber=' + that.job_number,
 						success: function () {},
 						fail: function () {
 							alert('fail');
