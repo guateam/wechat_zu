@@ -102,19 +102,19 @@
                                         <div style="overflow: hidden;">
                                             <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">状态</label>
                                             <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;color: red"
-                                                v-text="od.state==4?'待评价':od.state==5?'评价完成':od.state==1?'待付款':'未知' "></span>
+                                                v-text="od.state==2?'服务中':od.state==3?'待付款':od.state==4?'待评价':od.state==5?'评价完成':od.state==1?'待消费':'未知' "></span>
                                         </div>
                                     </div>
                                     <div style="position: relative;line-height: 50px;display: flex;">
                                         <!-- 付完的订单，查看详情进入订单详情 -->
-                                        <a v-if="od.status==1 || od.state==2 || od.state==4 || od.state==5" style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);"
+                                        <a v-if="od.state==1 || od.state==2 || od.state==4 || od.state==5" style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);"
                                             @click="detail(od.order_id)">查看详情</a>
                                         <!-- 没付完的订单，进入yuyueStatus.html -->
                                         <a v-if="od.state==3" style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);"
                                             @click="detail_appo(od.order_id)">查看详情</a>
 
                                         <!-- 付完的订单，删除就是不显示 -->
-                                        <a v-if="od.status == 1 || od.state==2 || od.state==4 || od.state==5" style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);"
+                                        <a v-if="od.state == 1 || od.state==2 || od.state==4 || od.state==5" style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);"
                                             @click="del(od.order_id)">删除记录</a>
                                         <!-- 没支付的订单，删除是数据库删除记录 -->
                                         <a v-if="od.state==3" style="color: #09BB07;position: relative;display: block;-webkit-box-flex: 1;flex: 1;text-align: center;-webkit-tap-highlight-color:rgba(0,0,0,0);"
@@ -199,7 +199,7 @@
                                 </div>
                                 <div style="margin-bottom: 50px"></div>
                     </tab-pane>
-                    <tab-pane label="服务中" name="name6">
+                    <tab-pane label="服务中" name="name3">
                             <div style="position: relative;background: #ffffff;" v-for="od in doing" id="list-item">
                                     <div v-if="od.show==1">
                                         <div style="position: relative;padding: 10px 15px;text-align: right;line-height: 2.5em;">

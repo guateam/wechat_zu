@@ -1,6 +1,6 @@
 <?php
 require("database.php");
-$id = $_POST['openid'];
+$id = "o5C5W49NYt7U5Yl9rEBWc9esKdKg";//$_POST['openid'];
 //获取所有消费订单
 $all_order = sql_str("select * from `consumed_order` where `user_id`='$id' ORDER BY `generated_time` DESC");
 //待消费订单
