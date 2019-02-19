@@ -59,5 +59,5 @@ $complete_order = sql_str("select * from `consumed_order` where `state`=5 and `u
 // }
 
 echo json_encode(['nostart'=>$nostart_order,'doing'=>$doing_order,
-                'nopay'=>$nopay_order,'nojudgep'=>$nojudge_order,
+                'nopay'=>$nopay_order,'nojudge'=>$nojudge_order,
                 'complete'=>$complete_order,'allorder'=>$all_order]);
