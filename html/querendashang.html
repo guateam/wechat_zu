@@ -232,7 +232,7 @@
                         '好的'
                     ], () => {
                         weixin.navigateTo({
-                            url: '/pages/pay/pay?total_fee=' + this.moneyList[0] +
+                            url: '/pages/pay/pay?total_fee=' + this.moneyList[0]*100 +
                                 '&jobnumber=' + jobnumber + '&type=dashang',
                             success: function () {
 
@@ -271,7 +271,7 @@
                     var jobnumber = getQueryString('jobnumber');
 
                     $.post('../php/dashang.php', {
-                        pay: money,
+                        pay: money*100,
                         user_id: "1", //user_id为微信用户的open_id
                         job_number: jobnumber,
                     }).done((res) => {
