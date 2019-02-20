@@ -243,10 +243,12 @@
                                     service_type: that.appotype, //产生的service_order的类型为服务还是茶水
                                 }).done((res) => {
                                     res = JSON.parse(res);
-                                    if (res.status == 1)
+                                    if (res.state == 1)
                                         window.location.href = "yuyueStatus.html?order_id=" +
                                         res.order_id + "&openid=" + that.id;
                                 })
+                            },()=>{
+                                that.button_clicked = false;
                             })
                         }
                     }
