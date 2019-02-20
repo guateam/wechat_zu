@@ -141,8 +141,7 @@
             <!--<button @click="confirm_od()"-->
 
 
-            <button @click="confirm_od()" style="position:absolute;right: 15px; width: 100px;height: 40px;border-radius: 5px;background-color: #2b85e4;color: white;outline: none;font-size: 0.9em">
-                确认支付
+            <button v-text="button_text" @click="confirm_od()" :disabled="button_clicked" style="position:absolute;right: 15px; width: 100px;height: 40px;border-radius: 5px;background-color: #2b85e4;color: white;outline: none;font-size: 0.9em">
             </button>
         </div>
         <div id="modal-overlay" v-show="overlay">
@@ -182,6 +181,8 @@
                 input_phone: "",
                 shop_phone: "",
                 overlay: true,
+                button_clicked:false,
+                button_text:"确认支付",
                 appotype: 1, //预约的类别 1--普通技师  3--茶艺师
                 pay_way: 3 //3--微信支付  1--余额支付
             },
@@ -193,7 +194,7 @@
                 },
                 confirm_od() {
                     var that = this;
-                    
+                    this.button_clicked = true;
                     str_list = "";
                     for (i = 0; i < that.list.length; i++) {
                         str_list += that.list[i]['tech']['job_number'] + '-' + that.list[i]['service']['ID'] +
