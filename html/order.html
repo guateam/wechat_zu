@@ -102,7 +102,7 @@
                                         <div style="overflow: hidden;">
                                             <label style="float: left;margin-right: 1em;min-width: 4em;color: #808080;text-align: justify;text-align-last: justify">状态</label>
                                             <span style="display: block;overflow: hidden;word-break: normal;word-wrap: break-word;color: red"
-                                                v-text="od.state==2?'服务中':od.state==3?'待付款':od.state==4?'待评价':od.state==5?'评价完成':od.state==1?'待消费':'未知' "></span>
+                                                v-text="od.state==0?'订单取消':od.state==2?'服务中':od.state==3?'待付款':od.state==4?'待评价':od.state==5?'评价完成':od.state==1?'待消费':'未知' "></span>
                                         </div>
                                     </div>
                                     <div style="position: relative;line-height: 50px;display: flex;">
