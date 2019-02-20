@@ -91,6 +91,7 @@ function gettechnician($id,$tm="")
             'gender'=>$gender,
             'vcr'=>$technician['vcr'],
             'level'=>$technician['level'],
+			'nickname'=>$technician['nickname'],
 //            'busy'=>$busy
         ];
         return $data;
