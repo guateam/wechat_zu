@@ -36,7 +36,7 @@ if($cus)
         'id_number'=>$cus[0]['id_number'],
         'level'=>$lv,
         'gender'=>$cus[0]['gender']==1?"男":"女",
-        'cash'=>$charge/100  //分转换为元表示
+        'cash'=>$charge
         
     ]);
 }
