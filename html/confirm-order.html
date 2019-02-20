@@ -244,8 +244,7 @@
                                 }).done((res) => {
                                     res = JSON.parse(res);
                                     if (res.state == 1)
-                                        window.location.href = "yuyueStatus.html?order_id=" +
-                                        res.order_id + "&openid=" + that.id;
+                                        window.location.href = "order.html?&openid="+ that.id;
                                 })
                             },()=>{
                                 that.button_clicked = false;
