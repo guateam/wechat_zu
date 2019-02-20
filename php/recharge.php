@@ -6,8 +6,8 @@ $us = get("customer","openid",$user);
 
 if($us)
 {
-    $val = intval($_GET['charge'])*100;
-    $back = intval($_GET['back'])*100;
+    $val = intval($_GET['charge']);
+    $back = intval($_GET['back']);
 	//$job_number = null;
     //if(isset($_POST['job_number']))$job_number = $_GET['job_number'];
 	$job_number = $_GET['job_number'];
@@ -35,7 +35,8 @@ if($us)
         ['payment_method',$pay],
         ['job_number',$job_number],
         ['generated_time',time()],
-        ['note','充值']
+        ['note','充值'],
+        ['type',1],
         ]);
         
 	add("recharge_record",[
@@ -45,7 +46,8 @@ if($us)
             ['payment_method',$pay],
             ['job_number',$job_number],
             ['generated_time',time()],
-            ['note','充值送钱']
+            ['note','充值送钱'],
+            ['type',2],
     ]);
 
     $all_recharge = get('recharge_record','user_id',$user);
