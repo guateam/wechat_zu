@@ -244,7 +244,12 @@
                                 }).done((res) => {
                                     res = JSON.parse(res);
                                     if (res.state == 1)
-                                        window.location.href = "order.html?&openid="+ that.id;
+									{
+										$(that).openWindow("", "余额支付成功", ["好的"], () => {											
+												window.location.href = "order.html?&openid="+ that.id;
+											}
+										)
+									}
                                 })
                             },()=>{
                                 that.button_clicked = false;
