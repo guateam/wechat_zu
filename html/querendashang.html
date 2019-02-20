@@ -123,10 +123,12 @@
                         <div class="weui-cell__bd">
                             <p style="margin-left: 20%">
                                 <span style="display:inline-block ;width:40px">会员</span>
-                                <span style="display:inline-block ;font-family: 华文雅黑;background-color: #fe736c;color: white;border-radius: 6px;padding: 0 2px;font-size: 15px">
-                                    充返
-                                </span>
-                                <span style="display:inline-block;font-size: 13px;font-weight: 100;color: gray;">充500送500，充1000送2000</span>
+                                <div v-for="it in promotion" style="margin-left:20%">
+                                    <span style="display:inline-block ;font-family: 华文雅黑;background-color: #fe736c;color: white;border-radius: 6px;padding: 0 2px;font-size: 15px">
+                                        充返
+                                    </span>
+                                    <span style="display:inline-block;font-size: 13px;font-weight: 100;color: gray;" v-text="it.content"></span>
+                                </div>
                             </p>
                         </div>
                     </div>
@@ -193,6 +195,7 @@
             ],
             fee: 0,
             moneyList: [],
+            promotion:[],
         },
         methods: {
             getMoney(index) {
@@ -299,6 +302,16 @@
                     that.overlay = false;
                 }
             })
+
+            $.post("../php/getpromotion.php", {
+                    ajax_get: true
+                }).done((res) => {
+                    res = JSON.parse(res);
+                    if (res.status == 1) 
+					{
+                        that.promotion = res.data
+                    }
+                })
         },
     })
 

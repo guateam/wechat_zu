@@ -156,21 +156,7 @@
                     <span style="margin-bottom: 10px;font-size:20px" v-text="'￥'+val"></span>
                     <span style="font-size: 10px;position: absolute;margin-top: 15px;" v-if="back_list[index]" v-text="'送: ￥'+back_list[index]"></span>
                 </div>
-
-            <!-- <div class="row">
-                <div v-for="(val, index) in [1000,2000,5000]" @click="choose(index+3)" :id="box_list[index+3]==0?'box':'choosen-box'">
-                    <span style="margin-bottom: 10px;font-size:20px" v-text="'￥'+val"></span>
-                    <span style="font-size: 10px;position: absolute;margin-top: 15px;" v-if="back_list[index+3]" v-text="'送: ￥'+back_list[index+3]"></span>
-                </div>
-            </div>
-            <div class="row">
-                <div v-for="(val, index) in [10000,20000,50000]" @click="choose(index+6)" :id="box_list[index+6]==0?'box':'choosen-box'">
-                    <span style="margin-bottom: 10px;font-size:20px" v-text="'￥'+val"></span>
-                    <span style="font-size: 10px;position: absolute;margin-top: 15px;" v-if="back_list[index+6]" v-text="'送: ￥'+back_list[index+6]"></span>
-                </div>
-            </div> -->
         </div>
-        <div style="height:60px"></div>
 		<!--
         <div class="weui-cells__title" v-on:click="userxuanzejine()" id="inputmoney">更多金额</div>
         <div class="weui-cells " v-if="xuanzejine">
@@ -185,8 +171,8 @@
         </div>
 		-->
         
-		<!--
-		<div class="weui-cells__title">本次优惠</div>
+		
+		<div class="weui-cells__title">活动优惠</div>
         <div class="weui-cells">
             <div class="weui-cell weui-cell_swiped">
                 <div class="weui-cell__bd" style="transform: translateX(-68px)">
@@ -204,7 +190,7 @@
                 </div>
             </div>
         </div>
-		-->
+        <div style="height:60px"></div>
 		
         <div style="position: fixed;bottom:20px;width: 100%;height: 30px;">
             <button @click="recharge()" style="width: 94%;margin-left: 3%;height: 50px;border-radius: 15px;background-color: #1aad19;border: none;font-size: 18px;color: white">
