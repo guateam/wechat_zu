@@ -10,8 +10,8 @@ $id = $cus[0]['openid'];
 //获取充值总额
 $str = "select sum(`recharge_record`.`charge`) AS `charge` from  `recharge_record` where ( '$id' = `recharge_record`.`user_id`)";
 $charge = sql_str($str);
-//获取消费总额,仅计算用会员卡支付并且支付完成或评价完成的订单
-$str = "select sum(pay_amount) as pay from consumed_order where user_id='$id' and (state!=3) and payment_method=3";
+//获取消费总额,仅计算用会员卡支付的订单
+$str = "select sum(pay_amount) as pay from consumed_order where user_id='$id' and (state!=3 and state != 0) and payment_method=3";
 $use = sql_str($str);
 //计算目前账户内余额
 $charge=$charge[0]['charge']-$use[0]['pay'];
