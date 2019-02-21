@@ -55,7 +55,25 @@ if($user)
             $j = $i*2;
             $jbnb = $obj[$j];
             $service_id = $obj[$j+1];
-            add("service_order",[['appoint_time',$appoint_time],['clock_type',2],['order_id',$time],['service_type',$appotype],["item_id",$service_id],["job_number",$jbnb]]);
+
+            $service_type = sql_str("select * from service_type where ID='$service_id' ");
+            $technician = sql_str("select * from technician where job_number='$jbnb'");
+
+            $ticheng = 0;
+            $yongjin = 0;
+
+            $yongjin = $service_type[0]['invite_income'];
+            //都是点钟
+            //技师
+            if($technician[0]['type']==1){
+                $ticheng = $service_type[0]['commission'];
+            //接待
+            }else if($technician[0]['type']==2){
+                $ticheng = $service_type[0]['commission2'];
+            }
+
+
+            add("service_order",[['appoint_time',$appoint_time],['ticheng',$ticheng],['yongjin',$yongjin], ['clock_type',2],['order_id',$time],['service_type',$appotype],["item_id",$service_id],["job_number",$jbnb]]);
         }
         echo json_encode(['state'=>1,'order_id'=>$time]);
         die();

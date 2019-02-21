@@ -181,8 +181,10 @@
                 input_phone: "",
                 shop_phone: "",
                 overlay: true,
-                button_clicked:false,
-                button_text:"确认支付",
+                button_clicked: false,
+                button_text: "确认支付",
+
+
                 appotype: 1, //预约的类别 1--普通技师  3--茶艺师
                 pay_way: 3 //3--微信支付  1--余额支付
             },
@@ -243,15 +245,14 @@
                                     service_type: that.appotype, //产生的service_order的类型为服务还是茶水
                                 }).done((res) => {
                                     res = JSON.parse(res);
-                                    if (res.state == 1)
-									{
-										$(that).openWindow("", "余额支付成功", ["好的"], () => {											
-												window.location.href = "order.html?&openid="+ that.id;
-											}
-										)
-									}
+                                    if (res.state == 1) {
+                                        $(that).openWindow("", "余额支付成功", ["好的"], () => {
+                                            window.location.href =
+                                                "order.html?&openid=" + that.id;
+                                        })
+                                    }
                                 })
-                            },()=>{
+                            }, () => {
                                 that.button_clicked = false;
                             })
                         }
@@ -261,7 +262,7 @@
                         $(that).openWindow("", "确认下单吗？", ["不", "是的"], () => {
                             if (that.input_phone == "") that.input_phone = "0";
                             wx.miniProgram.navigateTo({
-                                url: '/pages/pay/pay?total_fee=' + this.total_price  +
+                                url: '/pages/pay/pay?total_fee=' + this.total_price +
                                     '&type=' + that.appotype + '&phone=' + that.input_phone +
                                     '&peoplenum=' + that.people_num + '&list=' + str_list +
                                     '&select_time=' + that.start_time
@@ -315,7 +316,7 @@
                         that.charge = res.charge;
                         that.overlay = false;
                     }
-                    
+
                 })
 
                 $.post('../php/getpromotion.php', {
