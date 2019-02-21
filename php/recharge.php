@@ -28,8 +28,14 @@ if($us)
 	{
         $rnd.=$dict[rand(0,count($dict)-1)];
     }
+    $tech = sql_str("select * from technician where job_number='$job_number'");
+    $ticheng = 0;
+    if($tech && $tech[0]['type']==1){
+        $ticheng = $shop[0]['recharge_income'] * $val;
+    }else{
+        $ticheng = $shop[0]['recharge_income2'] * $val;
+    }
 
-    $ticheng = $shop[0]['recharge_income'] * $val;
 
     add("recharge_record",[
         ["record_id",$rnd],
