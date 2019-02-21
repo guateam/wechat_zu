@@ -3,6 +3,7 @@ require("database.php");
 require("getpromotion.php");
 $user = $_GET['user_id'];
 $us = get("customer","openid",$user);
+$shop = sql_str("select * from shop where ID=1");
 
 if($us)
 {
@@ -28,6 +29,8 @@ if($us)
         $rnd.=$dict[rand(0,count($dict)-1)];
     }
 
+    $ticheng = $shop[0]['recharge_income'] * $val;
+
     add("recharge_record",[
         ["record_id",$rnd],
         ["user_id",$us[0]['openid']],
@@ -37,6 +40,7 @@ if($us)
         ['generated_time',time()],
         ['note','充值'],
         ['type',1],
+        ['ticheng',$ticheng]
         ]);
         
 	add("recharge_record",[
@@ -47,6 +51,7 @@ if($us)
             ['job_number',$job_number],
             ['generated_time',time()],
             ['note','充值送钱'],
+            ['ticheng',0],
             ['type',2],
     ]);
 
