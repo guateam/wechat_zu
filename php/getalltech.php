@@ -41,8 +41,7 @@ foreach($tech_info as $idx => $tc){
     $already_appoint = false;
     //若有预约
     if($appoint_after || $appoint_before){
-        //预约情况为true
-        $already_appoint = true;
+        $tech_info[$idx]['busy'] = 1;
     }
 
     //获取图片
@@ -52,7 +51,7 @@ foreach($tech_info as $idx => $tc){
     //保留一位小数
     $rate = round($rate[0]['score'],1);
     //$tech_info[$idx] = array_merge($tech_info[$idx],['img_list'=>$friend_circle,'rate'=>$rate,'level'=>"",'busy'=>$up_clock,'appoint'=>$already_appoint]);
-    $tech_info[$idx] = array_merge($tech_info[$idx],['img_list'=>$friend_circle,'rate'=>$rate,'appoint'=>$already_appoint]);
+    $tech_info[$idx] = array_merge($tech_info[$idx],['img_list'=>$friend_circle,'rate'=>$rate]);
 }
 echo json_encode(['status'=>1,'data'=>$tech_info]);
 

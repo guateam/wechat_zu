@@ -46,13 +46,15 @@ foreach ($tech_info as $idx => $tc) {
     //是否被预约
     $already_appoint = false;
     if($appoint_before || $appoint_after){
-        $already_appoint = true;
+       $tech_info[$idx]['busy'] = 1;
     }
     $friend_circle = sql_str("select A.img from technician_photo A where A.job_number = '$job_number' order by A.ID desc limit 3");
     $rate = sql_str("select Avg(score) as score from rate where job_number = '$job_number' and `bad` = 1");
     //保留一位小数
     $rate = round($rate[0]['score'], 1);
     $tech_info[$idx] = array_merge($tech_info[$idx], ['img_list' => $friend_circle, 'rate' => $rate, 'appoint' => $already_appoint]);
+    
+    
     //只有是普通技师时，才有等级的处理
     if ($type == 1 && $service_name[0]['have_level'] == 0) {
         $tech_info[$idx]['level'] = "";

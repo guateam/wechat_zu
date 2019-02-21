@@ -337,7 +337,7 @@
             tags: [],
             overlay: true,
             skill_list: [],
-            busy: getQueryString("appoint")==="true"?true:false,
+            busy: getQueryString("busy")==="true"?true:false,
             total_rate: 0,
             openid:getQueryString('openid'),
         },
@@ -358,7 +358,7 @@
             },
             down_order() {
                 var that = this;
-                if(this.busy != false){
+                if(this.busy == 1){
                     $(that).openWindow("", "该技师在所选时段内已经有约", ["好的","电话预约"], () => {
                         window.location.href = "tel:"+that.tel;
                     })
