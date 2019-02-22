@@ -31,22 +31,9 @@ function gettechnician($id,$tm="")
             }
         }
         $service=get('service_order','job_number',$id);
-        $photo=sql_str("select A.img from technician_photo A where A.job_number = '$id' order by A.ID desc limit 4");
-        // $photodata=[];
-        // if(count($photo)>=4)
-		// {
-        //     for($i=0;$i<4;$i++)
-		// 	{
-        //         array_push($photodata,$photo[$i]['img']);
-        //     }
-        // }
-		// else
-		// {
-        //     foreach($photo as $value)
-		// 	{
-        //         array_push($photodata,$value['img']);
-        //     }
-        // }
+        
+		//$photo=sql_str("select A.img from technician_photo A where A.job_number = '$id' order by A.ID desc limit 4");        
+		$photo=sql_str("select A.img from technician_photo A where A.job_number = '$id' and A.ID in (select img from friend_circle where job_number = '$id') order by A.ID desc limit 4");
         
         $entrytime='';
         $date=(time()-$technician['entry_date']);

@@ -54,12 +54,15 @@ foreach($tech_info as $idx => $tc)
     }
 
     //获取图片
-    $friend_circle = sql_str("select A.img from technician_photo A where A.job_number = '$job_number' order by A.ID desc limit 3");
+    //$friend_circle = sql_str("select A.img from technician_photo A where A.job_number = '$job_number' order by A.ID desc limit 3");
+    $friend_circle = sql_str("select A.img from technician_photo A where A.job_number = '$job_number' and A.ID in (select img from friend_circle where job_number = '$job_number') order by A.ID desc limit 3");
+	
     //获取评分
     $rate = sql_str("select Avg(score) as score from rate where job_number = '$job_number' and `bad` = 1");
     //保留一位小数
     $rate = round($rate[0]['score'],1);
-    //$tech_info[$idx] = array_merge($tech_info[$idx],['img_list'=>$friend_circle,'rate'=>$rate,'level'=>"",'busy'=>$up_clock,'appoint'=>$already_appoint]);
+    
+	//$tech_info[$idx] = array_merge($tech_info[$idx],['img_list'=>$friend_circle,'rate'=>$rate,'level'=>"",'busy'=>$up_clock,'appoint'=>$already_appoint]);
     $tech_info[$idx] = array_merge($tech_info[$idx],['img_list'=>$friend_circle,'rate'=>$rate]);
 }
 echo json_encode(['status'=>1,'data'=>$tech_info]);
