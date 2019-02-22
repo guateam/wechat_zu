@@ -71,8 +71,8 @@ if($user)
             }else if($technician[0]['type']==2){
                 $ticheng = $service_type[0]['commission2'];
             }
-
-
+			
+			
             add("service_order",[['appoint_time',$appoint_time],['ticheng',$ticheng],['yongjin',$yongjin], ['clock_type',2],['order_id',$time],['service_type',$appotype],["item_id",$service_id],["job_number",$jbnb]]);
         }
         echo json_encode(['state'=>1,'order_id'=>$time]);

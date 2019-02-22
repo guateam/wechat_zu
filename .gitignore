@@ -4,3 +4,7 @@ php/database.php
 .idea/workspace.xml
 .idea/workspace.xml
 .idea/workspace.xml
+
+php/\.vscode/launch\.json
+
+php/sdr\.txt
