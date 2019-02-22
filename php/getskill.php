@@ -4,13 +4,15 @@ require("database.php");
 $sv = $_POST['fn'];
 //1--普通技师  2--接待  3--茶艺师
 $type = 1;
-if(isset($_POST['type'])){
+if(isset($_POST['type']))
+{
     $type = $_POST['type'];
 }
 
 $shop = get("shop");
 $phone = "";
-if($shop){
+if($shop)
+{
 	$phone = $shop[0]['phone'];
 }
 
@@ -21,9 +23,12 @@ $total_price = 0;
 $id=$_POST['id'];//用户的openid
 $selfphone = sql_str("select phone_number from customer where openid='$id'");
 
-if(count($selfphone)<=0){
+if(count($selfphone)<=0)
+{
 
-}else{
+}
+else
+{
     $selfphone = $selfphone[0]['phone_number'];
 }
 
@@ -37,8 +42,8 @@ $use = sql_str($str);
 //计算目前账户内余额
 $charge=$charge[0]['charge']-$use[0]['use'];
 
-
-for($i=0;$i<count($sv)/2;$i++){
+for($i=0;$i<count($sv)/2;$i++)
+{
     $j = $i*2;
     $job_number = $sv[$j];
     $id = $sv[$j+1];
@@ -58,3 +63,5 @@ for($i=0;$i<count($sv)/2;$i++){
     array_push($info,['tech'=>$tech[0],'service'=>$service[0]]);
 }
 echo json_encode(['status'=>1,'data'=>$info,'selfphone'=>$selfphone,'phone'=>$phone,'exist'=>$total_time,'total_price'=>$total_price,'charge'=>$charge]);
+
+?>

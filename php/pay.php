@@ -173,3 +173,4 @@ function randomkeys($num){
         $str .= strval(floor(mt_rand(0,9)));
     return $str;
 }
+?>

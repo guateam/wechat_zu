@@ -18,3 +18,5 @@ add("tip",[
         ]);
 		
 echo json_encode(['status'=>1]);
+
+?>

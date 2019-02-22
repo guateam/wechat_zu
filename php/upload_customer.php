@@ -7,3 +7,4 @@ $head = $_POST['head'];
 
 sql_str("insert into customer (gender,name,head,openid) values ('$gender','$username','$head','$openid')");
 echo json_encode(['status'=>1]);
+?>

@@ -13,3 +13,4 @@ function getnotice($id)
     }
     return ['status'=>1,'data'=>$data];
 }
+?>

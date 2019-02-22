@@ -64,3 +64,4 @@ function getfeedback($id)
     // }
     return $rate;
 }
+?>

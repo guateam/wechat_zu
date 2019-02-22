@@ -23,3 +23,4 @@ if(isset($_POST['ajax_get']))
 {
     echo json_encode(['status'=>1,'data'=>get_promotion()]);
 }
+?>

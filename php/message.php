@@ -4,7 +4,8 @@
     $path = "/dx/sendSms";
     $code = "";
     
-    for($i=0;$i<6;$i++){
+    for($i=0;$i<6;$i++)
+	{
         $code.=rand(0,9);
     }
 

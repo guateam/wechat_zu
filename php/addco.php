@@ -30,7 +30,9 @@ $rnd = "";
 for($i=0;$i<3;$i++)
 {
     for($j=0;$j<4;$j++)
+	{
         $rnd.=$dict[rand(0,count($dict)-1)];
+	}
 }
 $time = date("Ymd").$rnd;
 
@@ -64,14 +66,15 @@ if($user)
 
             $yongjin = $service_type[0]['invite_income'];
             //都是点钟
-            //技师
-            if($technician[0]['type']==1){
-                $ticheng = $service_type[0]['commission'];
-            //接待
-            }else if($technician[0]['type']==2){
-                $ticheng = $service_type[0]['commission2'];
+            
+            if($technician[0]['type']==1)//技师
+			{
+                $ticheng = $service_type[0]['commission'];            
             }
-			
+			else if($technician[0]['type']==2)//接待
+			{
+                $ticheng = $service_type[0]['commission2'];
+            }			
 			
             add("service_order",[['appoint_time',$appoint_time],['ticheng',$ticheng],['yongjin',$yongjin], ['clock_type',2],['order_id',$time],['service_type',$appotype],["item_id",$service_id],["job_number",$jbnb]]);
         }
@@ -80,3 +83,5 @@ if($user)
 }
 //用户不存在的情况
 echo json_encode(['state'=>0]);
+
+?>

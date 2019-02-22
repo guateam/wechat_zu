@@ -8,14 +8,16 @@ $rate=$_POST['rate'];
 $job_number = $_POST['job_number'];
 $comment=$_POST['comment'];
 $tags = [];
-if(isset($_POST['tags'])){
+if(isset($_POST['tags']))
+{
     $tags=$_POST['tags'];
 }
 
 $user=get('customer','openid',$openid);
 if($user)
 {
-    foreach($service_id as $idx => $svid){
+    foreach($service_id as $idx => $svid)
+	{
         $jbnb = $job_number[$idx];
         $arr_jbnb = ['job_number',$jbnb];
 
@@ -50,3 +52,4 @@ else
 {
     echo(json_encode(['status'=>0]));
 }
+?>

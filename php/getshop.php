@@ -1,5 +1,6 @@
 <?php
-function getshop($id){
+function getshop($id)
+{
     $shop=get('shop');
     $id = 1;
     $photos = get("shop_photo","shop_id",$id);
@@ -21,3 +22,4 @@ function getshop($id){
             ]
         ];
 }
+?>

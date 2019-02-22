@@ -3,14 +3,16 @@ require('database.php');
 date_default_timezone_set('PRC');
 //获取店铺信息
 //$shop="御足堂影院式足道";
-if(isset( $_COOKIE['zys'])){
+if(isset( $_COOKIE['zys']))
+{
     $shop_name = $_COOKIE['zys'];
 }
 //默认没有选中技师
 $job_number = null;
 $appoint_time = [];
 //获取选中的技师
-if(isset($_POST['jobnumber'])){
+if(isset($_POST['jobnumber']))
+{
     $job_number =$_POST['jobnumber'];
     $now = time();
     //已经被预约的时间段
@@ -18,7 +20,8 @@ if(isset($_POST['jobnumber'])){
 }
 
 $shop = sql_str("select * from shop limit 1");// get("shop","name",$shop);
-if($shop){
+if($shop)
+{
     $result = [];
 
     $open = strtotime(date("Y-m-d ",time()).$shop[0]['open_time']);//开业时间戳
@@ -29,7 +32,8 @@ if($shop){
     $time_block = []; //营业时间块
     $now = time();//目前的时间戳
     //填充时间块变量
-    for($i=$open,$j=0;$i<=$close;$i+=$leap,$j++){
+    for($i=$open,$j=0;$i<=$close;$i+=$leap,$j++)
+	{
         //如果目前时间比时间块时间大25分钟，则时间块无法选择(时间块里面最多细分到超前25分钟)
         $can = 1;
         if($now>=$i+(60*25))$can = 0;
@@ -40,7 +44,8 @@ if($shop){
             }
         }
         array_push($row,['time'=>$i,'choosen'=>0,'allow'=>$can]);
-        if (($j + 1) % 4 == 0) {
+        if (($j + 1) % 4 == 0) 
+		{
             array_push($time_block,$row);
             $row = [];
         } 
@@ -54,8 +59,10 @@ if($shop){
     $time_block_2 = $time_block;
     $time_block_3 = $time_block;
     //重新确认第二天和第三天的预约情况
-    for($i=0;$i<count($time_block_2);$i++){
-        for($j=0;$j<count($time_block_2[$i]);$j++){
+    for($i=0;$i<count($time_block_2);$i++)
+	{
+        for($j=0;$j<count($time_block_2[$i]);$j++)
+		{
             $time_block_2[$i][$j]['allow'] = 1;
             $time_block_2[$i][$j]['time']+=24*60*60;
 
@@ -63,7 +70,8 @@ if($shop){
             $time_block_3[$i][$j]['time']+=2*24*60*60;
             
             //如果时间块已经有预约，则无法选择
-            for($k =0;$k<count($appoint_time);$k++){
+            for($k =0;$k<count($appoint_time);$k++)
+			{
                 if($time_block_2[$i][$j]['time'] >= $appoint_time[$k]['begin'] && $time_block_2[$i][$j]['time'] <=  $appoint_time[$k]['end']){
                     $time_block_2[$i][$j]['allow'] = 0;
                 }
@@ -86,6 +94,9 @@ if($shop){
     'pre'=>$shop[0]['appoint_allow']
     ]);
     echo json_encode(['status'=>1,"data"=>$result]);
-}else{
+}
+else
+{
     echo json_encode(['status'=>0]);
 }
+?>

@@ -1,5 +1,6 @@
 <?php
-if(isset($_POST['ajax_call'])){
+if(isset($_POST['ajax_call']))
+{
     require('database.php');
     $id = $_POST['id'];
     $data = gettechnician($id);
@@ -97,3 +98,4 @@ function gettechnician($id,$tm="")
         return $data;
     }
 }
+?>

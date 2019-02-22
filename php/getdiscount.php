@@ -13,3 +13,4 @@ function getdiscount($id)
     }
     return ['status'=>1,'data'=>$data];
 }
+?>

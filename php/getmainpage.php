@@ -9,7 +9,8 @@ $now_time = time();
 
 $pic = sql_str("select A.dir AS url,B.dir AS dir from shop_photo A, service_type B where A.shop_id = 1 and (B.ID = A.theme)");
 $npic = sql_str("select A.dir AS url from shop_photo A where A.shop_id = 1 and 0= A.theme");
-for($i=0;$i<count($npic);$i++){
+for($i=0;$i<count($npic);$i++)
+{
     $npic[$i] = array_merge($npic[$i],['dir'=>'qiyewenhua.html']);
 }
 //获取最近的5条优惠活动
@@ -28,13 +29,17 @@ $foot = [];
 $spa = [];
 
 //找出属于某类的项目，并且删除app2中同类的项目，只留下一个 belong_to 为1表示属于足浴，2表示属于SPA,0表示不属于任何
-foreach($app2['data'] as $key => $it){
+foreach($app2['data'] as $key => $it)
+{
     //$res = false;
     //preg_match($reg1,$it['name'],$res);
-    if($it['belong_to'] == 1){
+    if($it['belong_to'] == 1)
+	{
         array_push($foot,$it);
         unset($app2['data'][$key]);
-    }else if($it['belong_to'] == 2){
+    }
+	else if($it['belong_to'] == 2)
+	{
         //preg_match($reg2,$it['name'],$res);
         array_push($spa,$it);
         unset($app2['data'][$key]);
@@ -45,10 +50,12 @@ $app2['data'] = array_values($app2['data']);
 
 //用于项目分类
 $app2_more = $app2;
-if(count($foot)> 0){
+if(count($foot)> 0)
+{
     array_push($app2_more['data'],$foot[0]);
 }    
-if(count($spa)> 0){
+if(count($spa)> 0)
+{
     array_push($app2_more['data'],$spa[0]);
 }
 echo (json_encode(['status' => 1,'top_pic'=>$pic,'data'=>[
@@ -63,3 +70,5 @@ echo (json_encode(['status' => 1,'top_pic'=>$pic,'data'=>[
                             'notice' => getnotice($id),
                             'promo'=>$promo]
                 ]));
+				
+?>

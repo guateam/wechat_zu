@@ -8,7 +8,8 @@ $is_vip = $is_vip[0]['level']==0?false:true;
 $str = "select sum(`recharge_record`.`charge`) AS `charge` from  `recharge_record` where ( '$user_id' = `recharge_record`.`user_id`)";
 $result = sql_str($str);
 $result = $result[0];
-if(is_null($result['charge'])){
+if(is_null($result['charge']))
+{
     $result['charge'] = 0;
 }
 $data=[];
@@ -38,7 +39,6 @@ if(count($lv_list)>1) $nxlv = $lv_list[1];
 //数据整合到一个数组钟去
 $result = array_merge($result,["exp"=>$exp,'nowlv'=>$nowlv,'nxlv'=>$nxlv]);
 
-   
 if($result && $is_vip)
 { 
     $result['exp']/=100;
@@ -52,3 +52,4 @@ else
         'next_lv'=>$first_lv[0]['name'],
     ]]);
 }
+?>

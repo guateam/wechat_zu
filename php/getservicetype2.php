@@ -22,3 +22,4 @@ function getservicetype2($id)
     }
     return ['status'=>1,'data'=>$data];
 }
+?>

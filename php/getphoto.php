@@ -10,3 +10,4 @@
 	{
         echo json_encode(['status'=>0,'data'=>[]]);
     }
+?>

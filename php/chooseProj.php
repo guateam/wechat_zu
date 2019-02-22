@@ -31,8 +31,10 @@ if($tcs != '' && $tcs[0] != '')
         $jbnb = $tcs[$i];
         //判断目前是否是忙碌状态
         $appoint_time = sql_str("select A.appoint_time as `begin`, A.appoint_time+C.duration*60 as `end` from consumed_order A,service_order B,service_type C where A.appoint_time >= $time and B.order_id = A.order_id and B.job_number = '$jbnb' and C.ID=B.item_id");
-        foreach($appoint_time as $app_time){
-            if($time>=$app_time['begin'] && $time <= $app_time['end']){
+        foreach($appoint_time as $app_time)
+		{
+            if($time>=$app_time['begin'] && $time <= $app_time['end'])
+			{
                 echo json_encode(['status'=>-1]);
                 exit();
             }
@@ -71,9 +73,11 @@ else //未选择技师的情况
     `service_type`.`ID` AS `id`
     FROM
     (`service_type` )");
+	
      $list = [];//输出的技师-服务列表
      $list = array_merge($list,['all'=>['skill'=>[],'choosen'=>true,'job_number'=>"所有"]]);
-     foreach($skills as $skill){
+     foreach($skills as $skill)
+	 {
         //单位换算  分->元
         $skill['price']/=100;
         //添加服务的选择状态
@@ -83,6 +87,7 @@ else //未选择技师的情况
     }
     echo json_encode(['status'=>1,'data'=>$list]);
 }
+
 class A {
    public $idx;
    public $item;

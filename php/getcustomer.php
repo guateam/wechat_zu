@@ -2,7 +2,8 @@
 require("database.php");
 $openid = $_POST['openid'];
 $cus = get("customer","openid",$openid);
-if(!$cus){
+if(!$cus)
+{
     echo json_encode(['status'=>0]);
     exit();
 }

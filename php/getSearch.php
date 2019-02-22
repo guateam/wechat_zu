@@ -7,7 +7,8 @@ $job_number_like = $_POST['jobNumber'];
 
 $numbers = [];
 $tech_info = sql_str("select A.job_number,A.photo from technician A where `job_number` like '%$job_number_like%'");
-foreach($tech_info as $idx => $tc){
+foreach($tech_info as $idx => $tc)
+{
     $job_number = $tc['job_number'];
     //获取图片
     $friend_circle = sql_str("select A.img from technician_photo A where A.job_number = '$job_number' order by A.ID desc limit 3");

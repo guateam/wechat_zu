@@ -3,12 +3,14 @@ require("database.php");
 $order_id = $_POST['id'];
 
 $co = get("consumed_order","order_id",$order_id);
-if(count($co)<=0){
+if(count($co)<=0)
+{
     echo json_encode(['status'=>0]);
     exit();
 }
 $customer = get('customer','openid',$co[0]['user_id']);
-if(count($customer)<=0){
+if(count($customer)<=0)
+{
     echo json_encode(['status'=>-1]);
     exit();
 }
@@ -26,11 +28,13 @@ foreach($so as $svod)
 {
     $tech = get("technician","job_number",$svod['job_number']);
     //如果是服务，则查找service_type表
-    if($svod['service_type'] == 1){
+    if($svod['service_type'] == 1)
+	{
         $svs = get("service_type","ID",$svod['item_id']);
     }
     //如果是茶艺，则查找item_type表
-    else if($svod['service_type'] == 3){
+    else if($svod['service_type'] == 3)
+	{
         $svs = get("item_type","ID",$svod['item_id']);
     }
     $appo = ['appoint_time'=>$co[0]['appoint_time'],'people_num'=>$co[0]['user_num']];
@@ -69,14 +73,18 @@ foreach($so as $svod)
     }
 }
 $tag = sql_str("select * from rate_tag");
-if($tag){
-    for($i=0;$i<count($tag);$i++){
+if($tag)
+{
+    for($i=0;$i<count($tag);$i++)
+	{
         $tag[$i] = array_merge($tag[$i],['check'=>false]);
     }
 }
 
 $tags = [];
-for($i=0;$i<count($info);$i++){
+for($i=0;$i<count($info);$i++)
+{
     array_push($tags,$tag);
 }
 echo json_encode(['data'=>$info,'co'=>$co,'tags'=>$tags]);
+?>
