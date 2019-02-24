@@ -88,14 +88,17 @@
                         </i-col>
                     </row>
                     <row :gutter="2" v-if="clickjibie">
-                        <i-col span="8">
+                        <i-col span="6">
                             <i-button :type="button_type[4]" @click="select_level(4,'金牌足浴')" long>金牌足浴</i-button>
                         </i-col>
-                        <i-col span="8">
+                        <i-col span="6">
                             <i-button :type="button_type[5]" @click="select_level(5,'魅力天使')" long>魅力天使</i-button>
                         </i-col>
-                        <i-col span="8">
+                        <i-col span="6">
                             <i-button :type="button_type[6]" @click="select_level(6,'至尊国色')" long>至尊国色</i-button>
+                        </i-col>
+						 <i-col span="6">
+                            <i-button :type="button_type[6]" @click="select_level(7,'养生师')" long>养生师</i-button>
                         </i-col>
 
                     </row>
@@ -117,7 +120,7 @@
                         <row type="flex">
                             <i-col span="24">
                                 <div style="text-align: center">
-                                    <img :src="item.avatar_url" style="height: 60px; width: 60px; border-radius: 50px;" />
+                                    <img :src="item.avatar_url" style="height: 60px; width: 60px; border-radius: 5px;" />
                                 </div>
                             </i-col>
                         </row>
@@ -132,7 +135,7 @@
                             </i-col>
                         </row>
                         <row :gutter="2">
-                            <i-col span="8" v-for="dir in item.photo_list"><img :src="dir['img']" style="height: 65px; width: 65px;" /></i-col>
+                            <i-col span="8" v-for="dir in item.photo_list"><img :src="dir['img']" style="height: 65px; width: 65px;border-radius: 5px;" /></i-col>
                             <!-- <i-col span="8"><img :src="item.photo_list[1]" style="height: 65px; width: 65px;" /></i-col>
                         <i-col span="8"><img :src="item.photo_list[2]" style="height: 65px; width: 65px;" /></i-col> -->
                         </row>
@@ -380,6 +383,10 @@
 				else if (str == "至尊国色")
 				{
 					mylevel = "3";
+				}
+				else if (str == "养生师")
+				{
+					mylevel = "4";
 				}
 				
                 for (var i = 0; i < that.list.length; i++) 
