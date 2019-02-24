@@ -72,7 +72,7 @@
                 <div class="weui-cell__bd">
                     <p>手机号(方便联系)</p>
                 </div>
-                <input type="text" v-model="input_phone" style="outline: none;border: none;text-align: right"
+                <input type="text" v-model="input_phone" style="outline: none;border: none;text-align: right;font-size:16px"
                     placeholder="请输入手机号">
             </div>
         </div>
@@ -80,15 +80,17 @@
         <div class="weui-cells__title">本次优惠</div>
         <div class="weui-cells">
             <div class="weui-cell weui-cell_swiped">
-                <div class="weui-cell__bd" style="transform: translateX(-68px)">
+                <div class="weui-cell__bd" style="transform: translateX(-8px)">
                     <div class="weui-cell" @click="window.location.href = 'recharge.html?openid='+id">
+					
+						<!--<span style="display:inline-block ;width:40px"></span>	-->							
+						<span style="display:inline-block ;font-family: 华文雅黑;background-color: #fe736c;color: white;border-radius: 6px;padding: 0 2px;font-size: 15px">
+							会员充就送
+						</span>
+							
                         <div v-for="pro in promotion" class="weui-cell__bd">
                             <p style="margin-left: 20%">
-                                <span style="display:inline-block ;width:40px">会员</span>
-                                <span style="display:inline-block ;font-family: 华文雅黑;background-color: #fe736c;color: white;border-radius: 6px;padding: 0 2px;font-size: 15px">
-                                    充返
-                                </span>
-                                <span v-text="'充'+pro.need+'元 返'+pro.back+'元'" style="display:inline-block;font-size: 13px;font-weight: 100;color: gray;"></span>
+                                <span v-text="'充'+pro.need+'元 送'+pro.back+'元'" style="display:inline-block;font-size: 13px;font-weight: 100;color: gray;"></span>
                             </p>
                         </div>
                     </div>
