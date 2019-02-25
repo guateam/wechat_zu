@@ -63,6 +63,8 @@ if($user)
 
             $ticheng = 0;
             $yongjin = 0;
+			
+			$price = $service_type[0]['market_price'];
 
             $yongjin = $service_type[0]['invite_income'];
             //都是点钟
@@ -76,7 +78,7 @@ if($user)
                 $ticheng = $service_type[0]['commission2'];
             }			
 			
-            add("service_order",[['appoint_time',$appoint_time],['ticheng',$ticheng],['yongjin',$yongjin], ['clock_type',2],['order_id',$time],['service_type',$appotype],["item_id",$service_id],["job_number",$jbnb]]);
+            add("service_order",[['appoint_time',$appoint_time],['ticheng',$ticheng],['yongjin',$yongjin], ['price',$price],['clock_type',2],['order_id',$time],['service_type',$appotype],["item_id",$service_id],["job_number",$jbnb]]);
         }
         echo json_encode(['state'=>1,'order_id'=>$time]);
         die();

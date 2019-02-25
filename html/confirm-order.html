@@ -208,8 +208,10 @@
 
 
                     var item_id = [];
-                    //如果是余额支付
-                    if (this.pay_way == 1) {
+                    
+					//如果是余额支付
+                    if (this.pay_way == 1) 
+					{
                         //余额不足的情况
                         if (this.charge < this.total_price) {
                             $(that).openWindow("", "您的余额不足，请前往充值页面或选择其他支付方式", ["好的"], () => {
@@ -260,7 +262,8 @@
                         }
                     }
                     //如果是微信支付
-                    else if (this.pay_way == 3) {
+                    else if (this.pay_way == 3) 
+					{
                         $(that).openWindow("", "确认下单吗？", ["不", "是的"], () => {
                             if (that.input_phone == "") that.input_phone = "0";
                             wx.miniProgram.navigateTo({
