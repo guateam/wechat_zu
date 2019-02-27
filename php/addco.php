@@ -46,6 +46,7 @@ if($user)
             ['generated_time',time()],
             ["order_id",$time],
             ["pay_amount",$pay],
+			["shouldpay_amount",$pay],
             ['user_id',$user[0]['openid']],
             ['state',$state],//状态为1，表示待消费,3表示待支付，4表示待评价
             ['contact_phone',$phone],
@@ -64,7 +65,8 @@ if($user)
             $ticheng = 0;
             $yongjin = 0;
 			
-			$price = $service_type[0]['market_price'];
+			//$price = $service_type[0]['market_price'];//门市价
+			$price = $service_type[0]['price'];//活动价
 
             $yongjin = $service_type[0]['invite_income'];
             //都是点钟
