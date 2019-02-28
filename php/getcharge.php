@@ -7,7 +7,7 @@ if($user_id)
 {
     $user_id = $user_id[0]['openid'];
     //获取该顾客的充值记录,按照时间倒序
-    $order = sql_str("select * from `recharge_record` WHERE (`user_id` = '$user_id') ORDER BY `generated_time` DESC");
+    $order = sql_str("select * from `recharge_record` WHERE (`user_id` = '$user_id') ORDER BY `generated_time` DESC");//根据openid
     if($order)
 	{
         for($i=0;$i<count($order);$i++)

@@ -28,6 +28,10 @@ if($us)
 	{
         $rnd.=$dict[rand(0,count($dict)-1)];
     }
+	
+	//--------------------------------------------------------------------------
+	//计算技师的充卡提成
+	/*
     $tech = sql_str("select * from technician where job_number='$job_number'");
     $ticheng = 0;
     if($tech && $tech[0]['type']==1)
@@ -38,6 +42,8 @@ if($us)
 	{
         $ticheng = $shop[0]['recharge_income2'] * $val;
     }
+	*/
+	//--------------------------------------------------------------------------
 
 
     add("recharge_record",[
@@ -49,7 +55,6 @@ if($us)
         ['generated_time',time()],
         ['note','充值'],
         ['type',1],
-        ['ticheng',$ticheng]
         ]);
         
 	add("recharge_record",[
@@ -60,7 +65,6 @@ if($us)
             ['job_number',$job_number],
             ['generated_time',time()],
             ['note','充值送钱'],
-            ['ticheng',0],
             ['type',2],
     ]);
 
