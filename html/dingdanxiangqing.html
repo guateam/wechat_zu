@@ -37,7 +37,12 @@
 </head>
 
 <body>
+	
+	
     <div id="app">
+	
+		
+		
         <row>
             <i-col span="24">
                 <card dis-hover style="text-align: center">
@@ -58,6 +63,8 @@
                 </card>
             </i-col>
         </row>
+		
+		<div id="qrcode" style="text-align:center"></div>
 
         <row v-if="appointmentData">
             <i-col span="24">
@@ -120,8 +127,11 @@
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/date-format.js"></script>
 <script type="text/javascript" src="../js/windowOpen.js"></script>
+<script type="text/javascript" src="../js/qrcode.min.js"></script>
+<script type="text/javascript" src="../js/jquery.qrcode.min.js"></script>
 
 <script>
+
     function getQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
         var r = window.location.search.substr(1).match(reg);
@@ -212,7 +222,8 @@
                 window.location.href = "jishixuanze.html?openid=" + this.openid;
             }
         },
-        created() {
+        created() 
+		{
             var that = this;
             this.openid = getQueryString('openid');
             $.post("../php/getorderdetail.php", {
@@ -253,7 +264,12 @@
                 i = that.orderData['payment_method']
                 that.orderData['payment_method'] = pay[i];
                 that.overlay = false;
+				
+				console.log(that.orderData.order_id);
+				$('#qrcode').qrcode(that.orderData.order_id); //任意字符串
             })
+			
+			
         },
     };
     let Component = Vue.extend(Main);
