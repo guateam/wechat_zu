@@ -9,7 +9,7 @@ function get_promotion()
     $result = [];
     foreach($dates as $date)
 	{
-        if($date['start'] <= $time && $time <= $date['end'])
+        //if($date['start'] <= $time && $time <= $date['end'])
 		{
             $date['need']/=100;
             $date['back']/=100;
