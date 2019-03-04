@@ -8,6 +8,13 @@
     <link rel="stylesheet" href="../css/weui-min.css"/>
     <link rel="stylesheet" href="../css/example.css"/>
     <link rel="stylesheet" type="text/css" href="../css/overlay.css">
+	
+	<style>       
+		
+		#qrcode canvas{
+			width:150px;
+		}
+    </style>
 </head>
 
 <body>
@@ -55,6 +62,8 @@
         <div class="weui-cell__ft" v-text="user_info[0].phone_number"></div>
     </div>
 	
+	
+	
 	<!--
     <div class="weui-cell">
         <div class="weui-cell__bd">
@@ -71,12 +80,19 @@
     </div>
 </div>
 
+<div  style="text-align:center;padding:10px">
+	<div id="qrcode" style="display:inline-block"></div>
+</div>
+
 </body>
 <script type="text/javascript" src="../js/jweixin.js"></script>
 <!-- <script type="text/javascript" src="../js/example.js"></script> -->
 <script type="text/javascript" src="../js/weui-min.js"></script>
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script src="../js/vue.js"></script>
+<script type="text/javascript" src="../js/qrcode.min.js"></script>
+<script type="text/javascript" src="../js/jquery.qrcode.min.js"></script>
+
 <script type="text/javascript">
     $(function () {
         $('.weui-tabbar__item').on('click', function () {
@@ -101,6 +117,7 @@
         },
         created(){
             var that = this;
+			var openid = getQueryString('openid');
             $.post("../php/getcustomer.php",{
                 openid:getQueryString('openid')
             }).done((res)=>{
@@ -110,6 +127,7 @@
                     that.overlay = false;
                 }
             })
+			$('#qrcode').qrcode(openid); //任意字符串
         }
     })
 </script>
