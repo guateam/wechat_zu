@@ -12,7 +12,7 @@ $id = $cus[0]['openid'];
 $str = "select sum(`recharge_record`.`charge`) AS `charge` from  `recharge_record` where ( '$id' = `recharge_record`.`user_id`)";//根据userid recharge_record 计算充进去的钱
 $charge = sql_str($str);
 //获取消费总额,仅计算用会员卡支付的订单
-$str = "select sum(pay_amount) as pay from consumed_order where user_id='$id' and (state!=3 and state != 0) and payment_method=3";//根据userid consumed_order 计算花出去的钱
+$str = "select sum(pay_amount) as pay from consumed_order where user_id='$id' and (state!=3 and state != 0) and payment_method=11";//根据userid consumed_order 计算微信会员花出去的钱
 $use = sql_str($str);
 //计算目前账户内余额
 $charge=$charge[0]['charge']-$use[0]['pay'];
