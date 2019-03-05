@@ -45,16 +45,14 @@
                             </i-col>
                         </row>
                         <row type="flex">
-                            <i-col span="24">
-                                <div style="text-align: center">
-                                    <img :src="item.avatar_url" style="height: 60px; width: 60px; border-radius: 50px;" />
-                                </div>
+                            <i-col span="24" style="height:60px;border-radius: 50px;overflow: hidden;" >
+                                 <img :src="item.avatar_url" style="width: 60px;" />
                             </i-col>
                         </row>
                     </i-col>
 
-                    <i-col span="15" @click.native="tech_info(item.job_number,item.state)">
-                        <row style="margin-top: -10px" type="flex" align="bottom">
+                    <i-col span="15" @click.native="tech_info(item.job_number,item.state)" style="margin-top: 20px;">
+                        <row style="margin-top: -10px;margin-bottom: 10px;" type="flex" align="bottom">
                             <i-col span="18">
                                 <rate show-text allow-half v-model="item.rate" disabled style="font-size: 15px">
                                     <span style="color: #f5a623; margin-left: -20px">{{ item.rate }}分</span>
@@ -67,7 +65,9 @@
                             </i-col>
                         </row>
                         <row :gutter="2">
-                            <i-col span="8" v-for="dir in item.photo_list"><img :src="dir['img']" style="height: 65px; width: 65px;" /></i-col>
+                            <i-col span="8" v-for="dir in item.photo_list" style="height: 70px;overflow: hidden;display: inline-block;">
+								<img :src="dir['img']" style="width: 65px;" />
+							</i-col>
                         </row>
                     </i-col>
 
