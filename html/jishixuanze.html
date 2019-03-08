@@ -130,7 +130,8 @@
                         <row type="flex" justify="start" style="margin-bottom: 3px" :gutter="16" @click.native="tech_info(item.job_number,item.state)">
                             <i-col span="15">
                                 <p>
-                                    当前状态: <span :style="{color: item.busy ==1? '#ed4014' : '#19be6b' }">{{item.busy == 1?'繁忙':'空闲'  }}</span>
+                                    <!--当前状态: <span :style="{color: item.busy ==1? '#ed4014' : '#19be6b' }">{{item.busy == 1?'繁忙':'空闲'  }}</span>-->
+									<span :style="{color: item.busy ==1? '#ed4014' : '#19be6b' }">{{item.busy == 1?'  ':'  '  }}</span>
                                 </p>
                             </i-col>
                         </row>
@@ -142,9 +143,13 @@
                     </i-col>
 
                     <i-col span="4">
-                        <div @click="choose_tech(item)" :class="item.busy ==1?'circle_red':'circle'" :style="[{'font-size': (item.state === 1 ? '10' : '12') + 'px'}]">
-                            <span v-if="item.check === 1" style="font-size: 16px;color:red;">√</span>
+                        <div @click="choose_tech(item)" :class="'circle'" :style="[{'font-size': (item.state === 1 ? '10' : '12') + 'px'}]">
+						<!--div @click="choose_tech(item)" :class="item.busy ==1?'circle_red':'circle'" :style="[{'font-size': (item.state === 1 ? '10' : '12') + 'px'}]"-->
+                            <!--
+							<span v-if="item.check === 1" style="font-size: 16px;color:red;">√</span>
                             <span v-else>{{ item.busy ==1 ?'被约':'可选' }}</span>
+							-->
+							 <span>{{ '预约'}}</span>
                         </div>
                     </i-col>
                 </row>
@@ -284,12 +289,18 @@
             choose_tech(item) {
                 //如果被约则弹窗提示
                 var that = this
-                if ( item.busy == 1){
-                    $(that).openWindow("", "该技师在所选时段内已经有约", ["好的","电话预约"], () => {
-                        window.location.href = "tel:"+that.tel;
-                    })
-                    return;
-                } 
+                //if ( item.busy == 1){
+                //    $(that).openWindow("", "该技师在所选时段内已经有约", ["好的","电话预约"], () => {
+                //        window.location.href = "tel:"+that.tel;
+                //    })
+                //    return;
+                //} 
+				
+				 $(that).openWindow("", "该技师可以电话预约", ["好的","电话预约"], () => {
+                      window.location.href = "tel:"+that.tel;
+                  })
+                return;
+				
                 if (this.time === ''){
                     window.location.href = "select-time.html" + "?select_time=" + this.time + "&sv=" +
                         this.sv + "&tc=" + item.job_number + "&openid=" + this.openid;
