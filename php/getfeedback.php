@@ -1,7 +1,7 @@
 <?php
 function getfeedback($id)
 {
-    $rate=sql_str("select A.score,A.comment,A.time,B.head,B.name from rate A,customer B where A.`job_number`='$id' and A.bad=1 and A.customer_id=B.openid");
+    $rate=sql_str("select A.score,A.comment,A.time,B.head,B.name from rate A,customer B where A.`job_number`='$id' and A.bad=1 and A.customer_id=B.openid order by A.time desc");
     // $serivce = sql_str("select * from service_order WHERE (`job_number` = '$id') ORDER BY `ID` DESC");//get('service_order', 'job_number', $id);
     // $data = [];
     // foreach ($serivce as $value) 

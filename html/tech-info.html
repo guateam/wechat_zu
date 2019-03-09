@@ -171,7 +171,13 @@
                     <span style="color: #f5a623; margin-left: -20px">{{total_rate}}分</span>
                 </rate>
                 （共{{count}}条）
-            </span>
+        </span>
+				
+		 <div id="wantcmt" class="" onclick="gocomment()"  style="margin-left: 40px;font-size: 12px;padding: 5px;border: rgb(26,173,25) 1px solid;border-radius: 2px;background-color: rgb(60, 160,60); color: white;">
+			<!--<a href="comment.html?job_number=188&openid=o5C5W49NYt7U5Yl9rEBWc9esKdKg">我要评价</a>-->			
+			我要评价
+         </div>
+		
     </div>
     <div style="height: 5%;width: 100%;background-color: white;display: flex;align-items: center">
         <span id="tag" v-for="tag in tags" v-text="tag.tag_name+'('+tag.count+')'"></span>
@@ -197,8 +203,7 @@
                 </div>
                 <div class="weui-media-box__bd" style="height: 3rem;display:  flex;flex-direction: column;justify-content:  space-between;align-items:  flex-end;">
                     <span v-text="date('Y-m-d H:i:s',item.time)" class="weui-media-box__title" style="font-size:12px;color: #a1a1a1"></span>
-                    <div class="" style="font-size: 12px;padding: 5px;border: rgb(26,173,25) 1px solid;border-radius: 10px;color: rgb(26, 173, 25);">评论
-                    </div>
+                    <!--<div class="" style="font-size: 12px;padding: 5px;border: rgb(26,173,25) 1px solid;border-radius: 10px;color: rgb(26, 173, 25);">评论</div>-->
                 </div>
             </a>
         </div>
@@ -299,6 +304,21 @@
     // })
 </script>
 <script type="text/javascript">
+
+	function gocomment()
+	{
+		var job_number = getPar('job_number');
+		//alert(job_number);
+		
+		var openid = getQueryString('openid');
+		//alert(openid);
+		
+		var url = "comment.html?job_number="+job_number+"&openid="+openid;
+		//alert(url);
+		
+		window.location.href = url;
+	}
+	
     //获取url参数
     function getQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
@@ -356,6 +376,9 @@
 
                 });
             },
+			
+			
+			
             down_order()//下单 
 			{
                 var that = this;

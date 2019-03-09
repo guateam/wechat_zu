@@ -72,6 +72,8 @@ foreach($so as $svod)
         ]);
     }
 }
+
+//------------获取技师评价的tag--------------------
 $tag = sql_str("select * from rate_tag");
 if($tag)
 {
@@ -86,5 +88,7 @@ for($i=0;$i<count($info);$i++)
 {
     array_push($tags,$tag);
 }
+
+//--------------------------------------------------
 echo json_encode(['data'=>$info,'co'=>$co,'tags'=>$tags]);
 ?>
