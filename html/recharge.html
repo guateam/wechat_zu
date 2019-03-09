@@ -303,6 +303,12 @@
 			
             recharge() 
 			{
+				var that = this;
+				 $(that).openWindow("", "请前往店内充卡，精彩不断、活动更多！", ["好的"], () => {
+					return;
+				})
+				
+				/*	
                 var that = this;
 
                 if (this.job_number == "" || this.job_number == null) {
@@ -329,6 +335,7 @@
 						}
 					});
                 }
+				*/
             }
         },
         
