@@ -234,6 +234,8 @@
                     $(that).openWindow("确认", "打赏的金额:" + this.moneyList[0] + "元， " + "打赏的技师工号:" + jobnumber, [
                         '好的'
                     ], () => {
+					
+						/*
                         weixin.navigateTo({
                             url: '/pages/pay/pay?total_fee=' + this.moneyList[0]*100 +
                                 '&jobnumber=' + jobnumber + '&type=dashang',
@@ -247,6 +249,9 @@
                                 console.log('complete');
                             }
                         })
+						*/
+						
+						 $(that).openWindow("注意", "打赏功能暂时不可用", ['好的']);
                     });
                 }
             },
