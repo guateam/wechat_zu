@@ -20,7 +20,8 @@ $pic = array_merge($pic,$npic);
 $app2 = getservicetype($id);
 //显示在小程序上面的两个标签内容
 $tab1 ="足浴";
-$tab2 ="其它";
+// $tab2 ="其它";
+$tab2 ="SPA";
 
 // $tab1 ="搞卫生";
 // $tab2 ="擦玻璃";

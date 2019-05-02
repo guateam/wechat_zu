@@ -5,7 +5,9 @@ function getservicetype($id)
     $data=[];
     foreach($servicetype as $value)
 	{
-		if((strpos($value['name'],'spa') === false) && (strpos($value['name'],'SPA') === false) && (strpos($value['name'],'SAP') === false) &&  (strpos($value['name'],'中式') === false))
+		//if((strpos($value['name'],'spa') === false) && (strpos($value['name'],'SPA') === false) && (strpos($value['name'],'SAP') === false) &&  (strpos($value['name'],'中式') === false))
+		//if(strpos($value['name'],'中式推拿') === false)
+		if($value['name'] !== '中式推拿')	
 		{
 			$item=[
 				'id'=>$value['ID'],
